@@ -305,7 +305,13 @@ def main():
     # Build mutation K-maps with don't-care conditions
     print("\n[5/5] Building mutation K-maps with don't-care conditions...")
 
-    reference = pos_arrays[0]
+    # BUG FIX: Original code used pos_arrays[0] (first sequence) as reference.
+    # This is inconsistent with find_coevolutionary_pairs() which uses majority_ref.
+    # Fixed: build a synthetic majority reference array.
+    ref_codes = []
+    for pos in range(len(pos_arrays[0])):
+        ref_codes.append(get_majority_ref(pos_arrays, pos, n_all))
+    reference = np.array(ref_codes, dtype=np.int32)
 
     all_results = []
     for idx, (pos_i, pos_j, mi, n_muts) in enumerate(co_evolving[:10]):

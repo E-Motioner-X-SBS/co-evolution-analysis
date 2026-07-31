@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
 Shared Co-evolution Data Loading and Computation Module
-=======================================================
+======================================================
 SINGLE source of truth for all 17 co-evolution scripts:
   - FASTA parsing → position arrays (He 2012 encoding)
   - Vectorized Mutual Information (bincount, O(400) per pair)
   - Entropy / Perplexity / Variable position detection
-  - Coupling J = -ln(P/P_expected) and constraint function
+  - Coupling J = ln(P/P_expected) and constraint function
   - Multi-core worker pool with shared-memory initializer
 
 This ELIMINATES:
