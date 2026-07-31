@@ -1,0 +1,108 @@
+{
+  "dataset": "SARS-CoV-2 Spike Protein (ALL sequences)",
+  "num_sequences": 1299,
+  "method": "DCA (inverse covariance) \u2192 Boolean minimization",
+  "results": [
+    {
+      "pos_i": 74,
+      "pos_j": 76,
+      "max_coupling": 4617.535952461567,
+      "mean_coupling": 56.309104373132826,
+      "n_on_set": 73,
+      "n_prime_implicants": 56,
+      "n_essential": 33,
+      "accuracy": 0.0
+    },
+    {
+      "pos_i": 74,
+      "pos_j": 77,
+      "max_coupling": 8149.082937172252,
+      "mean_coupling": 103.3869639080056,
+      "n_on_set": 81,
+      "n_prime_implicants": 54,
+      "n_essential": 30,
+      "accuracy": 0.0
+    },
+    {
+      "pos_i": 72,
+      "pos_j": 74,
+      "max_coupling": 4677.436772529649,
+      "mean_coupling": 56.681022500905925,
+      "n_on_set": 72,
+      "n_prime_implicants": 61,
+      "n_essential": 36,
+      "accuracy": 0.0
+    },
+    {
+      "pos_i": 76,
+      "pos_j": 78,
+      "max_coupling": 1135.1864033250038,
+      "mean_coupling": 18.342103579846462,
+      "n_on_set": 73,
+      "n_prime_implicants": 53,
+      "n_essential": 32,
+      "accuracy": 0.0
+    },
+    {
+      "pos_i": 74,
+      "pos_j": 78,
+      "max_coupling": 2280.6628769513586,
+      "mean_coupling": 35.92719712345753,
+      "n_on_set": 81,
+      "n_prime_implicants": 65,
+      "n_essential": 37,
+      "accuracy": 0.0
+    },
+    {
+      "pos_i": 68,
+      "pos_j": 74,
+      "max_coupling": 2804.3991977185324,
+      "mean_coupling": 36.13476911012662,
+      "n_on_set": 58,
+      "n_prime_implicants": 47,
+      "n_essential": 29,
+      "accuracy": 0.0
+    },
+    {
+      "pos_i": 72,
+      "pos_j": 76,
+      "max_coupling": 2325.760135978697,
+      "mean_coupling": 34.99523604246827,
+      "n_on_set": 81,
+      "n_prime_implicants": 60,
+      "n_essential": 36,
+      "accuracy": 0.0
+    },
+    {
+      "pos_i": 68,
+      "pos_j": 73,
+      "max_coupling": 4509.539910545204,
+      "mean_coupling": 64.55459690103048,
+      "n_on_set": 69,
+      "n_prime_implicants": 67,
+      "n_essential": 38,
+      "accuracy": 0.0
+    },
+    {
+      "pos_i": 68,
+      "pos_j": 77,
+      "max_coupling": 3264.192870878833,
+      "mean_coupling": 37.72573776798988,
+      "n_on_set": 81,
+      "n_prime_implicants": 50,
+      "n_essential": 32,
+      "accuracy": 0.0
+    },
+    {
+      "pos_i": 72,
+      "pos_j": 75,
+      "max_coupling": 6823.503620214118,
+      "mean_coupling": 84.62453710424164,
+      "n_on_set": 73,
+      "n_prime_implicants": 63,
+      "n_essential": 37,
+      "accuracy": 0.0
+    }
+  ],
+  "avg_accuracy": 0.0
+}

@@ -1,0 +1,11 @@
+{
+  "n_sequences": 1299,
+  "max_position": 1276,
+  "mi_matrix_shape": [
+    1276,
+    1276
+  ],
+  "max_mi": 1.5917104340935966,
+  "mean_mi": 0.6654925645642863,
+  "high_mi_pairs_count": 106626
+}

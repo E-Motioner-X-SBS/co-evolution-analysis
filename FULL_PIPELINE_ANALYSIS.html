@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-Motioner-X-SBS: Complete Co-Evolution Analysis Pipeline</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});"></script>
+<style>
+  body { font-family: "Times New Roman", Georgia, serif; max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.8; color: #222; }
+  h1 { font-size: 1.8em; text-align: center; margin: 40px 0 10px; }
+  h2 { font-size: 1.4em; margin: 32px 0 12px; border-bottom: 1px solid #ccc; padding-bottom: 6px; }
+  h3 { font-size: 1.2em; margin: 24px 0 8px; }
+  h4, h5, h6 { font-size: 1em; margin: 16px 0 6px; }
+  p { margin: 8px 0; text-align: justify; }
+  li { margin: 4px 0; }
+  code { background: #f4f4f4; padding: 2px 4px; border-radius: 3px; font-size: 0.9em; }
+  table { border-collapse: collapse; margin: 16px 0; width: 100%; }
+  td, th { border: 1px solid #ddd; padding: 6px 10px; text-align: left; }
+  tr:nth-child(even) { background: #f9f9f9; }
+  hr { border: none; border-top: 1px solid #ccc; margin: 24px 0; }
+  a { color: #2a5db0; text-decoration: none; }
+  .math-display { text-align: center; margin: 16px 0; overflow-x: auto; }
+  .math-display svg { max-width: 100%; }
+  .math-inline { display: inline; }
+  .math-inline svg { vertical-align: middle; }
+  .math-error { color: red; font-style: italic; }
+  .author { text-align: center; color: #666; margin-bottom: 30px; }
+  @media print { body { max-width: none; margin: 0; } }
+</style>
+</head>
+<body>
+<div class="author">Shuvam Banerji Seal — IISER Kolkata</div>
+<h1>E-Motioner-X-SBS: Complete Co-Evolution Analysis Pipeline</h1>
+
+<p><strong>Generated:</strong> July 17, 2026 at 21:57</p>
+<p><strong>Dataset:</strong> SARS-CoV-2 Omicron Spike Protein — 1,299 sequences, 1276 positions</p>
+<p><strong>Compute:</strong> NVIDIA A100 80GB + 24-core Xeon, Python 3.10</p>
+<p><strong>Author:</strong> Shuvam Banerji Seal — IISER Kolkata</p>
+
+<hr>
+
+<h2>Abstract</h2>
+
+<p>This document presents the complete computational pipeline for analyzing co-evolutionary</p>
+<p>constraints in the SARS-CoV-2 Spike protein using Karnaugh map (K-map) Boolean minimization.</p>
+<p><strong>1,299</strong> Omicron variant Spike sequences from GISAID were encoded using base-20</p>
+<p>(He 2012 ordering) amino acid representation. Position-pair mutual information identified</p>
+<p><strong>15</strong> co-evolving position pairs in the N-terminal signal peptide region</p>
+<p>(positions 68-79). Quine-McCluskey Boolean minimization produced **108 essential</p>
+<p>prime implicants** — each representing an irreducible co-evolutionary constraint.</p>
+
+<p><strong>Key results:</strong> H1 Gray-code adjacency enrichment = <strong>0.18×</strong>;</p>
+<p>max pairwise MI = <strong>1.3700</strong> at positions (74,76);</p>
+<p>57/80 positions are evolutionarily variable (H > 0.3).</p>
+
+<h2>1. Formal Foundations — 236 Lean 4 Theorems</h2>
+
+<p>The entire framework rests on formal proofs in Lean 4.29.0. All theorems use <code>native_decide</code>,</p>
+<p>are <strong>sorry-free</strong> and <strong>axiom-free</strong>, and compile via <code>lake build</code> in under 1 second.</p>
+
+<h3>1.1 Binary K-map (<code>lean_proofs/</code>) — 106 Theorems</h3>
+
+<tr><td>File</td><td>Theorems</td><td>What Is Proved</td></tr>
+
+<tr><td><code>KmapProofs.lean</code></td><td>16</td><td>Gray code boundedness, injectivity, involution, DNA 2-bit encoding (A=00,C=01,G=11,T=10), complementarity, transition/transversion</td></tr>
+<tr><td><code>KmerIndexing.lean</code></td><td>35</td><td>k-mer encoding (k=1..4) injectivity and boundedness via concatenation, row/column K-map decomposition</td></tr>
+<tr><td><code>AminoAcidEncoding.lean</code></td><td>27</td><td>20 AAs → 5-bit Gray code, 7 physicochemical groups, within-group dist-1 (14 pairs), cross-group dist-1 (26 pairs), max-dist pairs (F-H, Y-E, W-R, M-K at dist=5)</td></tr>
+<tr><td><code>ContactMapCompleteness.lean</code></td><td>20</td><td>Contact maps as symmetric Boolean functions, irreducibility proof (no two contact pairs are 1-bit K-map adjacent)</td></tr>
+<tr><td><code>KmapEncodingEquiv.lean</code></td><td>8</td><td>Distance distribution, Q₅ hypercube degree=5, encoding captures 50% of Q₅ edges</td></tr>
+
+<h3>1.2 N-ary K-map (<code>n-ary-kmap/</code>) — 115 Theorems</h3>
+
+<tr><td>File</td><td>Theorems</td><td>What Is Proved</td></tr>
+
+<tr><td><code>NaryGrayCode.lean</code></td><td>54</td><td>Generalized n-ary reflected Gray code; digit-sum formula g_k = (d_k + d_{k+1}) mod b</td></tr>
+<tr><td><code>BaseNDnaEncoding.lean</code></td><td>13</td><td>Base-4 DNA encoder with transition adjacency (A↔C, C↔G, G↔T, T↔A as Gray neighbors)</td></tr>
+<tr><td><code>BaseNAminoEncoding.lean</code></td><td>33</td><td>Base-20 amino acid encoder, 7-group physicochemical ordering</td></tr>
+<tr><td><code>BaseNKMap.lean</code></td><td>15</td><td>Base-N K-map structure, cell adjacency, cyclic wrapping</td></tr>
+
+<h3>1.3 Speculative Encoding (<code>speculative-binary-encoding/</code>) — 15 Theorems</h3>
+
+<tr><td>File</td><td>Theorems</td><td>What Is Proved</td></tr>
+
+<tr><td><code>AntiCorrelation.lean</code></td><td>15</td><td>H1 encoding-invariance: the anti-correlation result holds across all 22 binary encodings</td></tr>
+
+<h3>1.4 Theorem Verification Bridge</h3>
+
+<p>The <code>lean_consistency.py</code> script in <code>kmap-sbm-validation/</code> re-computes every Lean theorem</p>
+<p>in Python and reports discrepancies. Result: <strong>103/103 pass</strong>, zero discrepancies.</p>
+
+<h2>2. Dataset</h2>
+
+<tr><td>Property</td><td>Value</td></tr>
+
+<tr><td><strong>File</strong></td><td><code>Spike_protein.aln-fasta</code> (1.8 MB)</td></tr>
+<tr><td><strong>Sequences</strong></td><td>1,299 SARS-CoV-2 Omicron Spike proteins</td></tr>
+<tr><td><strong>Alignment length</strong></td><td>1276 residues</td></tr>
+<tr><td><strong>Analysis region</strong></td><td>Positions 0-79 (N-terminal signal peptide)</td></tr>
+<tr><td><strong>Variable positions</strong></td><td>57/80 (entropy > 0.3)</td></tr>
+<tr><td><strong>Conserved positions</strong></td><td>23/80</td></tr>
+<tr><td><strong>Co-evolving pairs (MI > 0.01)</strong></td><td>1744</td></tr>
+<tr><td><strong>Co-evolving pairs (MI > 0.1)</strong></td><td>1229</td></tr>
+<tr><td><strong>Encoding</strong></td><td>Base-20, He 2012 ordering</td></tr>
+
+<h3>2.1 He 2012 Amino Acid Ordering</h3>
+
+<p>The 20 standard amino acids are ordered by physicochemical properties:</p>
+
+<tr><td>Index</td><td>AA</td><td>Group</td></tr>
+
+<tr><td>0</td><td>A</td><td>Aliphatic</td></tr>
+<tr><td>1</td><td>I</td><td>Aliphatic</td></tr>
+<tr><td>2</td><td>L</td><td>Aliphatic</td></tr>
+<tr><td>3</td><td>V</td><td>Aliphatic</td></tr>
+<tr><td>4</td><td>M</td><td>Sulfur</td></tr>
+<tr><td>5</td><td>F</td><td>Aromatic</td></tr>
+<tr><td>6</td><td>Y</td><td>Aromatic</td></tr>
+<tr><td>7</td><td>W</td><td>Aromatic</td></tr>
+<tr><td>8</td><td>E</td><td>Negative</td></tr>
+<tr><td>9</td><td>D</td><td>Negative</td></tr>
+<tr><td>10</td><td>Q</td><td>Polar</td></tr>
+<tr><td>11</td><td>N</td><td>Polar</td></tr>
+<tr><td>12</td><td>H</td><td>Positive</td></tr>
+<tr><td>13</td><td>K</td><td>Positive</td></tr>
+<tr><td>14</td><td>R</td><td>Positive</td></tr>
+<tr><td>15</td><td>S</td><td>Polar</td></tr>
+<tr><td>16</td><td>T</td><td>Polar</td></tr>
+<tr><td>17</td><td>C</td><td>Sulfur</td></tr>
+<tr><td>18</td><td>P</td><td>Structure</td></tr>
+<tr><td>19</td><td>G</td><td>Structure</td></tr>
+
+<h2>3. K-map Construction Methodology</h2>
+
+<h3>3.1 Encoding Biological Sequences as Karnaugh Maps</h3>
+
+<p>The core innovation is representing protein sequences as Karnaugh maps —</p>
+<p>the same mathematical objects used in digital logic design. The mapping is:</p>
+
+<p>```</p>
+<p>Biological Sequence → Amino Acid Encoding → K-map Cell → Frequency Map → Boolean Function</p>
+<p>```</p>
+
+<h3>3.2 Step 1: Position Array Construction</h3>
+
+<p>Each sequence is converted to a position array of integers (0-19):</p>
+
+<p>\(\text{seq}[i] \rightarrow \text{encoder.encode}(\text{seq}[i]) \in \{0, 1, \dots, 19\}\)</p>
+
+<p>For 1,299 sequences, each of length up to 1276, we build a list of <code>np.int32</code> arrays.</p>
+<p>Gap characters ('-') and ambiguous residues are mapped to -1 and excluded.</p>
+
+<h3>3.3 Step 2: Position-Pair K-map (20×20)</h3>
+
+<p>For each pair of positions $(i, j)$, a 20×20 frequency matrix is built:</p>
+
+<p>\(K_{ij}(a, b) = \frac{1}{N}\sum_{s=1}^{N} \mathbb{1}[\text{seq}_s[i] = a \land \text{seq}_s[j] = b]\)</p>
+
+<p>where $N = {n_all:,}$ is the number of sequences, $a,b \in \{0,\dots,19\}$.</p>
+
+<h3>3.4 Example: Frequency K-map for Positions (76, 77)</h3>
+
+<p>The reference residues are <strong>D</strong> at position 76 and <strong>N</strong> at position 77 (Wuhan-Hu-1).</p>
+
+<p>The top 10 most frequent dipeptide pairs at (76, 77):</p>
+
+<tr><td>Rank</td><td>AA(i)</td><td>AA(j)</td><td>Frequency</td></tr>
+
+<tr><td>1</td><td>D</td><td>N</td><td>0.6474</td></tr>
+<tr><td>2</td><td>F</td><td>D</td><td>0.2386</td></tr>
+<tr><td>3</td><td>P</td><td>V</td><td>0.0862</td></tr>
+<tr><td>4</td><td>N</td><td>P</td><td>0.0192</td></tr>
+<tr><td>5</td><td>K</td><td>R</td><td>0.0031</td></tr>
+<tr><td>6</td><td>V</td><td>L</td><td>0.0023</td></tr>
+<tr><td>7</td><td>L</td><td>P</td><td>0.0015</td></tr>
+<tr><td>8</td><td>N</td><td>D</td><td>0.0008</td></tr>
+<tr><td>9</td><td>G</td><td>N</td><td>0.0008</td></tr>
+
+<h3>3.5 Step 3: Boolean Thresholding</h3>
+
+<p>The frequency K-map is converted to a Boolean function by thresholding:</p>
+
+<p>\(B_{ij}(a,b) = \begin{cases} 1 & \text{if } K_{ij}(a,b) \geq \text{threshold} \\ 0 & \text{if } K_{ij}(a,b) < \text{threshold} \\ -1 & \text{if position is conserved (don't-care)} \end{cases}\)</p>
+
+<p>The threshold is typically the 75th percentile of non-zero frequencies.</p>
+<p>Don't-care (-1) marks the reference pair (conserved).</p>
+
+<h3>3.6 Step 4: Quine-McCluskey Boolean Minimization</h3>
+
+<p>The 20×20 = 400-cell K-map is flattened to a truth table with 8 binary variables</p>
+<p>(4 bits for row amino acid + 4 bits for column amino acid). The Quine-McCluskey</p>
+<p>algorithm finds the minimal set of prime implicants covering all on-set cells:</p>
+
+<p>\(f(\text{pos}_i, \text{pos}_j, \text{aa}_i, \text{aa}_j) = \bigvee_k \bigwedge_{m \in S_k} b_m\)</p>
+
+<p>where $b_m$ are the 8 binary variables and $S_k$ are the literal sets for each prime implicant.</p>
+
+<h2>4. Entropy and Conservation Analysis</h2>
+
+<h3>4.1 Shannon Entropy</h3>
+
+<p>Position-specific entropy measures evolutionary variability:</p>
+
+<p>\(H(p) = -\sum_{i=1}^{20} P(a_i) \log_2 P(a_i)\)</p>
+
+<p>where $P(a_i)$ is the frequency of amino acid $a_i$ at position $p$.</p>
+
+<li>$H \approx 0$: highly conserved (one amino acid dominates)</li>
+<li>$H \approx 4.32$: maximally variable (uniform distribution over 20 AAs)</li>
+
+<h3>4.2 Conservation Landscape (Positions 0-79)</h3>
+
+<tr><td>Position</td><td>Consensus</td><td>Frequency</td><td>Entropy</td><td>Perplexity</td><td>Status</td></tr>
+
+<tr><td>0</td><td>M</td><td>0.9962</td><td>0.0392</td><td>1.028</td><td>Conserved</td></tr>
+<tr><td>1</td><td>F</td><td>0.9969</td><td>0.0301</td><td>1.021</td><td>Conserved</td></tr>
+<tr><td>2</td><td>V</td><td>0.9915</td><td>0.0817</td><td>1.058</td><td>Conserved</td></tr>
+<tr><td>3</td><td>F</td><td>0.9946</td><td>0.0484</td><td>1.034</td><td>Conserved</td></tr>
+<tr><td>4</td><td>L</td><td>0.9792</td><td>0.1617</td><td>1.119</td><td>Conserved</td></tr>
+<tr><td>5</td><td>V</td><td>0.9938</td><td>0.0574</td><td>1.041</td><td>Conserved</td></tr>
+<tr><td>6</td><td>L</td><td>1.0000</td><td>-0.0000</td><td>1.000</td><td>Conserved</td></tr>
+<tr><td>7</td><td>L</td><td>0.9938</td><td>0.0574</td><td>1.041</td><td>Conserved</td></tr>
+<tr><td>8</td><td>P</td><td>0.9923</td><td>0.0687</td><td>1.049</td><td>Conserved</td></tr>
+<tr><td>9</td><td>L</td><td>0.9923</td><td>0.0687</td><td>1.049</td><td>Conserved</td></tr>
+<tr><td>10</td><td>V</td><td>0.9923</td><td>0.0687</td><td>1.049</td><td>Conserved</td></tr>
+<tr><td>11</td><td>S</td><td>0.9985</td><td>0.0181</td><td>1.013</td><td>Conserved</td></tr>
+<tr><td>12</td><td>S</td><td>0.9923</td><td>0.0687</td><td>1.049</td><td>Conserved</td></tr>
+<tr><td>13</td><td>Q</td><td>0.9915</td><td>0.0778</td><td>1.055</td><td>Conserved</td></tr>
+<tr><td>14</td><td>C</td><td>0.9915</td><td>0.0778</td><td>1.055</td><td>Conserved</td></tr>
+<tr><td>15</td><td>V</td><td>0.9915</td><td>0.0797</td><td>1.057</td><td>Conserved</td></tr>
+<tr><td>16</td><td>N</td><td>0.9908</td><td>0.0853</td><td>1.061</td><td>Conserved</td></tr>
+<tr><td>17</td><td>L</td><td>0.9900</td><td>0.0970</td><td>1.070</td><td>Conserved</td></tr>
+<tr><td>18</td><td>I</td><td>0.7329</td><td>0.8510</td><td>1.804</td><td>Variable</td></tr>
+<tr><td>19</td><td>T</td><td>0.9777</td><td>0.1591</td><td>1.117</td><td>Conserved</td></tr>
+<tr><td>20</td><td>R</td><td>0.9761</td><td>0.1757</td><td>1.130</td><td>Conserved</td></tr>
+<tr><td>21</td><td>T</td><td>0.9754</td><td>0.1847</td><td>1.137</td><td>Conserved</td></tr>
+<tr><td>22</td><td>Q</td><td>0.9754</td><td>0.1954</td><td>1.145</td><td>Conserved</td></tr>
+<tr><td>23</td><td>S</td><td>0.7321</td><td>0.9941</td><td>1.992</td><td>Variable</td></tr>
+<tr><td>24</td><td>Y</td><td>0.7313</td><td>0.9790</td><td>1.971</td><td>Variable</td></tr>
+<tr><td>25</td><td>T</td><td>0.7313</td><td>1.0028</td><td>2.004</td><td>Variable</td></tr>
+<tr><td>26</td><td>N</td><td>0.7313</td><td>1.0001</td><td>2.000</td><td>Variable</td></tr>
+<tr><td>27</td><td>S</td><td>0.7313</td><td>0.9900</td><td>1.986</td><td>Variable</td></tr>
+<tr><td>28</td><td>F</td><td>0.7313</td><td>0.8981</td><td>1.864</td><td>Variable</td></tr>
+<tr><td>29</td><td>T</td><td>0.7313</td><td>1.0028</td><td>2.004</td><td>Variable</td></tr>
+<tr><td>30</td><td>R</td><td>0.7313</td><td>1.0028</td><td>2.004</td><td>Variable</td></tr>
+<tr><td>31</td><td>G</td><td>0.7313</td><td>0.9981</td><td>1.997</td><td>Variable</td></tr>
+<tr><td>32</td><td>V</td><td>0.7313</td><td>0.9920</td><td>1.989</td><td>Variable</td></tr>
+<tr><td>33</td><td>Y</td><td>0.7521</td><td>0.8582</td><td>1.813</td><td>Variable</td></tr>
+<tr><td>34</td><td>Y</td><td>0.7321</td><td>0.9941</td><td>1.992</td><td>Variable</td></tr>
+<tr><td>35</td><td>P</td><td>0.7313</td><td>1.0001</td><td>2.000</td><td>Variable</td></tr>
+<tr><td>36</td><td>D</td><td>0.7313</td><td>0.9765</td><td>1.968</td><td>Variable</td></tr>
+<tr><td>37</td><td>K</td><td>0.7313</td><td>1.0028</td><td>2.004</td><td>Variable</td></tr>
+<tr><td>38</td><td>V</td><td>0.7313</td><td>1.0028</td><td>2.004</td><td>Variable</td></tr>
+<tr><td>39</td><td>F</td><td>0.7313</td><td>1.0003</td><td>2.000</td><td>Variable</td></tr>
+<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+<tr><td>40</td><td>R</td><td>0.7313</td><td>0.9920</td><td>1.989</td><td>Variable</td></tr>
+<tr><td>41</td><td>S</td><td>0.7521</td><td>0.8468</td><td>1.799</td><td>Variable</td></tr>
+<tr><td>42</td><td>S</td><td>0.7321</td><td>0.9941</td><td>1.992</td><td>Variable</td></tr>
+<tr><td>43</td><td>V</td><td>0.7313</td><td>0.9953</td><td>1.993</td><td>Variable</td></tr>
+<tr><td>44</td><td>L</td><td>0.7313</td><td>0.9601</td><td>1.945</td><td>Variable</td></tr>
+<tr><td>45</td><td>H</td><td>0.7306</td><td>0.9053</td><td>1.873</td><td>Variable</td></tr>
+<tr><td>46</td><td>S</td><td>0.7313</td><td>1.0028</td><td>2.004</td><td>Variable</td></tr>
+<tr><td>47</td><td>T</td><td>0.7313</td><td>1.0028</td><td>2.004</td><td>Variable</td></tr>
+<tr><td>48</td><td>Q</td><td>0.7298</td><td>1.0188</td><td>2.026</td><td>Variable</td></tr>
+<tr><td>49</td><td>D</td><td>0.7306</td><td>0.9993</td><td>1.999</td><td>Variable</td></tr>
+<tr><td>50</td><td>L</td><td>0.7321</td><td>0.9882</td><td>1.984</td><td>Variable</td></tr>
+<tr><td>51</td><td>F</td><td>0.7306</td><td>1.0019</td><td>2.003</td><td>Variable</td></tr>
+<tr><td>52</td><td>L</td><td>0.7336</td><td>0.9755</td><td>1.966</td><td>Variable</td></tr>
+<tr><td>53</td><td>P</td><td>0.7306</td><td>0.9745</td><td>1.965</td><td>Variable</td></tr>
+<tr><td>54</td><td>F</td><td>0.9938</td><td>0.0627</td><td>1.044</td><td>Conserved</td></tr>
+<tr><td>55</td><td>F</td><td>0.7313</td><td>0.9981</td><td>1.997</td><td>Variable</td></tr>
+<tr><td>56</td><td>S</td><td>0.7306</td><td>1.0040</td><td>2.006</td><td>Variable</td></tr>
+<tr><td>57</td><td>N</td><td>0.7306</td><td>0.9829</td><td>1.976</td><td>Variable</td></tr>
+<tr><td>58</td><td>V</td><td>0.7290</td><td>1.0242</td><td>2.034</td><td>Variable</td></tr>
+<tr><td>59</td><td>T</td><td>0.7306</td><td>1.0052</td><td>2.007</td><td>Variable</td></tr>
+<tr><td>60</td><td>W</td><td>0.7306</td><td>1.0068</td><td>2.009</td><td>Variable</td></tr>
+<tr><td>61</td><td>F</td><td>0.7306</td><td>1.0014</td><td>2.002</td><td>Variable</td></tr>
+<tr><td>62</td><td>H</td><td>0.7306</td><td>0.9993</td><td>1.999</td><td>Variable</td></tr>
+<tr><td>63</td><td>A</td><td>0.7306</td><td>1.0068</td><td>2.009</td><td>Variable</td></tr>
+<tr><td>64</td><td>I</td><td>0.7275</td><td>1.0329</td><td>2.046</td><td>Variable</td></tr>
+<tr><td>65</td><td>H</td><td>0.8861</td><td>0.6228</td><td>1.540</td><td>Variable</td></tr>
+<tr><td>66</td><td>V</td><td>0.8830</td><td>0.6676</td><td>1.588</td><td>Variable</td></tr>
+<tr><td>67</td><td>S</td><td>0.6474</td><td>1.3584</td><td>2.564</td><td>Variable</td></tr>
+<tr><td>68</td><td>G</td><td>0.6490</td><td>1.3501</td><td>2.549</td><td>Variable</td></tr>
+<tr><td>69</td><td>T</td><td>0.6490</td><td>1.0929</td><td>2.133</td><td>Variable</td></tr>
+<tr><td>70</td><td>N</td><td>0.6490</td><td>1.1127</td><td>2.163</td><td>Variable</td></tr>
+<tr><td>71</td><td>G</td><td>0.6513</td><td>1.3550</td><td>2.558</td><td>Variable</td></tr>
+<tr><td>72</td><td>T</td><td>0.6513</td><td>1.3550</td><td>2.558</td><td>Variable</td></tr>
+<tr><td>73</td><td>K</td><td>0.6482</td><td>1.3790</td><td>2.601</td><td>Variable</td></tr>
+<tr><td>74</td><td>R</td><td>0.6482</td><td>1.3811</td><td>2.605</td><td>Variable</td></tr>
+<tr><td>75</td><td>F</td><td>0.6490</td><td>1.3730</td><td>2.590</td><td>Variable</td></tr>
+<tr><td>76</td><td>D</td><td>0.6474</td><td>1.3854</td><td>2.613</td><td>Variable</td></tr>
+<tr><td>77</td><td>N</td><td>0.6482</td><td>1.3662</td><td>2.578</td><td>Variable</td></tr>
+<tr><td>78</td><td>P</td><td>0.6505</td><td>1.3552</td><td>2.558</td><td>Variable</td></tr>
+<tr><td>79</td><td>V</td><td>0.6474</td><td>1.1174</td><td>2.170</td><td>Variable</td></tr>
+
+<p><strong>Summary:</strong> 57 variable positions (H > 0.3), 23 conserved.</p>
+
+<h2>5. Mutual Information Analysis</h2>
+
+<h3>5.1 Definition</h3>
+
+<p>Mutual Information quantifies the co-dependence between two positions:</p>
+
+<p>\(MI(i,j) = \sum_{x=1}^{20} \sum_{y=1}^{20} P(x,y) \log_2 \frac{P(x,y)}{P(x) \cdot P(y)}\)</p>
+
+<p>where:</p>
+<li>$P(x,y)$ = joint frequency of amino acid $x$ at position $i$ and $y$ at position $j$</li>
+<li>$P(x)$ = marginal frequency of $x$ at position $i$</li>
+<li>$P(y)$ = marginal frequency of $y$ at position $j$</li>
+
+<h3>5.2 Implementation</h3>
+
+<p>We use a <strong>vectorized numpy implementation</strong> via <code>np.bincount</code> (O(400) per pair, not O(N²)):</p>
+
+<p>```python</p>
+<p>def mutual_information(pos_arrays, pos_i, pos_j, n_seqs):</p>
+<p>codes_i = np.array([arr[pos_i] for arr in pos_arrays[:n_seqs]])</p>
+<p>codes_j = np.array([arr[pos_j] for arr in pos_arrays[:n_seqs]])</p>
+<p>valid = (codes_i >= 0) & (codes_j >= 0)</p>
+<h1>Joint via bincount: flat_index = ci * 20 + cj</h1>
+<p>pairs = codes_i[valid] * 20 + codes_j[valid]</p>
+<p>joint = np.bincount(pairs, minlength=400).reshape(20,20)</p>
+<h1>... MI from joint and marginals</h1>
+<p>```</p>
+
+<h3>5.3 Top 50 Co-evolving Position Pairs</h3>
+
+<tr><td>Rank</td><td>Pos i</td><td>Pos j</td><td>MI</td><td>Ref(i)</td><td>Ref(j)</td><td>H(i)</td><td>H(j)</td><td>Δ</td></tr>
+
+<tr><td>1</td><td>74</td><td>76</td><td>1.3700</td><td>R</td><td>D</td><td>1.381</td><td>1.385</td><td>2</td></tr>
+<tr><td>2</td><td>73</td><td>76</td><td>1.3679</td><td>K</td><td>D</td><td>1.379</td><td>1.385</td><td>3</td></tr>
+<tr><td>3</td><td>73</td><td>75</td><td>1.3640</td><td>K</td><td>F</td><td>1.379</td><td>1.373</td><td>2</td></tr>
+<tr><td>4</td><td>74</td><td>77</td><td>1.3593</td><td>R</td><td>N</td><td>1.381</td><td>1.366</td><td>3</td></tr>
+<tr><td>5</td><td>75</td><td>77</td><td>1.3576</td><td>F</td><td>N</td><td>1.373</td><td>1.366</td><td>2</td></tr>
+<tr><td>6</td><td>73</td><td>77</td><td>1.3572</td><td>K</td><td>N</td><td>1.379</td><td>1.366</td><td>4</td></tr>
+<tr><td>7</td><td>72</td><td>74</td><td>1.3529</td><td>T</td><td>R</td><td>1.355</td><td>1.381</td><td>2</td></tr>
+<tr><td>8</td><td>71</td><td>74</td><td>1.3529</td><td>G</td><td>R</td><td>1.355</td><td>1.381</td><td>3</td></tr>
+<tr><td>9</td><td>71</td><td>73</td><td>1.3507</td><td>G</td><td>K</td><td>1.355</td><td>1.379</td><td>2</td></tr>
+<tr><td>10</td><td>73</td><td>78</td><td>1.3505</td><td>K</td><td>P</td><td>1.379</td><td>1.355</td><td>5</td></tr>
+<tr><td>11</td><td>76</td><td>78</td><td>1.3505</td><td>D</td><td>P</td><td>1.385</td><td>1.355</td><td>2</td></tr>
+<tr><td>12</td><td>74</td><td>78</td><td>1.3484</td><td>R</td><td>P</td><td>1.381</td><td>1.355</td><td>4</td></tr>
+<tr><td>13</td><td>75</td><td>78</td><td>1.3466</td><td>F</td><td>P</td><td>1.373</td><td>1.355</td><td>3</td></tr>
+<tr><td>14</td><td>68</td><td>74</td><td>1.3458</td><td>G</td><td>R</td><td>1.350</td><td>1.381</td><td>6</td></tr>
+<tr><td>15</td><td>72</td><td>76</td><td>1.3439</td><td>T</td><td>D</td><td>1.355</td><td>1.385</td><td>4</td></tr>
+<tr><td>16</td><td>71</td><td>76</td><td>1.3439</td><td>G</td><td>D</td><td>1.355</td><td>1.385</td><td>5</td></tr>
+<tr><td>17</td><td>68</td><td>73</td><td>1.3437</td><td>G</td><td>K</td><td>1.350</td><td>1.379</td><td>5</td></tr>
+<tr><td>18</td><td>68</td><td>77</td><td>1.3416</td><td>G</td><td>N</td><td>1.350</td><td>1.366</td><td>9</td></tr>
+<tr><td>19</td><td>72</td><td>75</td><td>1.3400</td><td>T</td><td>F</td><td>1.355</td><td>1.373</td><td>3</td></tr>
+<tr><td>20</td><td>71</td><td>75</td><td>1.3400</td><td>G</td><td>F</td><td>1.355</td><td>1.373</td><td>4</td></tr>
+<tr><td>21</td><td>67</td><td>74</td><td>1.3381</td><td>S</td><td>R</td><td>1.358</td><td>1.381</td><td>7</td></tr>
+<tr><td>22</td><td>68</td><td>76</td><td>1.3369</td><td>G</td><td>D</td><td>1.350</td><td>1.385</td><td>8</td></tr>
+<tr><td>23</td><td>67</td><td>73</td><td>1.3360</td><td>S</td><td>K</td><td>1.358</td><td>1.379</td><td>6</td></tr>
+<tr><td>24</td><td>72</td><td>77</td><td>1.3332</td><td>T</td><td>N</td><td>1.355</td><td>1.366</td><td>5</td></tr>
+<tr><td>25</td><td>71</td><td>77</td><td>1.3332</td><td>G</td><td>N</td><td>1.355</td><td>1.366</td><td>6</td></tr>
+<tr><td>26</td><td>68</td><td>75</td><td>1.3330</td><td>G</td><td>F</td><td>1.350</td><td>1.373</td><td>7</td></tr>
+<tr><td>27</td><td>67</td><td>76</td><td>1.3292</td><td>S</td><td>D</td><td>1.358</td><td>1.385</td><td>9</td></tr>
+<tr><td>28</td><td>67</td><td>77</td><td>1.3264</td><td>S</td><td>N</td><td>1.358</td><td>1.366</td><td>10</td></tr>
+<tr><td>29</td><td>67</td><td>75</td><td>1.3253</td><td>S</td><td>F</td><td>1.358</td><td>1.373</td><td>8</td></tr>
+<tr><td>30</td><td>68</td><td>78</td><td>1.3238</td><td>G</td><td>P</td><td>1.350</td><td>1.355</td><td>10</td></tr>
+<tr><td>31</td><td>71</td><td>78</td><td>1.3223</td><td>G</td><td>P</td><td>1.355</td><td>1.355</td><td>7</td></tr>
+<tr><td>32</td><td>72</td><td>78</td><td>1.3223</td><td>T</td><td>P</td><td>1.355</td><td>1.355</td><td>6</td></tr>
+<tr><td>33</td><td>68</td><td>71</td><td>1.3197</td><td>G</td><td>G</td><td>1.350</td><td>1.355</td><td>3</td></tr>
+<tr><td>34</td><td>68</td><td>72</td><td>1.3197</td><td>G</td><td>T</td><td>1.350</td><td>1.355</td><td>4</td></tr>
+<tr><td>35</td><td>67</td><td>71</td><td>1.3120</td><td>S</td><td>G</td><td>1.358</td><td>1.355</td><td>4</td></tr>
+<tr><td>36</td><td>67</td><td>72</td><td>1.3120</td><td>S</td><td>T</td><td>1.358</td><td>1.355</td><td>5</td></tr>
+<tr><td>37</td><td>67</td><td>78</td><td>1.3075</td><td>S</td><td>P</td><td>1.358</td><td>1.355</td><td>11</td></tr>
+<tr><td>38</td><td>70</td><td>74</td><td>1.1042</td><td>N</td><td>R</td><td>1.113</td><td>1.381</td><td>4</td></tr>
+<tr><td>39</td><td>70</td><td>73</td><td>1.1021</td><td>N</td><td>K</td><td>1.113</td><td>1.379</td><td>3</td></tr>
+<tr><td>40</td><td>75</td><td>79</td><td>1.1018</td><td>F</td><td>V</td><td>1.373</td><td>1.117</td><td>4</td></tr>
+<tr><td>41</td><td>70</td><td>75</td><td>1.1000</td><td>N</td><td>F</td><td>1.113</td><td>1.373</td><td>5</td></tr>
+<tr><td>42</td><td>76</td><td>79</td><td>1.0971</td><td>D</td><td>V</td><td>1.385</td><td>1.117</td><td>3</td></tr>
+<tr><td>43</td><td>70</td><td>79</td><td>1.0971</td><td>N</td><td>V</td><td>1.113</td><td>1.117</td><td>9</td></tr>
+<tr><td>44</td><td>70</td><td>76</td><td>1.0953</td><td>N</td><td>D</td><td>1.113</td><td>1.385</td><td>6</td></tr>
+<tr><td>45</td><td>74</td><td>79</td><td>1.0949</td><td>R</td><td>V</td><td>1.381</td><td>1.117</td><td>5</td></tr>
+<tr><td>46</td><td>73</td><td>79</td><td>1.0928</td><td>K</td><td>V</td><td>1.379</td><td>1.117</td><td>6</td></tr>
+<tr><td>47</td><td>69</td><td>74</td><td>1.0887</td><td>T</td><td>R</td><td>1.093</td><td>1.381</td><td>5</td></tr>
+<tr><td>48</td><td>69</td><td>73</td><td>1.0865</td><td>T</td><td>K</td><td>1.093</td><td>1.379</td><td>4</td></tr>
+<tr><td>49</td><td>77</td><td>79</td><td>1.0864</td><td>N</td><td>V</td><td>1.366</td><td>1.117</td><td>2</td></tr>
+<tr><td>50</td><td>70</td><td>77</td><td>1.0846</td><td>N</td><td>N</td><td>1.113</td><td>1.366</td><td>7</td></tr>
+
+<h2>6. Quine-McCluskey Boolean Minimization — All 108 Essential Prime Implicants</h2>
+
+<p>The Boolean minimization was performed on 15 position pairs (68-79),</p>
+<p>producing <strong>108 essential prime implicants</strong>. Each rule has the form:</p>
+
+<p>\(f(s_3, s_2, s_1, s_0, t_3, t_2, t_1, t_0) = \text{AND of literals}\)</p>
+
+<p><strong>Variables:</strong></p>
+<li>$s_3 s_2 s_1 s_0$ = 4-bit binary encoding of residue at position $i$</li>
+<li>$t_3 t_2 t_1 t_0$ = 4-bit binary encoding of residue at position $j$</li>
+<li>$\bar{s}_k$ = NOT ($s_k = 0$), $s_k$ = ($s_k = 1$)</li>
+
+<h3>6.1 Complete Inference Rules (108 rules across 15 position pairs)</h3>
+
+<h3>Position Pair (68, 75) — MI = 1.3330, Reference: G→F</h3>
+
+<tr><td>Rule</td><td>Boolean Expression</td><td>Amino Acids</td></tr>
+
+<tr><td>1</td><td>\(\bar{s3}  \cdot  s2  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  \bar{t2}  \cdot  t1  \cdot  t0\)</td><td>(M, V)</td></tr>
+<tr><td>2</td><td>\(\bar{s3}  \cdot  s2  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  t3  \cdot  \bar{t2}  \cdot  t0\)</td><td>(M, D)</td></tr>
+<tr><td>3</td><td>\(s3  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  t2  \cdot  t1  \cdot  t0\)</td><td>(R, W)</td></tr>
+<tr><td>4</td><td>\(s3  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(R, R)</td></tr>
+<tr><td>5</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  \bar{t0}\)</td><td>(A, A)</td></tr>
+<tr><td>6</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  t0\)</td><td>(V, I)</td></tr>
+<tr><td>7</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  \bar{t2}  \cdot  t1  \cdot  \bar{t0}\)</td><td>(V, Q)</td></tr>
+<tr><td>8</td><td>\(s3  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(E, R)</td></tr>
+
+<p><strong>Interpretation:</strong> When position 68 mutates to any of the listed residues,</p>
+<p>position 75 must co-evolve to the corresponding partner residue to maintain</p>
+<p>protein stability. The reference pair is (G, F).</p>
+
+<h3>Position Pair (68, 79) — MI = 1.0618, Reference: G→V</h3>
+
+<tr><td>Rule</td><td>Boolean Expression</td><td>Amino Acids</td></tr>
+
+<tr><td>9</td><td>\(\bar{s3}  \cdot  s2  \cdot  \bar{s1}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  \bar{t0}\)</td><td>(M, L)</td></tr>
+<tr><td>10</td><td>\(s3  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  t0\)</td><td>(R, I)</td></tr>
+<tr><td>11</td><td>\(s3  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(R, R)</td></tr>
+<tr><td>12</td><td>\(s3  \cdot  s2  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  t0\)</td><td>(S, D)</td></tr>
+<tr><td>13</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  t0\)</td><td>(L, S)</td></tr>
+<tr><td>14</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(V, R)</td></tr>
+<tr><td>15</td><td>\(\bar{s3}  \cdot  s2  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  t3  \cdot  \bar{t2}  \cdot  t1  \cdot  t0\)</td><td>(M, N)</td></tr>
+<tr><td>16</td><td>\(\bar{s3}  \cdot  s2  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  \bar{t1}  \cdot  \bar{t0}\)</td><td>(W, H)</td></tr>
+<tr><td>17</td><td>\(s3  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  t0\)</td><td>(E, I)</td></tr>
+
+<p><strong>Interpretation:</strong> When position 68 mutates to any of the listed residues,</p>
+<p>position 79 must co-evolve to the corresponding partner residue to maintain</p>
+<p>protein stability. The reference pair is (G, V).</p>
+
+<h3>Position Pair (69, 70) — MI = 8.7737, Reference: T→N</h3>
+
+<tr><td>Rule</td><td>Boolean Expression</td><td>Amino Acids</td></tr>
+
+<tr><td>18</td><td>\(\bar{s3}  \cdot  s2  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  t3  \cdot  \bar{t2}  \cdot  t1  \cdot  t0\)</td><td>(M, N)</td></tr>
+<tr><td>19</td><td>\(s3  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  t0\)</td><td>(N, S)</td></tr>
+<tr><td>20</td><td>\(s3  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  t0\)</td><td>(R, S)</td></tr>
+<tr><td>21</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  s0  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  \bar{t0}\)</td><td>(I, L)</td></tr>
+<tr><td>22</td><td>\(\bar{s3}  \cdot  s2  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  \bar{t1}  \cdot  t0\)</td><td>(M, K)</td></tr>
+<tr><td>23</td><td>\(\bar{s3}  \cdot  s2  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  \bar{t1}  \cdot  t0\)</td><td>(W, K)</td></tr>
+<tr><td>24</td><td>\(s3  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  t3  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  t0\)</td><td>(E, D)</td></tr>
+<tr><td>25</td><td>\(s3  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  \bar{t1}  \cdot  \bar{t0}\)</td><td>(E, H)</td></tr>
+
+<p><strong>Interpretation:</strong> When position 69 mutates to any of the listed residues,</p>
+<p>position 70 must co-evolve to the corresponding partner residue to maintain</p>
+<p>protein stability. The reference pair is (T, N).</p>
+
+<h3>Position Pair (69, 79) — MI = 1.0744, Reference: T→V</h3>
+
+<tr><td>Rule</td><td>Boolean Expression</td><td>Amino Acids</td></tr>
+
+<tr><td>26</td><td>\(\bar{s3}  \cdot  s2  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  t2  \cdot  \bar{t1}  \cdot  t0\)</td><td>(M, F)</td></tr>
+<tr><td>27</td><td>\(s3  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  \bar{t3}  \cdot  t2  \cdot  t1  \cdot  t0\)</td><td>(N, W)</td></tr>
+<tr><td>28</td><td>\(s3  \cdot  s2  \cdot  \bar{s1}  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(K, R)</td></tr>
+<tr><td>29</td><td>\(s3  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(R, R)</td></tr>
+<tr><td>30</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  t0\)</td><td>(A, S)</td></tr>
+<tr><td>31</td><td>\(\bar{s3}  \cdot  s2  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  \bar{t0}\)</td><td>(M, A)</td></tr>
+<tr><td>32</td><td>\(s3  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  t0\)</td><td>(E, I)</td></tr>
+<tr><td>33</td><td>\(s3  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(E, R)</td></tr>
+
+<p><strong>Interpretation:</strong> When position 69 mutates to any of the listed residues,</p>
+<p>position 79 must co-evolve to the corresponding partner residue to maintain</p>
+<p>protein stability. The reference pair is (T, V).</p>
+
+<h3>Position Pair (71, 75) — MI = 1.3400, Reference: G→F</h3>
+
+<tr><td>Rule</td><td>Boolean Expression</td><td>Amino Acids</td></tr>
+
+<tr><td>34</td><td>\(\bar{s3}  \cdot  s2  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  t3  \cdot  \bar{t2}  \cdot  t0\)</td><td>(M, D)</td></tr>
+<tr><td>35</td><td>\(\bar{s3}  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  t2  \cdot  t1  \cdot  t0\)</td><td>(Y, W)</td></tr>
+<tr><td>36</td><td>\(s3  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  \bar{t2}  \cdot  t1  \cdot  \bar{t0}\)</td><td>(R, Q)</td></tr>
+<tr><td>37</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  t0\)</td><td>(A, S)</td></tr>
+<tr><td>38</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  \bar{t2}  \cdot  t1  \cdot  \bar{t0}\)</td><td>(L, Q)</td></tr>
+<tr><td>39</td><td>\(\bar{s3}  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  \bar{t1}  \cdot  t0\)</td><td>(Y, K)</td></tr>
+<tr><td>40</td><td>\(s3  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  \bar{t1}  \cdot  \bar{t0}\)</td><td>(E, H)</td></tr>
+
+<p><strong>Interpretation:</strong> When position 71 mutates to any of the listed residues,</p>
+<p>position 75 must co-evolve to the corresponding partner residue to maintain</p>
+<p>protein stability. The reference pair is (G, F).</p>
+
+<h3>Position Pair (71, 79) — MI = 1.0688, Reference: G→V</h3>
+
+<tr><td>Rule</td><td>Boolean Expression</td><td>Amino Acids</td></tr>
+
+<tr><td>41</td><td>\(\bar{s3}  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t1  \cdot  t0\)</td><td>(Y, N)</td></tr>
+<tr><td>42</td><td>\(\bar{s3}  \cdot  s2  \cdot  \bar{s1}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  \bar{t0}\)</td><td>(M, L)</td></tr>
+<tr><td>43</td><td>\(s3  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(R, R)</td></tr>
+<tr><td>44</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  s0  \cdot  \bar{t3}  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(I, Y)</td></tr>
+<tr><td>45</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  \bar{t1}  \cdot  t0\)</td><td>(I, K)</td></tr>
+<tr><td>46</td><td>\(\bar{s3}  \cdot  s2  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  \bar{t1}  \cdot  \bar{t0}\)</td><td>(W, H)</td></tr>
+<tr><td>47</td><td>\(s3  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  t2  \cdot  \bar{t1}  \cdot  t0\)</td><td>(E, F)</td></tr>
+
+<p><strong>Interpretation:</strong> When position 71 mutates to any of the listed residues,</p>
+<p>position 79 must co-evolve to the corresponding partner residue to maintain</p>
+<p>protein stability. The reference pair is (G, V).</p>
+
+<h3>Position Pair (72, 75) — MI = 1.3400, Reference: T→F</h3>
+
+<tr><td>Rule</td><td>Boolean Expression</td><td>Amino Acids</td></tr>
+
+<tr><td>48</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t0\)</td><td>(A, K)</td></tr>
+<tr><td>49</td><td>\(\bar{s3}  \cdot  s2  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  t0\)</td><td>(M, I)</td></tr>
+<tr><td>50</td><td>\(\bar{s3}  \cdot  s2  \cdot  s1  \cdot  s0  \cdot  \bar{t3}  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(W, Y)</td></tr>
+<tr><td>51</td><td>\(s3  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  \bar{t3}  \cdot  t2  \cdot  t1  \cdot  t0\)</td><td>(N, W)</td></tr>
+<tr><td>52</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  t0\)</td><td>(L, V)</td></tr>
+<tr><td>53</td><td>\(\bar{s3}  \cdot  s2  \cdot  \bar{s1}  \cdot  s0  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  \bar{t0}\)</td><td>(F, A)</td></tr>
+<tr><td>54</td><td>\(s3  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  t3  \cdot  \bar{t2}  \cdot  t1  \cdot  \bar{t0}\)</td><td>(E, Q)</td></tr>
+
+<p><strong>Interpretation:</strong> When position 72 mutates to any of the listed residues,</p>
+<p>position 75 must co-evolve to the corresponding partner residue to maintain</p>
+<p>protein stability. The reference pair is (T, F).</p>
+
+<h3>Position Pair (72, 79) — MI = 1.0688, Reference: T→V</h3>
+
+<tr><td>Rule</td><td>Boolean Expression</td><td>Amino Acids</td></tr>
+
+<tr><td>55</td><td>\(\bar{s2}  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  t0\)</td><td>(V, S)</td></tr>
+<tr><td>56</td><td>\(\bar{s3}  \cdot  s2  \cdot  \bar{s0}  \cdot  t3  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  t0\)</td><td>(M, D)</td></tr>
+<tr><td>57</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  \bar{t3}  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(A, Y)</td></tr>
+<tr><td>58</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  \bar{t2}  \cdot  t1  \cdot  \bar{t0}\)</td><td>(L, Q)</td></tr>
+<tr><td>59</td><td>\(\bar{s3}  \cdot  s2  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  \bar{t0}\)</td><td>(M, A)</td></tr>
+<tr><td>60</td><td>\(s3  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(E, R)</td></tr>
+
+<p><strong>Interpretation:</strong> When position 72 mutates to any of the listed residues,</p>
+<p>position 79 must co-evolve to the corresponding partner residue to maintain</p>
+<p>protein stability. The reference pair is (T, V).</p>
+
+<h3>Position Pair (73, 75) — MI = 1.3640, Reference: K→F</h3>
+
+<tr><td>Rule</td><td>Boolean Expression</td><td>Amino Acids</td></tr>
+
+<tr><td>61</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t0\)</td><td>(L, I)</td></tr>
+<tr><td>62</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  \bar{t1}  \cdot  t0\)</td><td>(L, K)</td></tr>
+<tr><td>63</td><td>\(\bar{s3}  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  t0\)</td><td>(Y, S)</td></tr>
+<tr><td>64</td><td>\(s3  \cdot  s2  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(H, Y)</td></tr>
+<tr><td>65</td><td>\(s3  \cdot  s2  \cdot  \bar{s1}  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  t0\)</td><td>(K, S)</td></tr>
+<tr><td>66</td><td>\(s3  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  \bar{t1}  \cdot  \bar{t0}\)</td><td>(R, H)</td></tr>
+<tr><td>67</td><td>\(\bar{s3}  \cdot  s2  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(M, R)</td></tr>
+
+<p><strong>Interpretation:</strong> When position 73 mutates to any of the listed residues,</p>
+<p>position 75 must co-evolve to the corresponding partner residue to maintain</p>
+<p>protein stability. The reference pair is (K, F).</p>
+
+<h3>Position Pair (73, 79) — MI = 1.0928, Reference: K→V</h3>
+
+<tr><td>Rule</td><td>Boolean Expression</td><td>Amino Acids</td></tr>
+
+<tr><td>68</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  \bar{t2}  \cdot  t1\)</td><td>(L, Q)</td></tr>
+<tr><td>69</td><td>\(s3  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  t2  \cdot  t0\)</td><td>(R, F)</td></tr>
+<tr><td>70</td><td>\(\bar{s3}  \cdot  s2  \cdot  s1  \cdot  s0  \cdot  \bar{t3}  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(W, Y)</td></tr>
+<tr><td>71</td><td>\(s3  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  t0\)</td><td>(N, D)</td></tr>
+<tr><td>72</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  t2  \cdot  \bar{t1}  \cdot  \bar{t0}\)</td><td>(A, M)</td></tr>
+<tr><td>73</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  s0  \cdot  t3  \cdot  \bar{t2}  \cdot  t1  \cdot  \bar{t0}\)</td><td>(I, Q)</td></tr>
+<tr><td>74</td><td>\(\bar{s3}  \cdot  s2  \cdot  \bar{s1}  \cdot  s0  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  \bar{t0}\)</td><td>(F, L)</td></tr>
+
+<p><strong>Interpretation:</strong> When position 73 mutates to any of the listed residues,</p>
+<p>position 79 must co-evolve to the corresponding partner residue to maintain</p>
+<p>protein stability. The reference pair is (K, V).</p>
+
+<h3>Position Pair (74, 75) — MI = 8.8166, Reference: R→F</h3>
+
+<tr><td>Rule</td><td>Boolean Expression</td><td>Amino Acids</td></tr>
+
+<tr><td>75</td><td>\(\bar{s3}  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t0\)</td><td>(Y, K)</td></tr>
+<tr><td>76</td><td>\(\bar{s3}  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t1  \cdot  t0\)</td><td>(Y, N)</td></tr>
+<tr><td>77</td><td>\(s3  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  t0\)</td><td>(N, S)</td></tr>
+<tr><td>78</td><td>\(s3  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(R, R)</td></tr>
+<tr><td>79</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  s0  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  \bar{t0}\)</td><td>(I, L)</td></tr>
+<tr><td>80</td><td>\(s3  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  \bar{t1}  \cdot  \bar{t0}\)</td><td>(E, H)</td></tr>
+
+<p><strong>Interpretation:</strong> When position 74 mutates to any of the listed residues,</p>
+<p>position 75 must co-evolve to the corresponding partner residue to maintain</p>
+<p>protein stability. The reference pair is (R, F).</p>
+
+<h3>Position Pair (74, 79) — MI = 1.0949, Reference: R→V</h3>
+
+<tr><td>Rule</td><td>Boolean Expression</td><td>Amino Acids</td></tr>
+
+<tr><td>81</td><td>\(\bar{s3}  \cdot  s2  \cdot  s1  \cdot  \bar{t3}  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(Y, Y)</td></tr>
+<tr><td>82</td><td>\(s3  \cdot  s2  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(H, Y)</td></tr>
+<tr><td>83</td><td>\(s3  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  t0\)</td><td>(R, I)</td></tr>
+<tr><td>84</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  s0  \cdot  \bar{t3}  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(I, Y)</td></tr>
+<tr><td>85</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  s0  \cdot  t3  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  \bar{t0}\)</td><td>(I, E)</td></tr>
+<tr><td>86</td><td>\(\bar{s3}  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  \bar{t2}  \cdot  t1  \cdot  t0\)</td><td>(Y, N)</td></tr>
+<tr><td>87</td><td>\(\bar{s3}  \cdot  s2  \cdot  s1  \cdot  s0  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  t0\)</td><td>(W, V)</td></tr>
+<tr><td>88</td><td>\(s3  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  t2  \cdot  \bar{t1}  \cdot  t0\)</td><td>(E, F)</td></tr>
+
+<p><strong>Interpretation:</strong> When position 74 mutates to any of the listed residues,</p>
+<p>position 79 must co-evolve to the corresponding partner residue to maintain</p>
+<p>protein stability. The reference pair is (R, V).</p>
+
+<h3>Position Pair (76, 77) — MI = 8.8259, Reference: D→N</h3>
+
+<tr><td>Rule</td><td>Boolean Expression</td><td>Amino Acids</td></tr>
+
+<tr><td>89</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t1  \cdot  \bar{t0}\)</td><td>(V, Q)</td></tr>
+<tr><td>90</td><td>\(\bar{s3}  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  \bar{t1}  \cdot  t0\)</td><td>(Y, K)</td></tr>
+<tr><td>91</td><td>\(s3  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  t2  \cdot  \bar{t1}  \cdot  t0\)</td><td>(R, F)</td></tr>
+<tr><td>92</td><td>\(s3  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(R, R)</td></tr>
+<tr><td>93</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  s0  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  \bar{t0}\)</td><td>(I, L)</td></tr>
+<tr><td>94</td><td>\(\bar{s3}  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  \bar{t2}  \cdot  t1  \cdot  t0\)</td><td>(Y, N)</td></tr>
+<tr><td>95</td><td>\(s3  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  t2  \cdot  t1  \cdot  t0\)</td><td>(E, W)</td></tr>
+
+<p><strong>Interpretation:</strong> When position 76 mutates to any of the listed residues,</p>
+<p>position 77 must co-evolve to the corresponding partner residue to maintain</p>
+<p>protein stability. The reference pair is (D, N).</p>
+
+<h3>Position Pair (77, 79) — MI = 1.0864, Reference: N→V</h3>
+
+<tr><td>Rule</td><td>Boolean Expression</td><td>Amino Acids</td></tr>
+
+<tr><td>96</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  \bar{t1}  \cdot  t0\)</td><td>(L, K)</td></tr>
+<tr><td>97</td><td>\(\bar{s3}  \cdot  s2  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(M, R)</td></tr>
+<tr><td>98</td><td>\(s3  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  \bar{t3}  \cdot  t2  \cdot  t1  \cdot  t0\)</td><td>(N, W)</td></tr>
+<tr><td>99</td><td>\(s3  \cdot  s2  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(H, Y)</td></tr>
+<tr><td>100</td><td>\(s3  \cdot  s2  \cdot  \bar{s1}  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  \bar{t1}  \cdot  \bar{t0}\)</td><td>(K, H)</td></tr>
+<tr><td>101</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  \bar{s0}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  t0\)</td><td>(L, I)</td></tr>
+<tr><td>102</td><td>\(\bar{s3}  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  \bar{t2}  \cdot  t1  \cdot  \bar{t0}\)</td><td>(Y, Q)</td></tr>
+<tr><td>103</td><td>\(\bar{s3}  \cdot  s2  \cdot  s1  \cdot  s0  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  t0\)</td><td>(W, V)</td></tr>
+
+<p><strong>Interpretation:</strong> When position 77 mutates to any of the listed residues,</p>
+<p>position 79 must co-evolve to the corresponding partner residue to maintain</p>
+<p>protein stability. The reference pair is (N, V).</p>
+
+<h3>Position Pair (78, 79) — MI = 8.8198, Reference: P→V</h3>
+
+<tr><td>Rule</td><td>Boolean Expression</td><td>Amino Acids</td></tr>
+
+<tr><td>104</td><td>\(\bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t1  \cdot  \bar{t0}\)</td><td>(V, Q)</td></tr>
+<tr><td>105</td><td>\(\bar{s3}  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t0\)</td><td>(Y, K)</td></tr>
+<tr><td>106</td><td>\(\bar{s3}  \cdot  s2  \cdot  s1  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  t0\)</td><td>(Y, S)</td></tr>
+<tr><td>107</td><td>\(s3  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}\)</td><td>(R, R)</td></tr>
+<tr><td>108</td><td>\(\bar{s3}  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  \bar{t0}\)</td><td>(Y, E)</td></tr>
+
+<p><strong>Interpretation:</strong> When position 78 mutates to any of the listed residues,</p>
+<p>position 79 must co-evolve to the corresponding partner residue to maintain</p>
+<p>protein stability. The reference pair is (P, V).</p>
+
+
+<p><strong>Total inference rules:</strong> 108</p>
+
+<h2>7. Coupling Constants and Constraint Functions</h2>
+
+<h3>7.1 Definition</h3>
+
+<p>The coupling constant $J_{ij}(a,b)$ measures the log-odds of observing pair $(a,b)$</p>
+<p>at positions $(i,j)$ compared to the independent expectation:</p>
+
+<p>\(J_{ij}(a,b) = -\ln\frac{P_{ij}(a,b)}{P_i(a) \cdot P_j(b)}\)</p>
+
+<li>$J > 0$: pair is <strong>co-evolutionary</strong> (more common than expected)</li>
+<li>$J < 0$: pair is <strong>anti-correlated</strong> (less common than expected)</li>
+<li>$J = 0$: pair occurs at random frequency</li>
+
+<h3>7.2 Top Coupling Constants</h3>
+
+<tr><td>Pos i</td><td>Pos j</td><td>MI</td><td>avg\</td><td>J\</td><td></td><td>Top Co-evolutionary (J>0)</td><td>Top Anti-correlated (J<0)</td></tr>
+
+<tr><td>74</td><td>76</td><td>1.3700</td><td>12.66</td><td>R-F:+21.2, K-D:+21.2, R-P:+20.1</td><td>A-A:-23.0, A-I:-23.0, A-M:-23.0</td></tr>
+<tr><td>73</td><td>76</td><td>1.3679</td><td>12.67</td><td>K-F:+21.2, T-D:+21.2, K-P:+20.1</td><td>A-A:-23.0, A-I:-23.0, A-M:-23.0</td></tr>
+<tr><td>73</td><td>75</td><td>1.3640</td><td>13.06</td><td>T-F:+21.2, K-R:+21.2, K-N:+20.1</td><td>A-A:-23.0, A-I:-23.0, A-L:-23.0</td></tr>
+<tr><td>74</td><td>77</td><td>1.3593</td><td>13.42</td><td>R-D:+21.2, K-N:+21.2, R-V:+20.1</td><td>A-A:-23.0, A-I:-23.0, A-M:-23.0</td></tr>
+<tr><td>75</td><td>77</td><td>1.3576</td><td>13.47</td><td>R-N:+21.2, F-V:+20.1, N-N:+20.1</td><td>A-A:-23.0, A-I:-23.0, A-M:-23.0</td></tr>
+<tr><td>73</td><td>77</td><td>1.3572</td><td>13.44</td><td>K-D:+21.2, T-N:+21.2, K-V:+20.1</td><td>A-A:-23.0, A-I:-23.0, A-M:-23.0</td></tr>
+<tr><td>72</td><td>74</td><td>1.3529</td><td>13.12</td><td>T-K:+21.2, G-R:+21.2, T-D:+20.1</td><td>A-A:-23.0, A-I:-23.0, A-L:-23.0</td></tr>
+<tr><td>71</td><td>74</td><td>1.3529</td><td>13.12</td><td>G-K:+21.2, N-R:+21.2, G-D:+20.1</td><td>A-A:-23.0, A-I:-23.0, A-L:-23.0</td></tr>
+<tr><td>71</td><td>73</td><td>1.3507</td><td>13.13</td><td>G-T:+21.2, N-K:+21.2, G-F:+20.1</td><td>A-A:-23.0, A-I:-23.0, A-V:-23.0</td></tr>
+<tr><td>73</td><td>78</td><td>1.3505</td><td>13.47</td><td>T-P:+21.2, K-N:+21.2, K-L:+20.1</td><td>A-A:-23.0, A-I:-23.0, A-M:-23.0</td></tr>
+<tr><td>76</td><td>78</td><td>1.3505</td><td>13.02</td><td>F-P:+21.2, D-N:+21.2, P-P:+20.1</td><td>A-A:-23.0, A-I:-23.0, A-M:-23.0</td></tr>
+<tr><td>74</td><td>78</td><td>1.3484</td><td>13.44</td><td>K-P:+21.2, R-N:+21.2, R-L:+20.1</td><td>A-A:-23.0, A-I:-23.0, A-M:-23.0</td></tr>
+<tr><td>75</td><td>78</td><td>1.3466</td><td>13.46</td><td>R-P:+21.2, F-N:+21.2, N-P:+20.1</td><td>A-A:-23.0, A-I:-23.0, A-M:-23.0</td></tr>
+<tr><td>68</td><td>74</td><td>1.3458</td><td>13.79</td><td>S-R:+21.2, G-K:+21.2, N-R:+20.2</td><td>A-A:-23.0, A-I:-23.0, A-L:-23.0</td></tr>
+<tr><td>72</td><td>76</td><td>1.3439</td><td>12.66</td><td>T-F:+21.2, G-D:+21.2, T-P:+20.1</td><td>A-A:-23.0, A-I:-23.0, A-M:-23.0</td></tr>
+<tr><td>71</td><td>76</td><td>1.3439</td><td>12.66</td><td>G-F:+21.2, N-D:+21.2, G-P:+20.1</td><td>A-A:-23.0, A-I:-23.0, A-M:-23.0</td></tr>
+<tr><td>68</td><td>73</td><td>1.3437</td><td>13.80</td><td>S-K:+21.2, G-T:+21.2, N-K:+20.2</td><td>A-A:-23.0, A-I:-23.0, A-V:-23.0</td></tr>
+<tr><td>68</td><td>77</td><td>1.3416</td><td>14.30</td><td>G-D:+21.2, S-N:+21.2, N-N:+20.2</td><td>A-A:-23.0, A-I:-23.0, A-M:-23.0</td></tr>
+<tr><td>72</td><td>75</td><td>1.3400</td><td>13.06</td><td>T-R:+21.2, G-F:+21.2, T-N:+20.1</td><td>A-A:-23.0, A-I:-23.0, A-L:-23.0</td></tr>
+<tr><td>71</td><td>75</td><td>1.3400</td><td>13.06</td><td>G-R:+21.2, N-F:+21.2, G-N:+20.1</td><td>A-A:-23.0, A-I:-23.0, A-L:-23.0</td></tr>
+
+<h2>8. Perplexity Analysis</h2>
+
+<h3>8.1 Definition</h3>
+
+<p>Perplexity measures the effective number of choices: $PP = 2^H$.</p>
+<p>Conditional perplexity $PP(j|i)$ measures how much knowing residue $i$</p>
+<p>reduces uncertainty about residue $j$:</p>
+
+<p>\(PP(j) = 2^{H(P_j)}, \quad PP(j|i=a) = 2^{H(P_{j|i=a})}\)</p>
+
+<p>The <strong>co-evolution ratio</strong> $PP(j) / PP(j|i)$ quantifies constraint strength:</p>
+<li>Ratio $\approx 1$: no constraint (positions evolve independently)</li>
+<li>Ratio $> 2$: strong constraint (position $i$ determines position $j$)</li>
+
+<h3>8.2 Conditional Perplexity for Top Pairs</h3>
+
+<tr><td>Pos i</td><td>Pos j</td><td>MI</td><td>PPₘ(j)</td><td>PPₖₒₙₐ</td><td>Ratio</td><td>Most Constraining Residue</td><td>PP\</td><td>that</td></tr>
+
+<tr><td>74</td><td>76</td><td>1.3700</td><td>2.613</td><td>1.047</td><td>2.50</td><td>D</td><td>1.000</td></tr>
+<tr><td>73</td><td>76</td><td>1.3679</td><td>2.613</td><td>1.215</td><td>2.15</td><td>F</td><td>1.000</td></tr>
+<tr><td>73</td><td>75</td><td>1.3640</td><td>2.590</td><td>1.213</td><td>2.13</td><td>F</td><td>1.000</td></tr>
+<tr><td>74</td><td>77</td><td>1.3593</td><td>2.578</td><td>1.044</td><td>2.47</td><td>D</td><td>1.000</td></tr>
+<tr><td>75</td><td>77</td><td>1.3576</td><td>2.578</td><td>1.002</td><td>2.57</td><td>D</td><td>1.000</td></tr>
+<tr><td>73</td><td>77</td><td>1.3572</td><td>2.578</td><td>1.213</td><td>2.12</td><td>F</td><td>1.000</td></tr>
+<tr><td>72</td><td>74</td><td>1.3529</td><td>2.605</td><td>1.008</td><td>2.58</td><td>K</td><td>1.000</td></tr>
+<tr><td>71</td><td>74</td><td>1.3529</td><td>2.605</td><td>1.008</td><td>2.58</td><td>N</td><td>1.000</td></tr>
+<tr><td>71</td><td>73</td><td>1.3507</td><td>2.601</td><td>1.008</td><td>2.58</td><td>N</td><td>1.000</td></tr>
+<tr><td>73</td><td>78</td><td>1.3505</td><td>2.558</td><td>1.035</td><td>2.47</td><td>F</td><td>1.000</td></tr>
+<tr><td>76</td><td>78</td><td>1.3505</td><td>2.558</td><td>1.044</td><td>2.45</td><td>F</td><td>1.000</td></tr>
+<tr><td>74</td><td>78</td><td>1.3484</td><td>2.558</td><td>1.044</td><td>2.45</td><td>D</td><td>1.000</td></tr>
+<tr><td>75</td><td>78</td><td>1.3466</td><td>2.558</td><td>1.002</td><td>2.55</td><td>D</td><td>1.000</td></tr>
+<tr><td>68</td><td>74</td><td>1.3458</td><td>2.605</td><td>1.104</td><td>2.36</td><td>G</td><td>1.009</td></tr>
+<tr><td>72</td><td>76</td><td>1.3439</td><td>2.613</td><td>1.054</td><td>2.48</td><td>R</td><td>1.000</td></tr>
+<tr><td>71</td><td>76</td><td>1.3439</td><td>2.613</td><td>1.054</td><td>2.48</td><td>N</td><td>1.000</td></tr>
+<tr><td>68</td><td>73</td><td>1.3437</td><td>2.601</td><td>1.104</td><td>2.35</td><td>G</td><td>1.009</td></tr>
+<tr><td>68</td><td>77</td><td>1.3416</td><td>2.578</td><td>1.067</td><td>2.42</td><td>S</td><td>1.000</td></tr>
+<tr><td>72</td><td>75</td><td>1.3400</td><td>2.590</td><td>1.052</td><td>2.46</td><td>R</td><td>1.000</td></tr>
+<tr><td>71</td><td>75</td><td>1.3400</td><td>2.590</td><td>1.052</td><td>2.46</td><td>N</td><td>1.000</td></tr>
+
+<h2>9. H1: Gray-code Adjacency Hypothesis</h2>
+
+<h3>9.1 Hypothesis</h3>
+
+<p>Consecutive residues in protein sequences are preferentially K-map-adjacent</p>
+<p>(Hamming distance = 1) compared to random expectation.</p>
+
+<h3>9.2 Method</h3>
+
+<p>For each consecutive pair of residues in each of the {n_all:,} sequences:</p>
+<li>Encode each residue using its base-20 index (He 2012)</li>
+<li>Compute Gray code: $g(i) = i \oplus (i \gg 1)$</li>
+<li>Compute Hamming distance: $h = \text{popcount}(g(i) \oplus g(j))$</li>
+
+<h3>9.3 Results</h3>
+
+<tr><td>Metric</td><td>Value</td></tr>
+
+<tr><td>Total consecutive pairs</td><td>258,501</td></tr>
+<tr><td>Hamming-1 pairs</td><td>47,379</td></tr>
+<tr><td>Observed ratio</td><td><strong>0.1833</strong></td></tr>
+<tr><td>Expected (random)</td><td>0.1613</td></tr>
+<tr><td><strong>Enrichment</strong></td><td><strong>1.14×</strong></td></tr>
+
+<h3>9.4 Full Hamming Distance Distribution</h3>
+
+<tr><td>Distance</td><td>Count</td><td>Percentage</td><td>Cumulative</td></tr>
+
+<tr><td>0</td><td>18,537</td><td>7.2%</td><td>7.2%</td></tr>
+<tr><td>1</td><td>47,379</td><td>18.3%</td><td>25.5%</td></tr>
+<tr><td>2</td><td>89,328</td><td>34.6%</td><td>60.1%</td></tr>
+<tr><td>3</td><td>70,750</td><td>27.4%</td><td>87.4%</td></tr>
+<tr><td>4</td><td>28,609</td><td>11.1%</td><td>98.5%</td></tr>
+<tr><td>5</td><td>3,898</td><td>1.5%</td><td>100.0%</td></tr>
+
+<h2>10. Complete Analysis Scripts Inventory</h2>
+
+<p>The <code>datasets/co-evolution/</code> directory contains <strong>19 Python scripts</strong></p>
+<p>and <strong>1 shared module</strong> (<code>coevolution_shared.py</code>).</p>
+
+<tr><td>#</td><td>Script</td><td>Lines</td><td>Purpose</td></tr>
+
+<tr><td>1</td><td><code>coevolution_shared.py</code></td><td>329</td><td>Shared module: FASTA parsing, position arrays (cached), vectorized MI via <code>np.bincount</code>, entropy, perplexity, coupling, constraint function, shared-memory worker pool</td></tr>
+<tr><td>2</td><td><code>run_kmap_analysis.py</code></td><td>908</td><td>Master K-map pipeline: H1-H6 on binary 32×32 K-map, consensus K-map, co-evolution analysis</td></tr>
+<tr><td>3</td><td><code>boolean_co-evolution.py</code></td><td>637</td><td>Binary K-map Boolean minimization: 32×32 thresholded → Quine-McCluskey → essential prime implicants</td></tr>
+<tr><td>4</td><td><code>nary_kmap_co-evolution.py</code></td><td>537</td><td>Base-20 K-map analysis: 20×20 frequency map → Boolean → coupling constants</td></tr>
+<tr><td>5</td><td><code>master_boolean.py</code></td><td>330</td><td>Master Boolean function: 97 essential PIs across 35,448 pairs (full-length)</td></tr>
+<tr><td>6</td><td><code>position_kmap_coevolution.py</code></td><td>481</td><td>Position-pair K-maps with MI: builds per-position-pair 20×20 K-maps and minimizes</td></tr>
+<tr><td>7</td><td><code>run_allseq_analysis.py</code></td><td>328</td><td>Full position-based K-map analysis on ALL 1,299 sequences</td></tr>
+<tr><td>8</td><td><code>kmap_boolean_coevolution.py</code></td><td>383</td><td>K-map Boolean with full markdown output: 108 rules across 15 position pairs</td></tr>
+<tr><td>9</td><td><code>generate_co-evolution_md.py</code></td><td>313</td><td>Markdown generator from JSON results</td></tr>
+<tr><td>10</td><td><code>generate_full_analysis_md.py</code></td><td>397</td><td>Comprehensive report generator from all JSON outputs</td></tr>
+<tr><td>11</td><td><code>create_mi_heatmap.py</code></td><td>247</td><td>MI heatmap visualization (full + focus region), matplotlib</td></tr>
+<tr><td>12</td><td><code>allseq_constraint_function.py</code></td><td>247</td><td>Leave-One-Out Cross-Validation: constraint function prediction accuracy</td></tr>
+<tr><td>13</td><td><code>predictive_constraint_function.py</code></td><td>308</td><td>Three K-map approaches: Observed, Flipped, Continuous prediction</td></tr>
+<tr><td>14</td><td><code>flipped_boolean_coevolution.py</code></td><td>254</td><td>Flipped Boolean: forbidden pairs analysis (negative selection)</td></tr>
+<tr><td>15</td><td><code>dca_boolean_coevolution.py</code></td><td>344</td><td>DCA → Boolean pipeline: inverse covariance → coupling → QM minimization</td></tr>
+<tr><td>16</td><td><code>variable_position_coevolution.py</code></td><td>421</td><td>Variable-position K-map with strategic don't-care conditions</td></tr>
+<tr><td>17</td><td><code>perplexity_coevolution.py</code></td><td>217</td><td>Perplexity-based co-evolution strength measurement</td></tr>
+<tr><td>18</td><td><code>advanced_co-evolution_analysis.py</code></td><td>471</td><td>Co-evolution network, Walsh-Hadamard spectrum, variant classification, clustering</td></tr>
+<tr><td>19</td><td><code>full_length_analysis.py</code></td><td>206</td><td>Full-length (all 1,276 positions) entropy and MI analysis</td></tr>
+<tr><td>20</td><td><code>gpu_full_analysis.py</code></td><td>280</td><td>GPU-accelerated analysis: numba parallel entropy/H1/mutations + shared-memory Pool for MI</td></tr>
+<tr><td>21</td><td><code>run_all_bg.sh</code></td><td>107</td><td>Master launcher: runs all 17 scripts concurrently</td></tr>
+
+<h2>11. Flipped Boolean Analysis — Negative Selection</h2>
+
+<h3>11.1 Concept</h3>
+
+<p>While the positive Boolean function asks "what co-evolves?", the <strong>flipped</strong> version</p>
+<p>asks "what CANNOT co-exist?" The on-set (1) is assigned to residue pairs that are</p>
+<p>NEVER observed together across all sequences, capturing <strong>negative selection</strong>.</p>
+
+<h3>11.2 Method</h3>
+
+<li>Build 20×20 frequency K-map for each position pair</li>
+<li>Cells with frequency = 0 → on-set (1) — FORBIDDEN</li>
+<li>Cells with frequency > 0 → off-set (0) — ALLOWED</li>
+<li>Reference pair → don't-care (-1)</li>
+<li>QM minimization → minimal forbidden constraints</li>
+
+<h3>11.3 Results</h3>
+
+<p>The flipped analysis produced <strong>0</strong> forbidden rules. Why?</p>
+
+<p>With 1,299 sequences across multiple Omicron sub-lineages,</p>
+<p>virtually every amino acid pair appears at least once at every position pair.</p>
+<p>The Spike protein's N-terminal region is under <strong>purifying selection</strong> but not</p>
+<p><strong>absolute constraint</strong> — any single substitution has been sampled by evolution.</p>
+
+<p>This means:</p>
+
+<li><strong>No universally forbidden pairs exist</strong> — only statistically disfavored ones</li>
+<li>Co-evolution is <strong>probabilistic</strong>, not deterministic</li>
+<li>The constraint function $J_{ij}$ (continuous) is more appropriate than Boolean</li>
+
+<h2>12. Leave-One-Out Cross-Validation</h2>
+
+<h3>12.1 Method</h3>
+
+<p>For each position pair $(i,j)$:</p>
+<li>Exclude one sequence from the dataset</li>
+<li>Build constraint function $C_{ij}(a,b)$ from the remaining {n_all - 1:,} sequences</li>
+<li>Predict the co-evolving partner for the held-out sequence: $b^* = \arg\max_b C_{ij}(a_{\text{mutation}}, b)$</li>
+<li>Check if prediction matches</li>
+
+<h3>12.2 Key Insight</h3>
+
+<p>LOO-CV accuracy was near zero (0.08%). This reveals that co-evolutionary rules are <strong>lineage-specific</strong> —</p>
+<p>different Omicron sub-variants (BA.1, BA.2, BA.4, BA.5, XBB, etc.) have <strong>different co-evolutionary patterns</strong>.</p>
+<p>Rules learned from one variant do not generalize to others.</p>
+
+<h2>13. What This Analysis Pipeline Achieves</h2>
+
+<h3>13.1 By the Numbers</h3>
+
+<tr><td>Metric</td><td>Value</td></tr>
+
+<tr><td>Input sequences</td><td>1,299</td></tr>
+<tr><td>Positions analyzed</td><td>1276</td></tr>
+<tr><td>Position arrays built</td><td>1,299 × 1276 = 1,657,524 integers</td></tr>
+<tr><td>Variable positions (H > 0.3)</td><td>57</td></tr>
+<tr><td>Co-evolving pairs (MI > 0.1)</td><td>1229</td></tr>
+<tr><td>Boolean expressions (QM minimized)</td><td>108 essential prime implicants</td></tr>
+<tr><td>Unique position pairs with rules</td><td>15</td></tr>
+<tr><td>Lean 4 theorems</td><td>236 (106 + 115 + 15)</td></tr>
+<tr><td>Python scripts</td><td>20</td></tr>
+<tr><td>Total Python LOC</td><td>~7,000</td></tr>
+<tr><td>Shared module LOC</td><td>340</td></tr>
+
+<h2>14. How to Apply the Co-evolution Rules</h2>
+
+<h3>14.1 For a New Spike Sequence</h3>
+
+<p>```python</p>
+<h1>1. Extract residues at positions 68-79</h1>
+<p>seq_region = seq[68:80]</p>
+
+<h1>2. For each co-evolving position pair, check the Boolean function</h1>
+<p>for (pos_i, pos_j) in coevolving_pairs:</p>
+<p>aa_i = encode(seq_region[pos_i - 68])</p>
+<p>aa_j = encode(seq_region[pos_j - 68])</p>
+
+<h1>Encode as 4+4 bits</h1>
+<p>bits = int_to_bits(aa_i, 4) + int_to_bits(aa_j, 4)</p>
+
+<h1>Check if ANY essential prime implicant matches</h1>
+<p>is_coevolving = any(pi.matches(bits) for pi in prime_implicants[(pos_i, pos_j)])</p>
+
+<p>if is_coevolving:</p>
+<p>print(f'Positions {pos_i}-{pos_j} are co-evolving')</p>
+
+<h1>3. If position i mutates, find the required partner at position j</h1>
+<p>def predict_partner(pos_i, aa_i, pos_j):</p>
+<p>for pi in prime_implicants[(pos_i, pos_j)]:</p>
+<p>if pi.matches_row(aa_i):</p>
+<p>return pi.col_aa  # required co-evolving partner</p>
+<p>return None  # no constraint</p>
+<p>```</p>
+
+<h2>15. Key References</h2>
+
+<li>Karnaugh, M. (1953). The Map Method for Synthesis of Combinational Logic Circuits. <em>AIEE Transactions</em>.</li>
+<li>Gray, F. (1953). Pulse Code Communication. U.S. Patent 2,632,058.</li>
+<li>Quine, W.V. (1952). The Problem of Simplifying Truth Functions. <em>American Mathematical Monthly</em>.</li>
+<li>McCluskey, E.J. (1956). Minimization of Boolean Functions. <em>Bell System Technical Journal</em>.</li>
+<li>He, P.A. et al. (2012). A novel graphical representation of proteins. <em>MATCH Communications</em>.</li>
+<li>Petoukhov, S.V. (2024). Matrix Representations of Genetic Code and Karnaugh Maps. <em>Biosystems</em>.</li>
+<li>de Moura, L. et al. (2021). The Lean 4 Theorem Prover and Programming Language.</li>
+
+<hr>
+<p><em>Generated July 17, 2026 at 21:57 by <code>generate_full_pipeline_doc.py</code></em></p>
+<p><em>All values computed from 1,299 Omicron Spike sequences using shared <code>coevolution_shared</code> module</em></p>
+
+</body>
+</html>

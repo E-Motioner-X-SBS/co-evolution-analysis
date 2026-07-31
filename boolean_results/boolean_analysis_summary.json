@@ -1,0 +1,724 @@
+{
+  "dataset": "SARS-CoV-2 Spike Protein Boolean Analysis",
+  "num_sequences": 1299,
+  "boolean_kmap": {
+    "threshold": 0.003940333650922729,
+    "n_on_set": 93,
+    "n_total": 1024,
+    "density": 0.0908203125
+  },
+  "minimization": {
+    "n_prime_implicants": 70,
+    "n_essential": 23,
+    "covering_size": 23
+  },
+  "motifs": [
+    {
+      "rank": 1,
+      "row_aa": "V",
+      "col_aa": "I",
+      "row_gray": 1,
+      "col_gray": 2,
+      "n_dontcares": 3,
+      "coverage": 8,
+      "motif_count": 83242,
+      "motif_fraction": 0.05047634236011858
+    },
+    {
+      "rank": 5,
+      "row_aa": "T",
+      "col_aa": "T",
+      "row_gray": 10,
+      "col_gray": 10,
+      "n_dontcares": 3,
+      "coverage": 8,
+      "motif_count": 76704,
+      "motif_fraction": 0.046511825333251676
+    },
+    {
+      "rank": 3,
+      "row_aa": "L",
+      "col_aa": "I",
+      "row_gray": 3,
+      "col_gray": 2,
+      "n_dontcares": 3,
+      "coverage": 8,
+      "motif_count": 73816,
+      "motif_fraction": 0.044760597867116524
+    },
+    {
+      "rank": 6,
+      "row_aa": "T",
+      "col_aa": "T",
+      "row_gray": 10,
+      "col_gray": 10,
+      "n_dontcares": 3,
+      "coverage": 8,
+      "motif_count": 73719,
+      "motif_fraction": 0.0447017789390642
+    },
+    {
+      "rank": 7,
+      "row_aa": "T",
+      "col_aa": "N",
+      "row_gray": 10,
+      "col_gray": 11,
+      "n_dontcares": 3,
+      "coverage": 8,
+      "motif_count": 73629,
+      "motif_fraction": 0.04464720467592287
+    },
+    {
+      "rank": 2,
+      "row_aa": "V",
+      "col_aa": "I",
+      "row_gray": 1,
+      "col_gray": 2,
+      "n_dontcares": 3,
+      "coverage": 8,
+      "motif_count": 70067,
+      "motif_fraction": 0.042487276616929304
+    },
+    {
+      "rank": 4,
+      "row_aa": "T",
+      "col_aa": "T",
+      "row_gray": 10,
+      "col_gray": 10,
+      "n_dontcares": 3,
+      "coverage": 8,
+      "motif_count": 66061,
+      "motif_fraction": 0.0400581155264385
+    },
+    {
+      "rank": 50,
+      "row_aa": "S",
+      "col_aa": "A",
+      "row_gray": 14,
+      "col_gray": 0,
+      "n_dontcares": 2,
+      "coverage": 4,
+      "motif_count": 46893,
+      "motif_fraction": 0.028435010238738147
+    },
+    {
+      "rank": 37,
+      "row_aa": "F",
+      "col_aa": "N",
+      "row_gray": 6,
+      "col_gray": 11,
+      "n_dontcares": 2,
+      "coverage": 4,
+      "motif_count": 45362,
+      "motif_fraction": 0.027506641384633948
+    },
+    {
+      "rank": 35,
+      "row_aa": "F",
+      "col_aa": "T",
+      "row_gray": 6,
+      "col_gray": 10,
+      "n_dontcares": 2,
+      "coverage": 4,
+      "motif_count": 45077,
+      "motif_fraction": 0.0273338228846864
+    },
+    {
+      "rank": 34,
+      "row_aa": "F",
+      "col_aa": "L",
+      "row_gray": 6,
+      "col_gray": 3,
+      "n_dontcares": 2,
+      "coverage": 4,
+      "motif_count": 43736,
+      "motif_fraction": 0.02652066636388057
+    },
+    {
+      "rank": 18,
+      "row_aa": "V",
+      "col_aa": "I",
+      "row_gray": 1,
+      "col_gray": 2,
+      "n_dontcares": 2,
+      "coverage": 4,
+      "motif_count": 42870,
+      "motif_fraction": 0.025995540676320653
+    },
+    {
+      "rank": 36,
+      "row_aa": "F",
+      "col_aa": "N",
+      "row_gray": 6,
+      "col_gray": 11,
+      "n_dontcares": 2,
+      "coverage": 4,
+      "motif_count": 42749,
+      "motif_fraction": 0.02592216861143064
+    },
+    {
+      "rank": 10,
+      "row_aa": "A",
+      "col_aa": "I",
+      "row_gray": 0,
+      "col_gray": 2,
+      "n_dontcares": 2,
+      "coverage": 4,
+      "motif_count": 41549,
+      "motif_fraction": 0.025194511769546228
+    },
+    {
+      "rank": 16,
+      "row_aa": "V",
+      "col_aa": "A",
+      "row_gray": 1,
+      "col_gray": 0,
+      "n_dontcares": 2,
+      "coverage": 4,
+      "motif_count": 40545,
+      "motif_fraction": 0.024585705545169603
+    },
+    {
+      "rank": 29,
+      "row_aa": "L",
+      "col_aa": "Q",
+      "row_gray": 3,
+      "col_gray": 9,
+      "n_dontcares": 2,
+      "coverage": 4,
+      "motif_count": 40419,
+      "motif_fraction": 0.02450930157677174
+    },
+    {
+      "rank": 42,
+      "row_aa": "T",
+      "col_aa": "L",
+      "row_gray": 10,
+      "col_gray": 3,
+      "n_dontcares": 2,
+      "coverage": 4,
+      "motif_count": 40298,
+      "motif_fraction": 0.024435929511881727
+    },
+    {
+      "rank": 11,
+      "row_aa": "A",
+      "col_aa": "I",
+      "row_gray": 0,
+      "col_gray": 2,
+      "n_dontcares": 2,
+      "coverage": 4,
+      "motif_count": 39946,
+      "motif_fraction": 0.024222483504928966
+    },
+    {
+      "rank": 21,
+      "row_aa": "V",
+      "col_aa": "T",
+      "row_gray": 1,
+      "col_gray": 10,
+      "n_dontcares": 2,
+      "coverage": 4,
+      "motif_count": 39581,
+      "motif_fraction": 0.02400115454885579
+    },
+    {
+      "rank": 19,
+      "row_aa": "V",
+      "col_aa": "I",
+      "row_gray": 1,
+      "col_gray": 2,
+      "n_dontcares": 2,
+      "coverage": 4,
+      "motif_count": 38805,
+      "motif_fraction": 0.023530603124437204
+    }
+  ],
+  "coupling": {
+    "n_positions": 80,
+    "n_strong_couplings": 50,
+    "top_couplings": [
+      [
+        73,
+        74,
+        1.3768321683330982
+      ],
+      [
+        74,
+        76,
+        1.370020125970848
+      ],
+      [
+        75,
+        76,
+        1.3682562211188032
+      ],
+      [
+        73,
+        76,
+        1.3678993503725694
+      ],
+      [
+        74,
+        75,
+        1.3661354455205248
+      ],
+      [
+        73,
+        75,
+        1.3640146699222464
+      ],
+      [
+        76,
+        77,
+        1.3614467724218213
+      ],
+      [
+        74,
+        77,
+        1.359325996823543
+      ],
+      [
+        75,
+        77,
+        1.3575620919714984
+      ],
+      [
+        73,
+        77,
+        1.3572052212252645
+      ],
+      [
+        71,
+        72,
+        1.3549765031975463
+      ],
+      [
+        71,
+        74,
+        1.352855727599268
+      ],
+      [
+        72,
+        74,
+        1.352855727599268
+      ],
+      [
+        71,
+        73,
+        1.3507349520009897
+      ],
+      [
+        72,
+        73,
+        1.3507349520009897
+      ],
+      [
+        76,
+        78,
+        1.3504868021147576
+      ],
+      [
+        73,
+        78,
+        1.3504868021147574
+      ],
+      [
+        74,
+        78,
+        1.3483660265164792
+      ],
+      [
+        75,
+        78,
+        1.3466021216644346
+      ],
+      [
+        68,
+        74,
+        1.3458335821610075
+      ]
+    ]
+  },
+  "prediction": {
+    "on_set_pairs": [
+      [
+        "T",
+        "Q"
+      ],
+      [
+        "N",
+        "S"
+      ],
+      [
+        "C",
+        "V"
+      ],
+      [
+        "L",
+        "G"
+      ],
+      [
+        "Y",
+        "S"
+      ],
+      [
+        "L",
+        "D"
+      ],
+      [
+        "V",
+        "L"
+      ],
+      [
+        "F",
+        "L"
+      ],
+      [
+        "N",
+        "T"
+      ],
+      [
+        "F",
+        "G"
+      ],
+      [
+        "A",
+        "L"
+      ],
+      [
+        "V",
+        "S"
+      ],
+      [
+        "A",
+        "G"
+      ],
+      [
+        "Q",
+        "P"
+      ],
+      [
+        "S",
+        "N"
+      ],
+      [
+        "A",
+        "D"
+      ],
+      [
+        "S",
+        "F"
+      ],
+      [
+        "P",
+        "T"
+      ],
+      [
+        "S",
+        "K"
+      ],
+      [
+        "Q",
+        "T"
+      ],
+      [
+        "T",
+        "L"
+      ],
+      [
+        "G",
+        "T"
+      ],
+      [
+        "T",
+        "G"
+      ],
+      [
+        "D",
+        "I"
+      ],
+      [
+        "I",
+        "A"
+      ],
+      [
+        "N",
+        "L"
+      ],
+      [
+        "L",
+        "N"
+      ],
+      [
+        "N",
+        "G"
+      ],
+      [
+        "L",
+        "K"
+      ],
+      [
+        "E",
+        "V"
+      ],
+      [
+        "K",
+        "N"
+      ],
+      [
+        "V",
+        "N"
+      ],
+      [
+        "T",
+        "E"
+      ],
+      [
+        "V",
+        "F"
+      ],
+      [
+        "F",
+        "N"
+      ],
+      [
+        "F",
+        "K"
+      ],
+      [
+        "P",
+        "L"
+      ],
+      [
+        "C",
+        "T"
+      ],
+      [
+        "V",
+        "D"
+      ],
+      [
+        "R",
+        "V"
+      ],
+      [
+        "G",
+        "D"
+      ],
+      [
+        "V",
+        "Y"
+      ],
+      [
+        "Q",
+        "S"
+      ],
+      [
+        "T",
+        "N"
+      ],
+      [
+        "T",
+        "K"
+      ],
+      [
+        "I",
+        "T"
+      ],
+      [
+        "E",
+        "I"
+      ],
+      [
+        "L",
+        "I"
+      ],
+      [
+        "S",
+        "V"
+      ],
+      [
+        "N",
+        "N"
+      ],
+      [
+        "F",
+        "A"
+      ],
+      [
+        "N",
+        "F"
+      ],
+      [
+        "N",
+        "K"
+      ],
+      [
+        "A",
+        "A"
+      ],
+      [
+        "A",
+        "I"
+      ],
+      [
+        "P",
+        "F"
+      ],
+      [
+        "G",
+        "N"
+      ],
+      [
+        "R",
+        "L"
+      ],
+      [
+        "G",
+        "F"
+      ],
+      [
+        "S",
+        "A"
+      ],
+      [
+        "G",
+        "K"
+      ],
+      [
+        "L",
+        "P"
+      ],
+      [
+        "D",
+        "S"
+      ],
+      [
+        "L",
+        "T"
+      ],
+      [
+        "D",
+        "P"
+      ],
+      [
+        "F",
+        "V"
+      ],
+      [
+        "I",
+        "S"
+      ],
+      [
+        "G",
+        "A"
+      ],
+      [
+        "N",
+        "I"
+      ],
+      [
+        "S",
+        "S"
+      ],
+      [
+        "V",
+        "A"
+      ],
+      [
+        "V",
+        "I"
+      ],
+      [
+        "S",
+        "T"
+      ],
+      [
+        "G",
+        "I"
+      ],
+      [
+        "L",
+        "L"
+      ],
+      [
+        "N",
+        "V"
+      ],
+      [
+        "K",
+        "L"
+      ],
+      [
+        "D",
+        "L"
+      ],
+      [
+        "I",
+        "G"
+      ],
+      [
+        "K",
+        "S"
+      ],
+      [
+        "V",
+        "V"
+      ],
+      [
+        "G",
+        "V"
+      ],
+      [
+        "V",
+        "T"
+      ],
+      [
+        "L",
+        "Q"
+      ],
+      [
+        "A",
+        "S"
+      ],
+      [
+        "F",
+        "T"
+      ],
+      [
+        "S",
+        "L"
+      ],
+      [
+        "N",
+        "C"
+      ],
+      [
+        "S",
+        "G"
+      ],
+      [
+        "T",
+        "S"
+      ],
+      [
+        "T",
+        "P"
+      ],
+      [
+        "T",
+        "T"
+      ],
+      [
+        "Q",
+        "I"
+      ]
+    ],
+    "avg_on_mi": 0.116593321840472,
+    "avg_off_mi": 0.09823024351297156,
+    "n_on_set": 290,
+    "n_off_set": 116,
+    "prediction_accuracy": 0.5073891625615764
+  }
+}
