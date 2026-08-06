@@ -2,6 +2,8 @@
 
 Karnaugh map (K-map) Boolean minimization applied to predict co-evolutionary constraints in the SARS-CoV-2 Spike protein.
 
+**FULL-LENGTH + GPU:** All 20 scripts run on the complete sequence (1,276 positions) with all 1,299 sequences, GPU-accelerated via torch CUDA (A100). See [RESULTS_ANALYSIS.md](RESULTS_ANALYSIS.md) for the rigorous audit.
+
 ## Overview
 
 This pipeline analyzes **1,299 SARS-CoV-2 Omicron Spike protein sequences** using:
@@ -9,66 +11,73 @@ This pipeline analyzes **1,299 SARS-CoV-2 Omicron Spike protein sequences** usin
 - Position-pair mutual information to identify co-evolving positions
 - Quine-McCluskey Boolean minimization to extract minimal co-evolutionary rules
 - Constraint function for predicting co-evolutionary pairs
+- **GPU acceleration** (`coevolution_gpu.py`): full 813K-pair MI matrix in 1.6s on A100
 
 ## Quick Start
 
 ```bash
-# Install dependencies
-pip install numpy scipy matplotlib
+# GPU environment (torch 2.12.1+cu130, numba 0.66.0)
+PY=/store/shuvam/.venv/bin/python
 
 # Run the master Boolean function analysis
-python master_boolean.py
+$PY master_boolean.py
 
 # Generate comprehensive markdown with all rules
-python generate_co-evolution_md.py
+$PY generate_co-evolution_md.py
 
-# Create MI heatmap
-python create_mi_heatmap.py
+# Create MI heatmap (GPU)
+$PY create_mi_heatmap.py
 
 # Run LOO-CV prediction test
-python allseq_constraint_function.py
+$PY allseq_constraint_function.py
 
-# Run all scripts at once
-bash run_all_bg.sh
+# GPU full analysis
+nohup $PY -u gpu_full_analysis.py > logs/gpu_full.log 2>&1 &
 ```
 
-## Key Results
+## Key Results (FULL LENGTH, all 1,299 sequences)
 
 | Metric | Value |
 |--------|-------|
 | Sequences analyzed | 1,299 |
+| Positions analyzed | 1,276 (FULL length) |
 | Variable positions | 1,249 (H > 0.3) |
 | Co-evolutionary pairs (MI > 0.1) | 36,918 |
+| Max MI | 1.5917 @ (372, 401) |
 | Essential prime implicants | 152 |
-| LOO-CV accuracy | 7.26% |
 | Flipped Boolean forbidden rules | 345 |
-| Sequence clusters | 10 |
+| High-MI pairs (full length) | 35,858 |
+| LOO-CV accuracy | 2.93% (deterministic, verified) |
+| DCA-style accuracy | 17.6% (local precision, NOT real DCA) |
+| Variant signatures | 40 |
+| GPU MI matrix speed | 813K pairs in 1.6 s (~800× vs CPU) |
 
 ## Scripts
 
 | # | Script | Purpose | Output |
 |---|--------|---------|--------|
-| 1 | `coevolution_shared.py` | Shared module (FASTA, MI, entropy) | — |
-| 2 | `master_boolean.py` | Master Boolean function (152 rules) | `master_boolean/` |
-| 3 | `boolean_co-evolution.py` | Binary K-map Boolean minimization | `boolean_results/` |
-| 4 | `nary_kmap_co-evolution.py` | Base-20 K-map analysis | `nary_kmap_results/` |
-| 5 | `position_kmap_coevolution.py` | Position-pair K-maps with MI | `position_kmap_results/` |
-| 6 | `run_allseq_analysis.py` | Full analysis on all sequences | `full_position_results/` |
-| 7 | `run_kmap_analysis.py` | Master K-map pipeline (H1-H6) | `kmap_results/` |
-| 8 | `flipped_boolean_coevolution.py` | Forbidden pairs (negative selection) | `flipped_boolean_results/` |
-| 9 | `kmap_boolean_coevolution.py` | K-map Boolean with markdown output | `kmap_boolean_coevolution/` |
-| 10 | `variable_position_coevolution.py` | Variable-position K-map with don't-care | `variable_position_results/` |
-| 11 | `predictive_constraint_function.py` | Three K-map approaches (obs/flipped/cont) | `constraint_function_results/` |
-| 12 | `allseq_constraint_function.py` | LOO-CV constraint function | `allseq_constraint_results/` |
-| 13 | `dca_boolean_coevolution.py` | Local precision matrix → Boolean | `dca_boolean_results/` |
-| 14 | `perplexity_coevolution.py` | Perplexity-based co-evolution | `perplexity_results/` |
-| 15 | `advanced_co-evolution_analysis.py` | Network, Walsh-Hadamard, clustering | `advanced_analysis_results/` |
-| 16 | `full_length_analysis.py` | Full-length (1276 positions) entropy/MI | `full_length_results/` |
-| 17 | `gpu_full_analysis.py` | GPU-accelerated analysis (numba) | `full_gpu_results/` |
-| 18 | `create_mi_heatmap.py` | MI heatmap visualization | `mi_heatmap/` |
-| 19 | `generate_co-evolution_md.py` | Markdown from master_boolean JSON | `COEVOLUTION_KMAP_BOOLEAN.md` |
-| 20 | `generate_full_analysis_md.py` | Comprehensive report from all JSONs | `FULL_COEVOLUTION_ANALYSIS.md` |
-| 21 | `generate_full_pipeline_doc.py` | Full pipeline documentation | `FULL_PIPELINE_ANALYSIS.md` |
+| 1 | `coevolution_shared.py` | Shared module (FASTA, MI, entropy, GPU pair-finder) | — |
+| 2 | `coevolution_gpu.py` | **GPU kernels** (torch CUDA: MI matrix, entropy, refs, coupling, H1) | — |
+| 3 | `master_boolean.py` | Master Boolean function (152 rules) | `master_boolean/` |
+| 4 | `boolean_co-evolution.py` | Binary K-map Boolean minimization (796,953 pairs) | `boolean_results/` |
+| 5 | `nary_kmap_co-evolution.py` | Base-20 K-map analysis | `nary_kmap_results/` |
+| 6 | `position_kmap_coevolution.py` | Position-pair K-maps with MI (25,199 pairs) | `position_kmap_results/` |
+| 7 | `run_allseq_analysis.py` | Full analysis on all sequences | `full_position_results/` |
+| 8 | `run_kmap_analysis.py` | Master K-map pipeline (H1-H6) | `kmap_results/` |
+| 9 | `flipped_boolean_coevolution.py` | Forbidden pairs (negative selection, 345 rules) | `flipped_boolean_results/` |
+| 10 | `kmap_boolean_coevolution.py` | K-map Boolean with markdown output | `kmap_boolean_coevolution/` |
+| 11 | `variable_position_coevolution.py` | Variable-position K-map with don't-care | `variable_position_results/` |
+| 12 | `predictive_constraint_function.py` | Constraint function train/test | `constraint_function_results/` |
+| 13 | `allseq_constraint_function.py` | LOO-CV constraint function | `allseq_constraint_results/` |
+| 14 | `dca_boolean_coevolution.py` | Local precision matrix → Boolean (NOT real DCA) | `dca_boolean_results/` |
+| 15 | `perplexity_coevolution.py` | Perplexity-based co-evolution | `perplexity_results/` |
+| 16 | `advanced_co-evolution_analysis.py` | Network, Walsh-Hadamard, clustering, signatures | `advanced_analysis_results/` |
+| 17 | `full_length_analysis.py` | Full-length (1276 positions) entropy/MI | `full_length_results/` |
+| 18 | `gpu_full_analysis.py` | GPU full analysis (torch CUDA, saves full MI matrix) | `full_gpu_results/` |
+| 19 | `create_mi_heatmap.py` | MI heatmap visualization (GPU) | `mi_heatmap/` |
+| 20 | `generate_co-evolution_md.py` | Markdown from master_boolean JSON | `COEVOLUTION_KMAP_BOOLEAN.md` |
+| 21 | `generate_full_analysis_md.py` | Comprehensive report from all JSONs | `FULL_COEVOLUTION_ANALYSIS.md` |
+| 22 | `generate_full_pipeline_doc.py` | Full pipeline documentation (full-length) | `FULL_PIPELINE_ANALYSIS.md` |
 
 ## Methodology
 
@@ -108,9 +117,9 @@ P_co-evolution = σ(C) = 1/(1+e^{-C})
 ## Dependencies
 
 - Python 3.10+
-- NumPy
-- SciPy
-- Matplotlib
+- NumPy, SciPy, Matplotlib
+- **torch (CUDA)** — GPU kernels (`coevolution_gpu.py`); env: `/store/shuvam/.venv` (torch 2.12.1+cu130)
+- numba (optional, for legacy parallel code)
 - [kmap-sbm-validation](https://github.com/E-Motioner-X-SBS/kmap-sbm-validation) (for `gray_amino.py` encoding)
 - [n-ary-kmap](https://github.com/E-Motioner-X-SBS/n-ary-kmap) (for `bio_sequences.py` encoding)
 
@@ -118,7 +127,7 @@ P_co-evolution = σ(C) = 1/(1+e^{-C})
 
 ```
 co-evolution-analysis/
-├── *.py                          # 21 analysis scripts
+├── *.py                          # 22 analysis scripts (incl. coevolution_gpu.py)
 ├── run_all_bg.sh                 # Master launcher
 ├── Spike_protein.aln-fasta       # Input: 1,299 Omicron sequences
 ├── *.md                          # Generated reports
@@ -135,7 +144,7 @@ co-evolution-analysis/
 ├── perplexity_results/           # Perplexity analysis results
 ├── advanced_analysis_results/    # Network, clustering, Walsh-Hadamard
 ├── full_length_results/          # Full-length analysis
-├── full_gpu_results/             # GPU-accelerated results
+├── full_gpu_results/             # GPU results + full MI matrix (npy/csv)
 ├── kmap_boolean_coevolution/     # K-map Boolean with markdown
 ├── mi_heatmap/                   # MI heatmap visualizations
 ├── variable_position_results/    # Variable-position results
