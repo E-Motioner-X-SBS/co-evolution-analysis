@@ -360,3 +360,63 @@ def get_worker_count():
     """Number of CPU cores, capped at 24."""
     n = os.cpu_count() or 4
     return min(n, 24)
+
+
+# ══════════════════════════════════════════════════════════════════════
+#  7. GPU-accelerated pair finder (torch CUDA, A100)
+# ══════════════════════════════════════════════════════════════════════
+
+def find_coevolving_pairs_gpu(
+    pos_arrays,
+    variable_positions,
+    n_seqs,
+    max_gap=30,
+    min_mi=0.1,
+    min_muts=5,
+    mutation_only=True,
+):
+    """Find co-evolving position pairs with MI computed on GPU.
+
+    Returns list of (pos_i, pos_j, mi, n_muts, ref_i, ref_j) sorted by MI desc.
+    Falls back to CPU (mutual_information) if CUDA unavailable.
+    """
+    try:
+        import coevolution_gpu as cg
+
+        dense = cg.dense_to_gpu(pos_arrays[:n_seqs])
+        refs = cg.majority_refs_gpu(dense)
+        pairs = [
+            (pi, pj)
+            for idx_i, pi in enumerate(variable_positions)
+            for pj in variable_positions[idx_i + 1 :]
+            if abs(pi - pj) <= max_gap
+        ]
+        mi_dict, cnt_dict = cg.mi_matrix_gpu(
+            dense, pairs, refs=refs, mutation_only=mutation_only,
+            min_total=min_muts, chunk=16384,
+        )
+        results = []
+        for (pi, pj), mi in mi_dict.items():
+            if mi > min_mi:
+                results.append((pi, pj, mi, cnt_dict[(pi, pj)],
+                                int(refs[pi]), int(refs[pj])))
+        results.sort(key=lambda x: x[2], reverse=True)
+        return results
+    except Exception:
+        # CPU fallback: mutation-only MI via shared mutual_information
+        results = []
+        for idx_i, pi in enumerate(variable_positions):
+            for pj in variable_positions[idx_i + 1 :]:
+                if abs(pi - pj) > max_gap:
+                    continue
+                ri = majority_ref(pos_arrays, pi, n_seqs)
+                rj = majority_ref(pos_arrays, pj, n_seqs)
+                if mutation_only:
+                    mi, n_mut = mi_mutation_only(pos_arrays, pi, pj, ri, rj, n_seqs)
+                else:
+                    mi = mutual_information(pos_arrays, pi, pj, n_seqs)
+                    n_mut = 0
+                if mi > min_mi:
+                    results.append((pi, pj, mi, n_mut, ri, rj))
+        results.sort(key=lambda x: x[2], reverse=True)
+        return results

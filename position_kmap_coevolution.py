@@ -43,7 +43,7 @@ def parse_fasta(filepath):
     return sequences
 
 
-def build_position_kmaps(sequences, encoder, max_positions=100, n_seqs=200):
+def build_position_kmaps(sequences, encoder, max_positions=None, n_seqs=200):
     """
     Build position-pair K-maps.
 
@@ -52,12 +52,17 @@ def build_position_kmaps(sequences, encoder, max_positions=100, n_seqs=200):
     all sequences.
 
     This captures co-evolutionary constraints directly.
+
+    max_positions=None → FULL sequence length (all positions).
     """
     print("\n=== Building Position-Pair K-maps ===")
 
     n = min(n_seqs, len(sequences))
     min_len = min(len(seq) for _, seq in sequences[:n])
-    max_pos = min(max_positions, min_len)
+    if max_positions is None:
+        max_pos = min_len  # FULL length
+    else:
+        max_pos = min(max_positions, min_len)
 
     # Build frequency matrices for each position pair
     # We'll use a sliding window of position pairs
@@ -351,23 +356,39 @@ def main():
     encoder = Base20AminoEncoder(version=1)
     print(f"  Loaded {len(sequences)} sequences")
 
-    # Build position frequency vectors
+    # Build position frequency vectors — FULL LENGTH
     print("\n[2/5] Building position frequency vectors...")
     pos_freq, pos_counts, max_pos, window = build_position_kmaps(
-        sequences, encoder, max_positions=100, n_seqs=200
+        sequences, encoder, max_positions=None, n_seqs=1299
     )
 
     # Find co-evolving positions
-    print("\n[3/5] Finding co-evolving position pairs...")
+    print("\n[3/5] Finding co-evolving position pairs (FULL length, GPU)...")
     n_seqs = min(1299, len(sequences))
 
-    # Compute MI for all nearby position pairs
-    mi_results = []
-    for i in range(0, min(50, max_pos), 3):
-        for j in range(i + 1, min(i + window, max_pos)):
-            mi = compute_mutual_information(sequences, i, j, encoder, n_seqs)
-            if mi > 0.005:
-                mi_results.append((i, j, mi))
+    # Compute MI for all nearby position pairs — GPU accelerated
+    try:
+        import coevolution_gpu as cg
+
+        # Build position arrays
+        pos_arrays = []
+        for _, seq in sequences[:n_seqs]:
+            clean = "".join(aa for aa in seq if aa in encoder.encode)
+            arr = np.array([encoder.encode.get(aa, -1) for aa in clean], dtype=np.int32)
+            pos_arrays.append(arr)
+        dense = cg.dense_to_gpu(pos_arrays)
+        pairs = cg.all_pairs(dense.shape[1], max_gap=window)
+        mi_dict, _ = cg.mi_matrix_gpu(dense, pairs, min_total=10, chunk=16384)
+        mi_results = [(i, j, mi) for (i, j), mi in mi_dict.items() if mi > 0.005]
+        print(f"  GPU MI computed for {len(mi_dict)} pairs")
+    except Exception as e:
+        print(f"  GPU failed ({e}), using CPU...")
+        mi_results = []
+        for i in range(0, max_pos):
+            for j in range(i + 1, min(i + window, max_pos)):
+                mi = compute_mutual_information(sequences, i, j, encoder, n_seqs)
+                if mi > 0.005:
+                    mi_results.append((i, j, mi))
 
     mi_results.sort(key=lambda x: x[2], reverse=True)
 

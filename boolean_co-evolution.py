@@ -318,11 +318,9 @@ def compute_coupling_constants(kmap_freq, sequences, n_seqs=100):
         return {}
 
     min_len = min(len(s) for s in clean_seqs)
-    # PERFORMANCE FIX: Original code used max_pos = min_len (1276 positions
-    # → 813K pairs), which timed out at ~32% after 20 minutes. All other
-    # scripts in this pipeline analyze positions 0-79 (the N-terminal
-    # signal peptide region). Limit to 80 positions for consistency and speed.
-    max_pos = min(80, min_len)  # 80 positions → 3160 pairs
+    # FULL-LENGTH analysis: use ALL positions (1276), not just the first 80.
+    # GPU-accelerated via torch CUDA — computes all ~813K pairs in seconds.
+    max_pos = min_len  # full length — NO truncation
     n_positions = max_pos
 
     # Pre-compute position arrays for fast vectorized access
@@ -333,49 +331,60 @@ def compute_coupling_constants(kmap_freq, sequences, n_seqs=100):
 
     print(f"  Positions: {n_positions}, Sequences: {len(clean_seqs)}")
 
-    # Build all pairs and compute MI
+    # Build all pairs and compute MI on GPU (torch CUDA, A100)
     pairs = [(i, j) for i in range(n_positions) for j in range(i + 1, n_positions)]
     print(f"  Total pairs to compute: {len(pairs)}")
     mi_matrix = np.zeros((n_positions, n_positions))
 
-    # PERFORMANCE FIX: Use vectorized numpy bincount approach instead of
-    # pure-Python Counter. Build dense array once, then bincount per pair.
-    dense = np.full((len(pos_arrays), n_positions), -1, dtype=np.int32)
-    for si, arr in enumerate(pos_arrays):
-        L = min(len(arr), n_positions)
-        dense[si, :L] = arr[:L]
+    # GPU: dense tensor + batched scatter_add MI
+    try:
+        import coevolution_gpu as cg
 
-    for idx, (i, j) in enumerate(pairs):
-        codes_i = dense[:, i]
-        codes_j = dense[:, j]
-        valid = (codes_i >= 0) & (codes_j >= 0)
-        ci = codes_i[valid]
-        cj = codes_j[valid]
-        if len(ci) < 10:
-            continue
-        # Joint via bincount: flat = ci * 20 + cj
-        joint_flat = (
-            np.bincount(ci.astype(np.int64) * 20 + cj.astype(np.int64), minlength=400)
-            .reshape(20, 20)
-            .astype(np.float64)
-        )
-        total = joint_flat.sum()
-        if total == 0:
-            continue
-        marg_i = joint_flat.sum(axis=1)
-        marg_j = joint_flat.sum(axis=0)
-        mi = 0.0
-        for ai in range(20):
-            for aj in range(20):
-                if joint_flat[ai, aj] > 0 and marg_i[ai] > 0 and marg_j[aj] > 0:
-                    p = joint_flat[ai, aj] / total
-                    pi_v = marg_i[ai] / total
-                    pj_v = marg_j[aj] / total
-                    mi += p * np.log2(p / (pi_v * pj_v))
-        mi_matrix[i, j] = mi
-        mi_matrix[j, i] = mi
-        if (idx + 1) % 500 == 0:
-            print(f"    Coupling MI: {idx + 1}/{len(pairs)}")
+        dense = cg.dense_to_gpu(pos_arrays)
+        mi_dict, cnt_dict = cg.mi_matrix_gpu(dense, pairs, min_total=10, chunk=16384)
+        for (i, j), mi in mi_dict.items():
+            mi_matrix[i, j] = mi
+            mi_matrix[j, i] = mi
+        print(f"  GPU MI computed for {len(mi_dict)} pairs (torch CUDA)")
+    except Exception as e:
+        print(f"  GPU failed ({e}), falling back to vectorized numpy...")
+        dense = np.full((len(pos_arrays), n_positions), -1, dtype=np.int32)
+        for si, arr in enumerate(pos_arrays):
+            L = min(len(arr), n_positions)
+            dense[si, :L] = arr[:L]
+
+        for idx, (i, j) in enumerate(pairs):
+            codes_i = dense[:, i]
+            codes_j = dense[:, j]
+            valid = (codes_i >= 0) & (codes_j >= 0)
+            ci = codes_i[valid]
+            cj = codes_j[valid]
+            if len(ci) < 10:
+                continue
+            joint_flat = (
+                np.bincount(
+                    ci.astype(np.int64) * 20 + cj.astype(np.int64), minlength=400
+                )
+                .reshape(20, 20)
+                .astype(np.float64)
+            )
+            total = joint_flat.sum()
+            if total == 0:
+                continue
+            marg_i = joint_flat.sum(axis=1)
+            marg_j = joint_flat.sum(axis=0)
+            mi = 0.0
+            for ai in range(20):
+                for aj in range(20):
+                    if joint_flat[ai, aj] > 0 and marg_i[ai] > 0 and marg_j[aj] > 0:
+                        p = joint_flat[ai, aj] / total
+                        pi_v = marg_i[ai] / total
+                        pj_v = marg_j[aj] / total
+                        mi += p * np.log2(p / (pi_v * pj_v))
+            mi_matrix[i, j] = mi
+            mi_matrix[j, i] = mi
+            if (idx + 1) % 500 == 0:
+                print(f"    Coupling MI: {idx + 1}/{len(pairs)}")
 
     # Compute coupling constants from MI
     # J_ij = MI(i,j) * beta (inverse temperature)

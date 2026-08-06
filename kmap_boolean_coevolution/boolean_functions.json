@@ -11,7 +11,7 @@
       "aa_j": "V",
       "ref_i": "N",
       "ref_j": "G",
-      "mi": 2.3523987939236624,
+      "mi": 2.3523988723754883,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t1 \\cdot t0",
       "n_dc": 1,
       "coverage": 2
@@ -23,7 +23,7 @@
       "aa_j": "E",
       "ref_i": "N",
       "ref_j": "G",
-      "mi": 2.3523987939236624,
+      "mi": 2.3523988723754883,
       "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t0}",
       "n_dc": 1,
       "coverage": 2
@@ -35,7 +35,7 @@
       "aa_j": "V",
       "ref_i": "N",
       "ref_j": "G",
-      "mi": 2.3523987939236624,
+      "mi": 2.3523988723754883,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot t1 \\cdot t0",
       "n_dc": 1,
       "coverage": 2
@@ -47,7 +47,7 @@
       "aa_j": "F",
       "ref_i": "N",
       "ref_j": "G",
-      "mi": 2.3523987939236624,
+      "mi": 2.3523988723754883,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -59,7 +59,7 @@
       "aa_j": "F",
       "ref_i": "N",
       "ref_j": "G",
-      "mi": 2.3523987939236624,
+      "mi": 2.3523988723754883,
       "expr": "s3 \\cdot \\bar{s2} \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -71,7 +71,7 @@
       "aa_j": "I",
       "ref_i": "N",
       "ref_j": "G",
-      "mi": 2.3523987939236624,
+      "mi": 2.3523988723754883,
       "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -83,7 +83,7 @@
       "aa_j": "K",
       "ref_i": "N",
       "ref_j": "G",
-      "mi": 2.3523987939236624,
+      "mi": 2.3523988723754883,
       "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -95,7 +95,7 @@
       "aa_j": "V",
       "ref_i": "N",
       "ref_j": "G",
-      "mi": 2.3523987939236624,
+      "mi": 2.3523988723754883,
       "expr": "s3 \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -107,7 +107,7 @@
       "aa_j": "F",
       "ref_i": "N",
       "ref_j": "G",
-      "mi": 2.3523987939236624,
+      "mi": 2.3523988723754883,
       "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -119,7 +119,7 @@
       "aa_j": "H",
       "ref_i": "N",
       "ref_j": "G",
-      "mi": 2.3523987939236624,
+      "mi": 2.3523988723754883,
       "expr": "s3 \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -131,7 +131,7 @@
       "aa_j": "F",
       "ref_i": "N",
       "ref_j": "F",
-      "mi": 2.3344845763137974,
+      "mi": 2.334484577178955,
       "expr": "s3 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 1,
       "coverage": 2
@@ -143,7 +143,7 @@
       "aa_j": "D",
       "ref_i": "N",
       "ref_j": "F",
-      "mi": 2.3344845763137974,
+      "mi": 2.334484577178955,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot t0",
       "n_dc": 1,
       "coverage": 2
@@ -155,7 +155,7 @@
       "aa_j": "D",
       "ref_i": "N",
       "ref_j": "F",
-      "mi": 2.3344845763137974,
+      "mi": 2.334484577178955,
       "expr": "\\bar{s3} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 1,
       "coverage": 2
@@ -167,7 +167,7 @@
       "aa_j": "V",
       "ref_i": "N",
       "ref_j": "F",
-      "mi": 2.3344845763137974,
+      "mi": 2.334484577178955,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -179,7 +179,7 @@
       "aa_j": "M",
       "ref_i": "N",
       "ref_j": "F",
-      "mi": 2.3344845763137974,
+      "mi": 2.334484577178955,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -191,7 +191,7 @@
       "aa_j": "N",
       "ref_i": "N",
       "ref_j": "F",
-      "mi": 2.3344845763137974,
+      "mi": 2.334484577178955,
       "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -203,7 +203,7 @@
       "aa_j": "Q",
       "ref_i": "N",
       "ref_j": "F",
-      "mi": 2.3344845763137974,
+      "mi": 2.334484577178955,
       "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -215,7 +215,7 @@
       "aa_j": "K",
       "ref_i": "N",
       "ref_j": "F",
-      "mi": 2.3344845763137974,
+      "mi": 2.334484577178955,
       "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -227,7 +227,7 @@
       "aa_j": "K",
       "ref_i": "N",
       "ref_j": "F",
-      "mi": 2.3344845763137974,
+      "mi": 2.334484577178955,
       "expr": "s3 \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -239,7 +239,7 @@
       "aa_j": "F",
       "ref_i": "N",
       "ref_j": "F",
-      "mi": 2.3344845763137974,
+      "mi": 2.334484577178955,
       "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -251,7 +251,7 @@
       "aa_j": "I",
       "ref_i": "N",
       "ref_j": "T",
-      "mi": 2.3198788345424552,
+      "mi": 2.319878578186035,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -263,7 +263,7 @@
       "aa_j": "W",
       "ref_i": "N",
       "ref_j": "T",
-      "mi": 2.3198788345424552,
+      "mi": 2.319878578186035,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -275,7 +275,7 @@
       "aa_j": "D",
       "ref_i": "N",
       "ref_j": "T",
-      "mi": 2.3198788345424552,
+      "mi": 2.319878578186035,
       "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -287,7 +287,7 @@
       "aa_j": "W",
       "ref_i": "N",
       "ref_j": "T",
-      "mi": 2.3198788345424552,
+      "mi": 2.319878578186035,
       "expr": "s3 \\cdot \\bar{s2} \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -299,7 +299,7 @@
       "aa_j": "I",
       "ref_i": "N",
       "ref_j": "T",
-      "mi": 2.3198788345424552,
+      "mi": 2.319878578186035,
       "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -311,7 +311,7 @@
       "aa_j": "H",
       "ref_i": "N",
       "ref_j": "T",
-      "mi": 2.3198788345424552,
+      "mi": 2.319878578186035,
       "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -323,7 +323,7 @@
       "aa_j": "S",
       "ref_i": "N",
       "ref_j": "T",
-      "mi": 2.3198788345424552,
+      "mi": 2.319878578186035,
       "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot t3 \\cdot t2 \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -335,7 +335,7 @@
       "aa_j": "S",
       "ref_i": "N",
       "ref_j": "T",
-      "mi": 2.3198788345424552,
+      "mi": 2.319878578186035,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -347,7 +347,7 @@
       "aa_j": "M",
       "ref_i": "N",
       "ref_j": "T",
-      "mi": 2.3198788345424552,
+      "mi": 2.319878578186035,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -359,7 +359,7 @@
       "aa_j": "D",
       "ref_i": "N",
       "ref_j": "T",
-      "mi": 2.3198788345424552,
+      "mi": 2.319878578186035,
       "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -371,7 +371,7 @@
       "aa_j": "Q",
       "ref_i": "N",
       "ref_j": "T",
-      "mi": 2.3198788345424552,
+      "mi": 2.319878578186035,
       "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -383,7 +383,7 @@
       "aa_j": "I",
       "ref_i": "N",
       "ref_j": "T",
-      "mi": 2.3198788345424552,
+      "mi": 2.319878578186035,
       "expr": "s3 \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -395,7 +395,7 @@
       "aa_j": "A",
       "ref_i": "N",
       "ref_j": "D",
-      "mi": 2.3104028086566637,
+      "mi": 2.3104026317596436,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -407,7 +407,7 @@
       "aa_j": "D",
       "ref_i": "N",
       "ref_j": "D",
-      "mi": 2.3104028086566637,
+      "mi": 2.3104026317596436,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot s0 \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -419,7 +419,7 @@
       "aa_j": "D",
       "ref_i": "N",
       "ref_j": "D",
-      "mi": 2.3104028086566637,
+      "mi": 2.3104026317596436,
       "expr": "s3 \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -431,7 +431,7 @@
       "aa_j": "W",
       "ref_i": "N",
       "ref_j": "D",
-      "mi": 2.3104028086566637,
+      "mi": 2.3104026317596436,
       "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -443,7 +443,7 @@
       "aa_j": "Q",
       "ref_i": "N",
       "ref_j": "D",
-      "mi": 2.3104028086566637,
+      "mi": 2.3104026317596436,
       "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -455,7 +455,7 @@
       "aa_j": "S",
       "ref_i": "N",
       "ref_j": "D",
-      "mi": 2.3104028086566637,
+      "mi": 2.3104026317596436,
       "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot t3 \\cdot t2 \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -467,7 +467,7 @@
       "aa_j": "S",
       "ref_i": "N",
       "ref_j": "D",
-      "mi": 2.3104028086566637,
+      "mi": 2.3104026317596436,
       "expr": "s3 \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -479,7 +479,7 @@
       "aa_j": "M",
       "ref_i": "N",
       "ref_j": "D",
-      "mi": 2.3104028086566637,
+      "mi": 2.3104026317596436,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -491,7 +491,7 @@
       "aa_j": "K",
       "ref_i": "N",
       "ref_j": "D",
-      "mi": 2.3104028086566637,
+      "mi": 2.3104026317596436,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -503,7 +503,7 @@
       "aa_j": "L",
       "ref_i": "N",
       "ref_j": "D",
-      "mi": 2.3104028086566637,
+      "mi": 2.3104026317596436,
       "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -515,7 +515,7 @@
       "aa_j": "R",
       "ref_i": "N",
       "ref_j": "D",
-      "mi": 2.3104028086566637,
+      "mi": 2.3104026317596436,
       "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot t1 \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -527,248 +527,8 @@
       "aa_j": "F",
       "ref_i": "N",
       "ref_j": "D",
-      "mi": 2.3104028086566637,
+      "mi": 2.3104026317596436,
       "expr": "s3 \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 1026,
-      "pos_j": 1040,
-      "aa_i": "A",
-      "aa_j": "D",
-      "ref_i": "S",
-      "ref_j": "G",
-      "mi": 2.2988696552148236,
-      "expr": "\\bar{s3} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
-      "n_dc": 1,
-      "coverage": 2
-    },
-    {
-      "pos_i": 1026,
-      "pos_j": 1040,
-      "aa_i": "V",
-      "aa_j": "N",
-      "ref_i": "S",
-      "ref_j": "G",
-      "mi": 2.2988696552148236,
-      "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot s0 \\cdot t3 \\cdot t1 \\cdot t0",
-      "n_dc": 1,
-      "coverage": 2
-    },
-    {
-      "pos_i": 1026,
-      "pos_j": 1040,
-      "aa_i": "A",
-      "aa_j": "R",
-      "ref_i": "S",
-      "ref_j": "G",
-      "mi": 2.2988696552148236,
-      "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot t1 \\cdot \\bar{t0}",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 1026,
-      "pos_j": 1040,
-      "aa_i": "V",
-      "aa_j": "M",
-      "ref_i": "S",
-      "ref_j": "G",
-      "mi": 2.2988696552148236,
-      "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 1026,
-      "pos_j": 1040,
-      "aa_i": "M",
-      "aa_j": "L",
-      "ref_i": "S",
-      "ref_j": "G",
-      "mi": 2.2988696552148236,
-      "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 1026,
-      "pos_j": 1040,
-      "aa_i": "Y",
-      "aa_j": "I",
-      "ref_i": "S",
-      "ref_j": "G",
-      "mi": 2.2988696552148236,
-      "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 1026,
-      "pos_j": 1040,
-      "aa_i": "Q",
-      "aa_j": "K",
-      "ref_i": "S",
-      "ref_j": "G",
-      "mi": 2.2988696552148236,
-      "expr": "s3 \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 1026,
-      "pos_j": 1040,
-      "aa_i": "H",
-      "aa_j": "H",
-      "ref_i": "S",
-      "ref_j": "G",
-      "mi": 2.2988696552148236,
-      "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 1026,
-      "pos_j": 1040,
-      "aa_i": "Y",
-      "aa_j": "W",
-      "ref_i": "S",
-      "ref_j": "G",
-      "mi": 2.2988696552148236,
-      "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot t0",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 1026,
-      "pos_j": 1040,
-      "aa_i": "W",
-      "aa_j": "R",
-      "ref_i": "S",
-      "ref_j": "G",
-      "mi": 2.2988696552148236,
-      "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot t3 \\cdot t2 \\cdot t1 \\cdot \\bar{t0}",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 1026,
-      "pos_j": 1042,
-      "aa_i": "V",
-      "aa_j": "R",
-      "ref_i": "S",
-      "ref_j": "G",
-      "mi": 2.2988696552148236,
-      "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot s0 \\cdot t3 \\cdot t2 \\cdot t1",
-      "n_dc": 1,
-      "coverage": 3
-    },
-    {
-      "pos_i": 1026,
-      "pos_j": 1042,
-      "aa_i": "A",
-      "aa_j": "D",
-      "ref_i": "S",
-      "ref_j": "G",
-      "mi": 2.2988696552148236,
-      "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 1026,
-      "pos_j": 1042,
-      "aa_i": "L",
-      "aa_j": "H",
-      "ref_i": "S",
-      "ref_j": "G",
-      "mi": 2.2988696552148236,
-      "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 1026,
-      "pos_j": 1042,
-      "aa_i": "F",
-      "aa_j": "K",
-      "ref_i": "S",
-      "ref_j": "G",
-      "mi": 2.2988696552148236,
-      "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 1026,
-      "pos_j": 1042,
-      "aa_i": "Q",
-      "aa_j": "Y",
-      "ref_i": "S",
-      "ref_j": "G",
-      "mi": 2.2988696552148236,
-      "expr": "s3 \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot \\bar{t0}",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 1026,
-      "pos_j": 1042,
-      "aa_i": "H",
-      "aa_j": "K",
-      "ref_i": "S",
-      "ref_j": "G",
-      "mi": 2.2988696552148236,
-      "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 1026,
-      "pos_j": 1042,
-      "aa_i": "I",
-      "aa_j": "W",
-      "ref_i": "S",
-      "ref_j": "G",
-      "mi": 2.2988696552148236,
-      "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot t0",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 1026,
-      "pos_j": 1042,
-      "aa_i": "F",
-      "aa_j": "I",
-      "ref_i": "S",
-      "ref_j": "G",
-      "mi": 2.2988696552148236,
-      "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 1026,
-      "pos_j": 1042,
-      "aa_i": "Y",
-      "aa_j": "A",
-      "ref_i": "S",
-      "ref_j": "G",
-      "mi": 2.2988696552148236,
-      "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 1026,
-      "pos_j": 1042,
-      "aa_i": "E",
-      "aa_j": "N",
-      "ref_i": "S",
-      "ref_j": "G",
-      "mi": 2.2988696552148236,
-      "expr": "s3 \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
     },
@@ -779,7 +539,7 @@
       "aa_j": "W",
       "ref_i": "G",
       "ref_j": "G",
-      "mi": 2.2988696552148236,
+      "mi": 2.2988698482513428,
       "expr": "\\bar{s3} \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot t0",
       "n_dc": 1,
       "coverage": 2
@@ -791,7 +551,7 @@
       "aa_j": "I",
       "ref_i": "G",
       "ref_j": "G",
-      "mi": 2.2988696552148236,
+      "mi": 2.2988698482513428,
       "expr": "\\bar{s3} \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 1,
       "coverage": 2
@@ -803,7 +563,7 @@
       "aa_j": "F",
       "ref_i": "G",
       "ref_j": "G",
-      "mi": 2.2988696552148236,
+      "mi": 2.2988698482513428,
       "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -815,7 +575,7 @@
       "aa_j": "Q",
       "ref_i": "G",
       "ref_j": "G",
-      "mi": 2.2988696552148236,
+      "mi": 2.2988698482513428,
       "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -827,7 +587,7 @@
       "aa_j": "F",
       "ref_i": "G",
       "ref_j": "G",
-      "mi": 2.2988696552148236,
+      "mi": 2.2988698482513428,
       "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -839,7 +599,7 @@
       "aa_j": "M",
       "ref_i": "G",
       "ref_j": "G",
-      "mi": 2.2988696552148236,
+      "mi": 2.2988698482513428,
       "expr": "s3 \\cdot s2 \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -851,7 +611,7 @@
       "aa_j": "Q",
       "ref_i": "G",
       "ref_j": "G",
-      "mi": 2.2988696552148236,
+      "mi": 2.2988698482513428,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -863,7 +623,7 @@
       "aa_j": "R",
       "ref_i": "G",
       "ref_j": "G",
-      "mi": 2.2988696552148236,
+      "mi": 2.2988698482513428,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot s0 \\cdot t3 \\cdot t2 \\cdot t1 \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -875,8 +635,248 @@
       "aa_j": "E",
       "ref_i": "G",
       "ref_j": "G",
-      "mi": 2.2988696552148236,
+      "mi": 2.2988698482513428,
       "expr": "s3 \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 1026,
+      "pos_j": 1040,
+      "aa_i": "A",
+      "aa_j": "D",
+      "ref_i": "S",
+      "ref_j": "G",
+      "mi": 2.2988696098327637,
+      "expr": "\\bar{s3} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
+      "n_dc": 1,
+      "coverage": 2
+    },
+    {
+      "pos_i": 1026,
+      "pos_j": 1040,
+      "aa_i": "V",
+      "aa_j": "N",
+      "ref_i": "S",
+      "ref_j": "G",
+      "mi": 2.2988696098327637,
+      "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot s0 \\cdot t3 \\cdot t1 \\cdot t0",
+      "n_dc": 1,
+      "coverage": 2
+    },
+    {
+      "pos_i": 1026,
+      "pos_j": 1040,
+      "aa_i": "A",
+      "aa_j": "R",
+      "ref_i": "S",
+      "ref_j": "G",
+      "mi": 2.2988696098327637,
+      "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot t1 \\cdot \\bar{t0}",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 1026,
+      "pos_j": 1040,
+      "aa_i": "V",
+      "aa_j": "M",
+      "ref_i": "S",
+      "ref_j": "G",
+      "mi": 2.2988696098327637,
+      "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 1026,
+      "pos_j": 1040,
+      "aa_i": "M",
+      "aa_j": "L",
+      "ref_i": "S",
+      "ref_j": "G",
+      "mi": 2.2988696098327637,
+      "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 1026,
+      "pos_j": 1040,
+      "aa_i": "Y",
+      "aa_j": "I",
+      "ref_i": "S",
+      "ref_j": "G",
+      "mi": 2.2988696098327637,
+      "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 1026,
+      "pos_j": 1040,
+      "aa_i": "Q",
+      "aa_j": "K",
+      "ref_i": "S",
+      "ref_j": "G",
+      "mi": 2.2988696098327637,
+      "expr": "s3 \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 1026,
+      "pos_j": 1040,
+      "aa_i": "H",
+      "aa_j": "H",
+      "ref_i": "S",
+      "ref_j": "G",
+      "mi": 2.2988696098327637,
+      "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 1026,
+      "pos_j": 1040,
+      "aa_i": "Y",
+      "aa_j": "W",
+      "ref_i": "S",
+      "ref_j": "G",
+      "mi": 2.2988696098327637,
+      "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot t0",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 1026,
+      "pos_j": 1040,
+      "aa_i": "W",
+      "aa_j": "R",
+      "ref_i": "S",
+      "ref_j": "G",
+      "mi": 2.2988696098327637,
+      "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot t3 \\cdot t2 \\cdot t1 \\cdot \\bar{t0}",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 1026,
+      "pos_j": 1042,
+      "aa_i": "V",
+      "aa_j": "R",
+      "ref_i": "S",
+      "ref_j": "G",
+      "mi": 2.2988696098327637,
+      "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot s0 \\cdot t3 \\cdot t2 \\cdot t1",
+      "n_dc": 1,
+      "coverage": 3
+    },
+    {
+      "pos_i": 1026,
+      "pos_j": 1042,
+      "aa_i": "A",
+      "aa_j": "D",
+      "ref_i": "S",
+      "ref_j": "G",
+      "mi": 2.2988696098327637,
+      "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 1026,
+      "pos_j": 1042,
+      "aa_i": "L",
+      "aa_j": "H",
+      "ref_i": "S",
+      "ref_j": "G",
+      "mi": 2.2988696098327637,
+      "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 1026,
+      "pos_j": 1042,
+      "aa_i": "F",
+      "aa_j": "K",
+      "ref_i": "S",
+      "ref_j": "G",
+      "mi": 2.2988696098327637,
+      "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 1026,
+      "pos_j": 1042,
+      "aa_i": "Q",
+      "aa_j": "Y",
+      "ref_i": "S",
+      "ref_j": "G",
+      "mi": 2.2988696098327637,
+      "expr": "s3 \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot \\bar{t0}",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 1026,
+      "pos_j": 1042,
+      "aa_i": "H",
+      "aa_j": "K",
+      "ref_i": "S",
+      "ref_j": "G",
+      "mi": 2.2988696098327637,
+      "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 1026,
+      "pos_j": 1042,
+      "aa_i": "I",
+      "aa_j": "W",
+      "ref_i": "S",
+      "ref_j": "G",
+      "mi": 2.2988696098327637,
+      "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot t0",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 1026,
+      "pos_j": 1042,
+      "aa_i": "F",
+      "aa_j": "I",
+      "ref_i": "S",
+      "ref_j": "G",
+      "mi": 2.2988696098327637,
+      "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 1026,
+      "pos_j": 1042,
+      "aa_i": "Y",
+      "aa_j": "A",
+      "ref_i": "S",
+      "ref_j": "G",
+      "mi": 2.2988696098327637,
+      "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 1026,
+      "pos_j": 1042,
+      "aa_i": "E",
+      "aa_j": "N",
+      "ref_i": "S",
+      "ref_j": "G",
+      "mi": 2.2988696098327637,
+      "expr": "s3 \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
     },
@@ -887,7 +887,7 @@
       "aa_j": "Y",
       "ref_i": "R",
       "ref_j": "N",
-      "mi": 2.294614395689383,
+      "mi": 2.294614315032959,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot t1",
       "n_dc": 1,
       "coverage": 2
@@ -899,7 +899,7 @@
       "aa_j": "D",
       "ref_i": "R",
       "ref_j": "N",
-      "mi": 2.294614395689383,
+      "mi": 2.294614315032959,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -911,7 +911,7 @@
       "aa_j": "M",
       "ref_i": "R",
       "ref_j": "N",
-      "mi": 2.294614395689383,
+      "mi": 2.294614315032959,
       "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -923,7 +923,7 @@
       "aa_j": "E",
       "ref_i": "R",
       "ref_j": "N",
-      "mi": 2.294614395689383,
+      "mi": 2.294614315032959,
       "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -935,7 +935,7 @@
       "aa_j": "V",
       "ref_i": "R",
       "ref_j": "N",
-      "mi": 2.294614395689383,
+      "mi": 2.294614315032959,
       "expr": "s3 \\cdot \\bar{s2} \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -947,7 +947,7 @@
       "aa_j": "I",
       "ref_i": "R",
       "ref_j": "N",
-      "mi": 2.294614395689383,
+      "mi": 2.294614315032959,
       "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -959,7 +959,7 @@
       "aa_j": "K",
       "ref_i": "R",
       "ref_j": "N",
-      "mi": 2.294614395689383,
+      "mi": 2.294614315032959,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot s0 \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -971,7 +971,7 @@
       "aa_j": "N",
       "ref_i": "R",
       "ref_j": "N",
-      "mi": 2.294614395689383,
+      "mi": 2.294614315032959,
       "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -983,7 +983,7 @@
       "aa_j": "L",
       "ref_i": "R",
       "ref_j": "N",
-      "mi": 2.294614395689383,
+      "mi": 2.294614315032959,
       "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -995,7 +995,7 @@
       "aa_j": "F",
       "ref_i": "I",
       "ref_j": "N",
-      "mi": 2.294614395689383,
+      "mi": 2.294614315032959,
       "expr": "s3 \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot t0",
       "n_dc": 1,
       "coverage": 2
@@ -1007,7 +1007,7 @@
       "aa_j": "I",
       "ref_i": "I",
       "ref_j": "N",
-      "mi": 2.294614395689383,
+      "mi": 2.294614315032959,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -1019,7 +1019,7 @@
       "aa_j": "V",
       "ref_i": "I",
       "ref_j": "N",
-      "mi": 2.294614395689383,
+      "mi": 2.294614315032959,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -1031,7 +1031,7 @@
       "aa_j": "V",
       "ref_i": "I",
       "ref_j": "N",
-      "mi": 2.294614395689383,
+      "mi": 2.294614315032959,
       "expr": "s3 \\cdot \\bar{s2} \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -1043,7 +1043,7 @@
       "aa_j": "F",
       "ref_i": "I",
       "ref_j": "N",
-      "mi": 2.294614395689383,
+      "mi": 2.294614315032959,
       "expr": "s3 \\cdot \\bar{s2} \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -1055,7 +1055,7 @@
       "aa_j": "Q",
       "ref_i": "I",
       "ref_j": "N",
-      "mi": 2.294614395689383,
+      "mi": 2.294614315032959,
       "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -1067,7 +1067,7 @@
       "aa_j": "S",
       "ref_i": "I",
       "ref_j": "N",
-      "mi": 2.294614395689383,
+      "mi": 2.294614315032959,
       "expr": "s3 \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -1079,7 +1079,7 @@
       "aa_j": "Y",
       "ref_i": "I",
       "ref_j": "N",
-      "mi": 2.294614395689383,
+      "mi": 2.294614315032959,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -1091,7 +1091,7 @@
       "aa_j": "A",
       "ref_i": "I",
       "ref_j": "N",
-      "mi": 2.294614395689383,
+      "mi": 2.294614315032959,
       "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -1103,7 +1103,7 @@
       "aa_j": "E",
       "ref_i": "I",
       "ref_j": "N",
-      "mi": 2.294614395689383,
+      "mi": 2.294614315032959,
       "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -1115,7 +1115,7 @@
       "aa_j": "A",
       "ref_i": "V",
       "ref_j": "A",
-      "mi": 2.288814718823103,
+      "mi": 2.2888150215148926,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 1,
       "coverage": 2
@@ -1127,7 +1127,7 @@
       "aa_j": "A",
       "ref_i": "V",
       "ref_j": "A",
-      "mi": 2.288814718823103,
+      "mi": 2.2888150215148926,
       "expr": "\\bar{s3} \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 1,
       "coverage": 2
@@ -1139,7 +1139,7 @@
       "aa_j": "F",
       "ref_i": "V",
       "ref_j": "A",
-      "mi": 2.288814718823103,
+      "mi": 2.2888150215148926,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -1151,7 +1151,7 @@
       "aa_j": "I",
       "ref_i": "V",
       "ref_j": "A",
-      "mi": 2.288814718823103,
+      "mi": 2.2888150215148926,
       "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -1163,7 +1163,7 @@
       "aa_j": "W",
       "ref_i": "V",
       "ref_j": "A",
-      "mi": 2.288814718823103,
+      "mi": 2.2888150215148926,
       "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -1175,7 +1175,7 @@
       "aa_j": "E",
       "ref_i": "V",
       "ref_j": "A",
-      "mi": 2.288814718823103,
+      "mi": 2.2888150215148926,
       "expr": "s3 \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -1187,7 +1187,7 @@
       "aa_j": "I",
       "ref_i": "V",
       "ref_j": "A",
-      "mi": 2.288814718823103,
+      "mi": 2.2888150215148926,
       "expr": "s3 \\cdot \\bar{s2} \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -1199,7 +1199,7 @@
       "aa_j": "D",
       "ref_i": "V",
       "ref_j": "A",
-      "mi": 2.288814718823103,
+      "mi": 2.2888150215148926,
       "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -1211,7 +1211,7 @@
       "aa_j": "F",
       "ref_i": "V",
       "ref_j": "A",
-      "mi": 2.288814718823103,
+      "mi": 2.2888150215148926,
       "expr": "s3 \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -1223,7 +1223,7 @@
       "aa_j": "Q",
       "ref_i": "V",
       "ref_j": "A",
-      "mi": 2.288814718823103,
+      "mi": 2.2888150215148926,
       "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -1235,7 +1235,7 @@
       "aa_j": "M",
       "ref_i": "V",
       "ref_j": "P",
-      "mi": 2.2875610657813876,
+      "mi": 2.2875611782073975,
       "expr": "\\bar{s3} \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 1,
       "coverage": 2
@@ -1247,7 +1247,7 @@
       "aa_j": "H",
       "ref_i": "V",
       "ref_j": "P",
-      "mi": 2.2875610657813876,
+      "mi": 2.2875611782073975,
       "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot \\bar{t0}",
       "n_dc": 1,
       "coverage": 2
@@ -1259,7 +1259,7 @@
       "aa_j": "Y",
       "ref_i": "V",
       "ref_j": "P",
-      "mi": 2.2875610657813876,
+      "mi": 2.2875611782073975,
       "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t2 \\cdot t1 \\cdot \\bar{t0}",
       "n_dc": 1,
       "coverage": 2
@@ -1271,7 +1271,7 @@
       "aa_j": "Q",
       "ref_i": "V",
       "ref_j": "P",
-      "mi": 2.2875610657813876,
+      "mi": 2.2875611782073975,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -1283,7 +1283,7 @@
       "aa_j": "N",
       "ref_i": "V",
       "ref_j": "P",
-      "mi": 2.2875610657813876,
+      "mi": 2.2875611782073975,
       "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -1295,7 +1295,7 @@
       "aa_j": "K",
       "ref_i": "V",
       "ref_j": "P",
-      "mi": 2.2875610657813876,
+      "mi": 2.2875611782073975,
       "expr": "s3 \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -1307,7 +1307,7 @@
       "aa_j": "A",
       "ref_i": "V",
       "ref_j": "P",
-      "mi": 2.2875610657813876,
+      "mi": 2.2875611782073975,
       "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -1319,7 +1319,7 @@
       "aa_j": "I",
       "ref_i": "V",
       "ref_j": "P",
-      "mi": 2.2875610657813876,
+      "mi": 2.2875611782073975,
       "expr": "s3 \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -1331,7 +1331,7 @@
       "aa_j": "S",
       "ref_i": "V",
       "ref_j": "P",
-      "mi": 2.2875610657813876,
+      "mi": 2.2875611782073975,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -1343,7 +1343,7 @@
       "aa_j": "E",
       "ref_i": "V",
       "ref_j": "P",
-      "mi": 2.2875610657813876,
+      "mi": 2.2875611782073975,
       "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -1355,7 +1355,7 @@
       "aa_j": "W",
       "ref_i": "V",
       "ref_j": "P",
-      "mi": 2.2875610657813876,
+      "mi": 2.2875611782073975,
       "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -1367,7 +1367,7 @@
       "aa_j": "I",
       "ref_i": "N",
       "ref_j": "C",
-      "mi": 2.2865150990404426,
+      "mi": 2.2865149974823,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 1,
       "coverage": 2
@@ -1379,7 +1379,7 @@
       "aa_j": "F",
       "ref_i": "N",
       "ref_j": "C",
-      "mi": 2.2865150990404426,
+      "mi": 2.2865149974823,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot t0",
       "n_dc": 1,
       "coverage": 2
@@ -1391,7 +1391,7 @@
       "aa_j": "K",
       "ref_i": "N",
       "ref_j": "C",
-      "mi": 2.2865150990404426,
+      "mi": 2.2865149974823,
       "expr": "s3 \\cdot s2 \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 1,
       "coverage": 2
@@ -1403,7 +1403,7 @@
       "aa_j": "M",
       "ref_i": "N",
       "ref_j": "C",
-      "mi": 2.2865150990404426,
+      "mi": 2.2865149974823,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1}",
       "n_dc": 1,
       "coverage": 2
@@ -1415,7 +1415,7 @@
       "aa_j": "S",
       "ref_i": "N",
       "ref_j": "C",
-      "mi": 2.2865150990404426,
+      "mi": 2.2865149974823,
       "expr": "\\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot t1 \\cdot t0",
       "n_dc": 1,
       "coverage": 2
@@ -1427,7 +1427,7 @@
       "aa_j": "S",
       "ref_i": "N",
       "ref_j": "C",
-      "mi": 2.2865150990404426,
+      "mi": 2.2865149974823,
       "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot t3 \\cdot t2 \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -1439,7 +1439,7 @@
       "aa_j": "M",
       "ref_i": "N",
       "ref_j": "C",
-      "mi": 2.2865150990404426,
+      "mi": 2.2865149974823,
       "expr": "s3 \\cdot \\bar{s2} \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -1451,7 +1451,7 @@
       "aa_j": "H",
       "ref_i": "N",
       "ref_j": "C",
-      "mi": 2.2865150990404426,
+      "mi": 2.2865149974823,
       "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -1463,7 +1463,7 @@
       "aa_j": "W",
       "ref_i": "N",
       "ref_j": "C",
-      "mi": 2.2865150990404426,
+      "mi": 2.2865149974823,
       "expr": "s3 \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -1475,7 +1475,7 @@
       "aa_j": "A",
       "ref_i": "N",
       "ref_j": "C",
-      "mi": 2.2865150990404426,
+      "mi": 2.2865149974823,
       "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -1487,128 +1487,8 @@
       "aa_j": "I",
       "ref_i": "N",
       "ref_j": "C",
-      "mi": 2.2865150990404426,
+      "mi": 2.2865149974823,
       "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 459,
-      "pos_j": 473,
-      "aa_i": "L",
-      "aa_j": "E",
-      "ref_i": "P",
-      "ref_j": "N",
-      "mi": 2.284218593794427,
-      "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1}",
-      "n_dc": 1,
-      "coverage": 2
-    },
-    {
-      "pos_i": 459,
-      "pos_j": 473,
-      "aa_i": "W",
-      "aa_j": "I",
-      "ref_i": "P",
-      "ref_j": "N",
-      "mi": 2.284218593794427,
-      "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t0",
-      "n_dc": 1,
-      "coverage": 2
-    },
-    {
-      "pos_i": 459,
-      "pos_j": 473,
-      "aa_i": "W",
-      "aa_j": "V",
-      "ref_i": "P",
-      "ref_j": "N",
-      "mi": 2.284218593794427,
-      "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot t1 \\cdot t0",
-      "n_dc": 1,
-      "coverage": 2
-    },
-    {
-      "pos_i": 459,
-      "pos_j": 473,
-      "aa_i": "L",
-      "aa_j": "W",
-      "ref_i": "P",
-      "ref_j": "N",
-      "mi": 2.284218593794427,
-      "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot t0",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 459,
-      "pos_j": 473,
-      "aa_i": "N",
-      "aa_j": "L",
-      "ref_i": "P",
-      "ref_j": "N",
-      "mi": 2.284218593794427,
-      "expr": "s3 \\cdot \\bar{s2} \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 459,
-      "pos_j": 473,
-      "aa_i": "N",
-      "aa_j": "S",
-      "ref_i": "P",
-      "ref_j": "N",
-      "mi": 2.284218593794427,
-      "expr": "s3 \\cdot \\bar{s2} \\cdot s1 \\cdot s0 \\cdot t3 \\cdot t2 \\cdot t1 \\cdot t0",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 459,
-      "pos_j": 473,
-      "aa_i": "R",
-      "aa_j": "Y",
-      "ref_i": "P",
-      "ref_j": "N",
-      "mi": 2.284218593794427,
-      "expr": "s3 \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot \\bar{t0}",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 459,
-      "pos_j": 473,
-      "aa_i": "A",
-      "aa_j": "F",
-      "ref_i": "P",
-      "ref_j": "N",
-      "mi": 2.284218593794427,
-      "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 459,
-      "pos_j": 473,
-      "aa_i": "I",
-      "aa_j": "W",
-      "ref_i": "P",
-      "ref_j": "N",
-      "mi": 2.284218593794427,
-      "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot t0",
-      "n_dc": 0,
-      "coverage": 1
-    },
-    {
-      "pos_i": 459,
-      "pos_j": 473,
-      "aa_i": "M",
-      "aa_j": "A",
-      "ref_i": "P",
-      "ref_j": "N",
-      "mi": 2.284218593794427,
-      "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
     },
@@ -1619,7 +1499,7 @@
       "aa_j": "F",
       "ref_i": "Y",
       "ref_j": "N",
-      "mi": 2.284218593794427,
+      "mi": 2.2842187881469727,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot t0",
       "n_dc": 1,
       "coverage": 2
@@ -1631,7 +1511,7 @@
       "aa_j": "V",
       "ref_i": "Y",
       "ref_j": "N",
-      "mi": 2.284218593794427,
+      "mi": 2.2842187881469727,
       "expr": "s3 \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t1 \\cdot t0",
       "n_dc": 1,
       "coverage": 2
@@ -1643,7 +1523,7 @@
       "aa_j": "L",
       "ref_i": "Y",
       "ref_j": "N",
-      "mi": 2.284218593794427,
+      "mi": 2.2842187881469727,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -1655,7 +1535,7 @@
       "aa_j": "W",
       "ref_i": "Y",
       "ref_j": "N",
-      "mi": 2.284218593794427,
+      "mi": 2.2842187881469727,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -1667,7 +1547,7 @@
       "aa_j": "A",
       "ref_i": "Y",
       "ref_j": "N",
-      "mi": 2.284218593794427,
+      "mi": 2.2842187881469727,
       "expr": "s3 \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -1679,7 +1559,7 @@
       "aa_j": "F",
       "ref_i": "Y",
       "ref_j": "N",
-      "mi": 2.284218593794427,
+      "mi": 2.2842187881469727,
       "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -1691,7 +1571,7 @@
       "aa_j": "W",
       "ref_i": "Y",
       "ref_j": "N",
-      "mi": 2.284218593794427,
+      "mi": 2.2842187881469727,
       "expr": "s3 \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -1703,7 +1583,7 @@
       "aa_j": "Q",
       "ref_i": "Y",
       "ref_j": "N",
-      "mi": 2.284218593794427,
+      "mi": 2.2842187881469727,
       "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -1715,7 +1595,7 @@
       "aa_j": "M",
       "ref_i": "Y",
       "ref_j": "N",
-      "mi": 2.284218593794427,
+      "mi": 2.2842187881469727,
       "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -1727,8 +1607,128 @@
       "aa_j": "K",
       "ref_i": "Y",
       "ref_j": "N",
-      "mi": 2.284218593794427,
+      "mi": 2.2842187881469727,
       "expr": "s3 \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 459,
+      "pos_j": 473,
+      "aa_i": "L",
+      "aa_j": "E",
+      "ref_i": "P",
+      "ref_j": "N",
+      "mi": 2.2842185497283936,
+      "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1}",
+      "n_dc": 1,
+      "coverage": 2
+    },
+    {
+      "pos_i": 459,
+      "pos_j": 473,
+      "aa_i": "W",
+      "aa_j": "I",
+      "ref_i": "P",
+      "ref_j": "N",
+      "mi": 2.2842185497283936,
+      "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t0",
+      "n_dc": 1,
+      "coverage": 2
+    },
+    {
+      "pos_i": 459,
+      "pos_j": 473,
+      "aa_i": "W",
+      "aa_j": "V",
+      "ref_i": "P",
+      "ref_j": "N",
+      "mi": 2.2842185497283936,
+      "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot t1 \\cdot t0",
+      "n_dc": 1,
+      "coverage": 2
+    },
+    {
+      "pos_i": 459,
+      "pos_j": 473,
+      "aa_i": "L",
+      "aa_j": "W",
+      "ref_i": "P",
+      "ref_j": "N",
+      "mi": 2.2842185497283936,
+      "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot t0",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 459,
+      "pos_j": 473,
+      "aa_i": "N",
+      "aa_j": "L",
+      "ref_i": "P",
+      "ref_j": "N",
+      "mi": 2.2842185497283936,
+      "expr": "s3 \\cdot \\bar{s2} \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 459,
+      "pos_j": 473,
+      "aa_i": "N",
+      "aa_j": "S",
+      "ref_i": "P",
+      "ref_j": "N",
+      "mi": 2.2842185497283936,
+      "expr": "s3 \\cdot \\bar{s2} \\cdot s1 \\cdot s0 \\cdot t3 \\cdot t2 \\cdot t1 \\cdot t0",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 459,
+      "pos_j": 473,
+      "aa_i": "R",
+      "aa_j": "Y",
+      "ref_i": "P",
+      "ref_j": "N",
+      "mi": 2.2842185497283936,
+      "expr": "s3 \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot \\bar{t0}",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 459,
+      "pos_j": 473,
+      "aa_i": "A",
+      "aa_j": "F",
+      "ref_i": "P",
+      "ref_j": "N",
+      "mi": 2.2842185497283936,
+      "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 459,
+      "pos_j": 473,
+      "aa_i": "I",
+      "aa_j": "W",
+      "ref_i": "P",
+      "ref_j": "N",
+      "mi": 2.2842185497283936,
+      "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot t0",
+      "n_dc": 0,
+      "coverage": 1
+    },
+    {
+      "pos_i": 459,
+      "pos_j": 473,
+      "aa_i": "M",
+      "aa_j": "A",
+      "ref_i": "P",
+      "ref_j": "N",
+      "mi": 2.2842185497283936,
+      "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
     },
@@ -1739,7 +1739,7 @@
       "aa_j": "E",
       "ref_i": "V",
       "ref_j": "A",
-      "mi": 2.2816204742187867,
+      "mi": 2.281620502471924,
       "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1}",
       "n_dc": 1,
       "coverage": 2
@@ -1751,7 +1751,7 @@
       "aa_j": "N",
       "ref_i": "V",
       "ref_j": "A",
-      "mi": 2.2816204742187867,
+      "mi": 2.281620502471924,
       "expr": "\\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot t0",
       "n_dc": 1,
       "coverage": 2
@@ -1763,7 +1763,7 @@
       "aa_j": "L",
       "ref_i": "V",
       "ref_j": "A",
-      "mi": 2.2816204742187867,
+      "mi": 2.281620502471924,
       "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t1",
       "n_dc": 1,
       "coverage": 2
@@ -1775,7 +1775,7 @@
       "aa_j": "M",
       "ref_i": "V",
       "ref_j": "A",
-      "mi": 2.2816204742187867,
+      "mi": 2.281620502471924,
       "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -1787,7 +1787,7 @@
       "aa_j": "Q",
       "ref_i": "V",
       "ref_j": "A",
-      "mi": 2.2816204742187867,
+      "mi": 2.281620502471924,
       "expr": "s3 \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -1799,7 +1799,7 @@
       "aa_j": "F",
       "ref_i": "V",
       "ref_j": "A",
-      "mi": 2.2816204742187867,
+      "mi": 2.281620502471924,
       "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
       "n_dc": 0,
       "coverage": 1
@@ -1811,7 +1811,7 @@
       "aa_j": "H",
       "ref_i": "V",
       "ref_j": "A",
-      "mi": 2.2816204742187867,
+      "mi": 2.281620502471924,
       "expr": "s3 \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1
@@ -1823,7 +1823,7 @@
       "aa_j": "L",
       "ref_i": "V",
       "ref_j": "A",
-      "mi": 2.2816204742187867,
+      "mi": 2.281620502471924,
       "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
       "n_dc": 0,
       "coverage": 1

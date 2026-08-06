@@ -67,8 +67,45 @@ def find_variable_positions(pos_arrays, n_seqs, max_pos=80, threshold=0.3):
 def find_coevolutionary_pairs(
     pos_arrays, variable_positions, n_seqs, max_gap=30, min_mi=0.1
 ):
-    """Find position pairs with significant co-evolution (MI > min_mi)."""
+    """Find position pairs with significant co-evolution (MI > min_mi).
+
+    GPU-accelerated via torch CUDA (coevolution_gpu) — mutation-only MI.
+    Falls back to CPU Counter implementation if CUDA unavailable.
+    """
     co_evolving = []
+
+    # Build pair list (within max_gap)
+    pairs = [
+        (pos_i, pos_j)
+        for idx_i, pos_i in enumerate(variable_positions)
+        for pos_j in variable_positions[idx_i + 1 :]
+        if abs(pos_i - pos_j) <= max_gap
+    ]
+
+    # GPU path
+    try:
+        import coevolution_gpu as cg
+
+        dense = cg.dense_to_gpu(pos_arrays)
+        refs = cg.majority_refs_gpu(dense)
+        mi_dict, cnt_dict = cg.mi_matrix_gpu(
+            dense,
+            pairs,
+            refs=refs,
+            mutation_only=True,
+            min_total=5,
+            chunk=16384,
+        )
+        for (pos_i, pos_j), mi in mi_dict.items():
+            n_mut = cnt_dict[(pos_i, pos_j)]
+            if mi > min_mi:
+                co_evolving.append(
+                    (pos_i, pos_j, mi, n_mut, int(refs[pos_i]), int(refs[pos_j]))
+                )
+        co_evolving.sort(key=lambda x: x[2], reverse=True)
+        return co_evolving
+    except Exception as e:
+        print(f"  GPU MI failed ({e}), using CPU...")
 
     for idx_i, pos_i in enumerate(variable_positions):
         for idx_j in range(idx_i + 1, len(variable_positions)):

@@ -58,49 +58,63 @@ def main():
         pos_arrays_list.append(arr)
     pos_arrays = np.array(pos_arrays_list)
 
-    # Compute MI matrix for all position pairs (VECTORIZED)
-    print("Computing MI matrix for all position pairs (vectorized)...")
+    # Compute MI matrix for ALL position pairs (FULL length) — GPU accelerated
+    print("Computing MI matrix for all position pairs (FULL length, GPU)...")
     mi_matrix = np.zeros((max_pos, max_pos), dtype=np.float64)
 
-    def mi_vectorized(pos_arrays, pos_i, pos_j, n_seqs):
-        codes_i = pos_arrays[:n_seqs, pos_i]
-        codes_j = pos_arrays[:n_seqs, pos_j]
-        valid = (codes_i >= 0) & (codes_j >= 0)
-        codes_i = codes_i[valid]
-        codes_j = codes_j[valid]
-        if len(codes_i) < 10:
-            return 0.0
-        pairs = codes_i * 20 + codes_j
-        joint_flat = (
-            np.bincount(pairs, minlength=400).reshape(20, 20).astype(np.float64)
-        )
-        total = joint_flat.sum()
-        if total == 0:
-            return 0.0
-        marg_i = joint_flat.sum(axis=1)
-        marg_j = joint_flat.sum(axis=0)
-        mi = 0.0
-        for ai in range(20):
-            for aj in range(20):
-                if joint_flat[ai, aj] > 0 and marg_i[ai] > 0 and marg_j[aj] > 0:
-                    p = joint_flat[ai, aj] / total
-                    p_i = marg_i[ai] / total
-                    p_j = marg_j[aj] / total
-                    if p > 0 and p_i > 0 and p_j > 0:
-                        mi += p * np.log2(p / (p_i * p_j))
-        return mi
+    try:
+        import coevolution_gpu as cg
 
-    total_pairs = 0
-    for i in range(max_pos):
-        for j in range(i + 1, max_pos):
-            mi = mi_vectorized(pos_arrays, i, j, n_all)
+        pos_arrays_list = [arr for arr in pos_arrays]  # list of 1D arrays
+        dense = cg.dense_to_gpu(pos_arrays_list)
+        pairs = cg.all_pairs(max_pos)  # ALL pairs, full matrix (~813K)
+        print(f"  GPU: {len(pairs)} pairs on {dense.device}")
+        mi_dict, _ = cg.mi_matrix_gpu(dense, pairs, min_total=10, chunk=32768)
+        for (i, j), mi in mi_dict.items():
             mi_matrix[i, j] = mi
             mi_matrix[j, i] = mi
-            total_pairs += 1
-            if total_pairs % 10000 == 0:
-                print(f"    Progress: {total_pairs} pairs")
+        print(f"  Completed: {len(mi_dict)} pairs (GPU)")
+    except Exception as e:
+        print(f"  GPU failed ({e}), using vectorized numpy...")
 
-    print(f"  Completed: {total_pairs} pairs")
+        def mi_vectorized(pos_arrays, pos_i, pos_j, n_seqs):
+            codes_i = pos_arrays[:n_seqs, pos_i]
+            codes_j = pos_arrays[:n_seqs, pos_j]
+            valid = (codes_i >= 0) & (codes_j >= 0)
+            codes_i = codes_i[valid]
+            codes_j = codes_j[valid]
+            if len(codes_i) < 10:
+                return 0.0
+            pairs = codes_i * 20 + codes_j
+            joint_flat = (
+                np.bincount(pairs, minlength=400).reshape(20, 20).astype(np.float64)
+            )
+            total = joint_flat.sum()
+            if total == 0:
+                return 0.0
+            marg_i = joint_flat.sum(axis=1)
+            marg_j = joint_flat.sum(axis=0)
+            mi = 0.0
+            for ai in range(20):
+                for aj in range(20):
+                    if joint_flat[ai, aj] > 0 and marg_i[ai] > 0 and marg_j[aj] > 0:
+                        p = joint_flat[ai, aj] / total
+                        p_i = marg_i[ai] / total
+                        p_j = marg_j[aj] / total
+                        if p > 0 and p_i > 0 and p_j > 0:
+                            mi += p * np.log2(p / (p_i * p_j))
+            return mi
+
+        total_pairs = 0
+        for i in range(max_pos):
+            for j in range(i + 1, max_pos):
+                mi = mi_vectorized(pos_arrays, i, j, n_all)
+                mi_matrix[i, j] = mi
+                mi_matrix[j, i] = mi
+                total_pairs += 1
+                if total_pairs % 10000 == 0:
+                    print(f"    Progress: {total_pairs} pairs")
+        print(f"  Completed: {total_pairs} pairs")
 
     # Save MI matrix
     np.save(output_dir / "mi_matrix.npy", mi_matrix)

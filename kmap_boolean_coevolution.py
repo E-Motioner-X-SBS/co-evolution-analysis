@@ -176,21 +176,13 @@ def main():
     ]
     print(f"  Variable positions: {len(variable_positions)}")
 
-    # Find co-evolutionary pairs
-    print("\n[3/4] Finding co-evolutionary pairs...")
-    co_evolving = []
-    for idx_i, pos_i in enumerate(variable_positions):
-        for idx_j in range(idx_i + 1, len(variable_positions)):
-            pos_j = variable_positions[idx_j]
-            if abs(pos_i - pos_j) > 30:
-                continue
-            mi, n_muts = compute_mi(pos_arrays, pos_i, pos_j, n_all)
-            if mi > 0.1:
-                ref_i = get_majority_ref(pos_arrays, pos_i, n_all)
-                ref_j = get_majority_ref(pos_arrays, pos_j, n_all)
-                co_evolving.append((pos_i, pos_j, mi, n_muts, ref_i, ref_j))
+    # Find co-evolutionary pairs (GPU-accelerated via coevolution_shared)
+    print("\n[3/4] Finding co-evolutionary pairs (GPU)...")
+    from coevolution_shared import find_coevolving_pairs_gpu
 
-    co_evolving.sort(key=lambda x: x[2], reverse=True)
+    co_evolving = find_coevolving_pairs_gpu(
+        pos_arrays, variable_positions, n_all, max_gap=30, min_mi=0.1
+    )
     print(f"  Co-evolutionary pairs: {len(co_evolving)}")
 
     # Build K-maps and Boolean functions

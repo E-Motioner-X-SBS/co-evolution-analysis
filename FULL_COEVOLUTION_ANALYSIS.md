@@ -3,7 +3,7 @@
 
 **Generated:** August 07, 2026
 **Data:** 1,299 SARS-CoV-2 Omicron Spike protein sequences from `Spike_protein.aln-fasta`
-**Compute:** NVIDIA A100 80GB + 24-core Xeon, 7.1s total
+**Compute:** NVIDIA A100 80GB + 24-core Xeon, 2.9s total
 **Scripts:** 18 Python analysis scripts, all run with ALL 1,299 sequences
 
 ---
@@ -28,6 +28,7 @@ export PYTHONUNBUFFERED=1
 python3 advanced_co-evolution_analysis.py
 python3 allseq_constraint_function.py
 python3 boolean_co-evolution.py
+python3 coevolution_gpu.py
 python3 coevolution_shared.py
 python3 create_mi_heatmap.py
 python3 dca_boolean_coevolution.py
@@ -147,7 +148,7 @@ He 2012 ordering: `AILVMFYWEDQNHKRSTCPG` (0-19). Direct mapping — no binary in
 | (413,425) | N,F | 2.33 | — |
 | (413,426) | N,T | 2.32 | — |
 | (413,424) | N,D | 2.31 | — |
-| (1026,1040) | S,G | 2.30 | — |
+| (1040,1042) | G,G | 2.30 | — |
 
 ## 8. Coupling Landscape
 
@@ -157,14 +158,14 @@ He 2012 ordering: `AILVMFYWEDQNHKRSTCPG` (0-19). Direct mapping — no binary in
 
 | Pair | MI | avg\|J\| | Ref | Strongest Anti | J |
 |------|-----|--------|-----|---------------|-----|
-| (73,74) | 1.377 | 13.12 | K,R | —,— | 0.00 |
-| (74,76) | 1.370 | 12.66 | R,D | —,— | 0.00 |
-| (75,76) | 1.368 | 12.69 | F,D | —,— | 0.00 |
-| (73,76) | 1.368 | 12.67 | K,D | —,— | 0.00 |
-| (74,75) | 1.366 | 13.06 | R,F | —,— | 0.00 |
-| (73,75) | 1.364 | 13.06 | K,F | —,— | 0.00 |
-| (76,77) | 1.361 | 13.01 | D,N | —,— | 0.00 |
-| (74,77) | 1.359 | 13.42 | R,N | —,— | 0.00 |
+| (372,401) | 1.592 | 3.50 | A,N | A,D | -4.01 |
+| (401,404) | 1.569 | 4.15 | N,S | N,R | -2.72 |
+| (208,209) | 1.542 | 3.43 | L,G | L,P | -4.03 |
+| (372,404) | 1.536 | 3.68 | A,S | A,R | -2.49 |
+| (209,210) | 1.523 | 3.99 | G,R | R,E | -0.86 |
+| (852,977) | 1.514 | 3.08 | N,L | N,F | -4.28 |
+| (492,852) | 1.509 | 2.50 | G,N | S,N | -4.29 |
+| (208,210) | 1.502 | 3.58 | L,R | L,G | -0.25 |
 
 ## 9. Co-evolution Network
 
@@ -181,8 +182,8 @@ He 2012 ordering: `AILVMFYWEDQNHKRSTCPG` (0-19). Direct mapping — no binary in
 |--------|-------|
 | Variable positions | 1,249 (97.9%) |
 | Conserved | 27 |
-| High-MI pairs (full length) | 4949 |
-| Compute time | 7.1s (A100 + 24-core) |
+| High-MI pairs (full length) | 35858 |
+| Compute time | 2.9s (A100 + 24-core) |
 
 ### Top 10 Most Variable Positions
 
@@ -204,24 +205,24 @@ He 2012 ordering: `AILVMFYWEDQNHKRSTCPG` (0-19). Direct mapping — no binary in
 | Metric | Value |
 |--------|-------|
 | Sequences compared | 1,298 |
-| **Mean mutations/seq** | **1061.2 (83.2%)** |
+| **Mean mutations/seq** | **260.8 (20.4%)** |
 | Max | 1202 (94.2%) |
-| Min | 18 (1.4%) |
+| Min | 0 (0.0%) |
 
 ### Top Mutation Hotspots
 
 | Rank | Pos | Mutations | % |
 |------|-----|-----------|-----|
-| 1 | 141 | 658 | 50.7% |
-| 2 | 145 | 654 | 50.4% |
-| 3 | 146 | 653 | 50.3% |
-| 4 | 148 | 650 | 50.1% |
-| 5 | 142 | 650 | 50.1% |
-| 6 | 147 | 649 | 50.0% |
-| 7 | 79 | 638 | 49.2% |
-| 8 | 153 | 637 | 49.1% |
-| 9 | 150 | 637 | 49.1% |
-| 10 | 158 | 636 | 49.0% |
+| 1 | 852 | 506 | 39.0% |
+| 2 | 404 | 497 | 38.3% |
+| 3 | 492 | 490 | 37.8% |
+| 4 | 401 | 485 | 37.4% |
+| 5 | 372 | 481 | 37.1% |
+| 6 | 977 | 474 | 36.5% |
+| 7 | 209 | 473 | 36.4% |
+| 8 | 138 | 472 | 36.4% |
+| 9 | 207 | 469 | 36.1% |
+| 10 | 208 | 469 | 36.1% |
 
 ## 12. Perplexity Analysis
 
@@ -251,7 +252,7 @@ Co-evolution ratio = PP(j) / PP(j|i). Ratio > 1 means position i constrains j.
 
 | Algorithm | Accuracy | Why |
 |-----------|----------|-----|
-| LOO-CV | 7.26% (198/2726) | Lineage-specific references |
+| LOO-CV | 2.93% (80/2726) | Lineage-specific references |
 | DCA Boolean | 0.0% | Singular covariance matrix |
 | Flipped Boolean | 0 forbidden pairs | All observed with 1,299 seqs |
 | Constraint function | 5.8% | All C < 0 (no positive signal) |
@@ -271,11 +272,11 @@ Co-evolution ratio = PP(j) / PP(j|i). Ratio > 1 means position i constrains j.
 | | Inference rules | 152 |
 | Network | Nodes / Edges | 1249 / 35098 |
 | | Hub | Position 85 (degree 60) |
-| Mutations | Mean / Max | 1061.2 / 1202 |
+| Mutations | Mean / Max | 260.8 / 1202 |
 | Perplexity | Max ratio | 2.81× |
 | Variants | Unique signatures | 11 |
 | Couplings | All C < 0 | Purifying selection |
-| Compute | Time | 7.1s (A100) |
+| Compute | Time | 2.9s (A100) |
 
 ## 16. Script Index (All 18 Scripts)
 
@@ -307,7 +308,7 @@ Co-evolution ratio = PP(j) / PP(j|i). Ratio > 1 means position i constrains j.
 3. **Co-evolution is near-deterministic**: Conditional perplexity ≈ 1.0 at strongest pairs (1.134)
 4. **Purifying selection dominates**: ALL coupling constants C < 0
 5. **Protein is a single network**: 1249 nodes, 35098 edges, position 85 as hub
-6. **Lineage-specific co-evolution**: Global LOO-CV 7.26% — rules don't generalize across variants
+6. **Lineage-specific co-evolution**: Global LOO-CV 2.93% — rules don't generalize across variants
 7. **27 conserved positions**: Universal vaccine targets
 8. **1,249/1276 positions variable**: Nearly entire protein under evolutionary constraint
 

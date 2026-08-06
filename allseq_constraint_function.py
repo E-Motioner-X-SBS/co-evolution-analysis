@@ -128,38 +128,11 @@ def main():
     ]
     print(f"  Variable positions: {len(variable_positions)}")
 
-    # Find co-evolutionary pairs
-    print("\n[3/4] Finding co-evolutionary pairs...")
-    co_evolving = []
-    for idx_i, pos_i in enumerate(variable_positions):
-        for idx_j in range(idx_i + 1, len(variable_positions)):
-            pos_j = variable_positions[idx_j]
-            if abs(pos_i - pos_j) > 30:
-                continue
-
-            ref_i = get_majority_ref(pos_arrays, pos_i, n_all)
-            ref_j = get_majority_ref(pos_arrays, pos_j, n_all)
-            joint, marg_i, marg_j = Counter(), Counter(), Counter()
-            for arr in pos_arrays[:n_all]:
-                if pos_i < len(arr) and pos_j < len(arr):
-                    ci, cj = int(arr[pos_i]), int(arr[pos_j])
-                    if ci >= 0 and cj >= 0 and (ci != ref_i or cj != ref_j):
-                        joint[(ci, cj)] += 1
-                        marg_i[ci] += 1
-                        marg_j[cj] += 1
-            total = sum(joint.values())
-            if total < 5:
-                continue
-            mi = sum(
-                (c / total)
-                * np.log2((c / total) / ((marg_i[ai] / total) * (marg_j[aj] / total)))
-                for (ai, aj), c in joint.items()
-                if marg_i[ai] > 0 and marg_j[aj] > 0
-            )
-            if mi > 0.1:
-                co_evolving.append((pos_i, pos_j, mi, total, ref_i, ref_j))
-
-    co_evolving.sort(key=lambda x: x[2], reverse=True)
+    # Find co-evolutionary pairs (GPU-accelerated via coevolution_shared)
+    from coevolution_shared import find_coevolving_pairs_gpu
+    co_evolving = find_coevolving_pairs_gpu(
+        pos_arrays, variable_positions, n_all, max_gap=30, min_mi=0.1
+    )
     print(f"  Co-evolutionary pairs: {len(co_evolving)}")
 
     # Build constraint function on ALL sequences

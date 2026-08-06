@@ -37,74 +37,88 @@ def parse_fasta(filepath):
     return sequences
 
 
-def build_position_arrays(sequences, encoder, max_pos=200):
-    """Pre-compute position arrays for all sequences."""
+def build_position_arrays(sequences, encoder, max_pos=None):
+    """Pre-compute position arrays for all sequences.
+
+    max_pos=None → FULL sequence length (all positions).
+    """
     print("  Building position arrays...")
     pos_arrays = []
     min_len = 999999
     for _, seq in sequences:
         clean = "".join(aa for aa in seq if aa in encoder.encode)
-        arr = np.array(
-            [encoder.encode.get(aa, -1) for aa in clean[:max_pos]], dtype=np.int32
-        )
+        if max_pos is None:
+            arr = np.array([encoder.encode.get(aa, -1) for aa in clean], dtype=np.int32)
+        else:
+            arr = np.array(
+                [encoder.encode.get(aa, -1) for aa in clean[:max_pos]], dtype=np.int32
+            )
         pos_arrays.append(arr)
         min_len = min(min_len, len(arr))
     return pos_arrays, min_len
 
 
 def compute_mi_matrix(pos_arrays, n_seqs, max_pos, window=30):
-    """Compute MI for all nearby position pairs using vectorized operations."""
+    """Compute MI for all nearby position pairs using GPU (torch CUDA).
+
+    Falls back to vectorized numpy if CUDA unavailable.
+    """
     print("  Computing MI matrix...")
     mi_matrix = np.zeros((max_pos, max_pos), dtype=np.float64)
 
-    # BUG FIX: Original code used `range(0, max_pos, 2)` which skipped every
-    # other position (computed MI for (0,2), (0,4), ... but never (0,1), (0,3)).
-    # This missed ~50% of position pairs. Fixed to use step=1.
-    for i in range(max_pos):
-        for j in range(i + 2, min(i + window, max_pos)):
-            # Extract codes at positions i and j
-            codes_i = np.array([arr[i] for arr in pos_arrays[:n_seqs] if i < len(arr)])
-            codes_j = np.array([arr[j] for arr in pos_arrays[:n_seqs] if j < len(arr)])
+    # Build all pairs within window (i, i+1 .. i+window) — step=1 (no skipping)
+    pairs = [
+        (i, j) for i in range(max_pos) for j in range(i + 1, min(i + window, max_pos))
+    ]
 
-            min_len = min(len(codes_i), len(codes_j))
-            if min_len < 10:
-                continue
+    # GPU path (torch CUDA on A100)
+    try:
+        import coevolution_gpu as cg
 
-            codes_i = codes_i[:min_len]
-            codes_j = codes_j[:min_len]
-
-            # Filter valid codes
-            valid = (codes_i >= 0) & (codes_j >= 0)
-            codes_i = codes_i[valid]
-            codes_j = codes_j[valid]
-
-            if len(codes_i) < 10:
-                continue
-
-            # Compute joint and marginal counts
-            joint = Counter()
-            marg_i = Counter()
-            marg_j = Counter()
-
-            for ci, cj in zip(codes_i, codes_j):
-                joint[(int(ci), int(cj))] += 1
-                marg_i[int(ci)] += 1
-                marg_j[int(cj)] += 1
-
-            total = sum(joint.values())
-            if total == 0:
-                continue
-
-            mi = 0.0
-            for (ai, aj), count in joint.items():
-                p_joint = count / total
-                p_i = marg_i[ai] / total
-                p_j = marg_j[aj] / total
-                if p_joint > 0 and p_i > 0 and p_j > 0:
-                    mi += p_joint * np.log2(p_joint / (p_i * p_j))
-
+        dense = cg.dense_to_gpu(pos_arrays)
+        mi_dict, _ = cg.mi_matrix_gpu(dense, pairs, min_total=10, chunk=16384)
+        for (i, j), mi in mi_dict.items():
             mi_matrix[i, j] = mi
             mi_matrix[j, i] = mi
+        print(f"  GPU MI computed for {len(mi_dict)} pairs (torch CUDA)")
+        return mi_matrix
+    except Exception as e:
+        print(f"  GPU failed ({e}), using numpy fallback...")
+
+    # NumPy fallback (vectorized, no Counter)
+    dense = np.full((n_seqs, max_pos), -1, dtype=np.int32)
+    for si, arr in enumerate(pos_arrays[:n_seqs]):
+        L = min(len(arr), max_pos)
+        dense[si, :L] = arr[:L]
+
+    for idx, (i, j) in enumerate(pairs):
+        codes_i = dense[:, i]
+        codes_j = dense[:, j]
+        valid = (codes_i >= 0) & (codes_j >= 0)
+        ci = codes_i[valid]
+        cj = codes_j[valid]
+        if len(ci) < 10:
+            continue
+        joint_flat = (
+            np.bincount(ci.astype(np.int64) * 20 + cj.astype(np.int64), minlength=400)
+            .reshape(20, 20)
+            .astype(np.float64)
+        )
+        total = joint_flat.sum()
+        if total == 0:
+            continue
+        marg_i = joint_flat.sum(axis=1)
+        marg_j = joint_flat.sum(axis=0)
+        mi = 0.0
+        for ai in range(20):
+            for aj in range(20):
+                if joint_flat[ai, aj] > 0 and marg_i[ai] > 0 and marg_j[aj] > 0:
+                    p = joint_flat[ai, aj] / total
+                    pi_v = marg_i[ai] / total
+                    pj_v = marg_j[aj] / total
+                    mi += p * np.log2(p / (pi_v * pj_v))
+        mi_matrix[i, j] = mi
+        mi_matrix[j, i] = mi
 
     return mi_matrix
 
@@ -166,14 +180,14 @@ def main():
     n_all = len(sequences)
     print(f"  Total sequences: {n_all}")
 
-    # Build position arrays
+    # Build position arrays — FULL LENGTH (all 1276 positions, all sequences)
     print("\n[2/5] Building position arrays...")
-    pos_arrays, min_len = build_position_arrays(sequences, encoder, max_pos=200)
+    pos_arrays, min_len = build_position_arrays(sequences, encoder, max_pos=None)
     print(f"  Min sequence length: {min_len}")
 
-    # Compute MI matrix
-    print("\n[3/5] Computing MI for position pairs (ALL sequences)...")
-    max_pos = min(80, min_len)
+    # Compute MI matrix — FULL LENGTH on GPU
+    print("\n[3/5] Computing MI for position pairs (ALL sequences, FULL length)...")
+    max_pos = min_len  # full length — NO truncation
     mi_matrix = compute_mi_matrix(pos_arrays, n_all, max_pos, window=30)
 
     # Find top co-evolving pairs

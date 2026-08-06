@@ -323,6 +323,78 @@ Rule 42: IF position 413 = R AND position 424 = F THEN co-evolutionary (MI = 2.3
 
 ---
 
+## Position Pair (1040, 1042)
+
+| Property | Value |
+|----------|-------|
+| Mutual Information | 2.2989 |
+| Total mutations | 278 |
+| Reference pos 1040 | G |
+| Reference pos 1042 | G |
+| On-set cells | 11 |
+| Off-set cells | 388 |
+| Don't-care cells | 1 |
+| Prime implicants | 10 |
+| Essential PIs | 9 |
+
+### K-map (Compact View)
+
+```
+Position pair (1040, 1042): Reference = (G, G)
+
+Co-evolutionary residue pairs (on-set):
+  L-S, M-F, F-G, Y-L, D-C, H-M, K-Y, R-D, S-P, C-K, G-H
+
+Don't-care positions (conserved): 1 cells
+Never-seen pairs (off-set): 388 cells
+```
+
+### Boolean Function
+
+```
+f(pos_1040, pos_1042) = 1 if ANY of these residue pairs appear:
+
+  * PI_1: pos_1040=V AND pos_1042=W
+  * PI_2: pos_1040=L AND pos_1042=I
+  * PI_3: pos_1040=F AND pos_1042=F
+  * PI_4: pos_1040=W AND pos_1042=Q
+  * PI_5: pos_1040=H AND pos_1042=F
+  * PI_6: pos_1040=S AND pos_1042=M
+  * PI_7: pos_1040=A AND pos_1042=Q
+  * PI_8: pos_1040=V AND pos_1042=R
+  * PI_9: pos_1040=E AND pos_1042=E
+    PI_10: pos_1040=E AND pos_1042=S
+
+(* = essential prime implicant)
+```
+
+### Coupling Constants (J_ij)
+
+| Residue Pair | J_ij | Frequency | Type |
+|-------------|------|-----------|------|
+| D-C | 5.2234 | 0.0054 | co-evolutionary |
+| L-S | 4.7715 | 0.0085 | co-evolutionary |
+| H-M | 3.8735 | 0.0208 | co-evolutionary |
+| Y-L | 3.4805 | 0.0308 | co-evolutionary |
+| K-Y | 2.9647 | 0.0516 | co-evolutionary |
+| G-H | 0.1323 | 0.0901 | co-evolutionary |
+| G-G | 0.1304 | 0.7860 | co-evolutionary |
+
+### Inference Rules (Natural Language)
+
+**Rule 49:** IF position 1040 = **V** AND position 1042 = **W** THEN co-evolutionary (MI = 2.299)
+**Rule 50:** IF position 1040 = **L** AND position 1042 = **I** THEN co-evolutionary (MI = 2.299)
+**Rule 51:** IF position 1040 = **F** AND position 1042 = **F** THEN co-evolutionary (MI = 2.299)
+**Rule 52:** IF position 1040 = **W** AND position 1042 = **Q** THEN co-evolutionary (MI = 2.299)
+**Rule 53:** IF position 1040 = **H** AND position 1042 = **F** THEN co-evolutionary (MI = 2.299)
+**Rule 54:** IF position 1040 = **S** AND position 1042 = **M** THEN co-evolutionary (MI = 2.299)
+**Rule 55:** IF position 1040 = **A** AND position 1042 = **Q** THEN co-evolutionary (MI = 2.299)
+**Rule 56:** IF position 1040 = **V** AND position 1042 = **R** THEN co-evolutionary (MI = 2.299)
+**Rule 57:** IF position 1040 = **E** AND position 1042 = **E** THEN co-evolutionary (MI = 2.299)
+Rule 58: IF position 1040 = E AND position 1042 = S THEN co-evolutionary (MI = 2.299)
+
+---
+
 ## Position Pair (1026, 1040)
 
 | Property | Value |
@@ -382,16 +454,16 @@ f(pos_1026, pos_1040) = 1 if ANY of these residue pairs appear:
 
 ### Inference Rules (Natural Language)
 
-**Rule 49:** IF position 1026 = **A** AND position 1040 = **D** THEN co-evolutionary (MI = 2.299)
-**Rule 50:** IF position 1026 = **V** AND position 1040 = **N** THEN co-evolutionary (MI = 2.299)
-**Rule 51:** IF position 1026 = **A** AND position 1040 = **R** THEN co-evolutionary (MI = 2.299)
-**Rule 52:** IF position 1026 = **V** AND position 1040 = **M** THEN co-evolutionary (MI = 2.299)
-**Rule 53:** IF position 1026 = **M** AND position 1040 = **L** THEN co-evolutionary (MI = 2.299)
-**Rule 54:** IF position 1026 = **Y** AND position 1040 = **I** THEN co-evolutionary (MI = 2.299)
-**Rule 55:** IF position 1026 = **Q** AND position 1040 = **K** THEN co-evolutionary (MI = 2.299)
-**Rule 56:** IF position 1026 = **H** AND position 1040 = **H** THEN co-evolutionary (MI = 2.299)
-**Rule 57:** IF position 1026 = **Y** AND position 1040 = **W** THEN co-evolutionary (MI = 2.299)
-**Rule 58:** IF position 1026 = **W** AND position 1040 = **R** THEN co-evolutionary (MI = 2.299)
+**Rule 59:** IF position 1026 = **A** AND position 1040 = **D** THEN co-evolutionary (MI = 2.299)
+**Rule 60:** IF position 1026 = **V** AND position 1040 = **N** THEN co-evolutionary (MI = 2.299)
+**Rule 61:** IF position 1026 = **A** AND position 1040 = **R** THEN co-evolutionary (MI = 2.299)
+**Rule 62:** IF position 1026 = **V** AND position 1040 = **M** THEN co-evolutionary (MI = 2.299)
+**Rule 63:** IF position 1026 = **M** AND position 1040 = **L** THEN co-evolutionary (MI = 2.299)
+**Rule 64:** IF position 1026 = **Y** AND position 1040 = **I** THEN co-evolutionary (MI = 2.299)
+**Rule 65:** IF position 1026 = **Q** AND position 1040 = **K** THEN co-evolutionary (MI = 2.299)
+**Rule 66:** IF position 1026 = **H** AND position 1040 = **H** THEN co-evolutionary (MI = 2.299)
+**Rule 67:** IF position 1026 = **Y** AND position 1040 = **W** THEN co-evolutionary (MI = 2.299)
+**Rule 68:** IF position 1026 = **W** AND position 1040 = **R** THEN co-evolutionary (MI = 2.299)
 
 ---
 
@@ -454,88 +526,16 @@ f(pos_1026, pos_1042) = 1 if ANY of these residue pairs appear:
 
 ### Inference Rules (Natural Language)
 
-**Rule 59:** IF position 1026 = **V** AND position 1042 = **R** THEN co-evolutionary (MI = 2.299)
-**Rule 60:** IF position 1026 = **A** AND position 1042 = **D** THEN co-evolutionary (MI = 2.299)
-**Rule 61:** IF position 1026 = **L** AND position 1042 = **H** THEN co-evolutionary (MI = 2.299)
-**Rule 62:** IF position 1026 = **F** AND position 1042 = **K** THEN co-evolutionary (MI = 2.299)
-**Rule 63:** IF position 1026 = **Q** AND position 1042 = **Y** THEN co-evolutionary (MI = 2.299)
-**Rule 64:** IF position 1026 = **H** AND position 1042 = **K** THEN co-evolutionary (MI = 2.299)
-**Rule 65:** IF position 1026 = **I** AND position 1042 = **W** THEN co-evolutionary (MI = 2.299)
-**Rule 66:** IF position 1026 = **F** AND position 1042 = **I** THEN co-evolutionary (MI = 2.299)
-**Rule 67:** IF position 1026 = **Y** AND position 1042 = **A** THEN co-evolutionary (MI = 2.299)
-**Rule 68:** IF position 1026 = **E** AND position 1042 = **N** THEN co-evolutionary (MI = 2.299)
-
----
-
-## Position Pair (1040, 1042)
-
-| Property | Value |
-|----------|-------|
-| Mutual Information | 2.2989 |
-| Total mutations | 278 |
-| Reference pos 1040 | G |
-| Reference pos 1042 | G |
-| On-set cells | 11 |
-| Off-set cells | 388 |
-| Don't-care cells | 1 |
-| Prime implicants | 10 |
-| Essential PIs | 9 |
-
-### K-map (Compact View)
-
-```
-Position pair (1040, 1042): Reference = (G, G)
-
-Co-evolutionary residue pairs (on-set):
-  L-S, M-F, F-G, Y-L, D-C, H-M, K-Y, R-D, S-P, C-K, G-H
-
-Don't-care positions (conserved): 1 cells
-Never-seen pairs (off-set): 388 cells
-```
-
-### Boolean Function
-
-```
-f(pos_1040, pos_1042) = 1 if ANY of these residue pairs appear:
-
-  * PI_1: pos_1040=V AND pos_1042=W
-  * PI_2: pos_1040=L AND pos_1042=I
-  * PI_3: pos_1040=F AND pos_1042=F
-  * PI_4: pos_1040=W AND pos_1042=Q
-  * PI_5: pos_1040=H AND pos_1042=F
-  * PI_6: pos_1040=S AND pos_1042=M
-  * PI_7: pos_1040=A AND pos_1042=Q
-  * PI_8: pos_1040=V AND pos_1042=R
-  * PI_9: pos_1040=E AND pos_1042=E
-    PI_10: pos_1040=E AND pos_1042=S
-
-(* = essential prime implicant)
-```
-
-### Coupling Constants (J_ij)
-
-| Residue Pair | J_ij | Frequency | Type |
-|-------------|------|-----------|------|
-| D-C | 5.2234 | 0.0054 | co-evolutionary |
-| L-S | 4.7715 | 0.0085 | co-evolutionary |
-| H-M | 3.8735 | 0.0208 | co-evolutionary |
-| Y-L | 3.4805 | 0.0308 | co-evolutionary |
-| K-Y | 2.9647 | 0.0516 | co-evolutionary |
-| G-H | 0.1323 | 0.0901 | co-evolutionary |
-| G-G | 0.1304 | 0.7860 | co-evolutionary |
-
-### Inference Rules (Natural Language)
-
-**Rule 69:** IF position 1040 = **V** AND position 1042 = **W** THEN co-evolutionary (MI = 2.299)
-**Rule 70:** IF position 1040 = **L** AND position 1042 = **I** THEN co-evolutionary (MI = 2.299)
-**Rule 71:** IF position 1040 = **F** AND position 1042 = **F** THEN co-evolutionary (MI = 2.299)
-**Rule 72:** IF position 1040 = **W** AND position 1042 = **Q** THEN co-evolutionary (MI = 2.299)
-**Rule 73:** IF position 1040 = **H** AND position 1042 = **F** THEN co-evolutionary (MI = 2.299)
-**Rule 74:** IF position 1040 = **S** AND position 1042 = **M** THEN co-evolutionary (MI = 2.299)
-**Rule 75:** IF position 1040 = **A** AND position 1042 = **Q** THEN co-evolutionary (MI = 2.299)
-**Rule 76:** IF position 1040 = **V** AND position 1042 = **R** THEN co-evolutionary (MI = 2.299)
-**Rule 77:** IF position 1040 = **E** AND position 1042 = **E** THEN co-evolutionary (MI = 2.299)
-Rule 78: IF position 1040 = E AND position 1042 = S THEN co-evolutionary (MI = 2.299)
+**Rule 69:** IF position 1026 = **V** AND position 1042 = **R** THEN co-evolutionary (MI = 2.299)
+**Rule 70:** IF position 1026 = **A** AND position 1042 = **D** THEN co-evolutionary (MI = 2.299)
+**Rule 71:** IF position 1026 = **L** AND position 1042 = **H** THEN co-evolutionary (MI = 2.299)
+**Rule 72:** IF position 1026 = **F** AND position 1042 = **K** THEN co-evolutionary (MI = 2.299)
+**Rule 73:** IF position 1026 = **Q** AND position 1042 = **Y** THEN co-evolutionary (MI = 2.299)
+**Rule 74:** IF position 1026 = **H** AND position 1042 = **K** THEN co-evolutionary (MI = 2.299)
+**Rule 75:** IF position 1026 = **I** AND position 1042 = **W** THEN co-evolutionary (MI = 2.299)
+**Rule 76:** IF position 1026 = **F** AND position 1042 = **I** THEN co-evolutionary (MI = 2.299)
+**Rule 77:** IF position 1026 = **Y** AND position 1042 = **A** THEN co-evolutionary (MI = 2.299)
+**Rule 78:** IF position 1026 = **E** AND position 1042 = **N** THEN co-evolutionary (MI = 2.299)
 
 ---
 
@@ -909,78 +909,6 @@ Rule 126: IF position 413 = A AND position 428 = F THEN co-evolutionary (MI = 2.
 
 ---
 
-## Position Pair (459, 473)
-
-| Property | Value |
-|----------|-------|
-| Mutual Information | 2.2842 |
-| Total mutations | 265 |
-| Reference pos 459 | P |
-| Reference pos 473 | N |
-| On-set cells | 11 |
-| Off-set cells | 388 |
-| Don't-care cells | 1 |
-| Prime implicants | 10 |
-| Essential PIs | 10 |
-
-### K-map (Compact View)
-
-```
-Position pair (459, 473): Reference = (P, N)
-
-Co-evolutionary residue pairs (on-set):
-  I-G, L-A, F-K, E-P, D-N, N-Q, K-I, K-G, R-C, T-A, P-S
-
-Don't-care positions (conserved): 1 cells
-Never-seen pairs (off-set): 388 cells
-```
-
-### Boolean Function
-
-```
-f(pos_459, pos_473) = 1 if ANY of these residue pairs appear:
-
-  * PI_1: pos_459=L AND pos_473=E
-  * PI_2: pos_459=W AND pos_473=I
-  * PI_3: pos_459=W AND pos_473=V
-  * PI_4: pos_459=L AND pos_473=W
-  * PI_5: pos_459=N AND pos_473=L
-  * PI_6: pos_459=N AND pos_473=S
-  * PI_7: pos_459=R AND pos_473=Y
-  * PI_8: pos_459=A AND pos_473=F
-  * PI_9: pos_459=I AND pos_473=W
-  * PI_10: pos_459=M AND pos_473=A
-
-(* = essential prime implicant)
-```
-
-### Coupling Constants (J_ij)
-
-| Residue Pair | J_ij | Frequency | Type |
-|-------------|------|-----------|------|
-| N-Q | 5.2234 | 0.0054 | co-evolutionary |
-| R-C | 3.3852 | 0.0339 | co-evolutionary |
-| F-K | 3.0918 | 0.0454 | co-evolutionary |
-| E-P | 2.4509 | 0.0862 | co-evolutionary |
-| P-S | 0.2176 | 0.0085 | co-evolutionary |
-| D-N | 0.2071 | 0.0169 | co-evolutionary |
-| P-N | 0.1965 | 0.7960 | co-evolutionary |
-
-### Inference Rules (Natural Language)
-
-**Rule 134:** IF position 459 = **L** AND position 473 = **E** THEN co-evolutionary (MI = 2.284)
-**Rule 135:** IF position 459 = **W** AND position 473 = **I** THEN co-evolutionary (MI = 2.284)
-**Rule 136:** IF position 459 = **W** AND position 473 = **V** THEN co-evolutionary (MI = 2.284)
-**Rule 137:** IF position 459 = **L** AND position 473 = **W** THEN co-evolutionary (MI = 2.284)
-**Rule 138:** IF position 459 = **N** AND position 473 = **L** THEN co-evolutionary (MI = 2.284)
-**Rule 139:** IF position 459 = **N** AND position 473 = **S** THEN co-evolutionary (MI = 2.284)
-**Rule 140:** IF position 459 = **R** AND position 473 = **Y** THEN co-evolutionary (MI = 2.284)
-**Rule 141:** IF position 459 = **A** AND position 473 = **F** THEN co-evolutionary (MI = 2.284)
-**Rule 142:** IF position 459 = **I** AND position 473 = **W** THEN co-evolutionary (MI = 2.284)
-**Rule 143:** IF position 459 = **M** AND position 473 = **A** THEN co-evolutionary (MI = 2.284)
-
----
-
 ## Position Pair (469, 473)
 
 | Property | Value |
@@ -1040,16 +968,88 @@ f(pos_469, pos_473) = 1 if ANY of these residue pairs appear:
 
 ### Inference Rules (Natural Language)
 
-**Rule 144:** IF position 469 = **I** AND position 473 = **F** THEN co-evolutionary (MI = 2.284)
-**Rule 145:** IF position 469 = **E** AND position 473 = **V** THEN co-evolutionary (MI = 2.284)
-**Rule 146:** IF position 469 = **I** AND position 473 = **L** THEN co-evolutionary (MI = 2.284)
-**Rule 147:** IF position 469 = **L** AND position 473 = **W** THEN co-evolutionary (MI = 2.284)
-**Rule 148:** IF position 469 = **Q** AND position 473 = **A** THEN co-evolutionary (MI = 2.284)
-**Rule 149:** IF position 469 = **K** AND position 473 = **F** THEN co-evolutionary (MI = 2.284)
-**Rule 150:** IF position 469 = **R** AND position 473 = **W** THEN co-evolutionary (MI = 2.284)
-**Rule 151:** IF position 469 = **M** AND position 473 = **Q** THEN co-evolutionary (MI = 2.284)
-**Rule 152:** IF position 469 = **F** AND position 473 = **M** THEN co-evolutionary (MI = 2.284)
-**Rule 153:** IF position 469 = **E** AND position 473 = **K** THEN co-evolutionary (MI = 2.284)
+**Rule 134:** IF position 469 = **I** AND position 473 = **F** THEN co-evolutionary (MI = 2.284)
+**Rule 135:** IF position 469 = **E** AND position 473 = **V** THEN co-evolutionary (MI = 2.284)
+**Rule 136:** IF position 469 = **I** AND position 473 = **L** THEN co-evolutionary (MI = 2.284)
+**Rule 137:** IF position 469 = **L** AND position 473 = **W** THEN co-evolutionary (MI = 2.284)
+**Rule 138:** IF position 469 = **Q** AND position 473 = **A** THEN co-evolutionary (MI = 2.284)
+**Rule 139:** IF position 469 = **K** AND position 473 = **F** THEN co-evolutionary (MI = 2.284)
+**Rule 140:** IF position 469 = **R** AND position 473 = **W** THEN co-evolutionary (MI = 2.284)
+**Rule 141:** IF position 469 = **M** AND position 473 = **Q** THEN co-evolutionary (MI = 2.284)
+**Rule 142:** IF position 469 = **F** AND position 473 = **M** THEN co-evolutionary (MI = 2.284)
+**Rule 143:** IF position 469 = **E** AND position 473 = **K** THEN co-evolutionary (MI = 2.284)
+
+---
+
+## Position Pair (459, 473)
+
+| Property | Value |
+|----------|-------|
+| Mutual Information | 2.2842 |
+| Total mutations | 265 |
+| Reference pos 459 | P |
+| Reference pos 473 | N |
+| On-set cells | 11 |
+| Off-set cells | 388 |
+| Don't-care cells | 1 |
+| Prime implicants | 10 |
+| Essential PIs | 10 |
+
+### K-map (Compact View)
+
+```
+Position pair (459, 473): Reference = (P, N)
+
+Co-evolutionary residue pairs (on-set):
+  I-G, L-A, F-K, E-P, D-N, N-Q, K-I, K-G, R-C, T-A, P-S
+
+Don't-care positions (conserved): 1 cells
+Never-seen pairs (off-set): 388 cells
+```
+
+### Boolean Function
+
+```
+f(pos_459, pos_473) = 1 if ANY of these residue pairs appear:
+
+  * PI_1: pos_459=L AND pos_473=E
+  * PI_2: pos_459=W AND pos_473=I
+  * PI_3: pos_459=W AND pos_473=V
+  * PI_4: pos_459=L AND pos_473=W
+  * PI_5: pos_459=N AND pos_473=L
+  * PI_6: pos_459=N AND pos_473=S
+  * PI_7: pos_459=R AND pos_473=Y
+  * PI_8: pos_459=A AND pos_473=F
+  * PI_9: pos_459=I AND pos_473=W
+  * PI_10: pos_459=M AND pos_473=A
+
+(* = essential prime implicant)
+```
+
+### Coupling Constants (J_ij)
+
+| Residue Pair | J_ij | Frequency | Type |
+|-------------|------|-----------|------|
+| N-Q | 5.2234 | 0.0054 | co-evolutionary |
+| R-C | 3.3852 | 0.0339 | co-evolutionary |
+| F-K | 3.0918 | 0.0454 | co-evolutionary |
+| E-P | 2.4509 | 0.0862 | co-evolutionary |
+| P-S | 0.2176 | 0.0085 | co-evolutionary |
+| D-N | 0.2071 | 0.0169 | co-evolutionary |
+| P-N | 0.1965 | 0.7960 | co-evolutionary |
+
+### Inference Rules (Natural Language)
+
+**Rule 144:** IF position 459 = **L** AND position 473 = **E** THEN co-evolutionary (MI = 2.284)
+**Rule 145:** IF position 459 = **W** AND position 473 = **I** THEN co-evolutionary (MI = 2.284)
+**Rule 146:** IF position 459 = **W** AND position 473 = **V** THEN co-evolutionary (MI = 2.284)
+**Rule 147:** IF position 459 = **L** AND position 473 = **W** THEN co-evolutionary (MI = 2.284)
+**Rule 148:** IF position 459 = **N** AND position 473 = **L** THEN co-evolutionary (MI = 2.284)
+**Rule 149:** IF position 459 = **N** AND position 473 = **S** THEN co-evolutionary (MI = 2.284)
+**Rule 150:** IF position 459 = **R** AND position 473 = **Y** THEN co-evolutionary (MI = 2.284)
+**Rule 151:** IF position 459 = **A** AND position 473 = **F** THEN co-evolutionary (MI = 2.284)
+**Rule 152:** IF position 459 = **I** AND position 473 = **W** THEN co-evolutionary (MI = 2.284)
+**Rule 153:** IF position 459 = **M** AND position 473 = **A** THEN co-evolutionary (MI = 2.284)
 
 ---
 

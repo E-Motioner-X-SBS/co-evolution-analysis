@@ -78,14 +78,23 @@ def main():
         )
         pos_arrays.append(arr)
 
-    # Compute entropy for ALL positions
-    print("\n[3/4] Computing entropy for ALL positions...")
-    entropies = []
-    for pos in range(full_length):
-        ent = compute_entropy(pos_arrays, pos, n_all)
-        entropies.append(ent)
+    # Compute entropy for ALL positions — GPU accelerated
+    print("\n[3/4] Computing entropy for ALL positions (GPU)...")
+    try:
+        import coevolution_gpu as cg
 
-    entropies = np.array(entropies)
+        dense = cg.dense_to_gpu(pos_arrays)
+        entropies = cg.compute_entropy_gpu(dense).cpu().numpy()
+        refs = cg.majority_refs_gpu(dense)
+        print(f"  GPU entropy computed ({len(entropies)} positions)")
+    except Exception as e:
+        print(f"  GPU failed ({e}), using CPU...")
+        entropies = []
+        for pos in range(full_length):
+            ent = compute_entropy(pos_arrays, pos, n_all)
+            entropies.append(ent)
+        entropies = np.array(entropies)
+        refs = None
 
     # Find variable positions
     variable_threshold = 0.3
@@ -104,62 +113,90 @@ def main():
     for idx in sorted_indices[:20]:
         print(f"  {idx:8d} {entropies[idx]:8.3f} {2 ** entropies[idx]:12.3f}")
 
-    # Compute MI for top variable position pairs
-    print("\n[4/4] Computing MI for top variable position pairs...")
-    print("  (Limiting to top 50 variable positions for efficiency)")
+    # Compute MI for ALL variable position pairs (full length) — GPU
+    print("\n[4/4] Computing MI for ALL variable position pairs (FULL length, GPU)...")
+    all_var = variable_positions.tolist()
+    n_var = len(all_var)
+    print(f"  Variable positions: {n_var}")
 
-    top_var = sorted_indices[:100]  # Use top 100 most variable positions
-    n_var = len(top_var)
     mi_matrix = np.zeros((n_var, n_var), dtype=np.float64)
 
-    for idx_i in range(n_var):
-        for idx_j in range(idx_i + 1, n_var):
-            pos_i = top_var[idx_i]
-            pos_j = top_var[idx_j]
+    if refs is not None:
+        # GPU: mutation-only MI for all variable pairs within window 30
+        try:
+            import coevolution_gpu as cg
 
-            # Compute MI
-            ref_i = Counter(
-                int(a[pos_i])
-                for a in pos_arrays[:n_all]
-                if pos_i < len(a) and a[pos_i] >= 0
-            ).most_common(1)[0][0]
-            ref_j = Counter(
-                int(a[pos_j])
-                for a in pos_arrays[:n_all]
-                if pos_j < len(a) and a[pos_j] >= 0
-            ).most_common(1)[0][0]
+            pairs = [
+                (all_var[ii], all_var[jj])
+                for ii in range(n_var)
+                for jj in range(ii + 1, n_var)
+                if abs(all_var[ii] - all_var[jj]) <= 30
+            ]
+            print(f"  Pairs within window 30: {len(pairs)}")
+            mi_dict, _ = cg.mi_matrix_gpu(
+                dense, pairs, refs=refs, mutation_only=True, min_total=5, chunk=16384
+            )
+            # Map pair positions → matrix indices
+            pos_to_idx = {p: i for i, p in enumerate(all_var)}
+            for (pi, pj), mi in mi_dict.items():
+                ii, jj = pos_to_idx[pi], pos_to_idx[pj]
+                mi_matrix[ii, jj] = mi
+                mi_matrix[jj, ii] = mi
+            print(f"  GPU MI computed for {len(mi_dict)} pairs")
+        except Exception as e:
+            print(f"  GPU MI failed ({e}), falling back to CPU...")
+            refs = None
 
-            joint, marg_i, marg_j = Counter(), Counter(), Counter()
-            for arr in pos_arrays[:n_all]:
-                if pos_i < len(arr) and pos_j < len(arr):
-                    ci, cj = int(arr[pos_i]), int(arr[pos_j])
-                    if ci >= 0 and cj >= 0 and (ci != ref_i or cj != ref_j):
-                        joint[(ci, cj)] += 1
-                        marg_i[ci] += 1
-                        marg_j[cj] += 1
+    if refs is None:
+        # CPU fallback: mutation-only MI via Counter
+        for idx_i in range(n_var):
+            for idx_j in range(idx_i + 1, n_var):
+                pos_i = all_var[idx_i]
+                pos_j = all_var[idx_j]
+                if abs(pos_i - pos_j) > 30:
+                    continue
+                ref_i = Counter(
+                    int(a[pos_i])
+                    for a in pos_arrays[:n_all]
+                    if pos_i < len(a) and a[pos_i] >= 0
+                ).most_common(1)[0][0]
+                ref_j = Counter(
+                    int(a[pos_j])
+                    for a in pos_arrays[:n_all]
+                    if pos_j < len(a) and a[pos_j] >= 0
+                ).most_common(1)[0][0]
 
-            total = sum(joint.values())
-            if total >= 5:
-                mi = sum(
-                    (c / total)
-                    * np.log2(
-                        (c / total) / ((marg_i[ai] / total) * (marg_j[aj] / total))
+                joint, marg_i, marg_j = Counter(), Counter(), Counter()
+                for arr in pos_arrays[:n_all]:
+                    if pos_i < len(arr) and pos_j < len(arr):
+                        ci, cj = int(arr[pos_i]), int(arr[pos_j])
+                        if ci >= 0 and cj >= 0 and (ci != ref_i or cj != ref_j):
+                            joint[(ci, cj)] += 1
+                            marg_i[ci] += 1
+                            marg_j[cj] += 1
+
+                total = sum(joint.values())
+                if total >= 5:
+                    mi = sum(
+                        (c / total)
+                        * np.log2(
+                            (c / total) / ((marg_i[ai] / total) * (marg_j[aj] / total))
+                        )
+                        for (ai, aj), c in joint.items()
+                        if marg_i[ai] > 0 and marg_j[aj] > 0
                     )
-                    for (ai, aj), c in joint.items()
-                    if marg_i[ai] > 0 and marg_j[aj] > 0
-                )
-                mi_matrix[idx_i, idx_j] = mi
-                mi_matrix[idx_j, idx_i] = mi
+                    mi_matrix[idx_i, idx_j] = mi
+                    mi_matrix[idx_j, idx_i] = mi
 
-    # Find top MI pairs
+    # Find top MI pairs (all_var holds the variable position list)
     high_mi = []
     for idx_i in range(n_var):
         for idx_j in range(idx_i + 1, n_var):
             if mi_matrix[idx_i, idx_j] > 0.5:
                 high_mi.append(
                     (
-                        int(top_var[idx_i]),
-                        int(top_var[idx_j]),
+                        int(all_var[idx_i]),
+                        int(all_var[idx_j]),
                         float(mi_matrix[idx_i, idx_j]),
                     )
                 )
