@@ -1,10 +1,10 @@
-# 10. position_kmap_coevolution.py — Per-Position-Pair K-maps with MI
+# 10. position_kmap_coevolution.py - Per-Position-Pair K-maps with MI
 
 ## What the Program Does
 
 This script is a second, independent implementation of the position-pair analysis. It:
 
-1. Builds per-position frequency vectors for all positions (full length).
+1. Builds per-position frequency vectors for all positions (full length, 1,276 positions).
 2. Computes MI for all nearby pairs (window 20) using GPU.
 3. Finds co-evolving pairs (25,199 with MI > 0.005 at full length).
 4. Builds 20 x 20 K-maps for the top 10 pairs.

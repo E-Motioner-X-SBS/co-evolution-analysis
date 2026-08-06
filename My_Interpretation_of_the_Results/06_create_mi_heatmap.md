@@ -1,4 +1,4 @@
-# 06. create_mi_heatmap.py — The Full MI Landscape
+# 06. create_mi_heatmap.py - The Full MI Landscape
 
 ## What the Program Does
 
@@ -60,7 +60,7 @@ A: Mutual information of 1 bit means knowing the residue at one position halves 
 A: The dataset is 1,299 Omicron sequences that share a common evolutionary history. Shared ancestry creates correlation everywhere. MI does not distinguish "co-evolved because coupled" from "co-evolved because shared history". This is the phylogenetic confound, which neither MI nor our Boolean rules correct for.
 
 **Q: Is max MI 1.5917 a large value?**
-A: MI is bounded by min(H(i), H(j)). Position 372 has H = 1.63 bits and position 401 has H = 1.67 bits, so the maximum possible MI is about 1.63 bits. The observed 1.5917 is 97.6% of the theoretical maximum: knowing position 372 almost fully determines position 401 and vice versa. This is near-deterministic co-evolution.
+A: MI is bounded by min(H(i), H(j)). Position 372 has H = 1.63 bits and position 401 has H = 1.67 bits, so the maximum possible MI is about 1.63 bits. The observed 1.5917 is 97.5% of the theoretical maximum: knowing position 372 almost fully determines position 401 and vice versa. This is near-deterministic co-evolution.
 
 ## Mermaid Diagram
 

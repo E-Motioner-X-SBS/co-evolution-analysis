@@ -1,4 +1,7 @@
-# 14. flipped_boolean_coevolution.py — Forbidden Pairs (Negative Selection)
+# 14. flipped_boolean_coevolution.py - Forbidden Pairs (Negative Selection)
+
+
+**Sequence length analyzed: 1,276 positions (full length), all 1,299 sequences.**
 
 ## What the Program Does
 
@@ -26,7 +29,7 @@ flowchart TD
 
 ## Worked Example: Pair (413, 427)
 
-The reference is (A, V). Observed mutation pairs include (W, E), (I, V), (M, D). Every other combination in the 20 x 20 grid was never observed across all 1,299 sequences at these positions together. For example, the combination (413 = A, 427 = A) is never observed. The rule:
+The reference is (N, G). Observed mutation pairs include (A, V), (W, E), (I, V), (R, V). Every other combination in the 20 x 20 grid was never observed across all 1,299 sequences at these positions together. For example, the combination (413 = A, 427 = A) is never observed. The rule:
 
 ```
 IF pos 413 = A AND pos 427 = A THEN FORBIDDEN

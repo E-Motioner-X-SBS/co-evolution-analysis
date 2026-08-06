@@ -1,4 +1,4 @@
-# 08. gpu_full_analysis.py — The Definitive Full-Length GPU Result
+# 08. gpu_full_analysis.py - The Definitive Full-Length GPU Result
 
 ## What the Program Does
 
@@ -29,7 +29,7 @@ flowchart TD
 
 ## Worked Example: The Full MI Matrix
 
-The complete MI matrix has 1,275 x 1,275 entries (the dense tensor width is 1,275 because gaps reduce the effective length slightly). The maximum entry is MI(372, 401) = 1.5917. The script sorts all pairs and reports the top 30:
+The complete MI matrix has 1,275 x 1,275 entries. The dense tensor width is 1,275 because the position arrays are built from gap-stripped sequences and the longest clean sequence has 1,275 residues; positions beyond a sequence's clean length are marked -1 and excluded. The maximum entry is MI(372, 401) = 1.5917. The script sorts all pairs and reports the top 30:
 
 | Rank | Pos i | Pos j | MI |
 |------|-------|-------|-----|
@@ -54,7 +54,7 @@ The same max MI value 1.5917 appears in `create_mi_heatmap.py` and `boolean_co-e
 | Mean mutations per sequence | 260.8 (vs majority ref) |
 | Full MI matrix | 1,275 x 1,275, saved |
 | Max MI | 1.5917 at (372, 401) |
-| MI pairs > 0.5 | 1,153 (within top pairs) |
+| MI pairs > 0.5 | 568,835 |
 | Runtime | 2.9 s |
 
 ## Inference
@@ -77,4 +77,4 @@ A: Script 03 compares every sequence to the FIRST sequence in the file (a single
 A: It is the raw material for the heatmap (script 06), the DCA comparison (script 18), and any future analysis. Computing it once on GPU and reusing it avoids recomputation.
 
 **Q: What is the most important single number?**
-A: MI(372, 401) = 1.5917 bits, 97.6% of the theoretical maximum for those positions. It is the strongest co-evolution signal in the dataset and the anchor for the whole analysis.
+A: MI(372, 401) = 1.5917 bits, 97.5% of the theoretical maximum for those positions. It is the strongest co-evolution signal in the dataset and the anchor for the whole analysis.

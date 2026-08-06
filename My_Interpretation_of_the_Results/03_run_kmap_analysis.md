@@ -1,4 +1,4 @@
-# 03. run_kmap_analysis.py — Binary K-map Master Pipeline (H1 Hypothesis)
+# 03. run_kmap_analysis.py - Binary K-map Master Pipeline (H1 Hypothesis)
 
 ## What the Program Does
 
@@ -62,12 +62,12 @@ The second pair F and V: F = index 4, V = index 1. gray(4) = 6, gray(1) = 1. Ham
 
 Summing over all consecutive pairs in all 1,299 sequences gives the totals.
 
-## Results (all 1,299 sequences, full length)
+## Results (all 1,299 sequences, full length (1,276 positions))
 
 | Metric | Value |
 |--------|-------|
 | Total consecutive pairs | 1,647,830 |
-| Hamming-1 pairs | 356,408 |
+| Hamming-1 pairs | 356,431 |
 | Observed ratio | 0.2163 |
 | Expected ratio (random) | 0.1613 |
 | **Enrichment** | **1.34x** |

@@ -1,4 +1,7 @@
-# 16. allseq_constraint_function.py — Leave-One-Out Cross-Validation
+# 16. allseq_constraint_function.py - Leave-One-Out Cross-Validation
+
+
+**Sequence length analyzed: 1,276 positions (full length), all 1,299 sequences.**
 
 ## What the Program Does
 

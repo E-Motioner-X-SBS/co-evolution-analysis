@@ -1,8 +1,8 @@
-# 18. dca_mf_analysis.py — Proper Mean-Field Direct Coupling Analysis
+# 18. dca_mf_analysis.py - Proper Mean-Field Direct Coupling Analysis
 
 ## What the Program Does
 
-This is the corrected, proper implementation of Direct Coupling Analysis (DCA) following Morcos et al. 2011 (PNAS 108:E1293) and Weigt et al. 2009 (PNAS 106:67). It was implemented from the published algorithm and verified against a brute-force reference implementation (0.00e+00 maximum difference).
+This is the corrected, proper implementation of Direct Coupling Analysis (DCA) following Morcos et al. 2011 (PNAS 108:E1293) and Weigt et al. 2009 (PNAS 106:67). It was implemented from the published algorithm and verified in-session against a brute-force reference implementation (maximum difference 0.00e+00, see validation log).
 
 DCA answers: **which position pairs are DIRECTLY coupled, after removing indirect/transitive correlations?**
 

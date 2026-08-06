@@ -1,4 +1,4 @@
-# 21. Report Generators — The Three Documentation Scripts
+# 21. Report Generators - The Three Documentation Scripts
 
 ## What These Programs Do
 
@@ -6,7 +6,7 @@ Three scripts convert the JSON results into human-readable reports:
 
 1. `generate_co-evolution_md.py` - produces `kmap_boolean_coevolution/COEVOLUTION_KMAP_BOOLEAN.md` (all Boolean rules with LaTeX expressions).
 2. `generate_full_analysis_md.py` - produces `FULL_COEVOLUTION_ANALYSIS.md` (aggregate of all JSON results).
-3. `generate_full_pipeline_doc.py` - produces `FULL_PIPELINE_ANALYSIS.md` (the comprehensive pipeline document with formulas, tables, and all 152 rules).
+3. `generate_full_pipeline_doc.py` - produces `FULL_PIPELINE_ANALYSIS.md` (the comprehensive pipeline document with formulas, tables, full length (1,276 positions), and all 152 rules).
 
 None of these compute new statistics. They read the result JSON files and render them into markdown with LaTeX math and tables.
 
@@ -25,7 +25,7 @@ flowchart LR
 
 ## What the Reports Contain
 
-### COEVOLUTION_KMAP_BOOLEAN.md (1,138 lines)
+### COEVOLUTION_KMAP_BOOLEAN.md (1,144 lines)
 
 For each of the 15 rule pairs:
 - K-map compact view (on-set residue pairs).
@@ -33,7 +33,7 @@ For each of the 15 rule pairs:
 - Natural-language rules.
 - Coupling tables.
 
-### FULL_COEVOLUTION_ANALYSIS.md (342 lines)
+### FULL_COEVOLUTION_ANALYSIS.md (341 lines)
 
 - Dataset description.
 - H1 result.
@@ -65,6 +65,11 @@ The rule `IF pos 413 = W AND pos 427 = E THEN co-evolutionary` appears in all th
 | Max MI (full length) | 1.5917 at (372, 401) |
 | Lean theorems cataloged | 236 |
 | Scripts inventoried | 22 |
+
+
+## Inference
+
+The reports are derived documents: they are only as good as the JSONs they render. The inference is that reproducible science requires regenerating reports after every analysis change, and the three reports serve three audiences: rules-focused, summary-focused, and complete-pipeline documentation.
 
 ## Scholar Questions and Answers
 

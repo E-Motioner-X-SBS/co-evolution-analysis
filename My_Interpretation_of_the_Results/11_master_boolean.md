@@ -1,4 +1,7 @@
-# 11. master_boolean.py — The Master Boolean Function (152 Rules)
+# 11. master_boolean.py - The Master Boolean Function (152 Rules)
+
+
+**Sequence length analyzed: 1,276 positions (full length), all 1,299 sequences.**
 
 ## What the Program Does
 
@@ -45,17 +48,17 @@ This is the standard Quine-McCluskey with don't-cares, exactly as in the literat
 
 ## Worked Example: Rules for Pair (413, 427)
 
-The strongest co-evolving pair in the mutation-only analysis is (413, 427) with MI = 2.352. The reference residues are A at 413 and V at 427 (from the majority). The top rules extracted:
+The strongest co-evolving pair in the mutation-only analysis is (413, 427) with MI = 2.352 and 271 mutations. The majority (reference) residues are N at 413 and G at 427. The essential rules extracted for this pair include:
 
 ```
-Rule 1: IF pos 413 = A AND pos 427 = V THEN co-evolutionary   (the reference itself)
-Rule 2: IF pos 413 = W AND pos 427 = E THEN co-evolutionary
-Rule 3: IF pos 413 = I AND pos 427 = V THEN co-evolutionary
+Rule: IF pos 413 = A AND pos 427 = V THEN co-evolutionary
+Rule: IF pos 413 = W AND pos 427 = E THEN co-evolutionary
+Rule: IF pos 413 = I AND pos 427 = V THEN co-evolutionary
+Rule: IF pos 413 = N AND pos 427 = F THEN co-evolutionary
+Rule: IF pos 413 = R AND pos 427 = V THEN co-evolutionary
 ```
 
-Wait, note: Rule 1 (A, V) is the reference pair. Since the reference is a don't-care, why does it appear? Because the reference pair IS observed in most sequences (it is the majority), so it is also counted in the on-set. The mutation-only convention excludes it from the MI, but the K-map builder counts observed pairs as 1 when they differ from reference. The reference pair (A, V) is marked -1. However, if a sequence has (A, V) it is the reference and marked -1, not 1. The rules listed in the JSON with (A, V) arise because the QM algorithm can produce implicants that include don't-care cells, and the decoder reports the full cell. The essential rules for this pair are dominated by mutation pairs like (W, E) and (I, V).
-
-The biological reading: if position 413 mutates to W, position 427 compensates with E. If 413 mutates to I, 427 stays V.
+Note: the reference pair (N, G) is itself observed in most sequences, so the K-map marks it as a don't-care cell. The rules listed above are the mutation pairs that Quine-McCluskey found essential. The biological reading: if position 413 mutates to W, position 427 compensates with E. If 413 mutates to I, 427 takes V. If 413 becomes R, 427 takes V. These are the compensatory paths evolution actually used.
 
 ## Results
 
@@ -73,8 +76,8 @@ The 15 position pairs are: (413,424), (413,425), (413,426), (413,427), (413,428)
 ## Inference
 
 The 152 rules are a compressed description of the co-evolutionary grammar: "if this residue appears here, that residue must appear there." Two clusters dominate:
-1. Positions 413-428 and 459-473 (S1 subunit, near the RBD): 10 pairs.
-2. Positions 1026-1074 (S2 subunit): 5 pairs.
+1. Positions 413-428 and 459-473 (S1 subunit, near the RBD): 9 pairs.
+2. Positions 1026-1074 (S2 subunit): 6 pairs.
 
 The rules encode compensatory mutations. When evolution changes one position, the partner position must follow a specific path to maintain fitness. This is the Boolean logic of the protein's evolutionary constraints.
 
@@ -83,7 +86,7 @@ The rules encode compensatory mutations. When evolution changes one position, th
 ## Scholar Questions and Answers
 
 **Q: Why 152 essential rules from 36,918 pairs?**
-A: Only the top 15 pairs by MI get K-maps built. Each pair contributes 5 to 10 essential implicants, summing to 152. The 36,918 is the pool of candidate pairs; the rules are extracted only for the strongest.
+A: Only the top 15 pairs by MI get K-maps built. Each pair contributes 8 to 12 essential implicants, summing to 152. The 36,918 is the pool of candidate pairs; the rules are extracted only for the strongest.
 
 **Q: What does "essential" mean here?**
 A: An essential prime implicant covers at least one observed mutation pair that no other implicant covers. Dropping it would lose that observation. The 152 essential implicants are the irredundant core.

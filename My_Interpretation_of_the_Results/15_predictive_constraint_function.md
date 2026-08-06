@@ -1,4 +1,7 @@
-# 15. predictive_constraint_function.py — Can We Predict Mutations?
+# 15. predictive_constraint_function.py - Can We Predict Mutations?
+
+
+**Sequence length analyzed: 1,276 positions (full length), all 1,299 sequences (800 train, 499 test).**
 
 ## What the Program Does
 
@@ -53,7 +56,7 @@ The top co-evolutionary pairs found include (413, 427) with C values up to 4.68 
 | Test mutations | 1,062 |
 | Correct predictions | 62 |
 | **Prediction accuracy** | **5.84%** |
-| Strongest predicted pairs | P = 0.99 (e.g., K-H, E-C) |
+| Strongest predicted pairs | P = 0.99 (e.g., K-H), P = 0.98 (e.g., E-C) |
 
 ## Inference
 

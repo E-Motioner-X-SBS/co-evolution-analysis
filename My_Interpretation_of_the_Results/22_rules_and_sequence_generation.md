@@ -34,7 +34,7 @@ A generative model would produce a complete sequence. The rules are incomplete i
 
 1. **Coverage.** Only 15 position pairs have rules. The other 1,261 positions are unconstrained by the rules. Two sequences can satisfy all 152 rules and still differ at thousands of positions.
 
-2. **Choice.** The positive rules list several allowed partners for a given residue (e.g., position 413 = A allows partners V, E, ...). The rules do not say WHICH one to pick.
+2. **Choice.** The positive rules list several allowed partners for a given residue (e.g., position 413 = A allows partners V, D, S, M, K, I at its paired positions). The rules do not say WHICH one to pick.
 
 3. **Non-transitivity.** The rules are pairwise. A sequence satisfying every pairwise rule can still violate a three-body constraint that evolution respects. Pairwise rules cannot capture higher-order coupling.
 
@@ -53,10 +53,10 @@ If the 152 rules could generate valid sequences, the prediction accuracy would b
 ## Worked Example: Checking a Candidate Sequence
 
 Take a hypothetical sequence with:
-- Position 413 = A (matches the reference)
-- Position 427 = V (matches the reference)
+- Position 413 = N (matches the reference)
+- Position 427 = G (matches the reference)
 
-The pair (413, 427) = (A, V) is the reference and passes all rules.
+The pair (413, 427) = (N, G) is the reference and passes all rules.
 
 Now change position 413 to A and position 427 to A. The pair (A, A) is in the forbidden list for (413, 427). The filter rejects this sequence: no observed Omicron sequence has (A, A) at these positions.
 
@@ -64,7 +64,9 @@ Now change 413 to W and 427 to E. The pair (W, E) matches a positive rule. The f
 
 The filter is therefore a valid **sanity check** for mutations: it separates "combinations evolution has used" from "combinations evolution has never used". For protein design, this is valuable: the forbidden rules are candidate lethal pairs.
 
-## The Correct Use of the Rules
+## Inference
+
+### The Correct Use of the Rules
 
 1. **Mutation screening.** Given a proposed mutation at position i, check whether the partner position j would form a forbidden pair. If yes, the mutation is predicted deleterious.
 2. **Consistency checking.** Verify that a candidate sequence contains no forbidden pairs.

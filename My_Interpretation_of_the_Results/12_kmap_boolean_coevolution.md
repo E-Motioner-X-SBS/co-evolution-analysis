@@ -1,4 +1,7 @@
-# 12. kmap_boolean_coevolution.py — Rules as Boolean Logic
+# 12. kmap_boolean_coevolution.py - Rules as Boolean Logic
+
+
+**Sequence length analyzed: 1,276 positions (full length), all 1,299 sequences.**
 
 ## What the Program Does
 
@@ -47,7 +50,7 @@ The Boolean expression form makes the rules machine-checkable. A new sequence ca
 ## Scholar Questions and Answers
 
 **Q: Why 4 bits and not 5 (since amino acids need 5 bits for 32 codes)?**
-A: The base-20 encoding only needs 4 bits to distinguish 20 values (16 < 20 <= 16? No: 4 bits give 16 values, which is less than 20). Actually 4 bits give 16 codes, which covers only amino acids 0-15. This is a known limitation: the rules using 4-bit encoding cannot express amino acids with He index 16-19 (S, T, C, P, G). The decoder guards against this with `if row_code < 20 and col_code < 20`. In practice the dominant residues in the rule pairs are in the 0-15 range, so 152 rules were extractable, but the encoding is not complete for all 20 amino acids. This is documented as a limitation.
+A: The rules use 4 bits per axis, which gives 16 codes (0-15). This covers amino acids with He index 0-15 (A, I, L, V, M, F, Y, W, E, D, Q, N, H, K, R, S). Amino acids with He index 16-19 (T, C, P, G) cannot be expressed in 4 bits, so rules involving them are not representable. This is a known limitation of the 8-variable encoding. The decoder guards against out-of-range codes with `if row_code < 20 and col_code < 20`. In practice the dominant residues in the rule pairs fall in the 0-15 range, so 152 rules were extractable, but the encoding is not complete for all 20 amino acids.
 
 **Q: What is the difference between this script and master_boolean?**
 A: Same computation. This script adds the markdown and LaTeX rendering. master_boolean produces the summary JSON; this produces the human-readable documentation.

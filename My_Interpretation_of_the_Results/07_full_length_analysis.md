@@ -1,4 +1,4 @@
-# 07. full_length_analysis.py — Full-Length Entropy and MI
+# 07. full_length_analysis.py - Full-Length Entropy and MI
 
 ## What the Program Does
 
@@ -67,4 +67,4 @@ A: The threshold is entropy > 0.3 bits. Positions with H <= 0.3 are effectively 
 A: For each pair (i, j), the reference pair (majority residue at i, majority residue at j) is excluded from the joint count. This measures co-variation of mutations rather than the trivial dominance of the reference pair. It gives a cleaner signal of compensatory changes.
 
 **Q: What does 35,858 high-MI pairs mean for the protein?**
-A: It means the evolutionary constraint network has tens of thousands of edges. This is consistent with the network analysis (script 20) which found 35,098 edges with MI > 0.5 threshold. The protein behaves as one giant coupled system.
+A: It means the evolutionary constraint network has tens of thousands of edges. This is consistent with the network analysis (script 20) which found 35,098 edges at MI > 0.5. The protein has a dense co-evolution core (largest connected component covers 53% of variable positions) with a tail of weakly coupled positions.

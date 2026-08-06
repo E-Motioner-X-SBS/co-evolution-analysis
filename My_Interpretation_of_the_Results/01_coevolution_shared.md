@@ -1,8 +1,8 @@
-# 01. coevolution_shared.py — The Shared Toolbox
+# 01. coevolution_shared.py - The Shared Toolbox
 
 ## What the Program Does
 
-`coevolution_shared.py` is not an analysis by itself. It is the shared toolbox that 17 other scripts import. It performs the low-level operations that every analysis needs:
+`coevolution_shared.py` is not an analysis by itself. It is the shared toolbox that 7 other scripts import (master_boolean, kmap_boolean, allseq_constraint, predictive_constraint, flipped_boolean, advanced, gpu_full, plus the report generators). It performs the low-level operations that every analysis needs:
 
 1. Parse the FASTA alignment file into (header, sequence) pairs.
 2. Convert each sequence into an array of integer codes (0 to 19 for the 20 amino acids, -1 for gaps or unknown characters) using the base-20 He 2012 encoding.
@@ -100,6 +100,11 @@ J > 0 means the pair (a, b) is more common than expected under independence (co-
 - 1,249 variable positions (entropy > 0.3) out of 1,276.
 - 36,918 co-evolving pairs (mutation-only MI > 0.1, window 30).
 - Majority reference residues per position (the most common amino acid at that position).
+
+
+## Inference
+
+The results of this toolbox are the inputs to every other script: position arrays, entropy, MI, references, and co-evolving pairs. The inference that carries through the whole project is that the dataset contains 1,249 variable positions and 36,918 co-evolving pairs: the Spike protein is densely coupled, and every downstream analysis builds on these shared numbers.
 
 ## Scholar Questions and Answers
 

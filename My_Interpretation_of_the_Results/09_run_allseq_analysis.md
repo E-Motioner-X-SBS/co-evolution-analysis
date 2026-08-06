@@ -1,4 +1,4 @@
-# 09. run_allseq_analysis.py — Full Position-Pair K-maps
+# 09. run_allseq_analysis.py - Full Position-Pair K-maps
 
 ## What the Program Does
 
@@ -35,7 +35,7 @@ For each pair (i, j) within the window:
 
 ## Worked Example: Pair (372, 401)
 
-The top pair from the full-length MI is (372, 401) with MI = 1.5690 in this script's computation (matching the 1.5917 from the full matrix; small differences come from the window and the mutation handling). Its K-map has a dominant cell (A, N) at frequency 0.6266.
+The top pair from the full-length MI is (372, 401) with MI = 1.5917, matching the full matrix value. Its K-map has a dominant cell (A, N) at frequency 0.6266.
 
 The coupling for (A, N):
 
@@ -47,14 +47,14 @@ J(A, N) = ln( P(A,N) / (P(372=A) * P(401=N)) )
 
 A positive coupling means the pair appears more often than chance.
 
-## Results (full length, all sequences)
+## Results (full length (1,276 positions), all sequences)
 
 | Metric | Value |
 |--------|-------|
 | Position pairs with MI > 0.005 | 34,892 |
-| Top pair | (372, 401) MI = 1.5690 |
+| Top pair | (372, 401) MI = 1.5917 |
 | K-maps minimized | 15 |
-| Example coupling | J(372,401) region: +A-L, -D-S patterns |
+| Example coupling | J(372,401) region: +I-A (J=23.03), -T-N (J=-20.95) |
 
 ## Inference
 
@@ -70,5 +70,5 @@ A: Co-evolution signal is strongest for nearby positions. The window reduces the
 **Q: What does the coupling sign mean?**
 A: J > 0: the residue pair is observed more often than expected under independence (co-evolutionary). J < 0: observed less often (anti-correlated). J = 0: independent.
 
-**Q: Why is the top MI slightly different between scripts (1.5690 vs 1.5917)?**
-A: Different scripts use different conventions: full MI (all pairs counted) vs mutation-only MI (reference pair excluded), and different window parameters. The pair (372, 401) is the top pair in all of them; the exact value depends on the convention.
+**Q: Why does the top MI differ between scripts (1.5917 vs 1.5690)?**
+A: The full MI matrix (scripts 06, 08, and this one) gives MI(372, 401) = 1.5917. The value 1.5690 belongs to the second-ranked pair (401, 404). Script 10 reports (401, 404) as its top pair because it uses a different window and pair-selection convention. The ranking of the top pairs is stable across scripts; the exact values depend on the convention.

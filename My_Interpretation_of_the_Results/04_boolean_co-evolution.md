@@ -1,4 +1,4 @@
-# 04. boolean_co-evolution.py — Binary K-map Boolean Minimization
+# 04. boolean_co-evolution.py - Binary K-map Boolean Minimization
 
 ## What the Program Does
 
@@ -51,13 +51,13 @@ The result is the minimal disjunctive normal form: f = OR of essential prime imp
 
 **Worked example.** The top motif found is V-I. This means the dipeptide (V, I) and its Gray-code neighbors form a frequent, irreducible pattern. In the group-order encoding V = index 1 -> gray 1, I = index 3 -> gray 2, so the cell (1, 2) is on-set.
 
-## Results (full length, all 1,299 sequences)
+## Results (full length (1,276 positions), all 1,299 sequences)
 
 | Metric | Value |
 |--------|-------|
 | Total dipeptide pairs | millions (full protein) |
-| On-set cells | 290 |
-| Off-set cells | 116 |
+| On-set cells (K-map) | 93 |
+| Off-set cells (K-map) | 931 |
 | Prime implicants | 70 |
 | Essential prime implicants | 38 |
 | Covering size | 38 |
@@ -75,7 +75,7 @@ The deeper lesson: **sequence-level K-maps capture composition, not position-spe
 ## Scholar Questions and Answers
 
 **Q: Why only 38 essential prime implicants from 290 on-set cells?**
-A: Because Quine-McCluskey combines many on-set cells into single implicants. The essential ones are those that cannot be dropped. The 38 essential implicants fully cover the 290 on-set cells.
+A: Because Quine-McCluskey combines many on-set cells into single implicants. The essential ones are those that cannot be dropped. The 38 essential implicants fully cover the 93 on-set cells.
 
 **Q: Why is the prediction accuracy only 50.7%?**
 A: The on-set and off-set cells have very similar mean MI (0.117 vs 0.098). The Boolean threshold at the 75th percentile separates frequent from rare dipeptides, but frequency and position-pair co-evolution are different things. The 50.7% is barely above chance, showing that whole-protein dipeptide frequency is a weak proxy for co-evolution.

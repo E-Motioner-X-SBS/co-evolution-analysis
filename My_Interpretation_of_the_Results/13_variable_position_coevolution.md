@@ -1,4 +1,7 @@
-# 13. variable_position_coevolution.py — Mutation Motifs with Don't-Cares
+# 13. variable_position_coevolution.py - Mutation Motifs with Don't-Cares
+
+
+**Sequence length analyzed: 1,276 positions (full length), all 1,299 sequences.**
 
 ## What the Program Does
 
@@ -35,11 +38,12 @@ flowchart TD
 
 ## Worked Example: Pair (413, 427)
 
-The top pair is (413, 427) with MI = 2.352 and 271 mutations. The reference is A at 413, V at 427. The K-map marks (A, V) as -1 (don't-care) and every other observed pair as 1. QM then finds implicants like:
+The top pair is (413, 427) with MI = 2.352 and 271 mutations. The majority reference is N at 413, G at 427. The K-map marks (N, G) as -1 (don't-care) and every other observed pair as 1. QM then finds implicants like:
 
 - (413 = W, 427 = E)
 - (413 = I, 427 = V)
-- (413 = M, 427 = D)
+- (413 = A, 427 = V)
+- (413 = R, 427 = V)
 
 These are the mutation motifs: when position 413 changes, position 427 changes in specific ways.
 

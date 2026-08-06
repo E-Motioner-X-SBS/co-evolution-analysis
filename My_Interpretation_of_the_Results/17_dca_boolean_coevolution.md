@@ -1,4 +1,4 @@
-# 17. dca_boolean_coevolution.py — Local Precision Matrix (Legacy "DCA")
+# 17. dca_boolean_coevolution.py - Local Precision Matrix (Legacy "DCA")
 
 ## What the Program Does
 
@@ -35,14 +35,21 @@ The script previously used hardcoded position pairs from positions 68-78. It now
 | Metric | Value |
 |--------|-------|
 | Average accuracy | **17.6%** |
-| Pairs analyzed | 10 (dynamic, full length) |
-| Prime implicants per pair | 56-70 |
-| Essential PIs per pair | 36-67 |
-| Best pair | (1064, 1074) |
+| Pairs analyzed | 10 (dynamic, full length 1,276 positions) |
+| Prime implicants per pair | 57-77 |
+| Essential PIs per pair | 34-41 |
+| Best pair | (413, 424) at 89.98% |
+| Second best | (1026, 1042) at 78.36% |
+
+## Worked Example: Pair (413, 424)
+
+The pair (413, 424) achieves 89.98% accuracy. For each of the 499 test sequences, the method builds the 20 x 20 covariance between positions 413 and 424 from the 800 training sequences, regularizes it, takes the pseudoinverse, and predicts the partner of a mutation at 413 as the argmax of the coupling row. Position 413 is a highly variable position (entropy 1.2120 bits, perplexity 2.317) with reference N; position 424 has reference D. The strong covariance between these positions makes the prediction nearly deterministic in this split.
+
+In contrast, pairs like (413, 425) and (462, 473) achieve 0.0%: their coupling is weaker or lineage-specific, so the argmax prediction fails on every test mutation.
 
 ## Inference
 
-The local precision approach achieves the highest prediction accuracy of all three prediction methods in this project (17.6% vs 5.84% train/test and 2.93% LOO-CV). This is surprising because the method is theoretically weaker than real DCA. The likely reason: the pseudoinverse of the local covariance amplifies the strongest couplings, acting as a sharper filter than the raw MI or constraint function. The dynamic full-length pair selection (instead of hardcoded 68-78 pairs) was essential.
+The local precision approach achieves the highest prediction accuracy of all three prediction methods in this project (17.6% vs 5.84% train/test and 2.93% LOO-CV). This is surprising because the method is theoretically weaker than real DCA. The likely reason: the pseudoinverse of the local covariance amplifies the strongest couplings, acting as a sharper filter than the raw MI or constraint function. The dynamic full-length pair selection (instead of hardcoded 68-78 pairs) was essential. The per-pair results show the method is dominated by two pairs: (413, 424) at 90% and (1026, 1042) at 78%; the other eight pairs contribute little.
 
 However, because the method does not remove indirect correlations, its "couplings" mix direct and indirect signals. The proper DCA (script 18) is the correct tool for disentangling them.
 

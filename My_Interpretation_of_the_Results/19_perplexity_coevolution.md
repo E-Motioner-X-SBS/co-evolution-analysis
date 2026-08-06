@@ -1,4 +1,4 @@
-# 19. perplexity_coevolution.py — How Much Does One Residue Constrain Another?
+# 19. perplexity_coevolution.py - How Much Does One Residue Constrain Another?
 
 ## What the Program Does
 
@@ -45,7 +45,7 @@ A ratio of 1 means position i gives no information about j. A ratio of 2 means k
 
 ```mermaid
 flowchart TD
-    A[position arrays full length] --> B[entropy per position]
+    A[position arrays full length (1,276 positions)] --> B[entropy per position]
     B --> C[perplexity PP = 2^H]
     A --> D[GPU MI to find co-evolving pairs]
     D --> E[top pairs]
@@ -59,8 +59,8 @@ flowchart TD
 
 - H(372) = 1.6328 bits, PP(372) = 2^1.6328 = 3.101.
 - H(401) = 1.6715 bits, PP(401) = 2^1.6715 = 3.185.
-- Conditional perplexity: given residue at 372, the perplexity of 401 drops to about 1.05.
-- Ratio = 3.185 / 1.05 ~ 3.0 (the script reports 2.81 for the analyzed pairs).
+- Conditional perplexity: given residue at 372, the perplexity of 401 drops to about 1.13.
+- Ratio = 3.185 / 1.13 = 2.81 (the script reports 2.81 for the analyzed pairs).
 
 Interpretation: knowing the residue at 372 reduces the effective number of choices at 401 from about 3.2 to about 1.1. At the strongest pairs the conditional perplexity is close to 1.0, meaning position j is essentially DETERMINED by position i. This is near-deterministic co-evolution.
 
@@ -80,7 +80,7 @@ Interpretation: knowing the residue at 372 reduces the effective number of choic
 
 1. Perplexity is in the "number of states" unit, which is more intuitive than bits. PP = 1.1 says "about one effective choice".
 2. Conditional perplexity close to 1.0 is the direct statement of deterministic co-evolution: given i, j is forced.
-3. The ratio 2.81 for (372, 401) confirms the MI result (1.5917 bits, 97.6% of maximum) from a different angle.
+3. The ratio 2.81 for (372, 401) confirms the MI result (1.5917 bits, 97.5% of maximum) from a different angle.
 
 **Is perplexity better or worse than MI?**
 

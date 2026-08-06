@@ -1,4 +1,7 @@
-# 05. nary_kmap_co-evolution.py — The Base-20 (N-ary) K-map
+# 05. nary_kmap_co-evolution.py - The Base-20 (N-ary) K-map
+
+
+**Sequence length analyzed: 1,276 positions (full length), all 1,299 sequences.**
 
 ## What the Program Does
 
@@ -43,9 +46,9 @@ flowchart TD
 |----------|--------------|---------------|
 | Cells | 1,024 | 400 |
 | Used cells | 20 rows/cols used, 12 don't-care per axis | all 400 used |
-| Empty cells | ~98% of grid | 0% |
+| Empty cells | 61% of grid (20 of 32 codes used per axis) | 0% |
 | Cell meaning | (gray(aa1), gray(aa2)) | (aa1, aa2) directly |
-| Number of variables for QM | 10 bits (5+5) | 8 bits (4+4, but only 20 of 16 values per axis valid) |
+| Number of variables for QM | 10 bits (5+5) | 8 bits (4+4; only 16 of 20 values representable per axis) |
 
 The base-20 K-map is more compact and every cell is interpretable: cell (V, Q) literally means the dipeptide Valine-Glutamine.
 
