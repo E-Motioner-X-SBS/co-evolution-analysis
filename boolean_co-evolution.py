@@ -318,10 +318,12 @@ def compute_coupling_constants(kmap_freq, sequences, n_seqs=100):
         return {}
 
     min_len = min(len(s) for s in clean_seqs)
-    max_pos = min_len
-
-    # Compute pairwise mutual information between positions (80 positions, multiprocessing)
-    n_positions = max_pos  # 80 positions → 3160 pairs
+    # PERFORMANCE FIX: Original code used max_pos = min_len (1276 positions
+    # → 813K pairs), which timed out at ~32% after 20 minutes. All other
+    # scripts in this pipeline analyze positions 0-79 (the N-terminal
+    # signal peptide region). Limit to 80 positions for consistency and speed.
+    max_pos = min(80, min_len)  # 80 positions → 3160 pairs
+    n_positions = max_pos
 
     # Pre-compute position arrays for fast vectorized access
     pos_arrays = []
@@ -331,33 +333,47 @@ def compute_coupling_constants(kmap_freq, sequences, n_seqs=100):
 
     print(f"  Positions: {n_positions}, Sequences: {len(clean_seqs)}")
 
-    # Build all pairs and compute MI serially (no multiprocessing for simplicity)
+    # Build all pairs and compute MI
     pairs = [(i, j) for i in range(n_positions) for j in range(i + 1, n_positions)]
     print(f"  Total pairs to compute: {len(pairs)}")
     mi_matrix = np.zeros((n_positions, n_positions))
 
+    # PERFORMANCE FIX: Use vectorized numpy bincount approach instead of
+    # pure-Python Counter. Build dense array once, then bincount per pair.
+    dense = np.full((len(pos_arrays), n_positions), -1, dtype=np.int32)
+    for si, arr in enumerate(pos_arrays):
+        L = min(len(arr), n_positions)
+        dense[si, :L] = arr[:L]
+
     for idx, (i, j) in enumerate(pairs):
-        joint = Counter()
-        for arr in pos_arrays:
-            if arr[i] >= 0 and arr[j] >= 0:
-                joint[(int(arr[i]), int(arr[j]))] += 1
-        total = sum(joint.values())
-        if total > 0:
-            marg_i_cnt = Counter()
-            marg_j_cnt = Counter()
-            for (ai, aj), c in joint.items():
-                marg_i_cnt[ai] += c
-                marg_j_cnt[aj] += c
-            mi = sum(
-                (c / total)
-                * np.log2(
-                    (c / total) / ((marg_i_cnt[ai] / total) * (marg_j_cnt[aj] / total))
-                )
-                for (ai, aj), c in joint.items()
-                if marg_i_cnt[ai] > 0 and marg_j_cnt[aj] > 0
-            )
-            mi_matrix[i, j] = mi
-            mi_matrix[j, i] = mi
+        codes_i = dense[:, i]
+        codes_j = dense[:, j]
+        valid = (codes_i >= 0) & (codes_j >= 0)
+        ci = codes_i[valid]
+        cj = codes_j[valid]
+        if len(ci) < 10:
+            continue
+        # Joint via bincount: flat = ci * 20 + cj
+        joint_flat = (
+            np.bincount(ci.astype(np.int64) * 20 + cj.astype(np.int64), minlength=400)
+            .reshape(20, 20)
+            .astype(np.float64)
+        )
+        total = joint_flat.sum()
+        if total == 0:
+            continue
+        marg_i = joint_flat.sum(axis=1)
+        marg_j = joint_flat.sum(axis=0)
+        mi = 0.0
+        for ai in range(20):
+            for aj in range(20):
+                if joint_flat[ai, aj] > 0 and marg_i[ai] > 0 and marg_j[aj] > 0:
+                    p = joint_flat[ai, aj] / total
+                    pi_v = marg_i[ai] / total
+                    pj_v = marg_j[aj] / total
+                    mi += p * np.log2(p / (pi_v * pj_v))
+        mi_matrix[i, j] = mi
+        mi_matrix[j, i] = mi
         if (idx + 1) % 500 == 0:
             print(f"    Coupling MI: {idx + 1}/{len(pairs)}")
 
@@ -502,6 +518,7 @@ def predict_coevolution(qm_result, kmap_freq, sequences, n_seqs=100):
     # Compute prediction accuracy
     # If MI > median, predict "co-evolving"
     all_mi = list(on_set_mi) + list(off_set_mi)
+    accuracy = 0  # Default: initialized to avoid UnboundLocalError
     if all_mi:
         median_mi = np.median(all_mi)
         on_correct = sum(1 for m in on_set_mi if m > median_mi)

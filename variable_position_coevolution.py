@@ -183,14 +183,40 @@ def find_coevolutionary_pairs(pos_arrays, variable_positions, n_seqs, top_n=20):
 
     Uses conditional entropy: H(j | i) = H(i,j) - H(i)
     Low conditional entropy = strong co-evolution
+
+    PERFORMANCE FIX:
+    1. get_majority_ref() was called per pair (O(pairs × n_seqs) each call).
+       Now precomputed ONCE for all positions → O(max_pos × n_seqs) total.
+    2. Joint counting vectorized with numpy bincount instead of Counter.
     """
     print("\n  Computing conditional entropies...")
 
     co_evolving = []
-    var_set = set(variable_positions)
+
+    # ── Precompute majority references ONCE for all positions ──────────
+    # Old code: get_majority_ref(pos_i) inside the pair loop → for 1249
+    # variable positions ≈ 780K pairs × 2 calls × 1299 seqs ≈ 2 BILLION ops.
+    # New: build dense array + majority refs in O(n_seqs × max_pos).
+    max_pos = max(len(a) for a in pos_arrays[:n_seqs])
+    dense = np.full((n_seqs, max_pos), -1, dtype=np.int32)
+    for si, arr in enumerate(pos_arrays[:n_seqs]):
+        L = len(arr)
+        dense[si, :L] = arr[:L]
+
+    # Majority ref per position: most common valid code
+    ref_codes = {}
+    for pos in range(max_pos):
+        col = dense[:, pos]
+        valid = col[col >= 0]
+        if len(valid) == 0:
+            ref_codes[pos] = -1
+        else:
+            cnt = np.bincount(valid, minlength=20)
+            ref_codes[pos] = int(np.argmax(cnt))
 
     # Only consider pairs where both positions are variable
     for idx_i, pos_i in enumerate(variable_positions):
+        ref_i = ref_codes[pos_i]
         for idx_j in range(idx_i + 1, len(variable_positions)):
             pos_j = variable_positions[idx_j]
 
@@ -198,38 +224,41 @@ def find_coevolutionary_pairs(pos_arrays, variable_positions, n_seqs, top_n=20):
             if abs(pos_i - pos_j) > 30:
                 continue
 
-            # Joint distribution
-            joint = Counter()
-            marg_i = Counter()
-            marg_j = Counter()
+            ref_j = ref_codes[pos_j]
 
-            for arr in pos_arrays[:n_seqs]:
-                if pos_i < len(arr) and pos_j < len(arr):
-                    ci, cj = int(arr[pos_i]), int(arr[pos_j])
-                    if ci >= 0 and cj >= 0:
-                        # BUG FIX: Original code used pos_arrays[0] (first sequence)
-                        # as reference instead of the majority reference. This is
-                        # inconsistent with all other scripts. Fixed to use majority.
-                        ref_i = get_majority_ref(pos_arrays, pos_i, n_seqs)
-                        ref_j = get_majority_ref(pos_arrays, pos_j, n_seqs)
-
-                        if ci != ref_i or cj != ref_j:
-                            joint[(ci, cj)] += 1
-                            marg_i[ci] += 1
-                            marg_j[cj] += 1
-
-            total = sum(joint.values())
+            # ── Vectorized mutation counting ──────────────────────────
+            # Mutation = (ci != ref_i) OR (cj != ref_j); skip invalid (-1)
+            codes_i = dense[:, pos_i]
+            codes_j = dense[:, pos_j]
+            valid = (codes_i >= 0) & (codes_j >= 0)
+            ci = codes_i[valid]
+            cj = codes_j[valid]
+            # Only mutation pairs count
+            is_mut = (ci != ref_i) | (cj != ref_j)
+            ci = ci[is_mut]
+            cj = cj[is_mut]
+            total = len(ci)
             if total < 5:  # Need enough mutations
                 continue
 
-            # Mutual information
-            mi = 0.0
-            for (ai, aj), count in joint.items():
-                p_joint = count / total
-                p_i = marg_i[ai] / total
-                p_j = marg_j[aj] / total
-                if p_joint > 0 and p_i > 0 and p_j > 0:
-                    mi += p_joint * np.log2(p_joint / (p_i * p_j))
+            joint_flat = (
+                np.bincount(
+                    ci.astype(np.int64) * 20 + cj.astype(np.int64), minlength=400
+                )
+                .reshape(20, 20)
+                .astype(np.float64)
+            )
+            marg_i = joint_flat.sum(axis=1)
+            marg_j = joint_flat.sum(axis=0)
+
+            # Mutual information (vectorized)
+            with np.errstate(divide="ignore", invalid="ignore"):
+                p = joint_flat / total
+                pi = marg_i[:, None] / total
+                pj = marg_j[None, :] / total
+                ratio = p / (pi * pj)
+                contrib = np.where(p > 0, p * np.log2(ratio), 0.0)
+            mi = float(contrib.sum())
 
             if mi > 0.1:  # Only significant co-evolution
                 co_evolving.append((pos_i, pos_j, mi, total))

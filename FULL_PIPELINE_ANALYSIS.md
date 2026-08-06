@@ -1,6 +1,6 @@
 # E-Motioner-X-SBS: Complete Co-Evolution Analysis Pipeline
 
-**Generated:** July 27, 2026 at 16:58
+**Generated:** August 07, 2026 at 03:21
 **Dataset:** SARS-CoV-2 Omicron Spike Protein — 1,299 sequences, 1276 positions
 **Compute:** NVIDIA A100 80GB + 24-core Xeon, Python 3.10
 **Author:** Shuvam Banerji Seal — IISER Kolkata
@@ -304,8 +304,8 @@ def mutual_information(pos_arrays, pos_i, pos_j, n_seqs):
 | 7 | 72 | 74 | 1.3529 | T | R | 1.355 | 1.381 | 2 |
 | 8 | 71 | 74 | 1.3529 | G | R | 1.355 | 1.381 | 3 |
 | 9 | 71 | 73 | 1.3507 | G | K | 1.355 | 1.379 | 2 |
-| 10 | 73 | 78 | 1.3505 | K | P | 1.379 | 1.355 | 5 |
-| 11 | 76 | 78 | 1.3505 | D | P | 1.385 | 1.355 | 2 |
+| 10 | 76 | 78 | 1.3505 | D | P | 1.385 | 1.355 | 2 |
+| 11 | 73 | 78 | 1.3505 | K | P | 1.379 | 1.355 | 5 |
 | 12 | 74 | 78 | 1.3484 | R | P | 1.381 | 1.355 | 4 |
 | 13 | 75 | 78 | 1.3466 | F | P | 1.373 | 1.355 | 3 |
 | 14 | 68 | 74 | 1.3458 | G | R | 1.350 | 1.381 | 6 |
@@ -657,7 +657,7 @@ protein stability. The reference pair is (V, A).
 The coupling constant $J_{ij}(a,b)$ measures the log-odds of observing pair $(a,b)$
 at positions $(i,j)$ compared to the independent expectation:
 
-$$J_{ij}(a,b) = -\ln\frac{P_{ij}(a,b)}{P_i(a) \cdot P_j(b)}$$
+$$J_{ij}(a,b) = \ln\frac{P_{ij}(a,b)}{P_i(a) \cdot P_j(b)}$$
 
 - $J > 0$: pair is **co-evolutionary** (more common than expected)
 - $J < 0$: pair is **anti-correlated** (less common than expected)
@@ -676,8 +676,8 @@ $$J_{ij}(a,b) = -\ln\frac{P_{ij}(a,b)}{P_i(a) \cdot P_j(b)}$$
 | 72 | 74 | 1.3529 | 13.12 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | T-K:-21.2, G-R:-21.2, T-D:-20.1 |
 | 71 | 74 | 1.3529 | 13.12 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | G-K:-21.2, N-R:-21.2, G-D:-20.1 |
 | 71 | 73 | 1.3507 | 13.13 | A-A:+23.0, A-I:+23.0, A-V:+23.0 | G-T:-21.2, N-K:-21.2, G-F:-20.1 |
-| 73 | 78 | 1.3505 | 13.47 | A-A:+23.0, A-I:+23.0, A-M:+23.0 | T-P:-21.2, K-N:-21.2, K-L:-20.1 |
 | 76 | 78 | 1.3505 | 13.02 | A-A:+23.0, A-I:+23.0, A-M:+23.0 | F-P:-21.2, D-N:-21.2, P-P:-20.1 |
+| 73 | 78 | 1.3505 | 13.47 | A-A:+23.0, A-I:+23.0, A-M:+23.0 | T-P:-21.2, K-N:-21.2, K-L:-20.1 |
 | 74 | 78 | 1.3484 | 13.44 | A-A:+23.0, A-I:+23.0, A-M:+23.0 | K-P:-21.2, R-N:-21.2, R-L:-20.1 |
 | 75 | 78 | 1.3466 | 13.46 | A-A:+23.0, A-I:+23.0, A-M:+23.0 | R-P:-21.2, F-N:-21.2, N-P:-20.1 |
 | 68 | 74 | 1.3458 | 13.79 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | S-R:-21.2, G-K:-21.2, N-R:-20.2 |
@@ -715,8 +715,8 @@ The **co-evolution ratio** $PP(j) / PP(j|i)$ quantifies constraint strength:
 | 72 | 74 | 1.3529 | 2.605 | 1.008 | 2.58 | K | 1.000 |
 | 71 | 74 | 1.3529 | 2.605 | 1.008 | 2.58 | N | 1.000 |
 | 71 | 73 | 1.3507 | 2.601 | 1.008 | 2.58 | N | 1.000 |
-| 73 | 78 | 1.3505 | 2.558 | 1.035 | 2.47 | F | 1.000 |
 | 76 | 78 | 1.3505 | 2.558 | 1.044 | 2.45 | F | 1.000 |
+| 73 | 78 | 1.3505 | 2.558 | 1.035 | 2.47 | F | 1.000 |
 | 74 | 78 | 1.3484 | 2.558 | 1.044 | 2.45 | D | 1.000 |
 | 75 | 78 | 1.3466 | 2.558 | 1.002 | 2.55 | D | 1.000 |
 | 68 | 74 | 1.3458 | 2.605 | 1.104 | 2.36 | G | 1.009 |
@@ -897,5 +897,5 @@ def predict_partner(pos_i, aa_i, pos_j):
 7. de Moura, L. et al. (2021). The Lean 4 Theorem Prover and Programming Language.
 
 ---
-*Generated July 27, 2026 at 16:58 by `generate_full_pipeline_doc.py`*
+*Generated August 07, 2026 at 03:21 by `generate_full_pipeline_doc.py`*
 *All values computed from 1,299 Omicron Spike sequences using shared `coevolution_shared` module*

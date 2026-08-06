@@ -49,12 +49,14 @@ def main():
     n_all = len(sequences)
 
     # Build position arrays
+    # BUG FIX: Original code used clean[:80] (first 80 positions only), but
+    # master_boolean.py computes co-evolving pairs across the FULL length
+    # (e.g., positions 413, 427, ...). This mismatch caused the K-map to be
+    # all zeros → 0 rules. Fixed to use the full sequence length.
     pos_arrays = []
     for _, seq in sequences:
         clean = "".join(aa for aa in seq if aa in encoder.encode)
-        arr = np.array(
-            [encoder.encode.get(aa, -1) for aa in clean[:80]], dtype=np.int32
-        )
+        arr = np.array([encoder.encode.get(aa, -1) for aa in clean], dtype=np.int32)
         pos_arrays.append(arr)
 
     def get_majority(pos, n):

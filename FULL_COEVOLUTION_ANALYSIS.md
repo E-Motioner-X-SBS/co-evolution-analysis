@@ -1,9 +1,9 @@
 # Co-evolution Analysis of SARS-CoV-2 Spike Protein
 ## Complete Pipeline — ALL 1,299 Omicron Sequences
 
-**Generated:** July 27, 2026
+**Generated:** August 07, 2026
 **Data:** 1,299 SARS-CoV-2 Omicron Spike protein sequences from `Spike_protein.aln-fasta`
-**Compute:** NVIDIA A100 80GB + 24-core Xeon, 113.2s total
+**Compute:** NVIDIA A100 80GB + 24-core Xeon, 7.1s total
 **Scripts:** 18 Python analysis scripts, all run with ALL 1,299 sequences
 
 ---
@@ -119,8 +119,8 @@ He 2012 ordering: `AILVMFYWEDQNHKRSTCPG` (0-19). Direct mapping — no binary in
 | On-set cells | 93 (9.1% density) |
 | Threshold | 0.003940 |
 | Prime implicants | 70 |
-| Essential PIs | 23 |
-| Covering size | 23 |
+| Essential PIs | 38 |
+| Covering size | 38 |
 | **Prediction accuracy** | **50.7%** |
 | On-set MI (avg) | 0.117 |
 | Off-set MI (avg) | 0.098 |
@@ -157,14 +157,14 @@ He 2012 ordering: `AILVMFYWEDQNHKRSTCPG` (0-19). Direct mapping — no binary in
 
 | Pair | MI | avg\|J\| | Ref | Strongest Anti | J |
 |------|-----|--------|-----|---------------|-----|
-| (73,74) | 1.377 | 13.12 | K,R | D,N | -6.07 |
-| (74,76) | 1.370 | 12.66 | R,D | N,V | -6.07 |
-| (75,76) | 1.368 | 12.69 | F,D | V,L | -6.48 |
-| (73,76) | 1.368 | 12.67 | K,D | D,V | -6.07 |
-| (74,75) | 1.366 | 13.06 | R,F | N,P | -6.07 |
-| (73,75) | 1.364 | 13.06 | K,F | D,P | -6.07 |
-| (76,77) | 1.361 | 13.01 | D,N | V,L | -6.07 |
-| (74,77) | 1.359 | 13.42 | R,N | N,L | -6.07 |
+| (73,74) | 1.377 | 13.12 | K,R | —,— | 0.00 |
+| (74,76) | 1.370 | 12.66 | R,D | —,— | 0.00 |
+| (75,76) | 1.368 | 12.69 | F,D | —,— | 0.00 |
+| (73,76) | 1.368 | 12.67 | K,D | —,— | 0.00 |
+| (74,75) | 1.366 | 13.06 | R,F | —,— | 0.00 |
+| (73,75) | 1.364 | 13.06 | K,F | —,— | 0.00 |
+| (76,77) | 1.361 | 13.01 | D,N | —,— | 0.00 |
+| (74,77) | 1.359 | 13.42 | R,N | —,— | 0.00 |
 
 ## 9. Co-evolution Network
 
@@ -182,7 +182,7 @@ He 2012 ordering: `AILVMFYWEDQNHKRSTCPG` (0-19). Direct mapping — no binary in
 | Variable positions | 1,249 (97.9%) |
 | Conserved | 27 |
 | High-MI pairs (full length) | 4949 |
-| Compute time | 113.2s (A100 + 24-core) |
+| Compute time | 7.1s (A100 + 24-core) |
 
 ### Top 10 Most Variable Positions
 
@@ -212,16 +212,16 @@ He 2012 ordering: `AILVMFYWEDQNHKRSTCPG` (0-19). Direct mapping — no binary in
 
 | Rank | Pos | Mutations | % |
 |------|-----|-----------|-----|
-| 1 | 141 | 737 | 56.8% |
-| 2 | 145 | 735 | 56.6% |
-| 3 | 142 | 734 | 56.5% |
-| 4 | 146 | 732 | 56.4% |
-| 5 | 178 | 730 | 56.2% |
-| 6 | 147 | 727 | 56.0% |
-| 7 | 164 | 727 | 56.0% |
-| 8 | 148 | 726 | 55.9% |
-| 9 | 173 | 724 | 55.8% |
-| 10 | 165 | 723 | 55.7% |
+| 1 | 141 | 658 | 50.7% |
+| 2 | 145 | 654 | 50.4% |
+| 3 | 146 | 653 | 50.3% |
+| 4 | 148 | 650 | 50.1% |
+| 5 | 142 | 650 | 50.1% |
+| 6 | 147 | 649 | 50.0% |
+| 7 | 79 | 638 | 49.2% |
+| 8 | 153 | 637 | 49.1% |
+| 9 | 150 | 637 | 49.1% |
+| 10 | 158 | 636 | 49.0% |
 
 ## 12. Perplexity Analysis
 
@@ -263,7 +263,7 @@ Co-evolution ratio = PP(j) / PP(j|i). Ratio > 1 means position i constrains j.
 | Dataset | Sequences / Length | 1,299 / 1276 |
 | | Variable positions | 1,249 (97.9%) |
 | H1 | Enrichment | 1.34× |
-| Binary K-map | On-set / PIs / EPIs | 93 / 70 / 23 |
+| Binary K-map | On-set / PIs / EPIs | 93 / 70 / 38 |
 | | Prediction accuracy | 50.7% |
 | N-ary K-map | On-set / PIs / EPIs | 93 / 73 / 42 |
 | | Strong couplings | 337 |
@@ -275,7 +275,7 @@ Co-evolution ratio = PP(j) / PP(j|i). Ratio > 1 means position i constrains j.
 | Perplexity | Max ratio | 2.81× |
 | Variants | Unique signatures | 11 |
 | Couplings | All C < 0 | Purifying selection |
-| Compute | Time | 113.2s (A100) |
+| Compute | Time | 7.1s (A100) |
 
 ## 16. Script Index (All 18 Scripts)
 
@@ -338,4 +338,4 @@ See also:
 - `COEVOLUTION_CONSTRAINTS.md` — Mathematical constraint framework
 
 ---
-*Generated July 27, 2026 by `generate_full_analysis_md.py` — ALL values computed by Python analysis scripts, not hand-written.*
+*Generated August 07, 2026 by `generate_full_analysis_md.py` — ALL values computed by Python analysis scripts, not hand-written.*
