@@ -203,21 +203,45 @@ def main():
     # Build position arrays
     print("\n[2/6] Building position arrays...")
     pos_arrays = build_position_arrays(sequences, encoder, max_pos=full_length)
-    print(f"  Max position: 80")
+    print(f"  Max position: {full_length} (FULL LENGTH)")
 
-    # Top co-evolving pairs (from MI analysis)
-    co_evolving_pairs = [
-        (74, 76),
-        (74, 77),
-        (72, 74),
-        (76, 78),
-        (74, 78),
-        (68, 74),
-        (72, 76),
-        (68, 73),
-        (68, 77),
-        (72, 75),
-    ]
+    # Top co-evolving pairs — dynamically computed from full-length MI
+    # BUG FIX: was hardcoded pairs in positions 68-78. Now computed via
+    # GPU mutation-only MI over ALL variable positions (full length).
+    print("\n  Finding co-evolving pairs (GPU, full length)...")
+    try:
+        from coevolution_shared import find_coevolving_pairs_gpu
+        from collections import Counter as _C
+
+        # variable positions (entropy > 0.3)
+        vp = []
+        for p in range(full_length):
+            cnt = _C(int(a[p]) for a in pos_arrays if p < len(a) and a[p] >= 0)
+            t = sum(cnt.values())
+            if t == 0:
+                continue
+            h = -sum((c / t) * np.log2(c / t) for c in cnt.values() if c > 0)
+            if h > 0.3:
+                vp.append(p)
+        co_evolving_pairs = find_coevolving_pairs_gpu(
+            pos_arrays, vp, n_all, max_gap=30, min_mi=0.1
+        )
+        co_evolving_pairs = [(p[0], p[1]) for p in co_evolving_pairs[:10]]
+        print(f"  Top 10 co-evolving pairs (dynamic): {co_evolving_pairs}")
+    except Exception as e:
+        print(f"  GPU pair finding failed ({e}), using fallback pairs")
+        co_evolving_pairs = [
+            (74, 76),
+            (74, 77),
+            (72, 74),
+            (76, 78),
+            (74, 78),
+            (68, 74),
+            (72, 76),
+            (68, 73),
+            (68, 77),
+            (72, 75),
+        ]
 
     # ============================================================
     # STEP 1-2: Compute J_ij via DCA for all pairs

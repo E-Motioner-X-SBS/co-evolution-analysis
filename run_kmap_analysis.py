@@ -772,7 +772,8 @@ def main():
 
     # 4. H1: Adjacency analysis
     print("\n[4/10] Running H1: Gray-code adjacency analysis...")
-    h1_results = analyze_h1_adjacency(sequences, n_seqs=200)
+    # BUG FIX: was n_seqs=200 (only 200 of 1299 sequences). Now ALL sequences.
+    h1_results = analyze_h1_adjacency(sequences, n_seqs=1299)
 
     # 5. H2: Signature analysis
     print("\n[5/10] Running H2: K-map signature analysis...")

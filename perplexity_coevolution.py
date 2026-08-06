@@ -109,16 +109,38 @@ def main():
         f"{'Position':>8s} {'Entropy':>8s} {'Perplexity':>12s} {'Count':>6s} {'Interpretation'}"
     )
     print(f"{'-' * 8} {'-' * 8} {'-' * 12} {'-' * 6} {'-' * 20}")
-    for pos in range(80):
+    # BUG FIX: was range(80) — only displayed first 80. Now FULL length.
+    # Print summary stats for all positions + top 20 most/least variable.
+    all_pp = pos_perplexity
+    print(
+        f"  FULL LENGTH: {max_pos} positions, "
+        f"mean PP={all_pp.mean():.3f}, "
+        f"conserved (<1.5): {(all_pp < 1.5).sum()}, "
+        f"variable (>5): {(all_pp > 5).sum()}"
+    )
+    print("  Top 20 most variable positions:")
+    for pos in np.argsort(all_pp)[::-1][:20]:
         interp = (
             "conserved"
-            if pos_perplexity[pos] < 1.5
+            if all_pp[pos] < 1.5
             else "variable"
-            if pos_perplexity[pos] > 5
+            if all_pp[pos] > 5
             else "moderate"
         )
         print(
-            f"{pos:8d} {pos_entropy[pos]:8.3f} {pos_perplexity[pos]:12.3f} {pos_counts[pos]:6d} {interp}"
+            f"{int(pos):8d} {pos_entropy[int(pos)]:8.3f} {all_pp[int(pos)]:12.3f} {pos_counts[int(pos)]:6d} {interp}"
+        )
+    print("  Top 10 most conserved positions:")
+    for pos in np.argsort(all_pp)[:10]:
+        interp = (
+            "conserved"
+            if all_pp[pos] < 1.5
+            else "variable"
+            if all_pp[pos] > 5
+            else "moderate"
+        )
+        print(
+            f"{int(pos):8d} {pos_entropy[int(pos)]:8.3f} {all_pp[int(pos)]:12.3f} {pos_counts[int(pos)]:6d} {interp}"
         )
 
     # Compute pairwise conditional perplexity

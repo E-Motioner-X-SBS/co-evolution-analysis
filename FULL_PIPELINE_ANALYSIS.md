@@ -1,6 +1,6 @@
 # E-Motioner-X-SBS: Complete Co-Evolution Analysis Pipeline
 
-**Generated:** August 07, 2026 at 03:50
+**Generated:** August 07, 2026 at 04:05
 **Dataset:** SARS-CoV-2 Omicron Spike Protein — 1,299 sequences, 1276 positions
 **Compute:** NVIDIA A100 80GB + 24-core Xeon, Python 3.10
 **Author:** Shuvam Banerji Seal — IISER Kolkata
@@ -17,9 +17,9 @@ constraints in the SARS-CoV-2 Spike protein using Karnaugh map (K-map) Boolean m
 (positions 68-79). Quine-McCluskey Boolean minimization produced **152 essential
 prime implicants** — each representing an irreducible co-evolutionary constraint.
 
-**Key results:** H1 Gray-code adjacency enrichment = **0.18×**; 
-max pairwise MI = **1.3700** at positions (74,76);
-57/80 positions are evolutionarily variable (H > 0.3).
+**Key results:** H1 Gray-code adjacency enrichment = **0.19×**; 
+max pairwise MI = **1.5917** at positions (372,401);
+1249/80 positions are evolutionarily variable (H > 0.3).
 
 ## 1. Formal Foundations — 236 Lean 4 Theorems
 
@@ -64,10 +64,10 @@ in Python and reports discrepancies. Result: **103/103 pass**, zero discrepancie
 | **Sequences** | 1,299 SARS-CoV-2 Omicron Spike proteins |
 | **Alignment length** | 1276 residues |
 | **Analysis region** | Positions 0-79 (N-terminal signal peptide) |
-| **Variable positions** | 57/80 (entropy > 0.3) |
-| **Conserved positions** | 23/80 |
-| **Co-evolving pairs (MI > 0.01)** | 1744 |
-| **Co-evolving pairs (MI > 0.1)** | 1229 |
+| **Variable positions** | 1249/80 (entropy > 0.3) |
+| **Conserved positions** | -1169/80 |
+| **Co-evolving pairs (MI > 0.01)** | 36374 |
+| **Co-evolving pairs (MI > 0.1)** | 35774 |
 | **Encoding** | Base-20, He 2012 ordering |
 
 ### 2.1 He 2012 Amino Acid Ordering
@@ -261,7 +261,7 @@ where $P(a_i)$ is the frequency of amino acid $a_i$ at position $p$.
 | 78 | P | 0.6505 | 1.3552 | 2.558 | Variable |
 | 79 | V | 0.6474 | 1.1174 | 2.170 | Variable |
 
-**Summary:** 57 variable positions (H > 0.3), 23 conserved.
+**Summary:** 1249 variable positions (H > 0.3), -1169 conserved.
 
 ## 5. Mutual Information Analysis
 
@@ -295,56 +295,56 @@ def mutual_information(pos_arrays, pos_i, pos_j, n_seqs):
 
 | Rank | Pos i | Pos j | MI | Ref(i) | Ref(j) | H(i) | H(j) | Δ |
 |------|-------|-------|-------|--------|--------|------|------|----|
-| 1 | 74 | 76 | 1.3700 | R | D | 1.381 | 1.385 | 2 |
-| 2 | 73 | 76 | 1.3679 | K | D | 1.379 | 1.385 | 3 |
-| 3 | 73 | 75 | 1.3640 | K | F | 1.379 | 1.373 | 2 |
-| 4 | 74 | 77 | 1.3593 | R | N | 1.381 | 1.366 | 3 |
-| 5 | 75 | 77 | 1.3576 | F | N | 1.373 | 1.366 | 2 |
-| 6 | 73 | 77 | 1.3572 | K | N | 1.379 | 1.366 | 4 |
-| 7 | 72 | 74 | 1.3529 | T | R | 1.355 | 1.381 | 2 |
-| 8 | 71 | 74 | 1.3529 | G | R | 1.355 | 1.381 | 3 |
-| 9 | 71 | 73 | 1.3507 | G | K | 1.355 | 1.379 | 2 |
-| 10 | 76 | 78 | 1.3505 | D | P | 1.385 | 1.355 | 2 |
-| 11 | 73 | 78 | 1.3505 | K | P | 1.379 | 1.355 | 5 |
-| 12 | 74 | 78 | 1.3484 | R | P | 1.381 | 1.355 | 4 |
-| 13 | 75 | 78 | 1.3466 | F | P | 1.373 | 1.355 | 3 |
-| 14 | 68 | 74 | 1.3458 | G | R | 1.350 | 1.381 | 6 |
-| 15 | 72 | 76 | 1.3439 | T | D | 1.355 | 1.385 | 4 |
-| 16 | 71 | 76 | 1.3439 | G | D | 1.355 | 1.385 | 5 |
-| 17 | 68 | 73 | 1.3437 | G | K | 1.350 | 1.379 | 5 |
-| 18 | 68 | 77 | 1.3416 | G | N | 1.350 | 1.366 | 9 |
-| 19 | 72 | 75 | 1.3400 | T | F | 1.355 | 1.373 | 3 |
-| 20 | 71 | 75 | 1.3400 | G | F | 1.355 | 1.373 | 4 |
-| 21 | 67 | 74 | 1.3381 | S | R | 1.358 | 1.381 | 7 |
-| 22 | 68 | 76 | 1.3369 | G | D | 1.350 | 1.385 | 8 |
-| 23 | 67 | 73 | 1.3360 | S | K | 1.358 | 1.379 | 6 |
-| 24 | 72 | 77 | 1.3332 | T | N | 1.355 | 1.366 | 5 |
-| 25 | 71 | 77 | 1.3332 | G | N | 1.355 | 1.366 | 6 |
-| 26 | 68 | 75 | 1.3330 | G | F | 1.350 | 1.373 | 7 |
-| 27 | 67 | 76 | 1.3292 | S | D | 1.358 | 1.385 | 9 |
-| 28 | 67 | 77 | 1.3264 | S | N | 1.358 | 1.366 | 10 |
-| 29 | 67 | 75 | 1.3253 | S | F | 1.358 | 1.373 | 8 |
-| 30 | 68 | 78 | 1.3238 | G | P | 1.350 | 1.355 | 10 |
-| 31 | 71 | 78 | 1.3223 | G | P | 1.355 | 1.355 | 7 |
-| 32 | 72 | 78 | 1.3223 | T | P | 1.355 | 1.355 | 6 |
-| 33 | 68 | 71 | 1.3197 | G | G | 1.350 | 1.355 | 3 |
-| 34 | 68 | 72 | 1.3197 | G | T | 1.350 | 1.355 | 4 |
-| 35 | 67 | 71 | 1.3120 | S | G | 1.358 | 1.355 | 4 |
-| 36 | 67 | 72 | 1.3120 | S | T | 1.358 | 1.355 | 5 |
-| 37 | 67 | 78 | 1.3075 | S | P | 1.358 | 1.355 | 11 |
-| 38 | 70 | 74 | 1.1042 | N | R | 1.113 | 1.381 | 4 |
-| 39 | 70 | 73 | 1.1021 | N | K | 1.113 | 1.379 | 3 |
-| 40 | 75 | 79 | 1.1018 | F | V | 1.373 | 1.117 | 4 |
-| 41 | 70 | 75 | 1.1000 | N | F | 1.113 | 1.373 | 5 |
-| 42 | 76 | 79 | 1.0971 | D | V | 1.385 | 1.117 | 3 |
-| 43 | 70 | 79 | 1.0971 | N | V | 1.113 | 1.117 | 9 |
-| 44 | 70 | 76 | 1.0953 | N | D | 1.113 | 1.385 | 6 |
-| 45 | 74 | 79 | 1.0949 | R | V | 1.381 | 1.117 | 5 |
-| 46 | 73 | 79 | 1.0928 | K | V | 1.379 | 1.117 | 6 |
-| 47 | 69 | 74 | 1.0887 | T | R | 1.093 | 1.381 | 5 |
-| 48 | 69 | 73 | 1.0865 | T | K | 1.093 | 1.379 | 4 |
-| 49 | 77 | 79 | 1.0864 | N | V | 1.366 | 1.117 | 2 |
-| 50 | 70 | 77 | 1.0846 | N | N | 1.113 | 1.366 | 7 |
+| 1 | 372 | 401 | 1.5917 | A | N | 1.633 | 1.672 | 29 |
+| 2 | 401 | 404 | 1.5690 | N | S | 1.672 | 1.710 | 3 |
+| 3 | 208 | 209 | 1.5420 | L | G | 1.614 | 1.615 | 1 |
+| 4 | 209 | 210 | 1.5231 | G | R | 1.615 | 1.577 | 1 |
+| 5 | 208 | 210 | 1.5019 | L | R | 1.614 | 1.577 | 2 |
+| 6 | 207 | 209 | 1.4386 | N | G | 1.502 | 1.615 | 2 |
+| 7 | 207 | 208 | 1.4377 | N | L | 1.502 | 1.614 | 1 |
+| 8 | 206 | 207 | 1.4292 | I | N | 1.497 | 1.502 | 1 |
+| 9 | 206 | 209 | 1.4094 | I | G | 1.497 | 1.615 | 3 |
+| 10 | 206 | 208 | 1.4060 | I | L | 1.497 | 1.614 | 2 |
+| 11 | 207 | 210 | 1.4010 | N | R | 1.502 | 1.577 | 3 |
+| 12 | 133 | 136 | 1.3903 | N | F | 1.392 | 1.392 | 3 |
+| 13 | 131 | 133 | 1.3891 | F | N | 1.389 | 1.392 | 2 |
+| 14 | 131 | 136 | 1.3876 | F | F | 1.389 | 1.392 | 5 |
+| 15 | 84 | 86 | 1.3816 | D | V | 1.382 | 1.382 | 2 |
+| 16 | 83 | 84 | 1.3816 | N | D | 1.382 | 1.382 | 1 |
+| 17 | 83 | 86 | 1.3816 | N | V | 1.382 | 1.382 | 3 |
+| 18 | 89 | 101 | 1.3812 | A | I | 1.385 | 1.381 | 12 |
+| 19 | 89 | 110 | 1.3812 | A | T | 1.385 | 1.381 | 21 |
+| 20 | 101 | 110 | 1.3812 | I | T | 1.381 | 1.381 | 9 |
+| 21 | 84 | 87 | 1.3791 | D | Y | 1.382 | 1.381 | 3 |
+| 22 | 84 | 89 | 1.3791 | D | A | 1.382 | 1.385 | 5 |
+| 23 | 86 | 89 | 1.3791 | V | A | 1.382 | 1.385 | 3 |
+| 24 | 83 | 87 | 1.3791 | N | Y | 1.382 | 1.381 | 4 |
+| 25 | 83 | 89 | 1.3791 | N | A | 1.382 | 1.385 | 6 |
+| 26 | 86 | 87 | 1.3791 | V | Y | 1.382 | 1.381 | 1 |
+| 27 | 110 | 133 | 1.3790 | T | N | 1.381 | 1.392 | 23 |
+| 28 | 110 | 136 | 1.3781 | T | F | 1.381 | 1.392 | 26 |
+| 29 | 82 | 83 | 1.3773 | F | N | 1.377 | 1.382 | 1 |
+| 30 | 82 | 84 | 1.3773 | F | D | 1.377 | 1.382 | 2 |
+| 31 | 82 | 86 | 1.3773 | F | V | 1.377 | 1.382 | 4 |
+| 32 | 76 | 83 | 1.3768 | D | N | 1.385 | 1.382 | 7 |
+| 33 | 76 | 84 | 1.3768 | D | D | 1.385 | 1.382 | 8 |
+| 34 | 76 | 86 | 1.3768 | D | V | 1.385 | 1.382 | 10 |
+| 35 | 73 | 74 | 1.3768 | K | R | 1.379 | 1.381 | 1 |
+| 36 | 87 | 89 | 1.3766 | Y | A | 1.381 | 1.385 | 2 |
+| 37 | 127 | 133 | 1.3765 | C | N | 1.376 | 1.392 | 6 |
+| 38 | 110 | 131 | 1.3763 | T | F | 1.381 | 1.389 | 21 |
+| 39 | 80 | 83 | 1.3762 | L | N | 1.376 | 1.382 | 3 |
+| 40 | 80 | 84 | 1.3762 | L | D | 1.376 | 1.382 | 4 |
+| 41 | 80 | 85 | 1.3762 | L | G | 1.376 | 1.376 | 5 |
+| 42 | 80 | 86 | 1.3762 | L | V | 1.376 | 1.382 | 6 |
+| 43 | 83 | 85 | 1.3762 | N | G | 1.382 | 1.376 | 2 |
+| 44 | 84 | 85 | 1.3762 | D | G | 1.382 | 1.376 | 1 |
+| 45 | 85 | 86 | 1.3762 | G | V | 1.376 | 1.382 | 1 |
+| 46 | 206 | 210 | 1.3756 | I | R | 1.497 | 1.577 | 4 |
+| 47 | 136 | 137 | 1.3753 | F | L | 1.392 | 1.375 | 1 |
+| 48 | 127 | 136 | 1.3749 | C | F | 1.376 | 1.392 | 9 |
+| 49 | 82 | 87 | 1.3748 | F | Y | 1.377 | 1.381 | 5 |
+| 50 | 82 | 89 | 1.3748 | F | A | 1.377 | 1.385 | 7 |
 
 ## 6. Quine-McCluskey Boolean Minimization — All 108 Essential Prime Implicants
 
@@ -360,7 +360,7 @@ $$f(s_3, s_2, s_1, s_0, t_3, t_2, t_1, t_0) = \text{AND of literals}$$
 
 ### 6.1 Complete Inference Rules (152 rules across 15 position pairs)
 
-### Position Pair (413, 424) — MI = 2.3104, Reference: N→D
+### Position Pair (413, 424) — MI = 1.0122, Reference: N→D
 
 | Rule | Boolean Expression | Amino Acids |
 |------|-------------------|-------------|
@@ -381,7 +381,7 @@ $$f(s_3, s_2, s_1, s_0, t_3, t_2, t_1, t_0) = \text{AND of literals}$$
 position 424 must co-evolve to the corresponding partner residue to maintain
 protein stability. The reference pair is (N, D).
 
-### Position Pair (413, 425) — MI = 2.3345, Reference: N→F
+### Position Pair (413, 425) — MI = 1.0246, Reference: N→F
 
 | Rule | Boolean Expression | Amino Acids |
 |------|-------------------|-------------|
@@ -400,7 +400,7 @@ protein stability. The reference pair is (N, D).
 position 425 must co-evolve to the corresponding partner residue to maintain
 protein stability. The reference pair is (N, F).
 
-### Position Pair (413, 426) — MI = 2.3199, Reference: N→T
+### Position Pair (413, 426) — MI = 1.0216, Reference: N→T
 
 | Rule | Boolean Expression | Amino Acids |
 |------|-------------------|-------------|
@@ -421,7 +421,7 @@ protein stability. The reference pair is (N, F).
 position 426 must co-evolve to the corresponding partner residue to maintain
 protein stability. The reference pair is (N, T).
 
-### Position Pair (413, 427) — MI = 2.3524, Reference: N→G
+### Position Pair (413, 427) — MI = 1.0284, Reference: N→G
 
 | Rule | Boolean Expression | Amino Acids |
 |------|-------------------|-------------|
@@ -440,7 +440,7 @@ protein stability. The reference pair is (N, T).
 position 427 must co-evolve to the corresponding partner residue to maintain
 protein stability. The reference pair is (N, G).
 
-### Position Pair (413, 428) — MI = 2.2865, Reference: N→C
+### Position Pair (413, 428) — MI = 1.0222, Reference: N→C
 
 | Rule | Boolean Expression | Amino Acids |
 |------|-------------------|-------------|
@@ -460,7 +460,7 @@ protein stability. The reference pair is (N, G).
 position 428 must co-evolve to the corresponding partner residue to maintain
 protein stability. The reference pair is (N, C).
 
-### Position Pair (459, 473) — MI = 2.2842, Reference: P→N
+### Position Pair (459, 473) — MI = 1.0093, Reference: P→N
 
 | Rule | Boolean Expression | Amino Acids |
 |------|-------------------|-------------|
@@ -479,7 +479,7 @@ protein stability. The reference pair is (N, C).
 position 473 must co-evolve to the corresponding partner residue to maintain
 protein stability. The reference pair is (P, N).
 
-### Position Pair (462, 473) — MI = 2.2946, Reference: R→N
+### Position Pair (462, 473) — MI = 1.0114, Reference: R→N
 
 | Rule | Boolean Expression | Amino Acids |
 |------|-------------------|-------------|
@@ -497,7 +497,7 @@ protein stability. The reference pair is (P, N).
 position 473 must co-evolve to the corresponding partner residue to maintain
 protein stability. The reference pair is (R, N).
 
-### Position Pair (468, 473) — MI = 2.2946, Reference: I→N
+### Position Pair (468, 473) — MI = 1.0114, Reference: I→N
 
 | Rule | Boolean Expression | Amino Acids |
 |------|-------------------|-------------|
@@ -516,7 +516,7 @@ protein stability. The reference pair is (R, N).
 position 473 must co-evolve to the corresponding partner residue to maintain
 protein stability. The reference pair is (I, N).
 
-### Position Pair (469, 473) — MI = 2.2842, Reference: Y→N
+### Position Pair (469, 473) — MI = 1.0093, Reference: Y→N
 
 | Rule | Boolean Expression | Amino Acids |
 |------|-------------------|-------------|
@@ -535,7 +535,7 @@ protein stability. The reference pair is (I, N).
 position 473 must co-evolve to the corresponding partner residue to maintain
 protein stability. The reference pair is (Y, N).
 
-### Position Pair (1026, 1040) — MI = 2.2989, Reference: S→G
+### Position Pair (1026, 1040) — MI = 0.8136, Reference: S→G
 
 | Rule | Boolean Expression | Amino Acids |
 |------|-------------------|-------------|
@@ -554,7 +554,7 @@ protein stability. The reference pair is (Y, N).
 position 1040 must co-evolve to the corresponding partner residue to maintain
 protein stability. The reference pair is (S, G).
 
-### Position Pair (1026, 1042) — MI = 2.2989, Reference: S→G
+### Position Pair (1026, 1042) — MI = 1.2162, Reference: S→G
 
 | Rule | Boolean Expression | Amino Acids |
 |------|-------------------|-------------|
@@ -573,7 +573,7 @@ protein stability. The reference pair is (S, G).
 position 1042 must co-evolve to the corresponding partner residue to maintain
 protein stability. The reference pair is (S, G).
 
-### Position Pair (1040, 1042) — MI = 2.2989, Reference: G→G
+### Position Pair (1040, 1042) — MI = 0.8064, Reference: G→G
 
 | Rule | Boolean Expression | Amino Acids |
 |------|-------------------|-------------|
@@ -591,7 +591,7 @@ protein stability. The reference pair is (S, G).
 position 1042 must co-evolve to the corresponding partner residue to maintain
 protein stability. The reference pair is (G, G).
 
-### Position Pair (1064, 1065) — MI = 2.2876, Reference: V→P
+### Position Pair (1064, 1065) — MI = 1.1921, Reference: V→P
 
 | Rule | Boolean Expression | Amino Acids |
 |------|-------------------|-------------|
@@ -611,7 +611,7 @@ protein stability. The reference pair is (G, G).
 position 1065 must co-evolve to the corresponding partner residue to maintain
 protein stability. The reference pair is (V, P).
 
-### Position Pair (1064, 1066) — MI = 2.2816, Reference: V→A
+### Position Pair (1064, 1066) — MI = 1.1908, Reference: V→A
 
 | Rule | Boolean Expression | Amino Acids |
 |------|-------------------|-------------|
@@ -628,7 +628,7 @@ protein stability. The reference pair is (V, P).
 position 1066 must co-evolve to the corresponding partner residue to maintain
 protein stability. The reference pair is (V, A).
 
-### Position Pair (1064, 1074) — MI = 2.2888, Reference: V→A
+### Position Pair (1064, 1074) — MI = 0.7738, Reference: V→A
 
 | Rule | Boolean Expression | Amino Acids |
 |------|-------------------|-------------|
@@ -667,26 +667,26 @@ $$J_{ij}(a,b) = \ln\frac{P_{ij}(a,b)}{P_i(a) \cdot P_j(b)}$$
 
 | Pos i | Pos j | MI | avg\|J\| | Top Co-evolutionary (J>0) | Top Anti-correlated (J<0) |
 |-------|-------|-----|----------|---------------------------|---------------------------|
-| 74 | 76 | 1.3700 | 12.66 | A-A:+23.0, A-I:+23.0, A-M:+23.0 | R-F:-21.2, K-D:-21.2, R-P:-20.1 |
-| 73 | 76 | 1.3679 | 12.67 | A-A:+23.0, A-I:+23.0, A-M:+23.0 | K-F:-21.2, T-D:-21.2, K-P:-20.1 |
-| 73 | 75 | 1.3640 | 13.06 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | T-F:-21.2, K-R:-21.2, K-N:-20.1 |
-| 74 | 77 | 1.3593 | 13.42 | A-A:+23.0, A-I:+23.0, A-M:+23.0 | R-D:-21.2, K-N:-21.2, R-V:-20.1 |
-| 75 | 77 | 1.3576 | 13.47 | A-A:+23.0, A-I:+23.0, A-M:+23.0 | R-N:-21.2, F-V:-20.1, N-N:-20.1 |
-| 73 | 77 | 1.3572 | 13.44 | A-A:+23.0, A-I:+23.0, A-M:+23.0 | K-D:-21.2, T-N:-21.2, K-V:-20.1 |
-| 72 | 74 | 1.3529 | 13.12 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | T-K:-21.2, G-R:-21.2, T-D:-20.1 |
-| 71 | 74 | 1.3529 | 13.12 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | G-K:-21.2, N-R:-21.2, G-D:-20.1 |
-| 71 | 73 | 1.3507 | 13.13 | A-A:+23.0, A-I:+23.0, A-V:+23.0 | G-T:-21.2, N-K:-21.2, G-F:-20.1 |
-| 76 | 78 | 1.3505 | 13.02 | A-A:+23.0, A-I:+23.0, A-M:+23.0 | F-P:-21.2, D-N:-21.2, P-P:-20.1 |
-| 73 | 78 | 1.3505 | 13.47 | A-A:+23.0, A-I:+23.0, A-M:+23.0 | T-P:-21.2, K-N:-21.2, K-L:-20.1 |
-| 74 | 78 | 1.3484 | 13.44 | A-A:+23.0, A-I:+23.0, A-M:+23.0 | K-P:-21.2, R-N:-21.2, R-L:-20.1 |
-| 75 | 78 | 1.3466 | 13.46 | A-A:+23.0, A-I:+23.0, A-M:+23.0 | R-P:-21.2, F-N:-21.2, N-P:-20.1 |
-| 68 | 74 | 1.3458 | 13.79 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | S-R:-21.2, G-K:-21.2, N-R:-20.2 |
-| 72 | 76 | 1.3439 | 12.66 | A-A:+23.0, A-I:+23.0, A-M:+23.0 | T-F:-21.2, G-D:-21.2, T-P:-20.1 |
-| 71 | 76 | 1.3439 | 12.66 | A-A:+23.0, A-I:+23.0, A-M:+23.0 | G-F:-21.2, N-D:-21.2, G-P:-20.1 |
-| 68 | 73 | 1.3437 | 13.80 | A-A:+23.0, A-I:+23.0, A-V:+23.0 | S-K:-21.2, G-T:-21.2, N-K:-20.2 |
-| 68 | 77 | 1.3416 | 14.30 | A-A:+23.0, A-I:+23.0, A-M:+23.0 | G-D:-21.2, S-N:-21.2, N-N:-20.2 |
-| 72 | 75 | 1.3400 | 13.06 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | T-R:-21.2, G-F:-21.2, T-N:-20.1 |
-| 71 | 75 | 1.3400 | 13.06 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | G-R:-21.2, N-F:-21.2, G-N:-20.1 |
+| 372 | 401 | 1.5917 | 10.83 | I-A:+23.0, I-L:+23.0, I-M:+23.0 | T-N:-20.9, A-V:-20.1, K-N:-20.1 |
+| 401 | 404 | 1.5690 | 10.46 | A-L:+23.0, A-M:+23.0, A-F:+23.0 | D-S:-20.9, N-I:-20.1, V-S:-20.1 |
+| 208 | 209 | 1.5420 | 10.77 | A-A:+23.0, A-M:+23.0, A-Y:+23.0 | E-G:-21.0, L-D:-20.1, R-G:-20.1 |
+| 209 | 210 | 1.5231 | 10.46 | A-A:+23.0, A-M:+23.0, A-Y:+23.0 | P-R:-21.0, G-E:-21.0, D-R:-20.1 |
+| 208 | 210 | 1.5019 | 10.47 | A-A:+23.0, A-M:+23.0, A-Y:+23.0 | L-E:-21.0, E-R:-21.0, R-R:-20.1 |
+| 207 | 209 | 1.4386 | 10.61 | A-A:+23.0, A-M:+23.0, A-Y:+23.0 | R-G:-21.1, N-P:-21.0, N-D:-20.1 |
+| 207 | 208 | 1.4377 | 10.75 | A-A:+23.0, A-M:+23.0, A-F:+23.0 | R-L:-21.1, N-E:-21.0, N-R:-20.1 |
+| 206 | 207 | 1.4292 | 10.76 | A-A:+23.0, A-M:+23.0, A-F:+23.0 | I-R:-21.1, L-N:-20.1, L-R:-19.1 |
+| 206 | 209 | 1.4094 | 10.67 | A-A:+23.0, A-M:+23.0, A-Y:+23.0 | I-P:-21.0, L-G:-20.1, I-L:-19.1 |
+| 206 | 208 | 1.4060 | 10.81 | A-A:+23.0, A-M:+23.0, A-F:+23.0 | I-E:-21.0, L-L:-20.1, V-R:-19.1 |
+| 207 | 210 | 1.4010 | 10.37 | A-A:+23.0, A-M:+23.0, A-Y:+23.0 | R-R:-21.1, N-E:-21.0, N-L:-20.1 |
+| 133 | 136 | 1.3903 | 12.40 | A-A:+23.0, A-I:+23.0, A-M:+23.0 | N-P:-21.2, C-F:-21.2, N-D:-20.1 |
+| 131 | 133 | 1.3891 | 12.74 | A-A:+23.0, A-I:+23.0, A-V:+23.0 | F-C:-21.2, Q-N:-21.2, F-P:-20.1 |
+| 131 | 136 | 1.3876 | 12.72 | A-A:+23.0, A-I:+23.0, A-M:+23.0 | F-P:-21.2, Q-F:-21.2, F-D:-20.1 |
+| 84 | 86 | 1.3816 | 12.44 | A-I:+23.0, A-L:+23.0, A-M:+23.0 | D-G:-21.2, N-V:-21.2, V-V:-20.1 |
+| 83 | 84 | 1.3816 | 12.44 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | F-D:-21.2, N-N:-21.2, N-V:-20.1 |
+| 83 | 86 | 1.3816 | 12.44 | A-I:+23.0, A-L:+23.0, A-M:+23.0 | F-V:-21.2, N-G:-21.2, N-F:-20.1 |
+| 89 | 101 | 1.3812 | 12.76 | L-A:+23.0, L-L:+23.0, L-V:+23.0 | A-W:-21.2, F-I:-21.2, A-G:-20.1 |
+| 89 | 110 | 1.3812 | 12.76 | L-A:+23.0, L-I:+23.0, L-V:+23.0 | A-K:-21.2, F-T:-21.2, A-S:-20.1 |
+| 101 | 110 | 1.3812 | 13.14 | A-A:+23.0, A-I:+23.0, A-V:+23.0 | I-K:-21.2, W-T:-21.2, I-S:-20.1 |
 
 ## 8. Perplexity Analysis
 
@@ -706,26 +706,26 @@ The **co-evolution ratio** $PP(j) / PP(j|i)$ quantifies constraint strength:
 
 | Pos i | Pos j | MI | PPₘ(j) | PPₖₒₙₐ | Ratio | Most Constraining Residue | PP\|that |
 |-------|-------|-----|--------|---------|-------|--------------------------|----------|
-| 74 | 76 | 1.3700 | 2.613 | 1.047 | 2.50 | D | 1.000 |
-| 73 | 76 | 1.3679 | 2.613 | 1.215 | 2.15 | F | 1.000 |
-| 73 | 75 | 1.3640 | 2.590 | 1.213 | 2.13 | F | 1.000 |
-| 74 | 77 | 1.3593 | 2.578 | 1.044 | 2.47 | D | 1.000 |
-| 75 | 77 | 1.3576 | 2.578 | 1.002 | 2.57 | D | 1.000 |
-| 73 | 77 | 1.3572 | 2.578 | 1.213 | 2.12 | F | 1.000 |
-| 72 | 74 | 1.3529 | 2.605 | 1.008 | 2.58 | K | 1.000 |
-| 71 | 74 | 1.3529 | 2.605 | 1.008 | 2.58 | N | 1.000 |
-| 71 | 73 | 1.3507 | 2.601 | 1.008 | 2.58 | N | 1.000 |
-| 76 | 78 | 1.3505 | 2.558 | 1.044 | 2.45 | F | 1.000 |
-| 73 | 78 | 1.3505 | 2.558 | 1.035 | 2.47 | F | 1.000 |
-| 74 | 78 | 1.3484 | 2.558 | 1.044 | 2.45 | D | 1.000 |
-| 75 | 78 | 1.3466 | 2.558 | 1.002 | 2.55 | D | 1.000 |
-| 68 | 74 | 1.3458 | 2.605 | 1.104 | 2.36 | G | 1.009 |
-| 72 | 76 | 1.3439 | 2.613 | 1.054 | 2.48 | R | 1.000 |
-| 71 | 76 | 1.3439 | 2.613 | 1.054 | 2.48 | N | 1.000 |
-| 68 | 73 | 1.3437 | 2.601 | 1.104 | 2.35 | G | 1.009 |
-| 68 | 77 | 1.3416 | 2.578 | 1.067 | 2.42 | S | 1.000 |
-| 72 | 75 | 1.3400 | 2.590 | 1.052 | 2.46 | R | 1.000 |
-| 71 | 75 | 1.3400 | 2.590 | 1.052 | 2.46 | N | 1.000 |
+| 372 | 401 | 1.5917 | 3.185 | 1.224 | 2.60 | K | 1.000 |
+| 401 | 404 | 1.5690 | 3.271 | 1.291 | 2.53 | E | 1.000 |
+| 208 | 209 | 1.5420 | 3.063 | 1.177 | 2.60 | D | 1.000 |
+| 209 | 210 | 1.5231 | 2.983 | 1.106 | 2.70 | V | 1.000 |
+| 208 | 210 | 1.5019 | 2.983 | 1.187 | 2.51 | D | 1.000 |
+| 207 | 209 | 1.4386 | 3.063 | 1.409 | 2.17 | E | 1.000 |
+| 207 | 208 | 1.4377 | 3.062 | 1.468 | 2.09 | E | 1.000 |
+| 206 | 207 | 1.4292 | 2.832 | 1.201 | 2.36 | N | 1.000 |
+| 206 | 209 | 1.4094 | 3.063 | 1.392 | 2.20 | L | 1.000 |
+| 206 | 208 | 1.4060 | 3.062 | 1.438 | 2.13 | L | 1.000 |
+| 207 | 210 | 1.4010 | 2.983 | 1.490 | 2.00 | E | 1.000 |
+| 133 | 136 | 1.3903 | 2.625 | 1.000 | 2.63 | D | 1.000 |
+| 131 | 133 | 1.3891 | 2.624 | 1.000 | 2.62 | F | 1.000 |
+| 131 | 136 | 1.3876 | 2.625 | 1.000 | 2.63 | F | 1.000 |
+| 84 | 86 | 1.3816 | 2.605 | 1.000 | 2.61 | V | 1.000 |
+| 83 | 84 | 1.3816 | 2.605 | 1.000 | 2.61 | F | 1.000 |
+| 83 | 86 | 1.3816 | 2.605 | 1.000 | 2.61 | F | 1.000 |
+| 89 | 101 | 1.3812 | 2.605 | 1.000 | 2.60 | A | 1.000 |
+| 89 | 110 | 1.3812 | 2.605 | 1.000 | 2.60 | A | 1.000 |
+| 101 | 110 | 1.3812 | 2.605 | 1.000 | 2.60 | I | 1.000 |
 
 ## 9. H1: Gray-code Adjacency Hypothesis
 
@@ -745,22 +745,22 @@ For each consecutive pair of residues in each of the {n_all:,} sequences:
 
 | Metric | Value |
 |--------|-------|
-| Total consecutive pairs | 258,501 |
-| Hamming-1 pairs | 47,379 |
-| Observed ratio | **0.1833** |
+| Total consecutive pairs | 1,647,830 |
+| Hamming-1 pairs | 313,888 |
+| Observed ratio | **0.1905** |
 | Expected (random) | 0.1613 |
-| **Enrichment** | **1.14×** |
+| **Enrichment** | **1.18×** |
 
 ### 9.4 Full Hamming Distance Distribution
 
 | Distance | Count | Percentage | Cumulative |
 |----------|-------|------------|------------|
-| 0 | 18,537 | 7.2% | 7.2% |
-| 1 | 47,379 | 18.3% | 25.5% |
-| 2 | 89,328 | 34.6% | 60.1% |
-| 3 | 70,750 | 27.4% | 87.4% |
-| 4 | 28,609 | 11.1% | 98.5% |
-| 5 | 3,898 | 1.5% | 100.0% |
+| 0 | 87,469 | 5.3% | 5.3% |
+| 1 | 313,888 | 19.0% | 24.4% |
+| 2 | 575,018 | 34.9% | 59.3% |
+| 3 | 439,445 | 26.7% | 85.9% |
+| 4 | 204,386 | 12.4% | 98.3% |
+| 5 | 27,624 | 1.7% | 100.0% |
 
 ## 10. Complete Analysis Scripts Inventory
 
@@ -847,8 +847,8 @@ Rules learned from one variant do not generalize to others.
 | Input sequences | 1,299 |
 | Positions analyzed | 1276 |
 | Position arrays built | 1,299 × 1276 = 1,657,524 integers |
-| Variable positions (H > 0.3) | 57 |
-| Co-evolving pairs (MI > 0.1) | 1229 |
+| Variable positions (H > 0.3) | 1249 |
+| Co-evolving pairs (MI > 0.1) | 35774 |
 | Boolean expressions (QM minimized) | 152 essential prime implicants |
 | Unique position pairs with rules | 15 |
 | Lean 4 theorems | 236 (106 + 115 + 15) |
@@ -897,5 +897,5 @@ def predict_partner(pos_i, aa_i, pos_j):
 7. de Moura, L. et al. (2021). The Lean 4 Theorem Prover and Programming Language.
 
 ---
-*Generated August 07, 2026 at 03:50 by `generate_full_pipeline_doc.py`*
+*Generated August 07, 2026 at 04:05 by `generate_full_pipeline_doc.py`*
 *All values computed from 1,299 Omicron Spike sequences using shared `coevolution_shared` module*

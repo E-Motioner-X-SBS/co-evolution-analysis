@@ -45,7 +45,8 @@ now = datetime.now().strftime("%B %d, %Y at %H:%M")
 
 # ── Load all precomputed data ────────────────────────────────────────
 print("Loading data...")
-pos_arrays, n_all, full_len = load_position_arrays(max_pos=200)
+# BUG FIX: was max_pos=200 (first 200 positions only). Now FULL length.
+pos_arrays, n_all, full_len = load_position_arrays(max_pos=None)
 
 # Boolean expressions from QM minimization
 with open(BASE / "kmap_boolean_coevolution/boolean_functions.json") as f:
@@ -67,10 +68,14 @@ for r in all_rules:
 # ── Compute fresh results ────────────────────────────────────────────
 print("Computing metrics...")
 
-# Entropy vector
-entropy_vec = compute_entropy_vectorized(pos_arrays, n_all, 80)
+# BUG FIX: entropy/MI/consensus were limited to first 80 positions.
+# Now FULL length (full_len from load_position_arrays).
+full_len_actual = max(len(a) for a in pos_arrays)
+
+# Entropy vector — FULL length
+entropy_vec = compute_entropy_vectorized(pos_arrays, n_all, full_len_actual)
 perplexity_vec = 2.0**entropy_vec
-var_positions = find_variable_positions(pos_arrays, n_all, 80, 0.3)
+var_positions = find_variable_positions(pos_arrays, n_all, full_len_actual, 0.3)
 
 # H1 Hamming
 ham = np.zeros(6, dtype=np.int64)
@@ -88,10 +93,10 @@ for arr in pos_arrays[:n_all]:
         tot_consec += 1
 h1_ratio = ham[1] / tot_consec if tot_consec else 0
 
-# Top MI pairs (0-79)
+# Top MI pairs — FULL length (window 30, step 1)
 mi_pairs = []
-for i in range(80):
-    for j in range(i + 2, min(i + 30, 80)):
+for i in range(full_len_actual):
+    for j in range(i + 1, min(i + 30, full_len_actual)):
         mi = mutual_information(pos_arrays, i, j, n_all)
         if mi > 0.01:
             ref_i = majority_ref(pos_arrays, i, n_all)
@@ -120,17 +125,17 @@ for pi, pj, mi, ri, rj in mi_pairs[:20]:
     avgc = np.mean([v[0] for v in cond.values()]) if cond else 0
     perp_results.append((pi, pj, mi, mi_mut, ppm, avgc, cond))
 
-# Consensus AA per position
-pos_freq = np.zeros((80, N_AA), dtype=np.float64)
+# Consensus AA per position — FULL length
+pos_freq = np.zeros((full_len_actual, N_AA), dtype=np.float64)
 for arr in pos_arrays[:n_all]:
-    L = min(len(arr), 80)
+    L = min(len(arr), full_len_actual)
     for pos in range(L):
         if arr[pos] >= 0:
             pos_freq[pos, arr[pos]] += 1
 pos_freq /= n_all
 
 consensus = []
-for pos in range(80):
+for pos in range(full_len_actual):
     top = int(np.argmax(pos_freq[pos]))
     consensus.append(
         (pos, AA_LIST[top], float(pos_freq[pos, top]), float(entropy_vec[pos]))

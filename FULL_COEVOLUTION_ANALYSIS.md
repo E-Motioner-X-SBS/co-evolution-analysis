@@ -92,9 +92,9 @@ He 2012 ordering: `AILVMFYWEDQNHKRSTCPG` (0-19). Direct mapping — no binary in
 
 | Metric | Value |
 |--------|-------|
-| Total consecutive pairs | 253,442 |
-| Hamming-1 pairs | 54,739 |
-| Observed ratio | 0.2160 (21.6%) |
+| Total consecutive pairs | 1,647,830 |
+| Hamming-1 pairs | 356,431 |
+| Observed ratio | 0.2163 (21.6%) |
 | Expected (random) | 0.1613 (16.1%) |
 | **Enrichment** | **1.34×** |
 
@@ -102,12 +102,12 @@ He 2012 ordering: `AILVMFYWEDQNHKRSTCPG` (0-19). Direct mapping — no binary in
 
 | Distance | Count | Pct | Meaning |
 |----------|-------|-----|---------|
-| 0 | 13,428 | 5.3% |  |
-| 1 | 54,739 | 21.6% |  |
-| 2 | 84,092 | 33.2% |  |
-| 3 | 76,383 | 30.1% |  |
-| 4 | 22,800 | 9.0% |  |
-| 5 | 2,000 | 0.8% |  |
+| 0 | 87,469 | 5.3% |  |
+| 1 | 356,431 | 21.6% |  |
+| 2 | 547,031 | 33.2% |  |
+| 3 | 495,825 | 30.1% |  |
+| 4 | 148,087 | 9.0% |  |
+| 5 | 12,987 | 0.8% |  |
 
 **Inference:** Consecutive residues are 34% more likely to be K-map-adjacent than random.
 
@@ -238,22 +238,22 @@ Co-evolution ratio = PP(j) / PP(j|i). Ratio > 1 means position i constrains j.
 
 ## 13. Variant Classification
 
-**11** unique co-evolution signatures from 5 position pairs:
+**40** unique co-evolution signatures from 5 position pairs:
 
 | Cluster | Count | % |
 |---------|-------|-----|
-| 1 | 839 | 64.6% |
-| 2 | 310 | 23.9% |
-| 3 | 111 | 8.5% |
-| 4 | 25 | 1.9% |
-| 5 | 4 | 0.3% |
+| 1 | 799 | 61.5% |
+| 2 | 246 | 18.9% |
+| 3 | 108 | 8.3% |
+| 4 | 31 | 2.4% |
+| 5 | 30 | 2.3% |
 
 ## 14. Algorithms That Failed (Informative Failures)
 
 | Algorithm | Accuracy | Why |
 |-----------|----------|-----|
 | LOO-CV | 2.93% (80/2726) | Lineage-specific references |
-| DCA Boolean | 0.0% | Singular covariance matrix |
+| DCA Boolean | 17.6% | Singular covariance matrix |
 | Flipped Boolean | 0 forbidden pairs | All observed with 1,299 seqs |
 | Constraint function | 5.8% | All C < 0 (no positive signal) |
 
@@ -274,7 +274,7 @@ Co-evolution ratio = PP(j) / PP(j|i). Ratio > 1 means position i constrains j.
 | | Hub | Position 85 (degree 60) |
 | Mutations | Mean / Max | 260.8 / 1202 |
 | Perplexity | Max ratio | 2.81× |
-| Variants | Unique signatures | 11 |
+| Variants | Unique signatures | 40 |
 | Couplings | All C < 0 | Purifying selection |
 | Compute | Time | 2.9s (A100) |
 

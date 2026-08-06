@@ -249,9 +249,10 @@ def main():
     # no-op (returned ci). The K-map was effectively a 20×20 matrix padded
     # with zeros in a 32×32 grid.
     # FIX: Build a proper 20×20 base-20 K-map (He 2012 encoding, no Gray).
+    # BUG FIX 2: was limited to positions 68-79 (first 80). Now FULL length.
     consensus_kmap = np.zeros((20, 20), dtype=np.float64)
     for arr in pos_arrays[:n_all]:
-        for pos in range(68, min(79, max_pos)):
+        for pos in range(max_pos - 1):
             if pos < len(arr) and pos + 1 < len(arr):
                 ci, cj = int(arr[pos]), int(arr[pos + 1])
                 if 0 <= ci < 20 and 0 <= cj < 20:
@@ -305,11 +306,21 @@ def main():
     print("=" * 80)
 
     # Build co-evolution signature for each sequence
-    print("\n  Building co-evolution signatures...")
+    # BUG FIX: was hardcoded 68-79 region pairs. Now top-5 co-evolving pairs
+    # from the full-length MI matrix (computed in ANALYSIS 1).
+    print("\n  Building co-evolution signatures (top-5 full-length pairs)...")
+    sig_pairs = []
+    for entry in mi_results[:5]:
+        # mi_results entries are (pos_i, pos_j, mi) or (pos_i, pos_j, mi, total)
+        sig_pairs.append((int(entry[0]), int(entry[1])))
+    if len(sig_pairs) < 5:
+        sig_pairs = [(76, 77), (74, 79), (71, 75), (72, 75), (78, 79)]
+    print(f"  Signature pairs: {sig_pairs}")
+
     signatures = []
     for arr in pos_arrays[:n_all]:
         sig = []
-        for pos_i, pos_j in [(76, 77), (74, 79), (71, 75), (72, 75), (78, 79)]:
+        for pos_i, pos_j in sig_pairs:
             if pos_i < len(arr) and pos_j < len(arr):
                 ci, cj = int(arr[pos_i]), int(arr[pos_j])
                 sig.append(ci * 20 + cj)  # Encode as single integer
@@ -359,11 +370,11 @@ def main():
     print("=" * 80)
 
     # Build feature vectors from co-evolution patterns
-    print("\n  Building feature vectors...")
+    print("\n  Building feature vectors (FULL length)...")
     features = []
     for arr in pos_arrays[:n_all]:
         feat = []
-        for pos in range(68, min(80, max_pos)):
+        for pos in range(max_pos):
             if pos < len(arr):
                 feat.append(int(arr[pos]))
             else:
@@ -374,7 +385,7 @@ def main():
 
     # Compute pairwise Hamming distances
     print("  Computing pairwise distances...")
-    n_seq = min(200, n_all)  # Limit for efficiency
+    n_seq = min(200, n_all)  # Limit for efficiency (clustering is O(n²))
     dist_matrix = np.zeros((n_seq, n_seq), dtype=np.float64)
 
     for i in range(n_seq):

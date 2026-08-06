@@ -63,9 +63,10 @@ def parse_fasta(filepath):
 # ══════════════════════════════════════════════════════════════════════
 
 
-def load_position_arrays(fasta_path=None, max_pos=200, n_seqs=None, clear_cache=False):
+def load_position_arrays(fasta_path=None, max_pos=None, n_seqs=None, clear_cache=False):
     """Load FASTA, He 2012 encode, return (pos_arrays, n_all, full_len).
 
+    max_pos=None → FULL sequence length (all positions).
     Cached on first call. Pass clear_cache=True to force reload.
     """
     if fasta_path is None:
@@ -80,7 +81,10 @@ def load_position_arrays(fasta_path=None, max_pos=200, n_seqs=None, clear_cache=
     seqs_raw = parse_fasta(fasta_path)
     n_all = min(n_seqs, len(seqs_raw)) if n_seqs else len(seqs_raw)
     full_len = len(seqs_raw[0][1]) if seqs_raw else 0
-    actual_max = min(max_pos, full_len)
+    if max_pos is None:
+        actual_max = full_len  # FULL length
+    else:
+        actual_max = min(max_pos, full_len)
 
     pos_arrays = []
     for _, seq in seqs_raw[:n_all]:
@@ -366,6 +370,7 @@ def get_worker_count():
 #  7. GPU-accelerated pair finder (torch CUDA, A100)
 # ══════════════════════════════════════════════════════════════════════
 
+
 def find_coevolving_pairs_gpu(
     pos_arrays,
     variable_positions,
@@ -392,14 +397,19 @@ def find_coevolving_pairs_gpu(
             if abs(pi - pj) <= max_gap
         ]
         mi_dict, cnt_dict = cg.mi_matrix_gpu(
-            dense, pairs, refs=refs, mutation_only=mutation_only,
-            min_total=min_muts, chunk=16384,
+            dense,
+            pairs,
+            refs=refs,
+            mutation_only=mutation_only,
+            min_total=min_muts,
+            chunk=16384,
         )
         results = []
         for (pi, pj), mi in mi_dict.items():
             if mi > min_mi:
-                results.append((pi, pj, mi, cnt_dict[(pi, pj)],
-                                int(refs[pi]), int(refs[pj])))
+                results.append(
+                    (pi, pj, mi, cnt_dict[(pi, pj)], int(refs[pi]), int(refs[pj]))
+                )
         results.sort(key=lambda x: x[2], reverse=True)
         return results
     except Exception:
