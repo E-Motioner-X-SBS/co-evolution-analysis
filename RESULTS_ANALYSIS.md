@@ -120,3 +120,52 @@ nohup $G -u $D/full_length_analysis.py > logs/full_length_gpu.log 2>&1 &
 nohup $G -u $D/create_mi_heatmap.py > logs/mi_heatmap_gpu.log 2>&1 &
 # monitor: nvidia-smi, tail -f logs/*.log
 ```
+
+---
+
+## 8. FULL AUDIT — All 20 Scripts (Aug 7, 2026, final pass)
+
+### 8.1 Script completion & full-length verification
+
+| # | Script | Result | Full-length? | GPU? | Key metric |
+|---|--------|--------|--------------|------|------------|
+| 1 | run_kmap_analysis.py | ✅ | ✅ | — | H1=0.2163 (1.34×), 1,647,830 pairs (ALL 1299 seqs) |
+| 2 | boolean_co-evolution.py | ✅ | ✅ 1263 pos | ✅ | 796,953 pairs, 50.74% acc, top J=(372,401) 1.5917 |
+| 3 | nary_kmap_co-evolution.py | ✅ | ✅ | — | 73 PIs, 42 essential |
+| 4 | position_kmap_coevolution.py | ✅ | ✅ | ✅ | 25,199 co-evolving pairs |
+| 5 | run_allseq_analysis.py | ✅ | ✅ | ✅ | 34,892 pairs MI>0.005 |
+| 6 | master_boolean.py | ✅ | ✅ | ✅ | 152 essential PIs, 36,918 pairs |
+| 7 | kmap_boolean_coevolution.py | ✅ | ✅ | ✅ | 152 rules |
+| 8 | flipped_boolean_coevolution.py | ✅ | ✅ | ✅ | 345 forbidden rules |
+| 9 | variable_position_coevolution.py | ✅ | ✅ | ✅ | 20 top pairs |
+| 10 | predictive_constraint_function.py | ✅ | ✅ | ✅ | 5.84% acc (800/499 split) |
+| 11 | allseq_constraint_function.py | ✅ | ✅ | ✅ | LOO-CV 2.93% (deterministic) |
+| 12 | dca_boolean_coevolution.py | ✅ | ✅ (dynamic pairs) | ✅ | **17.6% acc** (was 0.0% hardcoded) |
+| 13 | perplexity_coevolution.py | ✅ | ✅ | — | 3 pairs, ratio ≤2.81 |
+| 14 | advanced_co-evolution_analysis.py | ✅ | ✅ (Walsh/cluster/signatures) | ✅ | 1,249 nodes, **40 signatures** (was 11) |
+| 15 | full_length_analysis.py | ✅ | ✅ | ✅ | 1,249 var, 35,858 hi-MI pairs |
+| 16 | gpu_full_analysis.py | ✅ | ✅ | ✅ | max MI=1.5917, full matrix saved |
+| 17 | create_mi_heatmap.py | ✅ | ✅ | ✅ | 813,450 pairs, max MI=1.5917 |
+| 18 | generate_co-evolution_md.py | ✅ | ✅ | — | 162 rules MD |
+| 19 | generate_full_analysis_md.py | ✅ | ✅ | — | FULL_COEVOLUTION_ANALYSIS.md |
+| 20 | generate_full_pipeline_doc.py | ✅ | ✅ (fixed 200→full) | — | FULL_PIPELINE_ANALYSIS.md, max MI=1.5917 at (372,401) |
+
+### 8.2 Remaining bugs fixed this pass
+1. **generate_full_pipeline_doc.py** — was `load_position_arrays(max_pos=200)` + MI over first 80 → FULL_PIPELINE_ANALYSIS.md only covered 80 positions. Fixed: full length. Top MI pair changed from (74,76) 1.37 → **(372,401) 1.5917**.
+2. **run_kmap_analysis.py** — H1 used 200/1299 sequences. Fixed: all 1299 → 1,647,830 pairs.
+3. **perplexity_coevolution.py** — display limited to first 80. Fixed: full-length summary.
+4. **dca_boolean_coevolution.py** — hardcoded 68-78 pairs. Fixed: dynamic full-length GPU pairs → accuracy 0.0% → **17.6%**.
+5. **advanced_co-evolution_analysis.py** — Walsh consensus + clustering + variant signatures limited to 68-80. Fixed: full length. Signatures 11 → **40**; fixed tuple-unpacking bug.
+
+### 8.3 Result consistency (final)
+| Metric | Value | Scripts |
+|--------|-------|---------|
+| Max MI | 1.5917 @ (372,401) | gpu_full ✓ boolean ✓ heatmap ✓ pipeline-doc ✓ |
+| Variable positions | 1,249 | all scripts ✓ |
+| Co-evolving pairs | 36,918 | master ✓ flipped ✓ allseq ✓ |
+| Master rules | 152 | master ✓ kmap_boolean ✓ docs ✓ |
+
+### 8.4 Repo completeness
+- `co-evolution-analysis` repo vs `datasets/co-evolution`: **0 differing/missing files** (verified by cmp)
+- All 20 scripts + 17 result JSONs + 3 report MDs + CSVs + npy + FASTA + README + RESULTS_ANALYSIS.md present
+- Log files intentionally excluded (.gitignore) — they are run artifacts, not results
