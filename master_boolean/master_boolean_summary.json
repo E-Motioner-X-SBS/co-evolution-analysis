@@ -2,9 +2,9 @@
   "dataset": "SARS-CoV-2 Spike Protein (1299 sequences)",
   "variable_positions": 21,
   "co_evolving_pairs": 10,
-  "total_prime_implicants": 255,
-  "essential_prime_implicants": 3,
-  "total_inference_rules": 3,
+  "total_prime_implicants": 36,
+  "essential_prime_implicants": 2,
+  "total_inference_rules": 2,
   "top_co_evolving_pairs": [
     {
       "pos_i": 495,
@@ -90,17 +90,8 @@
   "inferences": [
     {
       "pos_i": 212,
-      "pos_j": 215,
-      "aa_i": "V",
-      "aa_j": "P",
-      "ref_i": "V",
-      "ref_j": "G",
-      "mi": 0.39768385887145996
-    },
-    {
-      "pos_i": 212,
       "pos_j": 216,
-      "aa_i": "S",
+      "aa_i": "G",
       "aa_j": "R",
       "ref_i": "V",
       "ref_j": "R",
@@ -108,12 +99,12 @@
     },
     {
       "pos_i": 210,
-      "pos_j": 212,
-      "aa_i": "N",
-      "aa_j": "S",
+      "pos_j": 215,
+      "aa_i": "K",
+      "aa_j": "G",
       "ref_i": "N",
-      "ref_j": "V",
-      "mi": 0.17692936956882477
+      "ref_j": "G",
+      "mi": 0.23771017789840698
     }
   ]
 }

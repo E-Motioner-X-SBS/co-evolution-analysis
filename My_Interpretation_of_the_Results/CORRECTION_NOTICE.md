@@ -61,9 +61,10 @@ From `analysis/corrected_pipeline.py` and the re-run of every script (Aug 7, 202
 |--------|------------------|-----------|
 | Variable positions (H > 0.3) | 1,249 | **21** |
 | Co-evolving pairs (MI > 0.1, window 30) | 36,918 | **10-12** |
-| Strongest MI pair | (372, 401) MI = 1.5917 | **(373, 378) MI = 0.8067** |
-| Master Boolean prime implicants | 162 (143 phantom) | **255 (all cover real cells)** |
-| Essential rules | 152 | **3** (minimal irredundant core) |
+| Strongest full-MI pair | (372, 401) MI = 1.5917 | **(373, 378) MI = 0.8067** |
+| Strongest mutation-only MI pair | (413, 427) MI = 2.352 | **(495, 498) MI = 0.8710** |
+| Master Boolean prime implicants | 162 (143 phantom) | **36 distinct pairs** (all cover real cells) |
+| Essential rules | 152 | **2** (minimal irredundant core) |
 | Forbidden rules (flipped) | 345 | **490** |
 | Mean mutations per sequence | 1,061 | **11.1** |
 | High-MI pairs (MI > 0.5) | 35,858 | **5** |
@@ -114,13 +115,14 @@ Every analysis script was corrected and re-run:
 
 ### Corrected rules
 
-The corrected master Boolean function has **255 total prime implicants** across 10 pairs, of which **3 are essential** (the minimal irredundant cover). Every one of the 255 PIs covers at least one real observed cell (verified programmatically); there are no phantom rules. Example essential rules:
+The corrected master Boolean function has **36 distinct prime implicants** (residue-pair rules) across 10 pairs, of which **2 are essential** (the minimal irredundant core). Every rule was verified programmatically against the alignment: each listed residue pair is actually observed, so there are no phantom rules. The 2 essential rules:
 
 ```
-IF pos 210 = N AND pos 212 = S THEN co-evolutionary
-IF pos 212 = V AND pos 215 = P THEN co-evolutionary
-IF pos 212 = S AND pos 216 = R THEN co-evolutionary
+IF pos 212 = G AND pos 216 = R THEN co-evolutionary (mutation-only MI = 0.377)
+IF pos 210 = K AND pos 215 = G THEN co-evolutionary (mutation-only MI = 0.238)
 ```
+
+Note on MI conventions: the top-pair table in this notice uses FULL MI (all pairs incl. reference); the master Boolean pipeline ranks by MUTATION-ONLY MI (reference pair excluded). Both are valid; they rank pairs differently - e.g. (495, 498) has full MI 0.0386 but mutation-only MI 0.8710, because its signal lives in the non-reference pairs.
 
 ### What this means
 
@@ -128,7 +130,7 @@ IF pos 212 = S AND pos 216 = R THEN co-evolutionary
 
 2. The strongest genuine co-evolution signals are (373, 378), (18, 26), (66, 94), and the 210-216 cluster - NOT the (372, 401) hub reported earlier.
 
-3. The original 152 rules were mostly artifacts. The corrected rule set is 255 real prime implicants with a 3-rule essential core.
+3. The original 152 rules were mostly artifacts. The corrected rule set is 36 distinct real prime implicants with a 2-rule essential core.
 
 4. The DCA analysis (dca_mf_analysis.py) was NOT affected by A1 (it uses the raw alignment with gap as state 20); its direct-coupling results stand, but the DCA-vs-MI comparison must be re-interpreted against the corrected MI matrix (max 0.807).
 

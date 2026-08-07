@@ -154,7 +154,8 @@ def build_mutation_kmap_with_dontcare(
                     = 0 otherwise
     """
     # CORRECTED (FIX A2): 32x32 padded, rows/cols 20-31 don't-care
-    kmap = np.full((32, 32), -1, dtype=np.int32)  # -1=DC, 0=off, 1=on
+    kmap = np.full((32, 32), -1, dtype=np.int32)  # padding DC
+    kmap[:20, :20] = 0  # 20x20 default OFF-SET; -1=DC(ref), 1=on(mut)
 
     # First, determine which observations are "co-evolutionary"
     # (both positions variable) vs "conservation" (either position conserved)

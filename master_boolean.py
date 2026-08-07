@@ -173,7 +173,8 @@ def build_mutation_kmap(pos_arrays, pos_i, pos_j, ref_i, ref_j, n_seqs):
     sequence. Cells with gaps are excluded (gap-gap pairs are not
     counted as mutations; positions with gap in a sequence are skipped).
     """
-    kmap = np.full((32, 32), -1, dtype=np.int32)  # all don't-care
+    kmap = np.full((32, 32), -1, dtype=np.int32)  # padding rows/cols 20-31
+    kmap[:20, :20] = 0  # 20x20 region: default OFF-SET (never observed)
     for arr in pos_arrays[:n_seqs]:
         if pos_i < len(arr) and pos_j < len(arr):
             ci, cj = int(arr[pos_i]), int(arr[pos_j])
@@ -309,7 +310,26 @@ def main():
                 }
             )
 
-    print(f"  Total prime implicants: {len(all_pis)}")
+    # Deduplicate: multiple QM cubes can decode to the same residue pair
+    # (differing only in which don't-care cells they cover). Report the
+    # distinct-pair count so it matches the markdown generator.
+    seen_pis = {}
+    deduped_pis = []
+    for pi in all_pis:
+        key = (pi["pos_i"], pi["pos_j"], pi["aa_i"], pi["aa_j"])
+        if key not in seen_pis:
+            seen_pis[key] = len(deduped_pis)
+            deduped_pis.append(dict(pi))
+        else:
+            # OR the essential flag: a later cube may be the essential one
+            idx = seen_pis[key]
+            deduped_pis[idx]["is_essential"] = (
+                deduped_pis[idx]["is_essential"] or pi["is_essential"]
+            )
+    all_pis = deduped_pis
+    all_essential = [p for p in all_pis if p["is_essential"]]
+
+    print(f"  Total prime implicants (distinct pairs): {len(all_pis)}")
     print(f"  Essential prime implicants: {len(all_essential)}")
 
     # 5. Write all inference rules

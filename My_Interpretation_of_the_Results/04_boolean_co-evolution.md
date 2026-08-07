@@ -2,7 +2,7 @@
 > (gap-stripping column misalignment; 8-bit QM wrap-around on 400-cell maps)
 > invalidated the biological numbers in this file. See
 > [CORRECTION_NOTICE.md](CORRECTION_NOTICE.md) for the verified corrected
-> results (21 variable positions, 12 co-evolving pairs, 36 rules) and the
+> results (21 variable positions, 10 co-evolving pairs, 36 distinct rules (2 essential)) and the
 > corrected pipeline (analysis/corrected_pipeline.py). Numbers in this file
 > describe the original (buggy) run unless stated otherwise.
 

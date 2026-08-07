@@ -109,11 +109,11 @@ def main():
     md.append("## Variables\n")
     md.append("| Variable | Meaning |")
     md.append("|----------|---------|")
-    md.append("| s3, s2, s1, s0 | Binary code for residue at position i (0-19) |")
-    md.append("| t3, t2, t1, t0 | Binary code for residue at position j (0-19) |")
-    md.append("| ~s3 | NOT s3 (bit is 0) |")
-    md.append("| s3 | bit is 1 |")
-    md.append("| s3.s2.s1.s0 | AND of bits |")
+    md.append("| s4, s3, s2, s1, s0 | Binary code for residue at position i (0-19, 5 bits) |")
+    md.append("| t4, t3, t2, t1, t0 | Binary code for residue at position j (0-19, 5 bits) |")
+    md.append("| ~s4 | NOT s4 (bit is 0) |")
+    md.append("| s4 | bit is 1 |")
+    md.append("| s4.s3.s2.s1.s0 | AND of bits |")
     md.append("")
     md.append("---\n")
 
@@ -133,8 +133,11 @@ def main():
         ref_j_code = aa_list.index(ref_j) if ref_j in aa_list else 0
 
         # Build K-map
-        # CORRECTED (FIX A2): 32x32 padded, rows/cols 20-31 don't-care
+        # CORRECTED (FIX A2): 32x32 padded, rows/cols 20-31 don't-care.
+        # 20x20 region default 0 (off-set, never observed); observed
+        # mutation -> 1; reference -> -1 (don't-care).
         kmap = np.full((32, 32), -1, dtype=np.int32)
+        kmap[:20, :20] = 0
         for arr in pos_arrays[:n_all]:
             if pos_i < len(arr) and pos_j < len(arr):
                 ci, cj = int(arr[pos_i]), int(arr[pos_j])
@@ -144,6 +147,36 @@ def main():
         # Run QM
         bool_flat = kmap.flatten().astype(int)
         result = boolean_minimize_kmap(bool_flat, algorithm="qm")
+
+        # Decode QM cubes to residue pairs; deduplicate by (aa_i, aa_j),
+        # OR-ing the essential flag across cubes that decode to the same
+        # pair (they differ only in which don't-care cells they cover).
+        pi_map = {}  # (aa_i, aa_j) -> is_essential
+        pi_order = []
+        for pi in result["prime_implicants"]:
+            values = list(pi["values"])
+            mask = list(pi["mask"])
+            # CORRECTED (FIX A2): kmap is 32x32 -> 5 bits per axis (10 bits)
+            while len(values) < 10:
+                values.append(0)
+                mask.append(False)
+            row_code = sum(
+                values[j] * (2 ** (4 - j)) for j in range(5) if not mask[j]
+            )
+            col_code = sum(
+                values[j + 5] * (2 ** (4 - j)) for j in range(5) if not mask[j + 5]
+            )
+            if row_code < 20 and col_code < 20:
+                aa_i = aa_list[row_code]
+                aa_j = aa_list[col_code]
+                is_essential = pi in result["essential_prime_implicants"]
+                key = (aa_i, aa_j)
+                if key not in pi_map:
+                    pi_map[key] = is_essential
+                    pi_order.append(key)
+                else:
+                    pi_map[key] = pi_map[key] or is_essential
+        pi_entries = [(k[0], k[1], pi_map[k]) for k in pi_order]
 
         # Count cells
         n_on = int((kmap == 1).sum())
@@ -164,8 +197,8 @@ def main():
         md.append("| On-set cells | {} |".format(n_on))
         md.append("| Off-set cells | {} |".format(n_off))
         md.append("| Don't-care cells | {} |".format(n_dc))
-        md.append("| Prime implicants | {} |".format(result["n_prime_implicants"]))
-        md.append("| Essential PIs | {} |".format(result["n_essential"]))
+        md.append("| Prime implicants | {} |".format(len(pi_entries)))
+        md.append("| Essential PIs | {} |".format(sum(1 for _, _, e in pi_entries if e)))
         md.append("")
 
         # K-map compact
@@ -203,29 +236,14 @@ def main():
         md.append("")
 
         pi_num = 0
-        for pi in result["prime_implicants"]:
-            values = list(pi["values"])
-            mask = list(pi["mask"])
-            while len(values) < 8:
-                values.append(0)
-                mask.append(False)
-
-            row_code = sum(values[j] * (2 ** (3 - j)) for j in range(4) if not mask[j])
-            col_code = sum(
-                values[j + 4] * (2 ** (3 - j)) for j in range(4) if not mask[j + 4]
-            )
-
-            if row_code < 20 and col_code < 20:
-                aa_i = aa_list[row_code]
-                aa_j = aa_list[col_code]
-                is_essential = pi in result["essential_prime_implicants"]
-                marker = "*" if is_essential else " "
-                pi_num += 1
-                md.append(
-                    "  {} PI_{}: pos_{}={} AND pos_{}={}".format(
-                        marker, pi_num, pos_i, aa_i, pos_j, aa_j
-                    )
+        for aa_i, aa_j, is_essential in pi_entries:
+            marker = "*" if is_essential else " "
+            pi_num += 1
+            md.append(
+                "  {} PI_{}: pos_{}={} AND pos_{}={}".format(
+                    marker, pi_num, pos_i, aa_i, pos_j, aa_j
                 )
+            )
 
         md.append("")
         md.append("(* = essential prime implicant)")
@@ -247,35 +265,20 @@ def main():
         # Inference rules
         md.append("### Inference Rules (Natural Language)")
         md.append("")
-        for pi in result["prime_implicants"]:
-            values = list(pi["values"])
-            mask = list(pi["mask"])
-            while len(values) < 8:
-                values.append(0)
-                mask.append(False)
-
-            row_code = sum(values[j] * (2 ** (3 - j)) for j in range(4) if not mask[j])
-            col_code = sum(
-                values[j + 4] * (2 ** (3 - j)) for j in range(4) if not mask[j + 4]
-            )
-
-            if row_code < 20 and col_code < 20:
-                aa_i = aa_list[row_code]
-                aa_j = aa_list[col_code]
-                is_essential = pi in result["essential_prime_implicants"]
-                rule_num += 1
-                if is_essential:
-                    md.append(
-                        "**Rule {}:** IF position {} = **{}** AND position {} = **{}** THEN co-evolutionary (MI = {:.3f})".format(
-                            rule_num, pos_i, aa_i, pos_j, aa_j, mi
-                        )
+        for aa_i, aa_j, is_essential in pi_entries:
+            rule_num += 1
+            if is_essential:
+                md.append(
+                    "**Rule {}:** IF position {} = **{}** AND position {} = **{}** THEN co-evolutionary (MI = {:.3f})".format(
+                        rule_num, pos_i, aa_i, pos_j, aa_j, mi
                     )
-                else:
-                    md.append(
-                        "Rule {}: IF position {} = {} AND position {} = {} THEN co-evolutionary (MI = {:.3f})".format(
-                            rule_num, pos_i, aa_i, pos_j, aa_j, mi
-                        )
+                )
+            else:
+                md.append(
+                    "Rule {}: IF position {} = {} AND position {} = {} THEN co-evolutionary (MI = {:.3f})".format(
+                        rule_num, pos_i, aa_i, pos_j, aa_j, mi
                     )
+                )
 
         md.append("")
         md.append("---")
@@ -286,22 +289,26 @@ def main():
     md.append("| Metric | Value |")
     md.append("|--------|-------|")
     md.append("| Sequences | {} |".format(n_all))
-    md.append("| Variable positions | 57 |")
+    md.append("| Variable positions | {} |".format(summary["variable_positions"]))
     md.append("| Co-evolutionary pairs | {} |".format(summary["co_evolving_pairs"]))
     md.append("| Total inference rules | {} |".format(rule_num))
-    md.append("| Position pairs with rules | 15 |")
+    md.append("| Position pairs with rules | {} |".format(len(summary["top_co_evolving_pairs"])))
     md.append("")
     md.append("## How to Apply\n")
-    md.append("1. Extract residues at positions 68-79 from a new sequence")
-    md.append("2. For each position pair, check if the residue pair matches any rule")
-    md.append("3. If YES: that position pair is co-evolutionary")
+    md.append("1. Extract the residue pair at each co-evolving position pair from a new sequence")
+    md.append("2. For each position pair, check if the residue pair matches any rule below")
+    md.append("3. If YES: that position pair is co-evolutionary (consistent with the observed data)")
     md.append(
         "4. If position i mutates: find which residue at position j satisfies the co-evolutionary constraint"
     )
     md.append("")
-    md.append("**Example:** If position 76 mutates to Y, check rules for position 76.")
-    md.append("Rule 2 says: IF pos 76 = Y AND pos 77 = K THEN co-evolutionary.")
-    md.append("So position 77 must also mutate to K.")
+    if summary["inferences"]:
+        ex = summary["inferences"][0]
+        md.append("**Example:** If position {} mutates to {}, check rules for position {}.".format(ex["pos_i"], ex["aa_i"], ex["pos_i"]))
+        md.append("Essential rule: IF pos {} = {} AND pos {} = {} THEN co-evolutionary.".format(ex["pos_i"], ex["aa_i"], ex["pos_j"], ex["aa_j"]))
+        md.append("So position {} must also show {} to satisfy the co-evolutionary constraint.".format(ex["pos_j"], ex["aa_j"]))
+    else:
+        md.append("**Example:** No essential inference rules found; see per-pair rule lists above.")
 
     # Write
     output_path = base_dir / "kmap_boolean_coevolution" / "COEVOLUTION_KMAP_BOOLEAN.md"

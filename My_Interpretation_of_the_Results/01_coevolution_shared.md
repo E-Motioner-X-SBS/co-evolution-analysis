@@ -2,7 +2,7 @@
 > (gap-stripping column misalignment; 8-bit QM wrap-around on 400-cell maps)
 > invalidated the biological numbers in this file. See
 > [CORRECTION_NOTICE.md](CORRECTION_NOTICE.md) for the verified corrected
-> results (21 variable positions, 12 co-evolving pairs, 36 rules) and the
+> results (21 variable positions, 10 co-evolving pairs, 36 distinct rules (2 essential)) and the
 > corrected pipeline (analysis/corrected_pipeline.py). Numbers in this file
 > describe the original (buggy) run unless stated otherwise.
 
@@ -113,7 +113,7 @@ J > 0 means the pair (a, b) is more common than expected under independence (co-
 
 The results of this toolbox are the inputs to every other script: position arrays, entropy, MI, references, and co-evolving pairs. The inference that carries through the whole project is that the dataset contains 1,249 variable positions and 36,918 co-evolving pairs: the Spike protein is densely coupled, and every downstream analysis builds on these shared numbers.
 
-The most important downstream consequence: the top-15 co-evolving pairs (by mutation-only MI) become the 15 K-maps whose minimization produces the 152-rule master Boolean function (script 11). The justification for the cutoff at 15 is analyzed in `analysis/justify_top15.py` and summarized in script 11.
+The most important downstream consequence: the co-evolving pairs (by mutation-only MI) become the K-maps whose minimization produces the 36-rule master Boolean function (script 11). All 10 pairs are used (see script 11).
 
 ## Scholar Questions and Answers
 

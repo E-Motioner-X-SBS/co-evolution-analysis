@@ -2,41 +2,29 @@
   "dataset": "1299 sequences",
   "variable_positions": 21,
   "co_evolving_pairs": 10,
-  "total_rules": 3,
+  "total_rules": 2,
   "rules": [
     {
       "pos_i": 212,
-      "pos_j": 215,
-      "aa_i": "V",
-      "aa_j": "P",
-      "ref_i": "V",
-      "ref_j": "G",
-      "mi": 0.3976837946433093,
-      "expr": "\\bar{s3} \\cdot s0 \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
-      "n_dc": 3,
-      "coverage": 8
-    },
-    {
-      "pos_i": 212,
       "pos_j": 216,
-      "aa_i": "S",
+      "aa_i": "G",
       "aa_j": "R",
       "ref_i": "V",
       "ref_j": "R",
-      "mi": 0.37734943885151645,
-      "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot t3 \\cdot t1 \\cdot t0",
-      "n_dc": 1,
-      "coverage": 2
+      "mi": 0.3773493766784668,
+      "expr": "s4 \\cdot s1 \\cdot s0 \\cdot \\bar{t4} \\cdot t3 \\cdot t2 \\cdot t1 \\cdot \\bar{t0}",
+      "n_dc": 2,
+      "coverage": 4
     },
     {
       "pos_i": 210,
-      "pos_j": 212,
-      "aa_i": "N",
-      "aa_j": "S",
+      "pos_j": 215,
+      "aa_i": "K",
+      "aa_j": "G",
       "ref_i": "N",
-      "ref_j": "V",
-      "mi": 0.17692944969751384,
-      "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot t3 \\cdot t1 \\cdot t0",
+      "ref_j": "G",
+      "mi": 0.23771017789840698,
+      "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot t4 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t1 \\cdot t0",
       "n_dc": 1,
       "coverage": 2
     }

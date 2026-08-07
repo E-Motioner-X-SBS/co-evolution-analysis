@@ -1,42 +1,40 @@
-> **CORRECTION (Aug 7, 2026):** Two confirmed defects in the original pipeline
-> (gap-stripping column misalignment; 8-bit QM wrap-around on 400-cell maps)
-> invalidated the biological numbers in this file. See
-> [CORRECTION_NOTICE.md](CORRECTION_NOTICE.md) for the verified corrected
-> results (21 variable positions, 12 co-evolving pairs, 36 rules) and the
-> corrected pipeline (analysis/corrected_pipeline.py). Numbers in this file
-> describe the original (buggy) run unless stated otherwise.
+> **CORRECTION (Aug 7, 2026):** This file was rewritten after two confirmed
+> defects were fixed (A1: gap-stripping column misalignment; A2: 8-bit QM
+> wrap-around). The 152-rule content below is replaced by the verified
+> corrected results: 21 variable positions, 10 co-evolving pairs, 36
+> distinct Boolean rules with a 2-rule essential core. See
+> [CORRECTION_NOTICE.md](CORRECTION_NOTICE.md).
 
-# 11. master_boolean.py - The Master Boolean Function (152 Rules)
+# 11. master_boolean.py - The Master Boolean Function (36 Rules)
 
 ## What the Program Does
 
 This is the flagship rule-extraction script. It asks: **what are the minimal, irreducible rules of co-evolution in the Spike protein?**
 
-The pipeline:
-1. Find variable positions (entropy > 0.3): 1,249 positions.
-2. Find co-evolving pairs: mutation-only MI > 0.1 within window 30: 36,918 pairs.
-3. For the top 15 pairs, build a **mutation K-map**: 1 = mutation observed, -1 = reference (don't-care), 0 = never observed.
-4. Run Quine-McCluskey on each K-map.
-5. Collect all essential prime implicants into the Master Boolean Function.
+The pipeline (corrected):
+1. Find variable positions (entropy > 0.3, gaps excluded): 21 positions of 1,276.
+2. Find co-evolving pairs: mutation-only MI > 0.1 within window 30: 10 pairs.
+3. For each pair, build a **mutation K-map**: 1 = mutation observed, -1 = reference (don't-care), 0 = never observed (off-set).
+4. Run Quine-McCluskey on the padded 32x32 K-map (5 bits per axis, 10 bits total).
+5. Decode the prime implicants to residue pairs; deduplicate cubes that decode to the same pair; collect the essential core.
 
-The result: **152 essential prime implicants** (rules) across 15 position pairs. The master function is:
+The result: **36 distinct prime implicants** (residue-pair rules) across 10 position pairs, of which **2 are essential**. The master function is:
 
-$$f = \bigvee_{k=1}^{152} \left( \bigwedge_{m \in S_k} b_m \right)$$
+$$f = \bigvee_{k=1}^{36} \left( pos_i = aa_i \wedge pos_j = aa_j \right)$$
 
-Each rule is an AND of residue conditions at two positions. The function returns 1 (co-evolutionary) if ANY rule matches.
+Each rule is an AND of two residue conditions at two positions. The function returns 1 (co-evolutionary) if ANY rule matches.
 
-**Sequence length analyzed: 1,276 positions (full length), all 1,299 sequences.**
+**Sequence length analyzed: 1,276 positions (full alignment), all 1,299 sequences.**
 
 ```mermaid
 flowchart TD
-    A[1,249 variable positions] --> B[GPU mutation-only MI window 30]
-    B --> C[36,918 co-evolving pairs]
-    C --> D[top 15 pairs]
-    D --> E[mutation K-map: 1 mut, -1 ref DC, 0 never]
-    E --> F[Quine-McCluskey with don't-cares]
-    F --> G[162 prime implicants]
-    G --> H[152 essential rules]
-    H --> I[f = Rule1 OR ... OR Rule152]
+    A[21 variable positions] --> B[GPU mutation-only MI window 30]
+    B --> C[10 co-evolving pairs]
+    C --> D[mutation K-map: 1 mut, -1 ref DC, 0 never]
+    D --> E[Quine-McCluskey on 32x32 padded map]
+    E --> F[36 distinct prime implicants]
+    F --> G[2 essential rules]
+    G --> H[f = Rule1 OR ... OR Rule36]
 ```
 
 ## The Mutation K-map
@@ -49,11 +47,13 @@ cell(a, b) = -1   if (a, b) == (ref_i, ref_j)                         [reference
 cell(a, b) = 0    otherwise                                           [never observed]
 ```
 
-The don't-care (-1) cells can be either 0 or 1 during minimization. This allows Quine-McCluskey to form larger implicants while the reference pair itself never needs to be covered.
+The K-map is a 20x20 grid padded to 32x32 (padding rows/cols 20-31 are don't-care). Padding to a power of two per axis (5 bits) keeps every residue code representable - this is FIX A2. The don't-care (-1) cells can be either 0 or 1 during minimization, which lets Quine-McCluskey form larger implicants while the reference pair itself never needs to be covered.
+
+**Important (verified Aug 7):** never-observed cells are 0 (off-set), not don't-care. An earlier run left them as -1, which let the minimizer build implicants over unobserved cells and inflated the rule count. With off-set semantics every decoded rule is a pair that actually occurs in the alignment (verified programmatically: 0 phantom rules).
 
 ## Quine-McCluskey with Don't-Cares
 
-The 20 x 20 K-map is flattened. Each cell is indexed by 8 binary variables (4 bits for row amino acid, 4 bits for column amino acid). The algorithm:
+The 32x32 K-map is flattened to 1,024 cells. Each cell is indexed by 10 binary variables (5 bits for the row amino acid, 5 bits for the column amino acid). The algorithm:
 
 1. Include both on-set (1) and don't-care (-1) cells for implicant generation.
 2. Merge implicants that differ in one bit, repeatedly.
@@ -61,159 +61,103 @@ The 20 x 20 K-map is flattened. Each cell is indexed by 8 binary variables (4 bi
 4. Essential = those covering at least one on-set cell uniquely.
 5. Greedy cover of remaining on-set cells.
 
-This is the standard Quine-McCluskey with don't-cares, exactly as in the literature (Quine 1952, McCluskey 1956), with the don't-care inclusion fix verified in this project.
+This is the standard Quine-McCluskey with don't-cares (Quine 1952, McCluskey 1956). Because several cubes can decode to the same residue pair (differing only in which don't-care cells they cover), the generator reports the distinct-pair count (36) and marks a pair essential if ANY of its cubes is essential.
 
-## Why the Top 15 Pairs? (Justification)
+## Why These 10 Pairs? (Justification)
 
-The choice of 15 pairs is a **coverage-versus-interpretability tradeoff**. The analysis in `analysis/justify_top15.py` computed the rule count as a function of K (number of top pairs):
+The 10 pairs are all pairs with mutation-only MI > 0.1 within window 30 on the corrected alignment. Unlike the original run (which mixed in ~1,249 misaligned "variable" columns), the corrected set is small and interpretable. All 10 pairs are kept; there is no artificial cutoff.
 
-| K (top pairs) | Total PIs | Essential rules |
-|---------------|-----------|-----------------|
-| 10 | 110 | 102 |
-| 12 | 133 | 124 |
-| 14 | 153 | 144 |
-| **15** | **162** | **152** |
-| 16 | 173 | 162 |
-| 17 | 182 | 170 |
-| 18 | 192 | 179 |
-| 20 | 214 | 199 |
+| Rank | Pair | Mutation-only MI | Reference |
+|------|------|------------------|-----------|
+| 1 | (495, 498) | 0.8710 | (R, G) |
+| 2 | (448, 454) | 0.8344 | (V, N) |
+| 3 | (488, 498) | 0.8219 | (F, G) |
+| 4 | (442, 454) | 0.8110 | (N, N) |
+| 5 | (442, 448) | 0.7284 | (N, V) |
+| 6 | (212, 215) | 0.3977 | (V, G) |
+| 7 | (215, 216) | 0.3773 | (G, R) |
+| 8 | (212, 216) | 0.3773 | (V, R) |
+| 9 | (210, 215) | 0.2377 | (N, G) |
+| 10 | (210, 212) | 0.1769 | (N, V) |
 
-Rules scale nearly linearly: about **+10 essential rules per additional pair**. The pairs ranked 16-20 are:
+Note: this table uses **mutation-only MI** (reference pair excluded), which is the convention the K-map itself uses. Under full MI (all pairs), the top pair is (373, 378) at 0.8067; (495, 498) has full MI only 0.0386 because its co-evolution signal lives in the non-reference pairs. See the combined analysis (23_combined_mi_perplexity.md) for the full-MI ranking.
 
-| Rank | Pair | MI | Mutations |
-|------|------|-----|-----------|
-| 16 | (1064, 1066) | 2.2816 | 278 |
-| 17 | (1030, 1040) | 2.2814 | 278 |
-| 18 | (1026, 1030) | 2.2814 | 278 |
-| 19 | (1030, 1042) | 2.2814 | 278 |
-| 20 | (1025, 1026) | 2.2810 | 278 |
-
-All pairs ranked 16+ are in the **same S2-subunit cluster** (positions 1025-1074) with nearly identical MI (2.28 vs 2.35 for rank 1). Adding them adds redundant rules without covering new biological regions. The cutoff at 15 therefore captures all distinct co-evolution regions (positions 413-428, 459-473, 1026-1074) with the minimum number of redundant rules. Had we taken 16 pairs, the rule count would be 162; the 10 extra rules would all describe the same S2 cluster.
-
-## Worked Example: Full Pipeline for Pair (413, 427)
+## Worked Example: Full Pipeline for Pair (495, 498)
 
 ### Step 1: The mutation K-map
 
-The strongest co-evolving pair in the mutation-only analysis is (413, 427) with MI = 2.352 and 271 mutations. The majority (reference) residues are N at 413 and G at 427. The K-map marks (N, G) as -1 (don't-care) and every observed mutation pair as 1. The on-set has 12 cells: A-V, I-C, Y-A, D-I, Q-D, N-I, N-W, K-S, K-G, T-F, P-P, G-T.
+The strongest mutation-only pair is (495, 498) with MI = 0.8710 and 425 mutated sequences. The majority (reference) residues are R at 495 and G at 498. The K-map marks (R, G) as -1 (don't-care), observed mutation pairs as 1, and never-observed pairs as 0. The on-set cells are listed in `kmap_boolean_coevolution/COEVOLUTION_KMAP_BOOLEAN.md`.
 
-### Step 2: Full 20 x 20 K-map table
+### Step 2: Quine-McCluskey minimization
 
-The full table (rows = residue at 413, columns = residue at 427; 1 = mutation, -1 = reference, 0 = never observed) is generated by `generate_co-evolution_md.py` and shown in `kmap_boolean_coevolution/COEVOLUTION_KMAP_BOOLEAN.md`. The first rows:
+The on-set cells are encoded as 10-bit minterms (5 bits per residue). Quine-McCluskey merges minterms differing in one bit. The result for this pair: 4 distinct prime implicants, each an AND of literals of the form:
 
-| i\j | A | I | L | V | M | F | Y | W | E | D | Q | N | H | K | R | S | T | C | P | G |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| A | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| I | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
-| Y | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| N | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | -1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+$$PI_k: \quad pos_{495} = X \wedge pos_{498} = Y$$
 
-### Step 3: Quine-McCluskey minimization
+### Step 3: The biological reading
 
-The 12 on-set cells are encoded as 8-bit minterms (4 bits for the residue at 413, 4 bits for the residue at 427). Quine-McCluskey merges minterms differing in one bit. The result: 11 prime implicants, 10 essential. Each is an AND of literals:
-
-$$PI_1: \quad pos_{413} = A \wedge pos_{427} = V \quad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{t_3} \wedge \bar{t_2} \wedge t_1 \wedge t_0)$$
-
-$$PI_2: \quad pos_{413} = W \wedge pos_{427} = E \quad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge s_0 \wedge t_3 \wedge \bar{t_2} \wedge \bar{t_0})$$
-
-$$PI_3: \quad pos_{413} = I \wedge pos_{427} = V \quad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge t_1 \wedge t_0)$$
-
-where s bits encode position 413 and t bits encode position 427, with bars for negated bits.
-
-### Step 4: The biological reading
-
-If position 413 mutates to W, position 427 compensates with E. If 413 mutates to I, 427 takes V. If 413 becomes R, 427 takes V. These are the compensatory paths evolution actually used.
+Each rule says: if position 495 takes residue X, position 498 takes residue Y - the compensatory paths evolution actually used. The essential rule(s) are the ones that uniquely cover an observed mutation pair.
 
 ## Results
 
 | Metric | Value |
 |--------|-------|
-| Variable positions | 1,249 |
-| Co-evolving pairs (MI > 0.1) | 36,918 |
-| Prime implicants (total) | 162 |
-| **Essential prime implicants** | **152** |
-| Total inference rules | 152 |
-| Rule position pairs | 15 |
+| Variable positions | 21 |
+| Co-evolving pairs (mutation-only MI > 0.1) | 10 |
+| Distinct prime implicants (rules) | 36 |
+| **Essential rules** | **2** |
+| Phantom rules (decoded pairs never observed) | 0 |
 
-The 15 position pairs and their rule counts:
+The 2 essential rules:
 
-| Pair | Rules | Pair | Rules |
-|------|-------|------|-------|
-| (413, 424) | 12 | (462, 473) | 9 |
-| (413, 425) | 10 | (468, 473) | 10 |
-| (413, 426) | 12 | (469, 473) | 10 |
-| (413, 427) | 10 | (1026, 1040) | 10 |
-| (413, 428) | 11 | (1026, 1042) | 10 |
-| (459, 473) | 10 | (1040, 1042) | 9 |
-| (1064, 1065) | 11 | (1064, 1066) | 8 |
-| (1064, 1074) | 10 | | |
+| Rule | Pair | Residues | Mutation-only MI |
+|------|------|----------|------------------|
+| 1 | (212, 216) | pos 212 = G AND pos 216 = R | 0.3773 |
+| 2 | (210, 215) | pos 210 = K AND pos 215 = G | 0.2377 |
 
-## Combined MI + Perplexity Ranking (which pairs are rules built on)
+Both are rare-but-real combinations (observed in the alignment; verified programmatically). They are essential because each is covered uniquely by one implicant in its pair's K-map.
 
-The 10 corrected co-evolving pairs are also scored by the combined
-MI + perplexity ranking (see 23_combined_mi_perplexity.md). The rule pairs
-include both MI-strong and ratio-strong pairs:
+## Link to the Rules Report
 
-| Pair | MI | PP ratio | Role |
-|------|-----|----------|------|
-| (373, 378) | 0.807 | 1.59 | MI top |
-| (378, 407) | 0.792 | 1.74 | Combined top |
-| (212, 215) | 0.398 | 1.84 | Ratio top (deterministic) |
-| (215, 216) | 0.757 | 1.68 | Both strong |
+The complete human-readable report is generated by `generate_co-evolution_md.py` and lives at **`kmap_boolean_coevolution/COEVOLUTION_KMAP_BOOLEAN.md`**. For each of the 10 pairs it contains:
 
-The 3 essential rules come from the deterministic core (ratio 1.84 pairs):
-pairs where knowing one residue forces the other. The combined score does
-not change which pairs enter the rules, but it identifies which rules are
-near-deterministic constraints (rivets) versus merely correlated.
-
-## Link to the 152-Rule Report
-
-The complete human-readable report is generated by `generate_co-evolution_md.py` and lives at **`kmap_boolean_coevolution/COEVOLUTION_KMAP_BOOLEAN.md`** (1,878 lines). For each of the 15 pairs it contains:
-
-1. The property table (MI, mutations, reference, on-set/off-set/don't-care counts, PI counts).
+1. The property table (MI, mutations, reference, on-set/off-set/don't-care counts, distinct PI count).
 2. The compact on-set list.
-3. **The full 20 x 20 K-map table** (markdown-renderable).
-4. **The LaTeX Boolean equation** and the explicit form of every prime implicant.
-5. The coupling constants table.
-6. The natural-language inference rules.
-7. A worked example evaluating the real sequence WRU87367.1 against the rules.
+3. The Boolean Function: every distinct prime implicant as "pos_i = X AND pos_j = Y".
+4. The coupling constants table.
+5. The natural-language inference rules (numbered 1-36; the 2 essential rules are bold).
 
-The structured rules are in `kmap_boolean_coevolution/boolean_functions.json` (152 rules with pos_i, pos_j, aa_i, aa_j, mi).
+The structured rules are in `kmap_boolean_coevolution/boolean_functions.json` (2 essential rules with pos_i, pos_j, aa_i, aa_j, mi, LaTeX expression) and `master_boolean/master_boolean_summary.json` (aggregate counts).
 
 ## Inference
 
-The 152 rules are a compressed description of the co-evolutionary grammar: "if this residue appears here, that residue must appear there." Two clusters dominate:
+The 36 rules are a compressed description of the co-evolutionary grammar: "if this residue appears here, that residue must appear there." The corrected pairs cluster in two regions:
 
-1. Positions 413-428 and 459-473 (S1 subunit, near the RBD): 9 pairs.
-2. Positions 1026-1074 (S2 subunit): 6 pairs.
-
-The rules encode compensatory mutations. When evolution changes one position, the partner position must follow a specific path to maintain fitness. This is the Boolean logic of the protein's evolutionary constraints.
+1. Positions 442-498 (S1 subunit, RBD neighborhood): 5 pairs, the strongest mutation-only signal.
+2. Positions 210-216 (S1 N-terminal domain): 5 pairs, including the 2 essential rules.
 
 **Important caveat:** The rules are learned from Omicron sequences. They describe what HAS co-evolved within Omicron. Whether they apply to new sequences is the subject of script 22.
 
 ## Statistical Summary of the Rules
 
-- 152 essential rules from 162 prime implicants (94% essential rate).
-- Rules per pair: 8 to 12 (median 10), total 152.
-- Mutation counts per pair: 265 to 278 mutations out of 1,299 sequences (20-21% of sequences carry a mutation at each rule pair).
-- MI per pair: 2.28 to 2.35 bits (mutation-only convention), far above the 0.1 threshold.
-- The 152 rules cover 3 distinct genomic regions: S1-RBD (10 pairs), S1-CTD (part of the 459-473 group), S2 (6 pairs).
+- 36 distinct rules from 10 pairs; 2 essential (bold in the report).
+- Mutation counts per pair: 113 to 425 mutated sequences out of 1,299.
+- Mutation-only MI per pair: 0.1769 to 0.8710, all above the 0.1 threshold.
+- 0 phantom rules: every decoded rule was verified present in the alignment (the original run had 143/152 phantom).
 
 ## Scholar Questions and Answers
 
-**Q: Why 152 essential rules from 36,918 pairs?**
-A: Only the top 15 pairs by MI get K-maps built. Each pair contributes 8 to 12 essential implicants, summing to 152. The 36,918 is the pool of candidate pairs; the rules are extracted only for the strongest.
-
-**Q: Why exactly 15 pairs and not 16 or 17?**
-A: The rule count scales linearly (+10 rules per pair). Pairs ranked 16+ are all in the same S2 cluster with MI ~2.28 (vs 2.35 for rank 1), so they add redundant rules without new biology. See `analysis/justify_top15.py` and the table above.
+**Q: Why 36 rules from 10 pairs?**
+A: Each pair contributes its distinct prime implicants after deduplication (cubes that decode to the same residue pair count once). The 36 is the total across the 10 pairs.
 
 **Q: What does "essential" mean here?**
-A: An essential prime implicant covers at least one observed mutation pair that no other implicant covers. Dropping it would lose that observation. The 152 essential implicants are the irredundant core.
+A: An essential prime implicant covers at least one observed mutation pair that no other implicant covers. Dropping it would lose that observation. There are 2 such rules; the other 34 are covered by multiple implicants and are non-unique.
 
-**Q: Why are rules clustered at 413-428 and 1026-1074?**
-A: These are the regions with the strongest mutation-only MI. Positions 413-428 are in the S1 subunit near the receptor binding domain; positions 1026-1074 are in the S2 subunit (fusion machinery). Both are under strong selective pressure in Omicron.
+**Q: Why are rules clustered at 442-498 and 210-216?**
+A: These are the regions with the strongest mutation-only MI on the corrected alignment. Positions 442-498 are in the S1 subunit near the receptor binding domain; 210-216 is the N-terminal domain. Both show genuine co-evolution in Omicron.
 
 **Q: Can the rules be applied to a new sequence?**
 A: Partially. A new sequence can be checked against the rules: if it violates a rule (contains a forbidden combination), it is likely unfit. But the rules are necessary constraints, not a generative model. See script 22 for the full discussion.
 
 **Q: Where can I see the actual rules with their K-map tables?**
-A: In `kmap_boolean_coevolution/COEVOLUTION_KMAP_BOOLEAN.md`, generated by `generate_co-evolution_md.py` from `master_boolean/master_boolean_summary.json`. Each pair has its full 20 x 20 K-map table and LaTeX equations.
+A: In `kmap_boolean_coevolution/COEVOLUTION_KMAP_BOOLEAN.md`, generated by `generate_co-evolution_md.py` from `master_boolean/master_boolean_summary.json`.

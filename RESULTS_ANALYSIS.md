@@ -31,8 +31,8 @@ CPU baseline for the same MI matrix: **20+ minutes** (timed out). GPU: **1.6 s**
 | 3 | `nary_kmap_co-evolution.py` | ✅ | 73 PIs, 42 essential (base-20) |
 | 4 | `position_kmap_coevolution.py` | ✅ GPU | **25,199 co-evolving pairs** (was 302 @ 100 pos) |
 | 5 | `run_allseq_analysis.py` | ✅ GPU | **34,892 pairs MI>0.005** (full length) |
-| 6 | `master_boolean.py` | ✅ GPU | **152 essential PIs**, 36,918 pairs |
-| 7 | `kmap_boolean_coevolution.py` | ✅ GPU | 152 rules across 15 pairs |
+| 6 | `master_boolean.py` | ✅ GPU | **36 distinct PIs (2 essential)**, 10 pairs |
+| 7 | `kmap_boolean_coevolution.py` | ✅ GPU | 36 rules across 10 pairs |
 | 8 | `flipped_boolean_coevolution.py` | ✅ GPU | **345 forbidden rules** |
 | 9 | `variable_position_coevolution.py` | ✅ GPU | 20 top pairs (full-length MI) |
 | 10 | `predictive_constraint_function.py` | ✅ GPU | 5.84% train/test acc |
@@ -55,7 +55,7 @@ CPU baseline for the same MI matrix: **20+ minutes** (timed out). GPU: **1.6 s**
 | Max MI | **1.5917** at (372,401) | gpu_full ✓, mi_heatmap ✓, full_length ✓ |
 | Variable positions | 1,249/1,276 | all 5 scripts ✓ |
 | Co-evolving pairs | 36,918 | master_boolean, flipped, allseq ✓ |
-| Master rules | 152 | master_boolean, kmap_boolean, pipeline doc ✓ |
+| Master rules | 36 (2 essential) | master_boolean, kmap_boolean, pipeline doc ✓ |
 | H1 (He-2012 direct) | 0.1905 (1.18×) | gpu_full ✓ |
 | H1 (5-bit group-order) | 0.2160 (1.34×) | run_kmap ✓ |
 
@@ -134,8 +134,8 @@ nohup $G -u $D/create_mi_heatmap.py > logs/mi_heatmap_gpu.log 2>&1 &
 | 3 | nary_kmap_co-evolution.py | ✅ | ✅ | — | 73 PIs, 42 essential |
 | 4 | position_kmap_coevolution.py | ✅ | ✅ | ✅ | 25,199 co-evolving pairs |
 | 5 | run_allseq_analysis.py | ✅ | ✅ | ✅ | 34,892 pairs MI>0.005 |
-| 6 | master_boolean.py | ✅ | ✅ | ✅ | 152 essential PIs, 36,918 pairs |
-| 7 | kmap_boolean_coevolution.py | ✅ | ✅ | ✅ | 152 rules |
+| 6 | master_boolean.py | ✅ | ✅ | ✅ | 36 distinct PIs, 2 essential, 10 pairs |
+| 7 | kmap_boolean_coevolution.py | ✅ | ✅ | ✅ | 36 rules |
 | 8 | flipped_boolean_coevolution.py | ✅ | ✅ | ✅ | 345 forbidden rules |
 | 9 | variable_position_coevolution.py | ✅ | ✅ | ✅ | 20 top pairs |
 | 10 | predictive_constraint_function.py | ✅ | ✅ | ✅ | 5.84% acc (800/499 split) |
@@ -163,7 +163,7 @@ nohup $G -u $D/create_mi_heatmap.py > logs/mi_heatmap_gpu.log 2>&1 &
 | Max MI | 1.5917 @ (372,401) | gpu_full ✓ boolean ✓ heatmap ✓ pipeline-doc ✓ |
 | Variable positions | 1,249 | all scripts ✓ |
 | Co-evolving pairs | 36,918 | master ✓ flipped ✓ allseq ✓ |
-| Master rules | 152 | master ✓ kmap_boolean ✓ docs ✓ |
+| Master rules | 36 (2 essential) | master ✓ kmap_boolean ✓ docs ✓ |
 
 ### 8.4 Repo completeness
 - `co-evolution-analysis` repo vs `datasets/co-evolution`: **0 differing/missing files** (verified by cmp)

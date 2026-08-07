@@ -12,7 +12,7 @@ Three scripts convert the JSON results into human-readable reports:
 
 1. `generate_co-evolution_md.py` - produces `kmap_boolean_coevolution/COEVOLUTION_KMAP_BOOLEAN.md` (all Boolean rules with LaTeX expressions).
 2. `generate_full_analysis_md.py` - produces `FULL_COEVOLUTION_ANALYSIS.md` (aggregate of all JSON results).
-3. `generate_full_pipeline_doc.py` - produces `FULL_PIPELINE_ANALYSIS.md` (the comprehensive pipeline document with formulas, tables, full length (1,276 positions), and all 152 rules).
+3. `generate_full_pipeline_doc.py` - produces `FULL_PIPELINE_ANALYSIS.md` (the comprehensive pipeline document with formulas, tables, full length (1,276 positions), and all 36 rules).
 
 None of these compute new statistics. They read the result JSON files and render them into markdown with LaTeX math and tables.
 
@@ -31,11 +31,11 @@ flowchart LR
 
 ## What the Reports Contain
 
-### COEVOLUTION_KMAP_BOOLEAN.md (1,144 lines)
+### COEVOLUTION_KMAP_BOOLEAN.md (588 lines, corrected Aug 7)
 
-For each of the 15 rule pairs:
+For each of the 10 rule pairs:
 - K-map compact view (on-set residue pairs).
-- Boolean function in LaTeX (e.g., `~s3 & s2 & s1 & ~s0 & t3 & ~t2 & t1 & t0`).
+- Boolean function as residue-pair conditions (5-bit variables per axis, FIX A2).
 - Natural-language rules.
 - Coupling tables.
 
@@ -53,22 +53,23 @@ The comprehensive document:
 - 236 Lean theorem catalog.
 - Full dataset description.
 - K-map construction formulas.
-- All 152 Boolean expressions.
+- All 36 Boolean expressions.
 - Entropy table (full length), MI top-50, coupling constants, perplexity.
 - H1 results.
 - Script inventory.
 
 ## Worked Example: A Rule in the Report
 
-The rule `IF pos 413 = W AND pos 427 = E THEN co-evolutionary` appears in all three reports. In COEVOLUTION_KMAP_BOOLEAN.md it is rendered with its 8-bit Boolean expression; in FULL_PIPELINE_ANALYSIS.md it appears in the "Complete Inference Rules" section with its position pair table; in FULL_COEVOLUTION_ANALYSIS.md it is summarized in the "108... 152 essential prime implicants" count.
+The rule `IF pos 212 = G AND pos 216 = R THEN co-evolutionary` (one of the 2 essential rules) appears in COEVOLUTION_KMAP_BOOLEAN.md rendered with its 5-bit Boolean expression; the FULL_PIPELINE_ANALYSIS.md and FULL_COEVOLUTION_ANALYSIS.md contain the "Complete Inference Rules" sections.
 
 ## Key Verified Numbers in the Reports
 
 | Metric | Value |
 |--------|-------|
-| Essential prime implicants | 152 |
-| Position pairs with rules | 15 |
-| Max MI (full length) | 1.5917 at (372, 401) |
+| Distinct prime implicants (rules) | 36 (2 essential) |
+| Position pairs with rules | 10 |
+| Max full-MI (corrected) | 0.8067 at (373, 378) |
+| Max mutation-only MI (corrected) | 0.8710 at (495, 498) |
 | Lean theorems cataloged | 236 |
 | Scripts inventoried | 22 |
 

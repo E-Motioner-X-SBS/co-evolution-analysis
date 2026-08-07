@@ -83,7 +83,8 @@ def compute_mi(pos_arrays, pos_i, pos_j, n_seqs):
 def build_mutation_kmap(pos_arrays, pos_i, pos_j, ref_i, ref_j, n_seqs):
     # CORRECTED (FIX A2): 32x32 padded, rows/cols 20-31 don't-care
     # (20x20 in 8-bit QM wrapped cells 256-399 -> phantom rules)
-    kmap = np.full((32, 32), -1, dtype=np.int32)
+    kmap = np.full((32, 32), -1, dtype=np.int32)  # padding DC
+    kmap[:20, :20] = 0  # 20x20 region default OFF-SET (never observed)
     for arr in pos_arrays[:n_seqs]:
         if pos_i < len(arr) and pos_j < len(arr):
             ci, cj = int(arr[pos_i]), int(arr[pos_j])
@@ -128,11 +129,20 @@ def decode_pi(pi, aa_list):
     row_aa = aa_list[row_code % 20] if row_code < 20 else "?"
     col_aa = aa_list[col_code % 20] if col_code < 20 else "?"
 
+    # CORRECTED (FIX A2): 10-bit encoding -> 5 bits per axis.
+    # values[0..4] = row bits (MSB first), values[5..9] = col bits (MSB first).
     terms = []
-    for j in range(8):
+    for j in range(5):
         if not mask[j]:
-            var = f"s{3 - j}" if j < 4 else f"t{7 - j}"
+            var = f"s{4 - j}"
             if values[j] == 0:
+                terms.append(f"\\bar{{{var}}}")
+            else:
+                terms.append(var)
+    for j in range(5):
+        if not mask[j + 5]:
+            var = f"t{4 - j}"
+            if values[j + 5] == 0:
                 terms.append(f"\\bar{{{var}}}")
             else:
                 terms.append(var)
@@ -146,7 +156,10 @@ def main():
     fasta_file = base_dir / "Spike_protein.aln-fasta"
     results_dir = base_dir / "kmap_boolean_coevolution"
     results_dir.mkdir(exist_ok=True)
-    md_path = results_dir / "COEVOLUTION_KMAP_BOOLEAN.md"
+    # CORRECTED (Aug 7): write to a distinct file. COEVOLUTION_KMAP_BOOLEAN.md
+    # is produced by generate_co-evolution_md.py (the master_boolean report);
+    # both scripts writing the same path caused silent clobbering.
+    md_path = results_dir / "KMAP_BOOLEAN_TABLES.md"
 
     print("=" * 80)
     print("K-map Boolean Co-evolution Analysis")

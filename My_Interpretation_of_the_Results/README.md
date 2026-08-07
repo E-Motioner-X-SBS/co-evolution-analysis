@@ -4,7 +4,8 @@
 > pipeline invalidated the biological numbers in the earlier documentation:
 > (A1) gap-stripping misaligned columns, (A2) 8-bit QM wrap-around corrupted
 > rule labels. The verified corrected results are: 21 variable positions,
-> 12 co-evolving pairs (top: (373,378) MI=0.807), 36 essential rules.
+> 10 co-evolving pairs, 36 distinct Boolean rules with a 2-rule essential
+> core (strongest full-MI pair: (373,378) MI=0.807).
 > See [CORRECTION_NOTICE.md](CORRECTION_NOTICE.md) and
 > `analysis/corrected_pipeline.py`. Files marked with a CORRECTION banner
 > describe the original (buggy) run.
@@ -32,7 +33,7 @@ A complete, from-first-principles interpretation of every script and algorithm i
 | 8 | [08_gpu_full_analysis.md](08_gpu_full_analysis.md) | `gpu_full_analysis.py` | What is the definitive full-length GPU result? |
 | 9 | [09_run_allseq_analysis.md](09_run_allseq_analysis.md) | `run_allseq_analysis.py` | Which position pairs co-evolve across all sequences? |
 | 10 | [10_position_kmap_coevolution.md](10_position_kmap_coevolution.md) | `position_kmap_coevolution.py` | What do per-position-pair K-maps look like? |
-| 11 | [11_master_boolean.md](11_master_boolean.md) | `master_boolean.py` | What are the 152 irreducible co-evolution rules? |
+| 11 | [11_master_boolean.md](11_master_boolean.md) | `master_boolean.py` | What are the 36 irreducible co-evolution rules? |
 | 12 | [12_kmap_boolean_coevolution.md](12_kmap_boolean_coevolution.md) | `kmap_boolean_coevolution.py` | How are rules expressed as Boolean logic? |
 | 13 | [13_variable_position_coevolution.md](13_variable_position_coevolution.md) | `variable_position_coevolution.py` | What rules remain when conservation is ignored? |
 | 14 | [14_flipped_boolean_coevolution.md](14_flipped_boolean_coevolution.md) | `flipped_boolean_coevolution.py` | What pairs are FORBIDDEN (never co-occur)? |
@@ -43,7 +44,7 @@ A complete, from-first-principles interpretation of every script and algorithm i
 | 19 | [19_perplexity_coevolution.md](19_perplexity_coevolution.md) | `perplexity_coevolution.py` | How much does one residue constrain another? |
 | 20 | [20_advanced_co-evolution_analysis.md](20_advanced_co-evolution_analysis.md) | `advanced_co-evolution_analysis.py` | Network, spectrum, signatures, clusters |
 | 21 | [21_report_generators.md](21_report_generators.md) | `generate_*.py` (3 scripts) | How are the reports built? |
-| 22 | [22_rules_and_sequence_generation.md](22_rules_and_sequence_generation.md) | 152 rules synthesis (original, buggy) | Can the rules generate new Omicron sequences? |
+| 22 | [22_rules_and_sequence_generation.md](22_rules_and_sequence_generation.md) | 36 rules synthesis (corrected) | Can the rules generate new Omicron sequences? |
 | 23 | [23_combined_mi_perplexity.md](23_combined_mi_perplexity.md) | Combined MI + perplexity analysis across all experiments |
 | 24 | [CORRECTION_NOTICE.md](CORRECTION_NOTICE.md) | The two verified defects and corrected results |
 
@@ -62,9 +63,10 @@ A complete, from-first-principles interpretation of every script and algorithm i
 | Metric | Corrected value |
 |--------|-----------------|
 | Variable positions (H > 0.3) | 21 of 1,276 |
-| Co-evolving pairs (MI > 0.1, window 30) | 12 |
-| Strongest MI pair | (373, 378) MI = 0.8067 |
-| Essential rules | 36 |
+| Co-evolving pairs (mutation-only MI > 0.1, window 30) | 10 |
+| Strongest full-MI pair | (373, 378) MI = 0.8067 |
+| Strongest mutation-only MI pair | (495, 498) MI = 0.8710 |
+| Master Boolean rules (distinct residue pairs) | 36 (2 essential) |
 | Original (buggy) values | 1,249 / 36,918 / 1.5917 / 152 |
 
 
@@ -93,11 +95,11 @@ The analysis answers one question in many ways: **which positions in the Spike p
 | Question | Answer | Where |
 |----------|--------|-------|
 | Do consecutive residues prefer K-map adjacency? | Yes, 1.34x enrichment | 03_run_kmap |
-| How many position pairs co-evolve? | 36,918 (MI > 0.1) | 11_master_boolean |
-| What is the strongest MI pair? | (372,401) MI = 1.5917 bits | 08_gpu_full |
-| How many high-MI pairs exist? | 35,858 (MI > 0.5) | 07_full_length |
-| What are the minimal co-evolution rules? | 152 essential prime implicants | 11_master_boolean |
-| What pairs are forbidden? | 345 forbidden rules | 14_flipped |
+| How many position pairs co-evolve? | 10 (mutation-only MI > 0.1, corrected) | 11_master_boolean |
+| What is the strongest full-MI pair? | (373,378) MI = 0.8067 (corrected) | 08_gpu_full |
+| How many high-MI pairs exist? | 5 (MI > 0.5, corrected) | 07_full_length |
+| What are the minimal co-evolution rules? | 36 distinct rules, 2 essential (corrected) | 11_master_boolean |
+| What pairs are forbidden? | 490 forbidden rules (corrected) | 14_flipped |
 | How deterministic is co-evolution? | Perplexity ratio up to 2.81x | 19_perplexity |
 | Can rules predict mutations? | 2.93% LOO-CV, 5.84% train/test | 16_allseq, 15_predictive |
 | What are the DIRECT couplings? | mfDCA: (454,495) DI=0.37, uncorrelated with MI (rho=0.06) | 18_dca_mf |
@@ -117,7 +119,7 @@ flowchart TD
     ENC --> GPU[coevolution_gpu<br>CUDA kernels]
     SHARED --> SEQ[Sequence-level:<br>run_kmap H1 1.34x, nary K-map, heatmap]
     SHARED --> PAIR[Position-pair:<br>run_allseq, position_kmap<br>36,918 pairs]
-    PAIR --> BOOL[Boolean rules:<br>master 152 rules, flipped 345 forbidden]
+    PAIR --> BOOL[Boolean rules:<br>master 36 rules, flipped 490 forbidden]
     PAIR --> PRED[Prediction:<br>LOO-CV 2.93%, train/test 5.84%, local precision 17.6%]
     PAIR --> PHYS[Statistical physics:<br>perplexity 2.81x, network 35,098 edges]
     GPU --> DCA[Proper mfDCA:<br>DI top pair 454,495, rho vs MI 0.06]
