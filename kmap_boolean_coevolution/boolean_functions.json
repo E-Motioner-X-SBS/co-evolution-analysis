@@ -11,7 +11,7 @@
       "aa_j": "P",
       "ref_i": "V",
       "ref_j": "G",
-      "mi": 0.39768385887145996,
+      "mi": 0.3976837946433093,
       "expr": "\\bar{s3} \\cdot s0 \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
       "n_dc": 3,
       "coverage": 8
@@ -23,7 +23,7 @@
       "aa_j": "R",
       "ref_i": "V",
       "ref_j": "R",
-      "mi": 0.3773493766784668,
+      "mi": 0.37734943885151645,
       "expr": "\\bar{s3} \\cdot s2 \\cdot s1 \\cdot s0 \\cdot t3 \\cdot t1 \\cdot t0",
       "n_dc": 1,
       "coverage": 2
@@ -35,7 +35,7 @@
       "aa_j": "S",
       "ref_i": "N",
       "ref_j": "V",
-      "mi": 0.17692936956882477,
+      "mi": 0.17692944969751384,
       "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot t3 \\cdot t1 \\cdot t0",
       "n_dc": 1,
       "coverage": 2

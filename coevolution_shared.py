@@ -454,3 +454,87 @@ def find_coevolving_pairs_gpu(
                     results.append((pi, pj, mi, n_mut, ri, rj))
         results.sort(key=lambda x: x[2], reverse=True)
         return results
+
+
+# ══════════════════════════════════════════════════════════════════════
+#  8. Combined MI + Perplexity analysis (all experiments)
+# ══════════════════════════════════════════════════════════════════════
+
+def perplexity_ratio(pos_arrays, pos_i, pos_j, n_seqs, entropy_vec=None):
+    """PP(j) / mean PP(j|i=a) over residues a with n>=5.
+
+    Marginal PP uses 2^H(j); conditional PP uses 2^H(j|i=a). Ratio > 1
+    means knowing residue i reduces the effective number of choices at j
+    (determinism). Returns None if fewer than 3 conditioning residues.
+    """
+    counts = Counter()
+    for arr in pos_arrays[:n_seqs]:
+        if pos_i < len(arr) and pos_j < len(arr):
+            ci, cj = int(arr[pos_i]), int(arr[pos_j])
+            if 0 <= ci < N_AA and 0 <= cj < N_AA:
+                counts[(ci, cj)] += 1
+    ci_tot = Counter()
+    for (ci, cj), c in counts.items():
+        ci_tot[ci] += c
+    cond = []
+    for ci, tot in ci_tot.items():
+        h = 0.0
+        for (c_i, c_j), c in counts.items():
+            if c_i == ci:
+                p = c / tot
+                if p > 0:
+                    h -= p * np.log2(p)
+        if tot >= 5:
+            cond.append(2.0 ** h)
+    if len(cond) < 1:
+        return None
+    if entropy_vec is not None:
+        ppj = 2.0 ** float(entropy_vec[pos_j])
+    else:
+        # compute marginal entropy of j from counts
+        marg_j = Counter()
+        for (ci, cj), c in counts.items():
+            marg_j[cj] += c
+        tot_j = sum(marg_j.values())
+        if tot_j == 0:
+            return None
+        h_j = -sum((c / tot_j) * np.log2(c / tot_j) for c in marg_j.values() if c > 0)
+        ppj = 2.0 ** h_j
+    avg_cond = float(np.mean(cond))
+    if avg_cond <= 0:
+        return None
+    return ppj / avg_cond
+
+
+def combined_pair_scores(pos_arrays, pairs, n_seqs, entropy_vec=None,
+                         mi_fn=None):
+    """Combined MI + perplexity-ratio score for a list of pairs.
+
+    Returns list of dicts: {pos_i, pos_j, mi, ratio, combined}
+      combined = rank-normalized MI + rank-normalized ratio (averaged).
+    mi_fn defaults to mutual_information; pass a mutation-only MI function
+    to match the pipeline convention.
+    """
+    if mi_fn is None:
+        mi_fn = mutual_information
+    scored = []
+    for (i, j) in pairs:
+        mi = mi_fn(pos_arrays, i, j, n_seqs)
+        ratio = perplexity_ratio(pos_arrays, i, j, n_seqs, entropy_vec)
+        if mi is not None and ratio is not None:
+            scored.append({"pos_i": int(i), "pos_j": int(j),
+                           "mi": float(mi), "ratio": float(ratio)})
+    if not scored:
+        return scored
+    n = len(scored)
+    mi_vals = np.array([s["mi"] for s in scored])
+    ra_vals = np.array([s["ratio"] for s in scored])
+    def rnorm(v):
+        order = np.argsort(np.argsort(v))
+        return order / (n - 1) if n > 1 else np.zeros(n)
+    rm = rnorm(mi_vals)
+    rr = rnorm(ra_vals)
+    for idx, s in enumerate(scored):
+        s["combined"] = float(0.5 * (rm[idx] + rr[idx]))
+    scored.sort(key=lambda s: -s["combined"])
+    return scored

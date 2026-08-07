@@ -239,5 +239,45 @@ def main():
         json.dump(summary, f, indent=2, default=str)
 
 
+
+
+    # ============================================================
+    # COMBINED MI + PERPLEXITY ANALYSIS (all experiments)
+    # ============================================================
+    print("\n=== Combined MI + Perplexity Analysis ===")
+    try:
+        from coevolution_shared import (
+            combined_pair_scores, compute_entropy_vectorized,
+            load_position_arrays as _lpa,
+        )
+        _pa, _na, _fl = _lpa(max_pos=None, aligned=True)
+        _ent = compute_entropy_vectorized(_pa, _na, _fl)
+        _var = [p for p in range(_fl) if _ent[p] > 0.3]
+        _pairs = [(i, j) for idx, i in enumerate(_var)
+                  for j in _var[idx + 1:] if j - i <= 30]
+        _scored = combined_pair_scores(_pa, _pairs, _na, _ent)
+        print(f"  Variable positions: {len(_var)}")
+        print(f"  Pairs scored (MI + perplexity ratio): {len(_scored)}")
+        print(f"  Top 5 combined (MI + ratio):")
+        for _s in _scored[:5]:
+            print(f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
+                  f"ratio={_s['ratio']:.2f} combined={_s['combined']:.3f}")
+        _mi_top = sorted(_scored, key=lambda s: -s['mi'])[:5]
+        print(f"  Top 5 by MI alone:")
+        for _s in _mi_top:
+            print(f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
+                  f"ratio={_s['ratio']:.2f}")
+        # ranking agreement
+        _r_mi = {(_s['pos_i'], _s['pos_j']): idx
+                 for idx, _s in enumerate(sorted(_scored, key=lambda s: -s['mi']))}
+        _r_cb = {(_s['pos_i'], _s['pos_j']): idx
+                 for idx, _s in enumerate(_scored)}
+        _same = sum(1 for k in _r_mi if _r_mi[k] == _r_cb[k])
+        print(f"  Ranking agreement (MI vs combined, top-5 same): "
+              f"{len([k for k in _r_mi if k in _r_cb and _r_mi[k] < 5 and _r_cb[k] < 5])}/5")
+    except Exception as _e:
+        print(f"  Combined analysis skipped: {_e}")
+
+
 if __name__ == "__main__":
     main()

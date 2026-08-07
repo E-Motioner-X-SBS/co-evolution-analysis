@@ -1,3 +1,45 @@
+
+
+def combined_pipeline_section():
+    """Combined MI + perplexity markdown section (all experiments)."""
+    lines = ["## Combined MI + Perplexity Analysis (all experiments)",
+             "",
+             "Both lenses are computed for every variable-position pair:",
+             "MI (total correlation) and perplexity ratio (determinism).",
+             "Combined score = average of normalized ranks.",
+             ""]
+    try:
+        from coevolution_shared import (load_position_arrays,
+                                        compute_entropy_vectorized,
+                                        combined_pair_scores)
+        pa, na, fl = load_position_arrays(max_pos=None, aligned=True)
+        ent = compute_entropy_vectorized(pa, na, fl)
+        var = [p for p in range(fl) if ent[p] > 0.3]
+        pairs = [(i, j) for idx, i in enumerate(var)
+                 for j in var[idx + 1:] if j - i <= 30]
+        sc = combined_pair_scores(pa, pairs, na, ent)
+        lines.append(f"| Variable positions | {len(var)} |")
+        lines.append(f"| Pairs scored (MI + ratio) | {len(sc)} |")
+        lines.append("")
+        lines.append("| Rank | Pos i | Pos j | MI | PP ratio | Combined |")
+        lines.append("|------|-------|-------|-----|----------|----------|")
+        for rk, s in enumerate(sc[:10], 1):
+            lines.append(f"| {rk} | {s['pos_i']} | {s['pos_j']} | "
+                         f"{s['mi']:.3f} | {s['ratio']:.2f} | {s['combined']:.3f} |")
+        mi_top = sorted(sc, key=lambda s: -s['mi'])[:3]
+        ratio_top = sorted(sc, key=lambda s: -s['ratio'])[:3]
+        lines.append("")
+        lines.append("Top 3 by MI: "
+                     + ", ".join(f"({s['pos_i']},{s['pos_j']})" for s in mi_top))
+        lines.append("Top 3 by PP ratio: "
+                     + ", ".join(f"({s['pos_i']},{s['pos_j']})" for s in ratio_top))
+        lines.append("Top 3 by combined: "
+                     + ", ".join(f"({s['pos_i']},{s['pos_j']})" for s in sc[:3]))
+    except Exception as e:
+        lines.append(f"(combined analysis unavailable: {e})")
+    return "\n".join(lines)
+
+
 #!/usr/bin/env python3
 """
 COMPLETE PIPELINE DOCUMENTATION GENERATOR
@@ -939,6 +981,9 @@ w(
 w("7. de Moura, L. et al. (2021). The Lean 4 Theorem Prover and Programming Language.")
 w()
 
+w("---")
+w(combined_pipeline_section())
+w("")
 w("---")
 w(f"*Generated {now} by `generate_full_pipeline_doc.py`*")
 w(

@@ -44,7 +44,8 @@ A complete, from-first-principles interpretation of every script and algorithm i
 | 20 | [20_advanced_co-evolution_analysis.md](20_advanced_co-evolution_analysis.md) | `advanced_co-evolution_analysis.py` | Network, spectrum, signatures, clusters |
 | 21 | [21_report_generators.md](21_report_generators.md) | `generate_*.py` (3 scripts) | How are the reports built? |
 | 22 | [22_rules_and_sequence_generation.md](22_rules_and_sequence_generation.md) | 152 rules synthesis (original, buggy) | Can the rules generate new Omicron sequences? |
-| 23 | [CORRECTION_NOTICE.md](CORRECTION_NOTICE.md) | The two verified defects and corrected results |
+| 23 | [23_combined_mi_perplexity.md](23_combined_mi_perplexity.md) | Combined MI + perplexity analysis across all experiments |
+| 24 | [CORRECTION_NOTICE.md](CORRECTION_NOTICE.md) | The two verified defects and corrected results |
 
 ## Discovery Analyses (analysis/ folder)
 
@@ -54,6 +55,7 @@ A complete, from-first-principles interpretation of every script and algorithm i
 | `analysis/justify_top15.py` | Why 15 pairs and not 16? | top15_justification.json |
 | `analysis/perplexity_deep_dive.py` | What do perplexity ratios really tell us? | perplexity_deep_dive.json |
 | `analysis/dca_vs_mi_vs_ratio.py` | How do MI, perplexity ratio, and DCA compare? | dca_vs_mi_vs_ratio.json |
+| `analysis/combined_mi_perplexity.py` | Does combining MI + perplexity improve results? | combined_mi_perplexity.json |
 
 ## Statistical Summary of Corrected Results
 

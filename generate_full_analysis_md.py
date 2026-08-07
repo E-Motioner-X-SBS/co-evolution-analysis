@@ -1,3 +1,46 @@
+
+
+def combined_section_md():
+    """Markdown section: combined MI + perplexity analysis."""
+    lines = ["## Combined MI + Perplexity Analysis",
+             "",
+             "For every variable-position pair (window 30) on the CORRECTED",
+             "aligned data, we compute mutual information (total correlation)",
+             "and the perplexity ratio PP(j)/PP(j|i) (determinism). The combined",
+             "score is the average of their normalized ranks.",
+             "",
+             "```python",
+             "# from coevolution_shared import combined_pair_scores",
+             "# scored = combined_pair_scores(pos_arrays, pairs, n_all, entropy)",
+             "```",
+             ""]
+    try:
+        from coevolution_shared import (load_position_arrays,
+                                        compute_entropy_vectorized,
+                                        combined_pair_scores)
+        pa, na, fl = load_position_arrays(max_pos=None, aligned=True)
+        ent = compute_entropy_vectorized(pa, na, fl)
+        var = [p for p in range(fl) if ent[p] > 0.3]
+        pairs = [(i, j) for idx, i in enumerate(var)
+                 for j in var[idx + 1:] if j - i <= 30]
+        sc = combined_pair_scores(pa, pairs, na, ent)
+        lines.append(f"| Metric | Value |")
+        lines.append(f"|--------|-------|")
+        lines.append(f"| Variable positions | {len(var)} |")
+        lines.append(f"| Pairs scored | {len(sc)} |")
+        lines.append(f"| Top combined pair | ({sc[0]['pos_i']}, {sc[0]['pos_j']}) MI={sc[0]['mi']:.3f} ratio={sc[0]['ratio']:.2f} |")
+        lines.append("")
+        lines.append("Top 5 by combined score:")
+        lines.append("")
+        lines.append("| Rank | Pos i | Pos j | MI | PP ratio | Combined |")
+        lines.append("|------|-------|-------|-----|----------|----------|")
+        for rk, s in enumerate(sc[:5], 1):
+            lines.append(f"| {rk} | {s['pos_i']} | {s['pos_j']} | {s['mi']:.3f} | {s['ratio']:.2f} | {s['combined']:.3f} |")
+    except Exception as e:
+        lines.append(f"(combined analysis unavailable: {e})")
+    return "\n".join(lines)
+
+
 #!/usr/bin/env python3
 """
 Generate FULL_COEVOLUTION_ANALYSIS.md from all computed JSON/CSV results.
@@ -388,6 +431,9 @@ a("- `kmap_boolean_coevolution/boolean_functions.json` — All Boolean functions
 a("- `CO-EVOLUTION_BOOLEAN_FUNCTIONS.md` — Detailed Boolean function documentation")
 a("- `COEVOLUTION_CONSTRAINTS.md` — Mathematical constraint framework")
 a()
+a("---")
+a(combined_section_md())
+a("")
 a("---")
 a(f"*Generated {date_str} by `generate_full_analysis_md.py` — ALL values computed by Python analysis scripts, not hand-written.*")
 

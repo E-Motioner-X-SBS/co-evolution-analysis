@@ -193,10 +193,9 @@ def build_kmap_consensus(sequences, n_seqs=None):
 
     for i in range(n_seqs):
         _, seq = sequences[i]
-        # Remove gaps
-        clean_seq = "".join(aa for aa in seq if aa in _AA_TO_INDEX)
-        if len(clean_seq) > 1:
-            kmap = build_aa_kmap_2d(clean_seq)
+        # CORRECTED (FIX A1): aligned; build_aa_kmap_2d skips gap windows
+        if len(seq) > 1:
+            kmap = build_aa_kmap_2d(seq)
             kmap_sum += kmap
             count += 1
 
@@ -291,28 +290,27 @@ def analyze_h2_signature(sequences, n_seqs=100):
 
     for i in range(n):
         _, seq = sequences[i]
-        clean_seq = "".join(aa for aa in seq if aa in _AA_TO_INDEX)
+        seq_lengths.append(len(seq))
 
-        seq_lengths.append(len(clean_seq))
-
-        # GC content (using nucleotide analogy - count G and C amino acids)
+        # CORRECTED (FIX A1): count only canonical residues for composition
+        canon = [aa for aa in seq if aa in _AA_TO_INDEX]
         gc = (
-            (clean_seq.count("G") + clean_seq.count("C")) / len(clean_seq)
-            if len(clean_seq) > 0
+            (canon.count("G") + canon.count("C")) / len(canon)
+            if len(canon) > 0
             else 0
         )
         gc_contents.append(gc)
 
         # Shannon entropy of amino acid composition
-        aa_freq = Counter(clean_seq)
+        aa_freq = Counter(canon)
         total = sum(aa_freq.values())
         entropy = -sum(
             (c / total) * np.log2(c / total) for c in aa_freq.values() if c > 0
         )
         entropy_values.append(entropy)
 
-        # K-map norm
-        kmap = build_aa_kmap_2d(clean_seq)
+        # K-map norm (aligned; build_aa_kmap_2d skips gap windows)
+        kmap = build_aa_kmap_2d(seq)
         kmap_norms.append(np.linalg.norm(kmap))
 
     print(f"  Sequences analyzed: {n}")
@@ -360,9 +358,8 @@ def analyze_h3_structure(sequences, n_seqs=50):
     seq_ids = []
     for i in range(n):
         header, seq = sequences[i]
-        clean_seq = "".join(aa for aa in seq if aa in _AA_TO_INDEX)
-        if len(clean_seq) > 10:
-            kmap = build_aa_kmap_2d(clean_seq)
+        if len(seq) > 10:
+            kmap = build_aa_kmap_2d(seq)
             kmaps.append(kmap)
             seq_ids.append(extract_accession(header))
 
@@ -519,9 +516,8 @@ def analyze_coevolution(sequences, n_seqs=50):
     clean_seqs = []
     for i in range(n):
         header, seq = sequences[i]
-        clean = "".join(aa for aa in seq if aa in _AA_TO_INDEX)
-        if len(clean) > 100:
-            clean_seqs.append((extract_accession(header), clean))
+        if len(seq) > 100:
+            clean_seqs.append((extract_accession(header), seq))
 
     if len(clean_seqs) < 5:
         print("  Insufficient clean sequences")
@@ -678,10 +674,8 @@ def analyze_mutations(sequences, n_seqs=100):
     # Use first sequence as reference
     ref_header, ref_seq = sequences[0]
     ref_encoded = encode_sequence_gray(ref_seq)
-    ref_clean = "".join(aa for aa in ref_seq if aa in _AA_TO_INDEX)
-
     print(f"  Reference: {extract_accession(ref_header)}")
-    print(f"  Reference length: {len(ref_clean)}")
+    print(f"  Reference length: {len(ref_seq)}")
 
     # Compute mutations for each sequence
     mutation_counts = []
@@ -861,9 +855,8 @@ def main():
     for i in range(min(10, len(sequences))):
         header, seq = sequences[i]
         acc = extract_accession(header)
-        clean_seq = "".join(aa for aa in seq if aa in _AA_TO_INDEX)
-        if len(clean_seq) > 1:
-            kmap = build_aa_kmap_2d(clean_seq)
+        if len(seq) > 1:
+            kmap = build_aa_kmap_2d(seq)
             np.save(results_dir / f"kmap_{acc}.npy", kmap)
 
     # Save encoded sequences (first 50)
@@ -914,6 +907,46 @@ def main():
     print(
         f"  Mutations: Mean = {mutation_results.get('mean_mutations', 0):.1f} per sequence"
     )
+
+
+
+
+    # ============================================================
+    # COMBINED MI + PERPLEXITY ANALYSIS (all experiments)
+    # ============================================================
+    print("\n=== Combined MI + Perplexity Analysis ===")
+    try:
+        from coevolution_shared import (
+            combined_pair_scores, compute_entropy_vectorized,
+            load_position_arrays as _lpa,
+        )
+        _pa, _na, _fl = _lpa(max_pos=None, aligned=True)
+        _ent = compute_entropy_vectorized(_pa, _na, _fl)
+        _var = [p for p in range(_fl) if _ent[p] > 0.3]
+        _pairs = [(i, j) for idx, i in enumerate(_var)
+                  for j in _var[idx + 1:] if j - i <= 30]
+        _scored = combined_pair_scores(_pa, _pairs, _na, _ent)
+        print(f"  Variable positions: {len(_var)}")
+        print(f"  Pairs scored (MI + perplexity ratio): {len(_scored)}")
+        print(f"  Top 5 combined (MI + ratio):")
+        for _s in _scored[:5]:
+            print(f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
+                  f"ratio={_s['ratio']:.2f} combined={_s['combined']:.3f}")
+        _mi_top = sorted(_scored, key=lambda s: -s['mi'])[:5]
+        print(f"  Top 5 by MI alone:")
+        for _s in _mi_top:
+            print(f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
+                  f"ratio={_s['ratio']:.2f}")
+        # ranking agreement
+        _r_mi = {(_s['pos_i'], _s['pos_j']): idx
+                 for idx, _s in enumerate(sorted(_scored, key=lambda s: -s['mi']))}
+        _r_cb = {(_s['pos_i'], _s['pos_j']): idx
+                 for idx, _s in enumerate(_scored)}
+        _same = sum(1 for k in _r_mi if _r_mi[k] == _r_cb[k])
+        print(f"  Ranking agreement (MI vs combined, top-5 same): "
+              f"{len([k for k in _r_mi if k in _r_cb and _r_mi[k] < 5 and _r_cb[k] < 5])}/5")
+    except Exception as _e:
+        print(f"  Combined analysis skipped: {_e}")
 
 
 if __name__ == "__main__":

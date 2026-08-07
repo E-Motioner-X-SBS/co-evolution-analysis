@@ -1,7 +1,7 @@
 {
   "dataset": "1299 Omicron Spike sequences",
   "full_length": 1276,
-  "compute_time_s": 4.6,
+  "compute_time_s": 11.0,
   "gpu": "NVIDIA A100 80GB PCIe",
   "entropy": {
     "n_variable": 21,

@@ -1,6 +1,6 @@
 # E-Motioner-X-SBS: Complete Co-Evolution Analysis Pipeline
 
-**Generated:** August 07, 2026 at 09:56
+**Generated:** August 07, 2026 at 10:38
 **Dataset:** SARS-CoV-2 Omicron Spike Protein — 1,299 sequences, 1276 positions
 **Compute:** NVIDIA A100 80GB + 24-core Xeon, Python 3.10
 **Author:** Shuvam Banerji Seal — IISER Kolkata
@@ -632,5 +632,32 @@ def predict_partner(pos_i, aa_i, pos_j):
 7. de Moura, L. et al. (2021). The Lean 4 Theorem Prover and Programming Language.
 
 ---
-*Generated August 07, 2026 at 09:56 by `generate_full_pipeline_doc.py`*
+## Combined MI + Perplexity Analysis (all experiments)
+
+Both lenses are computed for every variable-position pair:
+MI (total correlation) and perplexity ratio (determinism).
+Combined score = average of normalized ranks.
+
+| Variable positions | 21 |
+| Pairs scored (MI + ratio) | 17 |
+
+| Rank | Pos i | Pos j | MI | PP ratio | Combined |
+|------|-------|-------|-----|----------|----------|
+| 1 | 378 | 407 | 0.792 | 1.74 | 0.875 |
+| 2 | 18 | 26 | 0.802 | 1.73 | 0.844 |
+| 3 | 66 | 94 | 0.791 | 1.73 | 0.812 |
+| 4 | 210 | 215 | 0.753 | 1.79 | 0.812 |
+| 5 | 212 | 215 | 0.398 | 1.84 | 0.750 |
+| 6 | 373 | 378 | 0.807 | 1.59 | 0.719 |
+| 7 | 215 | 216 | 0.757 | 1.68 | 0.656 |
+| 8 | 407 | 410 | 0.750 | 1.71 | 0.656 |
+| 9 | 210 | 216 | 0.745 | 1.66 | 0.531 |
+| 10 | 212 | 216 | 0.377 | 1.68 | 0.531 |
+
+Top 3 by MI: (373,378), (18,26), (378,407)
+Top 3 by PP ratio: (212,215), (210,215), (378,407)
+Top 3 by combined: (378,407), (18,26), (66,94)
+
+---
+*Generated August 07, 2026 at 10:38 by `generate_full_pipeline_doc.py`*
 *All values computed from 1,299 Omicron Spike sequences using shared `coevolution_shared` module*
