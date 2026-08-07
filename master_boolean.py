@@ -115,16 +115,16 @@ def find_coevolutionary_pairs(
             if abs(pos_i - pos_j) > max_gap:
                 continue
 
-            # Majority reference
+            # Majority reference (exclude gap state 20)
             ref_i = Counter(
                 int(a[pos_i])
                 for a in pos_arrays[:n_seqs]
-                if pos_i < len(a) and a[pos_i] >= 0
+                if pos_i < len(a) and 0 <= int(a[pos_i]) < 20
             ).most_common(1)[0][0]
             ref_j = Counter(
                 int(a[pos_j])
                 for a in pos_arrays[:n_seqs]
-                if pos_j < len(a) and a[pos_j] >= 0
+                if pos_j < len(a) and 0 <= int(a[pos_j]) < 20
             ).most_common(1)[0][0]
 
             # Joint distribution of mutations

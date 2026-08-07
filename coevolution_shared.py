@@ -129,8 +129,10 @@ def compute_entropy(pos_arrays, pos, n_seqs):
     """Shannon entropy at a single position."""
     counts = Counter()
     for arr in pos_arrays[:n_seqs]:
-        if pos < len(arr) and arr[pos] >= 0:
-            counts[int(arr[pos])] += 1
+        if pos < len(arr):
+            c = int(arr[pos])
+            if 0 <= c < N_AA:  # exclude gap (20)
+                counts[c] += 1
     total = sum(counts.values())
     if total == 0:
         return 0.0
@@ -148,7 +150,7 @@ def compute_entropy_vectorized(pos_arrays, n_seqs, max_pos):
     ent = np.zeros(max_pos, dtype=np.float64)
     for pos in range(max_pos):
         col = dense[:, pos]
-        valid = col[col >= 0]
+        valid = col[(col >= 0) & (col < N_AA)]
         if len(valid) == 0:
             continue
         cnt = np.bincount(valid, minlength=N_AA).astype(np.float64)
@@ -172,9 +174,11 @@ def find_variable_positions(pos_arrays, n_seqs, max_pos=80, threshold=0.3):
 
 
 def majority_ref(pos_arrays, pos, n_seqs):
-    """Most common residue code at a position."""
+    """Most common residue code at a position (gaps excluded)."""
     cnt = Counter(
-        int(a[pos]) for a in pos_arrays[:n_seqs] if pos < len(a) and a[pos] >= 0
+        int(a[pos])
+        for a in pos_arrays[:n_seqs]
+        if pos < len(a) and 0 <= int(a[pos]) < N_AA
     )
     if not cnt:
         return 0
@@ -206,7 +210,7 @@ def mutual_information(pos_arrays, pos_i, pos_j, n_seqs):
         return 0.0
     codes_i = codes_i[:min_len]
     codes_j = codes_j[:min_len]
-    valid = (codes_i >= 0) & (codes_j >= 0)
+    valid = (codes_i >= 0) & (codes_i < N_AA) & (codes_j >= 0) & (codes_j < N_AA)
     codes_i = codes_i[valid]
     codes_j = codes_j[valid]
     if len(codes_i) < 10:
@@ -253,7 +257,7 @@ def mi_mutation_only(pos_arrays, pos_i, pos_j, ref_i, ref_j, n_seqs):
     for arr in pos_arrays[:n_seqs]:
         if pos_i < len(arr) and pos_j < len(arr):
             ci, cj = int(arr[pos_i]), int(arr[pos_j])
-            if ci >= 0 and cj >= 0 and (ci != ref_i or cj != ref_j):
+            if 0 <= ci < N_AA and 0 <= cj < N_AA and (ci != ref_i or cj != ref_j):
                 joint[(ci, cj)] += 1
                 marg_i[ci] += 1
                 marg_j[cj] += 1
@@ -290,7 +294,7 @@ def compute_coupling(pos_arrays, pos_i, pos_j, n_seqs):
     for arr in pos_arrays[:n_seqs]:
         if pos_i < len(arr) and pos_j < len(arr):
             ci, cj = int(arr[pos_i]), int(arr[pos_j])
-            if ci >= 0 and cj >= 0:
+            if 0 <= ci < N_AA and 0 <= cj < N_AA:
                 kmap[ci, cj] += 1
 
     total = kmap.sum()
@@ -330,7 +334,7 @@ def build_mutation_kmap(pos_arrays, pos_i, pos_j, ref_i, ref_j, n_seqs):
     for arr in pos_arrays[:n_seqs]:
         if pos_i < len(arr) and pos_j < len(arr):
             ci, cj = int(arr[pos_i]), int(arr[pos_j])
-            if ci >= 0 and cj >= 0:
+            if 0 <= ci < N_AA and 0 <= cj < N_AA:
                 kmap[ci, cj] = 1 if (ci != ref_i or cj != ref_j) else -1
     return kmap
 
@@ -343,7 +347,7 @@ def build_frequency_kmap(pos_arrays, pos_i, pos_j, n_seqs, exclude_idx=None):
             continue
         if pos_i < len(arr) and pos_j < len(arr):
             ci, cj = int(arr[pos_i]), int(arr[pos_j])
-            if ci >= 0 and cj >= 0:
+            if 0 <= ci < N_AA and 0 <= cj < N_AA:
                 kmap[ci, cj] += 1
     total = kmap.sum()
     if total > 0:

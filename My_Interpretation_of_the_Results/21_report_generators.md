@@ -1,3 +1,9 @@
+> **CORRECTION (Aug 7, 2026):** The MI values in this file come from the
+> original gap-stripped (misaligned) pipeline. The DCA algorithm itself is
+> unaffected (it uses the raw alignment), but the DCA-vs-MI comparison must
+> be re-interpreted against the corrected MI (max 0.807 at (373,378)).
+> See [CORRECTION_NOTICE.md](CORRECTION_NOTICE.md).
+
 # 21. Report Generators - The Three Documentation Scripts
 
 ## What These Programs Do
