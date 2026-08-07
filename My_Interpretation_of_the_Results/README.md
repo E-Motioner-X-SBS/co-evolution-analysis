@@ -102,6 +102,7 @@ The analysis answers one question in many ways: **which positions in the Spike p
 | Can rules predict mutations? | 2.93% LOO-CV, 5.84% train/test | 16_allseq, 15_predictive |
 | What are the DIRECT couplings? | mfDCA: (454,495) DI=0.37, uncorrelated with MI (rho=0.06) | 18_dca_mf |
 | Can rules generate new sequences? | Partially: rules are necessary constraints, not sufficient | 22_rules |
+| Do MI and perplexity agree on top pairs? | Partially (rho=0.69); combined top is (378,407); ratio rescues (212,215) | 23_combined |
 
 ---
 

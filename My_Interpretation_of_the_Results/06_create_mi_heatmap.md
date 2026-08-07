@@ -46,6 +46,28 @@ The MI is computed from the full joint distribution:
 
 Because the joint P(A, N) is far above the product P(372=A) * P(401=N), the log ratio is large and positive, and the MI sums to 1.5917 bits.
 
+## Worked Example: The Joint Distribution Behind Max MI (corrected data)
+
+The strongest MI pair in the corrected (aligned) data is **(373, 378)** with
+MI = 0.8067. The joint distribution over 1,294 valid sequences:
+
+| 373 | 378 | Count | Frequency |
+|-----|-----|-------|-----------|
+| F | A | 970 | 75.0% |
+| L | T | 311 | 24.0% |
+| S | T | 12 | 0.9% |
+| S | A | 1 | 0.1% |
+
+The marginals are: P(373=F) = 0.75, P(373=L) = 0.24; P(378=A) = 0.75,
+P(378=T) = 0.24. Under independence, the pair (F, A) would occur with
+probability 0.75 x 0.75 = 0.56, but it actually occurs 0.75 of the time;
+the pair (F, T) would occur 0.18 of the time under independence but is
+essentially absent. This deviation is what MI = 0.8067 bits measures.
+
+The maximum possible MI is min(H(373), H(378)) = min(0.872, 0.811) = 0.811
+bits, so the observed value is 99.5% of the theoretical maximum: knowing
+position 373 almost fully determines position 378.
+
 ## Results
 
 | Metric | Value |

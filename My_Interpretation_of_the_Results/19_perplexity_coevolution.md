@@ -68,6 +68,52 @@ flowchart TD
 
 Interpretation: knowing the residue at 372 reduces the effective number of choices at 401 from about 3.2 to about 1.1. At the strongest pairs the conditional perplexity is close to 1.0, meaning position j is essentially DETERMINED by position i. This is near-deterministic co-evolution.
 
+## Worked Example: The Conditional Perplexity Tables (real data)
+
+### Pair (373, 378) - marginal PP(378) = 1.754 (H = 0.811 bits)
+
+Conditional perplexity of 378 given each residue at 373:
+
+| Residue at 373 | Sequences | PP(378 | 373) | Effective choices left |
+|----------------|-----------|----------------|------------------------|
+| F | 970 | 1.000 | 1 |
+| L | 311 | 1.000 | 1 |
+| S | 13 | 1.312 | 1.31 |
+
+Average conditional PP = 1.104. Ratio = 1.754 / 1.104 = 1.589.
+
+**Reading:** for the two dominant residues (F and L, 99% of sequences),
+position 378 is fully determined (1 choice). The small S minority leaves
+1.31 choices. On average knowing 373 leaves 1.10 choices at 378.
+
+### Pair (212, 215) - marginal PP(215) = 1.842 (H = 0.881 bits)
+
+| Residue at 212 | Sequences | PP(215 | 212) | Effective choices left |
+|----------------|-----------|----------------|------------------------|
+| V | 279 | 1.000 | 1 |
+| I | 13 | 1.000 | 1 |
+| L | 6 | 1.000 | 1 |
+| S | 2 | 1.000 | 1 |
+
+Average conditional PP = 1.000. Ratio = 1.842 / 1.000 = 1.842.
+
+**Reading:** perfect determinism - every residue at 212 forces exactly one
+residue at 215. Note position 212 is 75% gaps, so this table covers the
+300 non-gap sequences only; that is why the MI of the pair (0.398) is
+modest even though the determinism is perfect.
+
+### Pair (378, 407) - marginal PP(407) = 1.758 (H = 0.814 bits)
+
+| Residue at 378 | Sequences | PP(407 | 378) |
+|----------------|-----------|----------------|
+| A | 973 | 1.021 |
+| T | 324 | 1.000 |
+
+Average conditional PP = 1.011. Ratio = 1.758 / 1.011 = 1.740.
+
+**Reading:** nearly deterministic with two dominant residues; this pair is
+strong in both MI (0.792) and ratio (1.74), making it the top combined pair.
+
 ## Results
 
 | Metric | Value |
