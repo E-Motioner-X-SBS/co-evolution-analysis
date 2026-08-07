@@ -126,11 +126,18 @@ def compute_sequence_stats(sequences):
 
 
 def encode_sequence_gray(seq):
-    """Encode a sequence to 5-bit Gray code values."""
+    """Encode a sequence to 5-bit Gray code values.
+
+    CORRECTED (FIX A1): gaps/unknown are encoded as -1 (kept in the array
+    to preserve alignment positions), not stripped. Consecutive-pair
+    analyses must skip pairs where either code is -1.
+    """
     encoded = []
     for aa in seq:
         if aa in _AA_TO_INDEX:
             encoded.append(encode_gray_single(aa))
+        else:
+            encoded.append(-1)
     return encoded
 
 
@@ -224,6 +231,10 @@ def analyze_h1_adjacency(sequences, n_seqs=100):
         encoded = encode_sequence_gray(seq)
 
         for j in range(len(encoded) - 1):
+            # CORRECTED (FIX A1): only count pairs where BOTH residues are
+            # canonical and truly consecutive in the alignment (no gap).
+            if encoded[j] < 0 or encoded[j + 1] < 0:
+                continue
             d = gray_hamming_int(encoded[j], encoded[j + 1])
             hamming_dist_counts[d] += 1
             total_pairs += 1

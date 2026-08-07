@@ -85,12 +85,19 @@ def build_nary_kmap(sequences, k=2, n_seqs=None):
 
     for i in range(n_seqs):
         _, seq = sequences[i]
-        # Remove gaps and non-canonical residues
-        clean_seq = "".join(aa for aa in seq if aa in encoder.encode)
-
-        counts = count_kmers_cpu(clean_seq, k, encoder)
-        total_counts += counts
-        total_kmers += max(0, len(clean_seq) - k + 1)
+        # CORRECTED (FIX A1): do NOT strip gaps (was misaligned k-mers).
+        # Slide over the ALIGNED sequence; a k-mer window is counted only if
+        # all k positions are canonical residues (no gaps), preserving true
+        # adjacency in the alignment.
+        codes = np.array([encoder.encode.get(aa, -1) for aa in seq], dtype=np.int32)
+        for start in range(0, len(codes) - k + 1):
+            window = codes[start : start + k]
+            if (window >= 0).all():
+                cell = 0
+                for c in window:
+                    cell = cell * 20 + int(c)
+                total_counts[cell] += 1
+                total_kmers += 1
 
     # Normalize to frequencies
     freq = normalize_kmap(total_counts, mode="frequency")
@@ -165,8 +172,11 @@ def minimize_nary_boolean(kmap_bool):
         boolean_minimize_kmap,
     )
 
-    # Flatten for QM
-    bool_flat = kmap_bool.flatten().astype(int)
+    # CORRECTED (FIX A2): pad 20x20 -> 32x32 so QM uses 10 bits (no wrap).
+    kb2d = np.asarray(kmap_bool).reshape(20, 20)
+    padded = np.full((32, 32), -1, dtype=int)
+    padded[:20, :20] = kb2d
+    bool_flat = padded.flatten().astype(int)
 
     # Run minimization
     result = boolean_minimize_kmap(bool_flat, algorithm="qm")
@@ -194,16 +204,17 @@ def extract_nary_motifs(qm_result, encoder, sequences, n_seqs=100):
 
     decode = encoder.decode
     n = min(n_seqs, len(sequences))
-    
+
     # Pre-encode all sequences into flat arrays for fast access
+    # CORRECTED (FIX A1): aligned (gap = -1 marker), no stripping.
     print(f"  Pre-encoding {n} sequences...")
     encoded_seqs = []
     for _, seq in sequences[:n]:
-        clean = [encoder.encode[aa] for aa in seq if aa in encoder.encode]
-        if len(clean) > 1:
-            encoded_seqs.append(np.array(clean, dtype=np.int32))
+        enc = [encoder.encode.get(aa, -1) for aa in seq]
+        if len(enc) > 1:
+            encoded_seqs.append(np.array(enc, dtype=np.int32))
     print(f"  Encoded {len(encoded_seqs)} sequences")
-    
+
     motifs = []
     for i, pi in enumerate(qm_result["prime_implicants"]):
         values = pi["values"]
@@ -213,10 +224,16 @@ def extract_nary_motifs(qm_result, encoder, sequences, n_seqs=100):
         n_digits = n_vars // 2
 
         # Extract row and column codes from prime implicant
-        row_code = sum(values[j] * (2 ** (min(n_digits, 5) - 1 - j)) 
-                       for j in range(min(n_digits, 5)) if not mask[j])
-        col_code = sum(values[j + n_digits] * (2 ** (min(n_digits, 5) - 1 - j))
-                       for j in range(min(n_digits, 5)) if not mask[j + n_digits])
+        row_code = sum(
+            values[j] * (2 ** (min(n_digits, 5) - 1 - j))
+            for j in range(min(n_digits, 5))
+            if not mask[j]
+        )
+        col_code = sum(
+            values[j + n_digits] * (2 ** (min(n_digits, 5) - 1 - j))
+            for j in range(min(n_digits, 5))
+            if not mask[j + n_digits]
+        )
 
         row_aa = decode.get(row_code % 20, "?")
         col_aa = decode.get(col_code % 20, "?")
@@ -227,24 +244,32 @@ def extract_nary_motifs(qm_result, encoder, sequences, n_seqs=100):
             if len(arr) < 2:
                 continue
             # Find all positions where consecutive pair matches (row_aa, col_aa)
-            matches_first = (arr[:-1] % 20 == row_code % 20)
-            matches_second = (arr[1:] % 20 == col_code % 20)
+            matches_first = arr[:-1] % 20 == row_code % 20
+            matches_second = arr[1:] % 20 == col_code % 20
             motif_count += int(np.sum(matches_first & matches_second))
 
         if motif_count > 0:
-            motifs.append({
-                "rank": i + 1, "row_aa": row_aa, "col_aa": col_aa,
-                "row_code": row_code % 20, "col_code": col_code % 20,
-                "n_dontcares": pi["n_dontcares"], "coverage": len(coverage),
-                "motif_count": motif_count,
-            })
+            motifs.append(
+                {
+                    "rank": i + 1,
+                    "row_aa": row_aa,
+                    "col_aa": col_aa,
+                    "row_code": row_code % 20,
+                    "col_code": col_code % 20,
+                    "n_dontcares": pi["n_dontcares"],
+                    "coverage": len(coverage),
+                    "motif_count": motif_count,
+                }
+            )
 
     motifs.sort(key=lambda x: x["motif_count"], reverse=True)
     print(f"  Total motifs: {len(motifs)}")
     if motifs:
         print(f"\n  Top 5 Co-evolution Motifs:")
         for m in motifs[:5]:
-            print(f"    {m['rank']:4d} {m['row_aa']:>3s}-{m['col_aa']:>3s} count={m['motif_count']:6d}")
+            print(
+                f"    {m['rank']:4d} {m['row_aa']:>3s}-{m['col_aa']:>3s} count={m['motif_count']:6d}"
+            )
     return motifs
 
 
@@ -337,9 +362,9 @@ def predict_coevolution_nary(freq_2d, encoder, sequences, n_seqs=100):
     clean_seqs = []
     for i in range(n):
         _, seq = sequences[i]
-        # CORRECTED: aligned columns, gap = 20 (was gap-stripped, misaligned)
-        if len(clean) > 100:
-            clean_seqs.append(clean)
+        # CORRECTED: aligned (gap = 20 handled by encoder), no stripping
+        if len(seq) > 100:
+            clean_seqs.append(seq)
 
     if len(clean_seqs) < 5:
         print("  Insufficient sequences")

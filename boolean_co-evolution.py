@@ -101,9 +101,10 @@ def build_boolean_kmap(sequences, threshold_percentile=75):
     total_pairs = 0
 
     for _, seq in sequences:
-        clean_seq = "".join(aa for aa in seq if aa in _AA_TO_INDEX)
-        for i in range(len(clean_seq) - 1):
-            aa1, aa2 = clean_seq[i], clean_seq[i + 1]
+        # CORRECTED (FIX A1): slide over ALIGNED sequence, count only
+        # consecutive non-gap dipeptides (preserves true adjacency).
+        for i in range(len(seq) - 1):
+            aa1, aa2 = seq[i], seq[i + 1]
             if aa1 in _AA_TO_INDEX and aa2 in _AA_TO_INDEX:
                 row = encode_gray_single(aa1)
                 col = encode_gray_single(aa2)
@@ -212,10 +213,10 @@ def extract_coevolution_motifs(qm_result, sequences, n_seqs=100):
     encoded_seqs = []
     total_aa = 0
     for _, seq in sequences[:n_seqs]:
-        clean = [encode_gray_single(aa) for aa in seq if aa in _AA_TO_INDEX]
-        if len(clean) > 1:
-            encoded_seqs.append(np.array(clean, dtype=np.int32))
-            total_aa += len(clean)
+        enc = [encode_gray_single(aa) if aa in _AA_TO_INDEX else -1 for aa in seq]
+        if len(enc) > 1:
+            encoded_seqs.append(np.array(enc, dtype=np.int32))
+            total_aa += len(enc)
     print(f"  Encoded {len(encoded_seqs)} sequences, {total_aa} total AAs")
 
     motifs = []
@@ -309,9 +310,8 @@ def compute_coupling_constants(kmap_freq, sequences, n_seqs=100):
     clean_seqs = []
     for i in range(n):
         _, seq = sequences[i]
-        clean = "".join(aa for aa in seq if aa in _AA_TO_INDEX)
-        if len(clean) > 100:
-            clean_seqs.append(clean)
+        if len(seq) > 100:
+            clean_seqs.append(seq)
 
     if len(clean_seqs) < 5:
         print("  Insufficient clean sequences")
@@ -435,9 +435,8 @@ def predict_coevolution(qm_result, kmap_freq, sequences, n_seqs=100):
     clean_seqs = []
     for i in range(n):
         _, seq = sequences[i]
-        clean = "".join(aa for aa in seq if aa in _AA_TO_INDEX)
-        if len(clean) > 100:
-            clean_seqs.append(clean)
+        if len(seq) > 100:
+            clean_seqs.append(seq)
 
     if len(clean_seqs) < 5:
         print("  Insufficient sequences")
