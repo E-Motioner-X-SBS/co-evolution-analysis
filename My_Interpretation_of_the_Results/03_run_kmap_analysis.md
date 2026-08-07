@@ -17,7 +17,11 @@ A=0, V=1, L=2, I=3, F=4, Y=5, W=6, M=7, C=8, P=9, G=10, S=11, T=12, N=13, Q=14, 
 Then the 5-bit Gray code is applied:
 
 ```
-gray(n) = n XOR (n >> 1)
+```
+
+$$g(n) = n \oplus (n \gg 1)$$
+
+```
 ```
 
 Example values: A (index 0) -> gray 0. V (index 1) -> gray 1. L (index 2) -> gray 3. I (index 3) -> gray 2. These four are the aliphatic hydrophobic group and sit together in a 2x2 block of the K-map.
@@ -39,7 +43,11 @@ flowchart TD
 ## The H1 Formula
 
 ```
-H1 ratio = (number of consecutive residue pairs with Hamming distance 1) / (total consecutive pairs)
+```
+
+$$R_{H1} = \frac{N_{d=1}}{N_{total}}$$
+
+```
 ```
 
 Expected ratio under a random 5-bit code: in 5-bit space a random pair of distinct codes has Hamming distance 1 with probability 5/31 = 0.1613 (5 neighbors out of 31 other codes).

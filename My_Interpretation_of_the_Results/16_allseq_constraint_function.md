@@ -23,7 +23,7 @@ For pair (i, j) and held-out sequence s:
 ```
 train on all sequences except s:
     kmap_freq = P(a, b) over 1,298 sequences
-    C(a, b) = ln( P(a, b) / (P(a) * P(b)) )
+    $$C(a, b) = \ln \frac{P(a, b)}{P(a) P(b)}$$
 test:
     if s has (a_mut at i, b_actual at j) and (a_mut, b_actual) != (ref_i, ref_j):
         best_j = argmax over b of C(a_mut, b)

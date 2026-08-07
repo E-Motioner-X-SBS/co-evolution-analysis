@@ -40,7 +40,7 @@ The top pair from the full-length MI is (372, 401) with MI = 1.5917, matching th
 The coupling for (A, N):
 
 ```
-J(A, N) = ln( P(A,N) / (P(372=A) * P(401=N)) )
+$$J(A, N) = \ln \frac{P(A,N)}{P(372{=}A) \cdot P(401{=}N)} = \ln \frac{0.6266}{0.63 \times 0.63} = \ln 1.57 \approx 0.45$$
          = ln( 0.6266 / (0.63 * 0.63) )
          = ln( 1.57 ) = 0.45
 ```

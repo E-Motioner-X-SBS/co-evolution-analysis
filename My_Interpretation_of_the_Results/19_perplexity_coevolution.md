@@ -6,46 +6,42 @@ This script measures co-evolution through **perplexity**, a different lens than 
 
 Perplexity is the effective number of choices:
 
-```
-Perplexity = 2^H
-```
+$$PP = 2^H$$
 
 where H is Shannon entropy in bits. If a position has perplexity 3.1, it behaves like a variable with 3.1 effective states.
 
 The script computes:
 1. Perplexity of every position (marginal perplexity).
-2. Conditional perplexity: PP(j | i = a) = 2^H(j | i = a), the perplexity of position j given that position i has residue a.
-3. The co-evolution ratio: PP(j) / PP(j | i).
+2. Conditional perplexity: $PP(j | i = a) = 2^{H(j | i = a)}$, the perplexity of position j given that position i has residue a.
+3. The co-evolution ratio: $PP(j) / PP(j | i)$.
 
 If knowing residue i reduces the uncertainty about j, the conditional perplexity is lower than the marginal, and the ratio is greater than 1.
+
+**Sequence length analyzed: 1,276 positions (full length), all 1,299 sequences.**
 
 ## The Formulas
 
 ### Marginal entropy and perplexity
 
-```
-H(j) = - sum over b of P(b) * log2(P(b))
-PP(j) = 2^H(j)
-```
+$$H(j) = -\sum_{b=1}^{20} P(b) \log_2 P(b)$$
+
+$$PP(j) = 2^{H(j)}$$
 
 ### Conditional entropy and perplexity
 
-```
-H(j | i = a) = - sum over b of P(b | i = a) * log2(P(b | i = a))
-PP(j | i = a) = 2^H(j | i = a)
-```
+$$H(j | i = a) = -\sum_{b=1}^{20} P(b | i = a) \log_2 P(b | i = a)$$
+
+$$PP(j | i = a) = 2^{H(j | i = a)}$$
 
 ### Co-evolution ratio
 
-```
-ratio(i, j) = PP(j) / average over a of PP(j | i = a)
-```
+$$\text{ratio}(i, j) = \frac{PP(j)}{\frac{1}{N_a} \sum_{a} PP(j | i = a)}$$
 
 A ratio of 1 means position i gives no information about j. A ratio of 2 means knowing i halves the effective number of choices at j.
 
 ```mermaid
 flowchart TD
-    A[position arrays full length (1,276 positions)] --> B[entropy per position]
+    A[position arrays full length] --> B[entropy per position]
     B --> C[perplexity PP = 2^H]
     A --> D[GPU MI to find co-evolving pairs]
     D --> E[top pairs]
@@ -74,22 +70,61 @@ Interpretation: knowing the residue at 372 reduces the effective number of choic
 | (208, 209) | ratio = 2.769 |
 | (401, 404) | ratio = 2.700 |
 
+## Deep-Dive Discovery: What the Perplexity Results Actually Tell Us
+
+The follow-up analysis in `analysis/perplexity_deep_dive.py` and `analysis/dca_vs_mi_vs_ratio.py` explored five questions:
+
+### 1. Can conditioning INCREASE perplexity?
+
+**Yes.** Of 810 position pairs checked, 93 have conditional perplexity greater than the marginal. This is not an error: conditioning can increase entropy when the residue at i selects a mixture of sub-populations at j. It means "PP(j|i) <= PP(j)" is NOT a theorem; the ratio can be below 1 for genuinely anti-correlated positions.
+
+### 2. Is the perplexity ratio the same ranking as MI?
+
+**Mostly, with a subtlety.** Over 3,393 pairs, Spearman(ratio, MI) = +0.78. The ratio is strongly (but not perfectly) correlated with MI. An earlier small-sample estimate (-0.097 over 413 pairs) was an artifact of the small sample; with more pairs the true relationship is strongly positive. The ratio is therefore a monotone-ish transform of MI, not an independent ranking.
+
+### 3. Which residues constrain most?
+
+At (372, 401): K at 372 forces PP(401 | 372 = K) = 1.00 (114 sequences). T at 372 also forces PP = 1.00 (260 sequences). At (208, 209): R at 208 forces PP(209 | 208 = R) = 1.00 (113 sequences). These are the near-deterministic drivers of the top co-evolution pairs.
+
+### 4. Regional pattern of constraint
+
+| Region | Mean ratio | n |
+|--------|-----------|----|
+| Signal peptide (0-12) | 1.02 | 1 |
+| S1-NTD (13-300) | 1.68 | 15 |
+| S1-RBD (301-550) | 1.63 | 12 |
+| S1-CTD (550-685) | 1.82 | 7 |
+| S2 (686-1276) | 1.85 | 25 |
+
+The strongest constraint is in S2 and S1-CTD; the signal peptide has almost none (ratio 1.02). The "more variance at the top" observation maps to specific regions: the highest-ratio pairs are concentrated in S2 (686-1276) and S1-CTD, not in the N-terminus.
+
+### 5. Is the ratio statistically significant?
+
+Bootstrap (200 resamples of 1,299 sequences) on (372, 401): ratio = 2.66 +/- 0.11, and P(ratio > 1) = 100%. The ratio is stably, significantly above 1.
+
+### The Three-Lens Discovery
+
+Comparing all three scoring lenses over 7,589 pairs:
+
+| Pair of lenses | Spearman rho |
+|----------------|--------------|
+| Perplexity ratio vs MI | +0.77 |
+| Perplexity ratio vs DCA-F | +0.06 |
+| MI vs DCA-F | +0.05 |
+| MI vs DCA-DI | +0.10 |
+| DCA-F vs DCA-DI | +0.56 |
+
+**Conclusion:** MI and the perplexity ratio both measure **total correlation** and are strongly correlated with each other. Both are nearly uncorrelated with DCA's **direct coupling** scores. The three lenses answer different questions: MI says "how much information is shared", perplexity ratio says "how deterministic is the relationship" (in effective-choice units), and DCA says "how directly are the positions coupled after removing transitive paths". Perplexity adds interpretability (effective number of choices) and determinism (conditional PP ~ 1), not independent ranking information.
+
 ## Inference
 
-**Perplexity vs MI: what does perplexity add?**
+1. **Perplexity ratio is a determinism measure.** At the strongest pairs, conditional perplexity ~ 1.0 means knowing residue i essentially determines residue j. This is the "rivet" structure of the protein.
 
-1. Perplexity is in the "number of states" unit, which is more intuitive than bits. PP = 1.1 says "about one effective choice".
-2. Conditional perplexity close to 1.0 is the direct statement of deterministic co-evolution: given i, j is forced.
-3. The ratio 2.81 for (372, 401) confirms the MI result (1.5917 bits, 97.5% of maximum) from a different angle.
+2. **The ratio confirms MI's ranking** (rho = 0.78) but in a more interpretable unit: "3.2 choices reduced to 1.1" is more concrete than "1.59 bits".
 
-**Is perplexity better or worse than MI?**
+3. **The constraint is regional.** S2 and S1-CTD dominate; the signal peptide is essentially unconstrained (ratio 1.02). This matches the MI hubs and the DCA direct couplings.
 
-They are complementary:
-- MI is additive and directly measures information in bits; it is the standard for ranking pairs.
-- Perplexity is a monotone transform of entropy (2^H) and is easier to interpret as "effective number of choices".
-- Perplexity does NOT replace MI for ranking, but the conditional-perplexity ratio gives a natural "determinism" reading that MI does not directly provide (MI of 1 bit does not immediately say "j is nearly determined", but PP(j|i) = 1.05 does).
-
-**Regional pattern.** The top pairs cluster at positions 208-210, 372-404 (S1 subunit). The "more variance at the top" question: the top-MI pairs have perplexity ratios near 2.7-2.8 (strong constraint), and these are concentrated in specific S1 regions. The N-terminal and other regions have lower ratios. So yes, there ARE particular regions with higher perplexity-based constraint, matching the MI hubs.
+4. **Conditioning can hurt.** 93/810 pairs have ratio < 1: for these, knowing residue i actually increases the uncertainty at j. These are anti-correlated pairs, and the flipped Boolean analysis (script 14) captures the same phenomenon as forbidden combinations.
 
 ## Scholar Questions and Answers
 
@@ -103,7 +138,10 @@ A: Without knowing position 372, position 401 has 3.19 effective choices. Knowin
 A: The script uses a stricter threshold for display (PP > 3, i.e., H > 1.585 bits). The entropy > 0.3 criterion (used elsewhere) is looser and gives 1,249 variable positions. The two criteria measure different things: the perplexity criterion marks highly variable positions only.
 
 **Q: Are there particular regions with higher perplexity?**
-A: Yes. The strongest constraint (ratio ~2.8) is at (372, 401) and (208, 209), both in the S1 subunit. This matches the MI hubs. Perplexity confirms the regional structure independently.
+A: Yes. The strongest constraint (ratio ~2.8) is at (372, 401) and (208, 209), both in the S1 subunit. The regional analysis shows S2 (mean 1.85) and S1-CTD (1.82) have the highest average ratios, and the signal peptide the lowest (1.02). Perplexity confirms the MI hubs independently.
 
 **Q: Is perplexity better than MI?**
-A: Neither is universally better. MI is the standard ranking tool. Perplexity gives a more interpretable "effective number of choices" view and makes determinism explicit (conditional PP ~ 1). Use MI for ranking, perplexity for interpretation.
+A: Neither is universally better. MI is the standard ranking tool. Perplexity gives a more interpretable "effective number of choices" view and makes determinism explicit (conditional PP ~ 1). The two are strongly correlated (rho = 0.78), so they mostly agree; perplexity adds interpretability, MI adds additivity.
+
+**Q: Why does the ratio correlate so weakly with DCA?**
+A: DCA removes transitive/indirect correlations. Total-correlation measures (MI, perplexity ratio) do not. Pairs can share a lot of information (high MI, high ratio) through chains of intermediates without any direct coupling. DCA finds the direct couplings; MI and perplexity find the total. They answer different questions.

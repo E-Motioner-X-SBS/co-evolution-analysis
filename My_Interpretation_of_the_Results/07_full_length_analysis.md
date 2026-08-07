@@ -35,7 +35,7 @@ flowchart TD
 Position 372 has entropy 1.6328 bits. The frequencies of the 20 amino acids at this position are spread across several residues (A dominant, plus T, K, F, C, and others). The entropy formula:
 
 ```
-H = - sum over a of P(a) * log2(P(a))
+$$H = -\sum_{a} P(a) \log_2 P(a)$$
 ```
 
 With P(A) = 0.63, P(T) = 0.15, P(K) = 0.09, P(F) = 0.04, P(C) = 0.03, and the rest small, the sum is approximately 1.63 bits. The perplexity 2^H = 3.10 means this position behaves like a 3.1-state variable.

@@ -15,8 +15,8 @@ The key difference from MI: if position A correlates with B, and B correlates wi
 Sequences with more than 80% identity (theta = 0.2) are downweighted. Each sequence l gets weight:
 
 ```
-W_l = 1 / (number of sequences within 80% identity of l)
-Meff = sum over l of W_l
+$$W_l = \frac{1}{\#\{m : \text{Hamming}(x_l, x_m) \le 0.2 L\}}$$
+$$M_{eff} = \sum_l W_l$$
 ```
 
 In our data Meff = 1.0, meaning all 1,299 sequences are unique at 80% identity (no redundancy). The reweighting leaves the data unchanged but is a required part of the algorithm.
@@ -24,7 +24,7 @@ In our data Meff = 1.0, meaning all 1,299 sequences are unique at 80% identity (
 ### 2. Single-site frequencies with pseudocount
 
 ```
-P_i(a) = (1 - lambda) * (1/Meff) * sum_l W_l * [x_li = a] + lambda/q
+$$P_i(a) = (1-\lambda) \frac{1}{M_{eff}} \sum_l W_l \, [x_{li} = a] + \frac{\lambda}{q}$$
 ```
 
 with lambda = 0.5 and q = 21 (20 amino acids + gap).
@@ -32,7 +32,7 @@ with lambda = 0.5 and q = 21 (20 amino acids + gap).
 ### 3. Pairwise frequencies with pseudocount
 
 ```
-P_ij(a, b) = (1 - lambda) * (1/Meff) * sum_l W_l * [x_li = a, x_lj = b] + lambda/q^2
+$$P_{ij}(a,b) = (1-\lambda) \frac{1}{M_{eff}} \sum_l W_l \, [x_{li}{=}a, x_{lj}{=}b] + \frac{\lambda}{q^2}$$
 ```
 
 for i != j. For i = j: P_ii(a, b) = delta(a, b) * P_i(a).
@@ -40,7 +40,7 @@ for i != j. For i = j: P_ii(a, b) = delta(a, b) * P_i(a).
 ### 4. Covariance matrix
 
 ```
-C[(i, alpha), (j, beta)] = P_ij(alpha, beta) - P_i(alpha) * P_j(beta)
+$$C[(i,\alpha),(j,\beta)] = P_{ij}(\alpha,\beta) - P_i(\alpha) P_j(\beta)$$
 ```
 
 for alpha, beta in 0..19 (the gap state is removed, so the matrix is L*20 x L*20 = 25,520 x 25,520).
@@ -48,7 +48,7 @@ for alpha, beta in 0..19 (the gap state is removed, so the matrix is L*20 x L*20
 ### 5. Couplings via inversion
 
 ```
-J = -C^(-1)
+$$J = -C^{-1}$$
 ```
 
 The inversion is done on the GPU (3.0 seconds for the full 25,520 x 25,520 matrix). A small diagonal regularization (1e-4) is added for numerical stability.
@@ -151,7 +151,7 @@ A: Direct Information is a normalized coupling measure derived from the mean-fie
 A: Adjacent residues (|i-j| < 4) are trivially coupled by the peptide bond. Including them would flood the top pairs with uninteresting results. The standard practice is to report non-adjacent pairs for contact-like inferences.
 
 **Q: Is this implementation verified?**
-A: Yes. The covariance matrix was compared against a brute-force reference implementation (maximum difference 0.00e+00), the inverse was verified (|J*C - I| = 7.5e-13), and the sign convention J = -C^(-1) matches the py-mfdca reference.
+A: Yes. The covariance matrix was compared against a brute-force reference implementation (maximum difference 0.00e+00), the inverse was verified (|J*C - I| = 7.5e-13), and the sign convention $$J = -C^{-1}$$ matches the py-mfdca reference.
 
 **Q: What is the biological meaning of (454, 495)?**
 A: These positions are in the S1 subunit, near the receptor binding region. Their strong direct coupling suggests a structural or functional constraint that links them, which MI alone could not reveal because of chain correlations.

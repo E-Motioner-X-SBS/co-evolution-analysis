@@ -17,7 +17,11 @@ The comparison is **every position with every other position** across all 1,299 
 ## The MI Formula (Recap)
 
 ```
-MI(i, j) = sum over a, b of P(a, b) * log2( P(a, b) / (P(a) * P(b)) )
+```
+
+$$MI(i, j) = \sum_{a,b} P(a,b) \log_2 \frac{P(a,b)}{P(a) P(b)}$$
+
+```
 ```
 
 where P(a) is the frequency of amino acid a at position i, P(b) at position j, and P(a, b) the joint frequency.

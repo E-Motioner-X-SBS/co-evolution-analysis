@@ -13,9 +13,11 @@
 
 The key design decision is that there is exactly one implementation of each operation. Every script uses the same MI formula, the same encoding, the same threshold. This guarantees that results from different scripts are comparable.
 
+**Sequence length analyzed: 1,276 positions (full length), all 1,299 sequences.**
+
 ## What Data It Looks At
 
-It loads all 1,299 sequences. For MI it looks at **position pairs within a sliding window**. Two positions i and j are compared if they are at most `max_gap` positions apart (default 30). It does not compare all 1,276 x 1,276 pairs for the pair-finder (that would be 813,450 pairs); it compares only pairs with |i - j| <= 30, which is the biologically relevant range because co-evolution is usually local in the sequence.
+It loads all 1,299 sequences. For MI it looks at **position pairs within a sliding window**. Two positions i and j are compared if they are at most `max_gap` positions apart (default 30). It does not compare all 813,450 unordered pairs (1,276 choose 2) for the pair-finder; it compares only pairs with |i - j| <= 30, which is the biologically relevant range because co-evolution is usually local in the sequence.
 
 The MI matrix computation (`mi_matrix_gpu`) can compute all pairs when asked, but the pair-finder uses the window.
 
@@ -42,21 +44,24 @@ The He 2012 ordering maps each amino acid to a number 0 to 19:
 
 This ordering is taken from He et al. 2012 (Physica A 391:93) and is the same ordering proved in the Lean theorem file `BaseNAminoEncoding.lean` (n-ary-kmap repo).
 
-**Worked example from our data.** The first sequence in the file is `WRU87367.1`. At position 372 (0-indexed) it has residue N, and at position 401 it has residue S. Under He 2012:
-- N is at index 11.
-- S is at index 15.
+### Worked Example: Sequence to Position Array
 
-So the position array for this sequence contains 11 at index 372 and 15 at index 401. When the script counts joint occurrences at (372, 401), it counts how many sequences have each (code_i, code_j) pair.
+Take the first sequence in the file, **WRU87367.1**, which begins `MFVFLVLLPLVSSQCVNLITRTQ...`. The first 10 residues and their He 2012 codes:
+
+| Residue | M | F | V | F | L | V | L | L | P | L |
+|---------|---|---|---|---|---|---|---|---|---|---|
+| He index | 4 | 5 | 3 | 5 | 2 | 3 | 2 | 2 | 18 | 2 |
+| 5-bit Gray | 6 | 7 | 2 | 7 | 3 | 2 | 3 | 3 | 27 | 3 |
+
+The position array for this sequence contains 4 at index 0, 5 at index 1, 3 at index 2, and so on. When the script counts joint occurrences at (372, 401), it counts how many sequences have each (code_i, code_j) pair.
+
+The 5-bit Gray code used by the binary K-map scripts is `gray(n) = n XOR (n >> 1)`: for M (index 4), gray(4) = 4 XOR 2 = 6; for F (index 5), gray(5) = 5 XOR 2 = 7.
 
 ## Formulas
 
 ### Shannon entropy (per position)
 
-For a position p with amino acid frequencies P(a):
-
-```
-H(p) = - sum over a of P(a) * log2(P(a))
-```
+$$H(p) = -\sum_{a=1}^{20} P(a) \log_2 P(a)$$
 
 Units: bits. H = 0 means fully conserved (one amino acid everywhere). H = log2(20) = 4.32 bits means uniform over all 20 amino acids.
 
@@ -66,11 +71,7 @@ Position 401 has entropy H = 1.6715 bits and perplexity 3.185.
 
 ### Mutual information (between two positions)
 
-For positions i and j with joint distribution P(x, y) and marginals P(x), P(y):
-
-```
-MI(i, j) = sum over x, sum over y of P(x,y) * log2( P(x,y) / (P(x) * P(y)) )
-```
+$$MI(i, j) = \sum_{a=1}^{20} \sum_{b=1}^{20} P(a,b) \log_2 \frac{P(a,b)}{P(a) P(b)}$$
 
 Units: bits. MI = 0 means the two positions are statistically independent. MI > 0 means knowing the residue at one position reduces uncertainty about the other.
 
@@ -89,9 +90,7 @@ The marginal frequencies: P(372 = A) = 0.6266 + other occurrences of A with diff
 
 ### Coupling constant / constraint function
 
-```
-J(i, j, a, b) = ln( P(a, b) / (P(a) * P(b)) )
-```
+$$J(i, j, a, b) = \ln \frac{P(a, b)}{P(a) P(b)}$$
 
 J > 0 means the pair (a, b) is more common than expected under independence (co-evolutionary). J < 0 means less common than expected (anti-correlated). This is the DCA coupling sign convention (Morcos et al. 2011).
 
@@ -100,11 +99,13 @@ J > 0 means the pair (a, b) is more common than expected under independence (co-
 - 1,249 variable positions (entropy > 0.3) out of 1,276.
 - 36,918 co-evolving pairs (mutation-only MI > 0.1, window 30).
 - Majority reference residues per position (the most common amino acid at that position).
-
+- The pair-finder returns (pos_i, pos_j, MI, n_mutations, ref_i, ref_j) tuples sorted by MI descending; the top 15 of these feed the master Boolean rule extraction.
 
 ## Inference
 
 The results of this toolbox are the inputs to every other script: position arrays, entropy, MI, references, and co-evolving pairs. The inference that carries through the whole project is that the dataset contains 1,249 variable positions and 36,918 co-evolving pairs: the Spike protein is densely coupled, and every downstream analysis builds on these shared numbers.
+
+The most important downstream consequence: the top-15 co-evolving pairs (by mutation-only MI) become the 15 K-maps whose minimization produces the 152-rule master Boolean function (script 11). The justification for the cutoff at 15 is analyzed in `analysis/justify_top15.py` and summarized in script 11.
 
 ## Scholar Questions and Answers
 
@@ -116,3 +117,6 @@ A: It marks gaps ('-') and ambiguous characters in the alignment. Positions with
 
 **Q: Why mutation-only MI?**
 A: The reference (majority) pair at each position pair is the "wild-type-like" combination. Counting only mutations (pairs that differ from the reference) isolates the co-variation of changes, rather than the trivial fact that most sequences share the reference pair. This is why the master Boolean rules are about mutations.
+
+**Q: How does the 5-bit Gray code differ from the He 2012 code?**
+A: The He 2012 code is the direct 0-19 index used by the base-20 (n-ary) K-map. The 5-bit Gray code is `gray(n) = n XOR (n >> 1)`, applied to the physicochemical group order (script 03), and is used by the binary 32x32 K-map. Both are formally verified in the Lean proofs; they answer different questions (base-20 direct adjacency vs binary Gray adjacency).

@@ -17,7 +17,7 @@ This script tests whether the constraint function can predict the co-evolving pa
 ## The Constraint Function
 
 ```
-C(a, b) = ln( P(a, b) / (P(a) * P(b)) )
+$$C(a, b) = \ln \frac{P(a, b)}{P(a) P(b)}$$
 ```
 
 - C > 0: pair more common than expected (co-evolutionary).
@@ -27,7 +27,7 @@ C(a, b) = ln( P(a, b) / (P(a) * P(b)) )
 ## The Sigmoid Prediction
 
 ```
-P_co-evolution(a, b) = sigma(C) = 1 / (1 + e^-C)
+$$P_{\text{coev}}(a,b) = \sigma(C) = \frac{1}{1 + e^{-C}}$$
 ```
 
 This maps C to a probability between 0 and 1. C > 0 gives P > 0.5.

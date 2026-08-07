@@ -21,7 +21,11 @@ The script:
 Under He 2012, each amino acid has an index 0 to 19 (see script 01). A dipeptide XY is encoded as:
 
 ```
-cell = index(X) * 20 + index(Y)
+```
+
+$$\text{cell} = \text{index}(X) \times 20 + \text{index}(Y)$$
+
+```
 ```
 
 This is a two-digit base-20 number. The first digit is the first amino acid, the second digit is the second amino acid. The K-map is the 20 x 20 grid of all possible cells 0 to 399.

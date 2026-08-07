@@ -19,9 +19,9 @@ This script implements a covariance-based method that was originally labeled "DC
 For pair (i, j):
 
 ```
-C(a, b) = P(a, b) - P(a) * P(b)      [20 x 20 covariance]
-C_reg = C + 0.01 * I                 [ridge regularization]
-J = pinv(C_reg)                      [pseudoinverse]
+$$C(a,b) = P(a,b) - P(a) P(b) \quad (20 \times 20 \text{ covariance})$$
+$$C_{reg} = C + 0.01 I \quad (\text{ridge})$$
+$$J = \text{pinv}(C_{reg})$$
 Boolean: |J| > 75th percentile       [threshold]
 QM minimization
 ```

@@ -73,7 +73,11 @@ H[pos] = - sum over a of p[pos, a] * log2(p[pos, a])
 For consecutive residues (position i and i+1), compute Gray codes g(x) = x XOR (x >> 1) and count pairs with Hamming distance 1:
 
 ```
-H1 ratio = (number of consecutive pairs with Hamming distance 1) / (total consecutive pairs)
+```
+
+$$R_{H1} = rac{N_{d=1}}{N_{total}}$$
+
+```
 ```
 
 ## Worked Example: MI(372, 401) on GPU
