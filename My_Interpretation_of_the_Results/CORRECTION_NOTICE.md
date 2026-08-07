@@ -64,11 +64,36 @@ From `analysis/corrected_pipeline.py` and the re-run of every script (Aug 7, 202
 | Strongest MI pair | (372, 401) MI = 1.5917 | **(373, 378) MI = 0.8067** |
 | Master Boolean prime implicants | 162 (143 phantom) | **255 (all cover real cells)** |
 | Essential rules | 152 | **3** (minimal irredundant core) |
+| Forbidden rules (flipped) | 345 | **490** |
 | Mean mutations per sequence | 1,061 | **11.1** |
 | High-MI pairs (MI > 0.5) | 35,858 | **5** |
 | MI > 1.0 pairs | 106,626 | **0** |
 | LOO-CV accuracy | 2.93% | **9.24%** (301/3259) |
+| Train/test accuracy | 5.84% | **0.11%** |
 | Network nodes/edges | 1,249 / 35,098 | **21 / 8** |
+
+### Code corrections applied to ALL scripts (Aug 7, 2026)
+
+Every analysis script was corrected and re-run:
+
+1. **Aligned columns (FIX A1):** all scripts now encode the full alignment with
+   gap = state 20 (was gap-stripped, misaligned). Changed in: coevolution_shared,
+   coevolution_gpu, master_boolean, gpu_full_analysis, full_length_analysis,
+   create_mi_heatmap, advanced_co-evolution_analysis, perplexity_coevolution,
+   run_allseq_analysis, position_kmap_coevolution, variable_position_coevolution,
+   flipped_boolean_coevolution, kmap_boolean_coevolution, dca_boolean_coevolution,
+   allseq_constraint_function, predictive_constraint_function,
+   generate_co-evolution_md. The binary-path scripts (run_kmap_analysis,
+   boolean_co-evolution, nary_kmap_co-evolution) use the group-order binary
+   encoding and are documented as historical.
+
+2. **Padded QM (FIX A2):** every Quine-McCluskey input is now 32x32 padded
+   (10 bits, 5 per axis) instead of raw 20x20 (8 bits, wrap-around). The QM
+   merge was optimized (popcount grouping, 70x faster) and verified against
+   a brute-force reference (50 random trials). kmap_truth_table now raises
+   on non-power-of-4 inputs instead of silently corrupting.
+
+3. **All result JSONs regenerated** with the corrected pipeline (see table above).
 
 ### Corrected top co-evolving pairs
 
