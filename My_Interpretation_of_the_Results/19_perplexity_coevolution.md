@@ -50,7 +50,7 @@ flowchart TD
     A --> D[GPU MI to find co-evolving pairs]
     D --> E[top pairs]
     E --> F[conditional PP j given i]
-    C --> G[ratio = PP(j) / PP(j|i)]
+    C --> G["ratio = PP(j) / PP(j|i)"]
     F --> G
     G --> H[ratio up to 2.81x]
 ```

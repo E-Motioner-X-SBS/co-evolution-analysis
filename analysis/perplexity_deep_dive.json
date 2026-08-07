@@ -1,0 +1,35 @@
+{
+  "info_inequality_violations": 93,
+  "checked_pairs": 810,
+  "spearman_ratio_vs_mi": -0.09723778027694696,
+  "regions": {
+    "SP (0-12)": {
+      "mean_ratio": 1.0215103615682053,
+      "n": 1
+    },
+    "S1-NTD (13-300)": {
+      "mean_ratio": 1.675245548019242,
+      "n": 15
+    },
+    "S1-RBD (301-550)": {
+      "mean_ratio": 1.6319087775672196,
+      "n": 12
+    },
+    "S1-CTD (550-685)": {
+      "mean_ratio": 1.8216929955729078,
+      "n": 7
+    },
+    "S2 (686-1276)": {
+      "mean_ratio": 1.85137955010402,
+      "n": 25
+    }
+  },
+  "bootstrap_ratio_mean": 2.6610636083279586,
+  "bootstrap_ratio_std": 0.11289444315032171,
+  "prob_ratio_gt_1": 1.0,
+  "spearman_ratio_vs_mi_large_sample": 0.7766,
+  "spearman_ratio_vs_dca": 0.0475,
+  "spearman_mi_vs_dca": 0.0427,
+  "n_large_sample": 3393,
+  "note": "Small-sample (413 pairs) rho=-0.097 was an artifact; with 3,393 pairs, ratio vs MI = +0.78 (ratio is a monotone-ish transform of MI). Both ratio and MI are nearly uncorrelated with DCA Frobenius direct couplings (rho ~ 0.05): MI-type measures capture total correlation, DCA captures direct coupling. Perplexity adds interpretability (effective number of choices) and determinism (conditional PP ~ 1), not independent ranking information."
+}

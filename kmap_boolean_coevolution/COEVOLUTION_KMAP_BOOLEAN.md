@@ -45,6 +45,55 @@ Don't-care positions (conserved): 1 cells
 Never-seen pairs (off-set): 387 cells
 ```
 
+### Full 20 x 20 K-map Table
+
+Rows = residue at position 413, columns = residue at position 427. Cell values: **1** = mutation observed, **-1** = reference (don't-care), **0** = never observed.
+
+| i\j | A | I | L | V | M | F | Y | W | E | D | Q | N | H | K | R | S | T | C | P | G |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **A** | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **I** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+| **L** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **V** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **M** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **F** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Y** | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **W** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **E** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **D** | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Q** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **N** | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | -1 |
+| **H** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **K** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 1 |
+| **R** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **S** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **T** | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **C** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **P** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
+| **G** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
+
+### Boolean Equation (LaTeX)
+
+$$f(pos_{413}, pos_{427}) = \bigvee_{k=1}^{11} \left( \bigwedge_{m \in S_k} b_m \right)$$
+
+where $b_m$ are the 8 binary variables (4 bits for position 413, 4 bits for position 427) and $S_k$ are the literal sets of prime implicant $k$.
+
+Explicit form:
+
+$$PI_1*: \quad pos_{413} = A \; \wedge \; pos_{427} = V \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{t_3} \wedge \bar{t_2} \wedge t_1 \wedge t_0)$$
+$$PI_2*: \quad pos_{413} = W \; \wedge \; pos_{427} = E \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge s_0 \wedge t_3 \wedge \bar{t_2} \wedge \bar{t_0})$$
+$$PI_3*: \quad pos_{413} = I \; \wedge \; pos_{427} = V \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge t_1 \wedge t_0)$$
+$$PI_4*: \quad pos_{413} = L \; \wedge \; pos_{427} = F \qquad (\bar{s_3} \wedge \bar{s_2} \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_5*: \quad pos_{413} = N \; \wedge \; pos_{427} = F \qquad (s_3 \wedge \bar{s_2} \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_6*: \quad pos_{413} = K \; \wedge \; pos_{427} = I \qquad (s_3 \wedge s_2 \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+$$PI_7*: \quad pos_{413} = K \; \wedge \; pos_{427} = K \qquad (s_3 \wedge s_2 \wedge \bar{s_1} \wedge s_0 \wedge t_3 \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_8*: \quad pos_{413} = R \; \wedge \; pos_{427} = V \qquad (s_3 \wedge s_2 \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge \bar{t_2} \wedge t_1 \wedge t_0)$$
+$$PI_9 : \quad pos_{413} = R \; \wedge \; pos_{427} = S \qquad (s_3 \wedge s_2 \wedge s_1 \wedge \bar{s_0} \wedge t_3 \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_10*: \quad pos_{413} = M \; \wedge \; pos_{427} = F \qquad (\bar{s_3} \wedge s_2 \wedge \bar{s_1} \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_11*: \quad pos_{413} = E \; \wedge \; pos_{427} = H \qquad (s_3 \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge t_2 \wedge \bar{t_1} \wedge \bar{t_0})$$
+
+(* = essential prime implicant)
+
 ### Boolean Function
 
 ```
@@ -119,6 +168,55 @@ Don't-care positions (conserved): 1 cells
 Never-seen pairs (off-set): 387 cells
 ```
 
+### Full 20 x 20 K-map Table
+
+Rows = residue at position 413, columns = residue at position 425. Cell values: **1** = mutation observed, **-1** = reference (don't-care), **0** = never observed.
+
+| i\j | A | I | L | V | M | F | Y | W | E | D | Q | N | H | K | R | S | T | C | P | G |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **A** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+| **I** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
+| **L** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **V** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **M** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **F** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Y** | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **W** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **E** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **D** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+| **Q** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
+| **N** | 0 | 1 | 0 | 0 | 0 | -1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+| **H** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **K** | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **R** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **S** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **T** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **C** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **P** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **G** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+### Boolean Equation (LaTeX)
+
+$$f(pos_{413}, pos_{425}) = \bigvee_{k=1}^{11} \left( \bigwedge_{m \in S_k} b_m \right)$$
+
+where $b_m$ are the 8 binary variables (4 bits for position 413, 4 bits for position 425) and $S_k$ are the literal sets of prime implicant $k$.
+
+Explicit form:
+
+$$PI_1*: \quad pos_{413} = E \; \wedge \; pos_{425} = F \qquad (s_3 \wedge \bar{s_1} \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_2*: \quad pos_{413} = A \; \wedge \; pos_{425} = D \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge t_0)$$
+$$PI_3*: \quad pos_{413} = A \; \wedge \; pos_{425} = D \qquad (\bar{s_3} \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+$$PI_4*: \quad pos_{413} = I \; \wedge \; pos_{425} = V \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge \bar{t_2} \wedge t_1 \wedge t_0)$$
+$$PI_5*: \quad pos_{413} = L \; \wedge \; pos_{425} = M \qquad (\bar{s_3} \wedge \bar{s_2} \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_6*: \quad pos_{413} = W \; \wedge \; pos_{425} = N \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge s_0 \wedge t_3 \wedge \bar{t_2} \wedge t_1 \wedge t_0)$$
+$$PI_7*: \quad pos_{413} = K \; \wedge \; pos_{425} = Q \qquad (s_3 \wedge s_2 \wedge \bar{s_1} \wedge s_0 \wedge t_3 \wedge \bar{t_2} \wedge t_1 \wedge \bar{t_0})$$
+$$PI_8*: \quad pos_{413} = K \; \wedge \; pos_{425} = K \qquad (s_3 \wedge s_2 \wedge \bar{s_1} \wedge s_0 \wedge t_3 \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_9 : \quad pos_{413} = R \; \wedge \; pos_{425} = I \qquad (s_3 \wedge s_2 \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+$$PI_10*: \quad pos_{413} = R \; \wedge \; pos_{425} = K \qquad (s_3 \wedge s_2 \wedge s_1 \wedge \bar{s_0} \wedge t_3 \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_11*: \quad pos_{413} = W \; \wedge \; pos_{425} = F \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+
+(* = essential prime implicant)
+
 ### Boolean Function
 
 ```
@@ -192,6 +290,57 @@ Co-evolutionary residue pairs (on-set):
 Don't-care positions (conserved): 1 cells
 Never-seen pairs (off-set): 387 cells
 ```
+
+### Full 20 x 20 K-map Table
+
+Rows = residue at position 413, columns = residue at position 426. Cell values: **1** = mutation observed, **-1** = reference (don't-care), **0** = never observed.
+
+| i\j | A | I | L | V | M | F | Y | W | E | D | Q | N | H | K | R | S | T | C | P | G |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **A** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+| **I** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+| **L** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **V** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **M** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **F** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Y** | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **W** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **E** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **D** | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Q** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **N** | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | -1 | 0 | 0 | 0 |
+| **H** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **K** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
+| **R** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **S** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **T** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **C** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **P** | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **G** | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+### Boolean Equation (LaTeX)
+
+$$f(pos_{413}, pos_{426}) = \bigvee_{k=1}^{13} \left( \bigwedge_{m \in S_k} b_m \right)$$
+
+where $b_m$ are the 8 binary variables (4 bits for position 413, 4 bits for position 426) and $S_k$ are the literal sets of prime implicant $k$.
+
+Explicit form:
+
+$$PI_1*: \quad pos_{413} = I \; \wedge \; pos_{426} = I \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+$$PI_2*: \quad pos_{413} = L \; \wedge \; pos_{426} = W \qquad (\bar{s_3} \wedge \bar{s_2} \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_3*: \quad pos_{413} = W \; \wedge \; pos_{426} = D \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge s_0 \wedge t_3 \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+$$PI_4*: \quad pos_{413} = N \; \wedge \; pos_{426} = W \qquad (s_3 \wedge \bar{s_2} \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_5*: \quad pos_{413} = K \; \wedge \; pos_{426} = I \qquad (s_3 \wedge s_2 \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+$$PI_6*: \quad pos_{413} = K \; \wedge \; pos_{426} = H \qquad (s_3 \wedge s_2 \wedge \bar{s_1} \wedge s_0 \wedge t_3 \wedge t_2 \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_7*: \quad pos_{413} = K \; \wedge \; pos_{426} = S \qquad (s_3 \wedge s_2 \wedge \bar{s_1} \wedge s_0 \wedge t_3 \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_8 : \quad pos_{413} = R \; \wedge \; pos_{426} = H \qquad (s_3 \wedge s_2 \wedge s_1 \wedge \bar{s_0} \wedge t_3 \wedge t_2 \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_9*: \quad pos_{413} = A \; \wedge \; pos_{426} = S \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_10*: \quad pos_{413} = I \; \wedge \; pos_{426} = M \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_11*: \quad pos_{413} = M \; \wedge \; pos_{426} = D \qquad (\bar{s_3} \wedge s_2 \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+$$PI_12*: \quad pos_{413} = Y \; \wedge \; pos_{426} = Q \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge t_1 \wedge \bar{t_0})$$
+$$PI_13*: \quad pos_{413} = E \; \wedge \; pos_{426} = I \qquad (s_3 \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+
+(* = essential prime implicant)
 
 ### Boolean Function
 
@@ -271,6 +420,57 @@ Don't-care positions (conserved): 1 cells
 Never-seen pairs (off-set): 387 cells
 ```
 
+### Full 20 x 20 K-map Table
+
+Rows = residue at position 413, columns = residue at position 424. Cell values: **1** = mutation observed, **-1** = reference (don't-care), **0** = never observed.
+
+| i\j | A | I | L | V | M | F | Y | W | E | D | Q | N | H | K | R | S | T | C | P | G |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **A** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
+| **I** | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **L** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **V** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **M** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **F** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Y** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+| **W** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **E** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **D** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+| **Q** | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **N** | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | -1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+| **H** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **K** | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **R** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **S** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **T** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
+| **C** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **P** | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **G** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+### Boolean Equation (LaTeX)
+
+$$f(pos_{413}, pos_{424}) = \bigvee_{k=1}^{13} \left( \bigwedge_{m \in S_k} b_m \right)$$
+
+where $b_m$ are the 8 binary variables (4 bits for position 413, 4 bits for position 424) and $S_k$ are the literal sets of prime implicant $k$.
+
+Explicit form:
+
+$$PI_1*: \quad pos_{413} = I \; \wedge \; pos_{424} = A \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_2*: \quad pos_{413} = I \; \wedge \; pos_{424} = D \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge s_0 \wedge t_3 \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+$$PI_3*: \quad pos_{413} = E \; \wedge \; pos_{424} = D \qquad (s_3 \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+$$PI_4*: \quad pos_{413} = H \; \wedge \; pos_{424} = W \qquad (s_3 \wedge s_2 \wedge \bar{s_1} \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_5*: \quad pos_{413} = H \; \wedge \; pos_{424} = Q \qquad (s_3 \wedge s_2 \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge t_1 \wedge \bar{t_0})$$
+$$PI_6*: \quad pos_{413} = K \; \wedge \; pos_{424} = S \qquad (s_3 \wedge s_2 \wedge \bar{s_1} \wedge s_0 \wedge t_3 \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_7 : \quad pos_{413} = R \; \wedge \; pos_{424} = F \qquad (s_3 \wedge s_2 \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_8*: \quad pos_{413} = R \; \wedge \; pos_{424} = S \qquad (s_3 \wedge s_2 \wedge s_1 \wedge \bar{s_0} \wedge t_3 \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_9*: \quad pos_{413} = A \; \wedge \; pos_{424} = M \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_10*: \quad pos_{413} = A \; \wedge \; pos_{424} = K \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_11*: \quad pos_{413} = F \; \wedge \; pos_{424} = L \qquad (\bar{s_3} \wedge s_2 \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge \bar{t_2} \wedge t_1 \wedge \bar{t_0})$$
+$$PI_12*: \quad pos_{413} = Y \; \wedge \; pos_{424} = R \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge \bar{s_0} \wedge t_3 \wedge t_2 \wedge t_1 \wedge \bar{t_0})$$
+$$PI_13*: \quad pos_{413} = E \; \wedge \; pos_{424} = F \qquad (s_3 \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+
+(* = essential prime implicant)
+
 ### Boolean Function
 
 ```
@@ -349,6 +549,54 @@ Don't-care positions (conserved): 1 cells
 Never-seen pairs (off-set): 388 cells
 ```
 
+### Full 20 x 20 K-map Table
+
+Rows = residue at position 1040, columns = residue at position 1042. Cell values: **1** = mutation observed, **-1** = reference (don't-care), **0** = never observed.
+
+| i\j | A | I | L | V | M | F | Y | W | E | D | Q | N | H | K | R | S | T | C | P | G |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **A** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **I** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **L** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| **V** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **M** | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **F** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+| **Y** | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **W** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **E** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **D** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+| **Q** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **N** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **H** | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **K** | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **R** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **S** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
+| **T** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **C** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **P** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **G** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | -1 |
+
+### Boolean Equation (LaTeX)
+
+$$f(pos_{1040}, pos_{1042}) = \bigvee_{k=1}^{10} \left( \bigwedge_{m \in S_k} b_m \right)$$
+
+where $b_m$ are the 8 binary variables (4 bits for position 1040, 4 bits for position 1042) and $S_k$ are the literal sets of prime implicant $k$.
+
+Explicit form:
+
+$$PI_1*: \quad pos_{1040} = V \; \wedge \; pos_{1042} = W \qquad (\bar{s_3} \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_2*: \quad pos_{1040} = L \; \wedge \; pos_{1042} = I \qquad (\bar{s_3} \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+$$PI_3*: \quad pos_{1040} = F \; \wedge \; pos_{1042} = F \qquad (\bar{s_3} \wedge s_2 \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_4*: \quad pos_{1040} = W \; \wedge \; pos_{1042} = Q \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge s_0 \wedge t_3 \wedge \bar{t_2} \wedge t_1 \wedge \bar{t_0})$$
+$$PI_5*: \quad pos_{1040} = H \; \wedge \; pos_{1042} = F \qquad (s_3 \wedge s_2 \wedge \bar{s_1} \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_6*: \quad pos_{1040} = S \; \wedge \; pos_{1042} = M \qquad (s_3 \wedge s_2 \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_7*: \quad pos_{1040} = A \; \wedge \; pos_{1042} = Q \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge t_1 \wedge \bar{t_0})$$
+$$PI_8*: \quad pos_{1040} = V \; \wedge \; pos_{1042} = R \qquad (\bar{s_3} \wedge \bar{s_2} \wedge s_1 \wedge s_0 \wedge t_3 \wedge t_2 \wedge t_1 \wedge \bar{t_0})$$
+$$PI_9*: \quad pos_{1040} = E \; \wedge \; pos_{1042} = E \qquad (s_3 \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_10 : \quad pos_{1040} = E \; \wedge \; pos_{1042} = S \qquad (s_3 \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge t_2 \wedge t_1 \wedge t_0)$$
+
+(* = essential prime implicant)
+
 ### Boolean Function
 
 ```
@@ -420,6 +668,54 @@ Co-evolutionary residue pairs (on-set):
 Don't-care positions (conserved): 1 cells
 Never-seen pairs (off-set): 388 cells
 ```
+
+### Full 20 x 20 K-map Table
+
+Rows = residue at position 1026, columns = residue at position 1040. Cell values: **1** = mutation observed, **-1** = reference (don't-care), **0** = never observed.
+
+| i\j | A | I | L | V | M | F | Y | W | E | D | Q | N | H | K | R | S | T | C | P | G |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **A** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
+| **I** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **L** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **V** | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **M** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+| **F** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Y** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **W** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **E** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **D** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Q** | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **N** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **H** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **K** | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **R** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **S** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | -1 |
+| **T** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **C** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+| **P** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **G** | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+### Boolean Equation (LaTeX)
+
+$$f(pos_{1026}, pos_{1040}) = \bigvee_{k=1}^{10} \left( \bigwedge_{m \in S_k} b_m \right)$$
+
+where $b_m$ are the 8 binary variables (4 bits for position 1026, 4 bits for position 1040) and $S_k$ are the literal sets of prime implicant $k$.
+
+Explicit form:
+
+$$PI_1*: \quad pos_{1026} = A \; \wedge \; pos_{1040} = D \qquad (\bar{s_3} \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+$$PI_2*: \quad pos_{1026} = V \; \wedge \; pos_{1040} = N \qquad (\bar{s_3} \wedge \bar{s_2} \wedge s_1 \wedge s_0 \wedge t_3 \wedge t_1 \wedge t_0)$$
+$$PI_3*: \quad pos_{1026} = A \; \wedge \; pos_{1040} = R \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge t_2 \wedge t_1 \wedge \bar{t_0})$$
+$$PI_4*: \quad pos_{1026} = V \; \wedge \; pos_{1040} = M \qquad (\bar{s_3} \wedge \bar{s_2} \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_5*: \quad pos_{1026} = M \; \wedge \; pos_{1040} = L \qquad (\bar{s_3} \wedge s_2 \wedge \bar{s_1} \wedge \bar{s_0} \wedge \bar{t_3} \wedge \bar{t_2} \wedge t_1 \wedge \bar{t_0})$$
+$$PI_6*: \quad pos_{1026} = Y \; \wedge \; pos_{1040} = I \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+$$PI_7*: \quad pos_{1026} = Q \; \wedge \; pos_{1040} = K \qquad (s_3 \wedge \bar{s_2} \wedge s_1 \wedge \bar{s_0} \wedge t_3 \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_8*: \quad pos_{1026} = H \; \wedge \; pos_{1040} = H \qquad (s_3 \wedge s_2 \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge t_2 \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_9*: \quad pos_{1026} = Y \; \wedge \; pos_{1040} = W \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_10*: \quad pos_{1026} = W \; \wedge \; pos_{1040} = R \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge s_0 \wedge t_3 \wedge t_2 \wedge t_1 \wedge \bar{t_0})$$
+
+(* = essential prime implicant)
 
 ### Boolean Function
 
@@ -493,6 +789,54 @@ Don't-care positions (conserved): 1 cells
 Never-seen pairs (off-set): 388 cells
 ```
 
+### Full 20 x 20 K-map Table
+
+Rows = residue at position 1026, columns = residue at position 1042. Cell values: **1** = mutation observed, **-1** = reference (don't-care), **0** = never observed.
+
+| i\j | A | I | L | V | M | F | Y | W | E | D | Q | N | H | K | R | S | T | C | P | G |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **A** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **I** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **L** | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **V** | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **M** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **F** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Y** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **W** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **E** | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **D** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Q** | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **N** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **H** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **K** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+| **R** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **S** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | -1 |
+| **T** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+| **C** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **P** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **G** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+
+### Boolean Equation (LaTeX)
+
+$$f(pos_{1026}, pos_{1042}) = \bigvee_{k=1}^{10} \left( \bigwedge_{m \in S_k} b_m \right)$$
+
+where $b_m$ are the 8 binary variables (4 bits for position 1026, 4 bits for position 1042) and $S_k$ are the literal sets of prime implicant $k$.
+
+Explicit form:
+
+$$PI_1*: \quad pos_{1026} = V \; \wedge \; pos_{1042} = R \qquad (\bar{s_3} \wedge \bar{s_2} \wedge s_1 \wedge s_0 \wedge t_3 \wedge t_2 \wedge t_1)$$
+$$PI_2*: \quad pos_{1026} = A \; \wedge \; pos_{1042} = D \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+$$PI_3*: \quad pos_{1026} = L \; \wedge \; pos_{1042} = H \qquad (\bar{s_3} \wedge \bar{s_2} \wedge s_1 \wedge \bar{s_0} \wedge t_3 \wedge t_2 \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_4*: \quad pos_{1026} = F \; \wedge \; pos_{1042} = K \qquad (\bar{s_3} \wedge s_2 \wedge \bar{s_1} \wedge s_0 \wedge t_3 \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_5*: \quad pos_{1026} = Q \; \wedge \; pos_{1042} = Y \qquad (s_3 \wedge \bar{s_2} \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge t_1 \wedge \bar{t_0})$$
+$$PI_6*: \quad pos_{1026} = H \; \wedge \; pos_{1042} = K \qquad (s_3 \wedge s_2 \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_7*: \quad pos_{1026} = I \; \wedge \; pos_{1042} = W \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_8*: \quad pos_{1026} = F \; \wedge \; pos_{1042} = I \qquad (\bar{s_3} \wedge s_2 \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+$$PI_9*: \quad pos_{1026} = Y \; \wedge \; pos_{1042} = A \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_10*: \quad pos_{1026} = E \; \wedge \; pos_{1042} = N \qquad (s_3 \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge t_1 \wedge t_0)$$
+
+(* = essential prime implicant)
+
 ### Boolean Function
 
 ```
@@ -565,6 +909,54 @@ Don't-care positions (conserved): 1 cells
 Never-seen pairs (off-set): 389 cells
 ```
 
+### Full 20 x 20 K-map Table
+
+Rows = residue at position 462, columns = residue at position 473. Cell values: **1** = mutation observed, **-1** = reference (don't-care), **0** = never observed.
+
+| i\j | A | I | L | V | M | F | Y | W | E | D | Q | N | H | K | R | S | T | C | P | G |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **A** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **I** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
+| **L** | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **V** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **M** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **F** | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Y** | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **W** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **E** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+| **D** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Q** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **N** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **H** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **K** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **R** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | -1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| **S** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+| **T** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **C** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **P** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **G** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+### Boolean Equation (LaTeX)
+
+$$f(pos_{462}, pos_{473}) = \bigvee_{k=1}^{10} \left( \bigwedge_{m \in S_k} b_m \right)$$
+
+where $b_m$ are the 8 binary variables (4 bits for position 462, 4 bits for position 473) and $S_k$ are the literal sets of prime implicant $k$.
+
+Explicit form:
+
+$$PI_1*: \quad pos_{462} = L \; \wedge \; pos_{473} = Y \qquad (\bar{s_3} \wedge \bar{s_2} \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge t_1)$$
+$$PI_2 : \quad pos_{462} = L \; \wedge \; pos_{473} = V \qquad (\bar{s_3} \wedge \bar{s_2} \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_1 \wedge t_0)$$
+$$PI_3*: \quad pos_{462} = L \; \wedge \; pos_{473} = D \qquad (\bar{s_3} \wedge \bar{s_2} \wedge s_1 \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+$$PI_4*: \quad pos_{462} = Y \; \wedge \; pos_{473} = M \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_5*: \quad pos_{462} = W \; \wedge \; pos_{473} = E \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge s_0 \wedge t_3 \wedge \bar{t_2} \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_6*: \quad pos_{462} = N \; \wedge \; pos_{473} = V \qquad (s_3 \wedge \bar{s_2} \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge \bar{t_2} \wedge t_1 \wedge t_0)$$
+$$PI_7*: \quad pos_{462} = H \; \wedge \; pos_{473} = I \qquad (s_3 \wedge s_2 \wedge \bar{s_1} \wedge \bar{s_0} \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+$$PI_8*: \quad pos_{462} = V \; \wedge \; pos_{473} = K \qquad (\bar{s_3} \wedge \bar{s_2} \wedge s_1 \wedge s_0 \wedge t_3 \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_9*: \quad pos_{462} = M \; \wedge \; pos_{473} = N \qquad (\bar{s_3} \wedge s_2 \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge t_1 \wedge t_0)$$
+$$PI_10*: \quad pos_{462} = W \; \wedge \; pos_{473} = L \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge \bar{t_2} \wedge t_1 \wedge \bar{t_0})$$
+
+(* = essential prime implicant)
+
 ### Boolean Function
 
 ```
@@ -636,6 +1028,55 @@ Co-evolutionary residue pairs (on-set):
 Don't-care positions (conserved): 1 cells
 Never-seen pairs (off-set): 388 cells
 ```
+
+### Full 20 x 20 K-map Table
+
+Rows = residue at position 468, columns = residue at position 473. Cell values: **1** = mutation observed, **-1** = reference (don't-care), **0** = never observed.
+
+| i\j | A | I | L | V | M | F | Y | W | E | D | Q | N | H | K | R | S | T | C | P | G |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **A** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+| **I** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | -1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| **L** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **V** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **M** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **F** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Y** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **W** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **E** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+| **D** | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Q** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
+| **N** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+| **H** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **K** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **R** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **S** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **T** | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **C** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **P** | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **G** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+### Boolean Equation (LaTeX)
+
+$$f(pos_{468}, pos_{473}) = \bigvee_{k=1}^{11} \left( \bigwedge_{m \in S_k} b_m \right)$$
+
+where $b_m$ are the 8 binary variables (4 bits for position 468, 4 bits for position 473) and $S_k$ are the literal sets of prime implicant $k$.
+
+Explicit form:
+
+$$PI_1*: \quad pos_{468} = E \; \wedge \; pos_{473} = F \qquad (s_3 \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge t_0)$$
+$$PI_2*: \quad pos_{468} = I \; \wedge \; pos_{473} = I \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+$$PI_3 : \quad pos_{468} = I \; \wedge \; pos_{473} = S \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge s_0 \wedge t_3 \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_4*: \quad pos_{468} = L \; \wedge \; pos_{473} = V \qquad (\bar{s_3} \wedge \bar{s_2} \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge \bar{t_2} \wedge t_1 \wedge t_0)$$
+$$PI_5*: \quad pos_{468} = N \; \wedge \; pos_{473} = V \qquad (s_3 \wedge \bar{s_2} \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge \bar{t_2} \wedge t_1 \wedge t_0)$$
+$$PI_6*: \quad pos_{468} = N \; \wedge \; pos_{473} = F \qquad (s_3 \wedge \bar{s_2} \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_7*: \quad pos_{468} = K \; \wedge \; pos_{473} = Q \qquad (s_3 \wedge s_2 \wedge \bar{s_1} \wedge s_0 \wedge t_3 \wedge \bar{t_2} \wedge t_1 \wedge \bar{t_0})$$
+$$PI_8*: \quad pos_{468} = R \; \wedge \; pos_{473} = S \qquad (s_3 \wedge s_2 \wedge s_1 \wedge \bar{s_0} \wedge t_3 \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_9*: \quad pos_{468} = V \; \wedge \; pos_{473} = Y \qquad (\bar{s_3} \wedge \bar{s_2} \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge t_1 \wedge \bar{t_0})$$
+$$PI_10*: \quad pos_{468} = M \; \wedge \; pos_{473} = A \qquad (\bar{s_3} \wedge s_2 \wedge \bar{s_1} \wedge \bar{s_0} \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_11*: \quad pos_{468} = Y \; \wedge \; pos_{473} = E \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge \bar{t_1} \wedge \bar{t_0})$$
+
+(* = essential prime implicant)
 
 ### Boolean Function
 
@@ -711,6 +1152,55 @@ Don't-care positions (conserved): 1 cells
 Never-seen pairs (off-set): 388 cells
 ```
 
+### Full 20 x 20 K-map Table
+
+Rows = residue at position 1064, columns = residue at position 1074. Cell values: **1** = mutation observed, **-1** = reference (don't-care), **0** = never observed.
+
+| i\j | A | I | L | V | M | F | Y | W | E | D | Q | N | H | K | R | S | T | C | P | G |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **A** | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **I** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **L** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **V** | -1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **M** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **F** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+| **Y** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
+| **W** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **E** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+| **D** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Q** | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **N** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **H** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **K** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **R** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **S** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **T** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
+| **C** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **P** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
+| **G** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+### Boolean Equation (LaTeX)
+
+$$f(pos_{1064}, pos_{1074}) = \bigvee_{k=1}^{11} \left( \bigwedge_{m \in S_k} b_m \right)$$
+
+where $b_m$ are the 8 binary variables (4 bits for position 1064, 4 bits for position 1074) and $S_k$ are the literal sets of prime implicant $k$.
+
+Explicit form:
+
+$$PI_1*: \quad pos_{1064} = A \; \wedge \; pos_{1074} = A \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_2*: \quad pos_{1064} = I \; \wedge \; pos_{1074} = A \qquad (\bar{s_3} \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_3*: \quad pos_{1064} = V \; \wedge \; pos_{1074} = F \qquad (\bar{s_3} \wedge \bar{s_2} \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_4 : \quad pos_{1064} = V \; \wedge \; pos_{1074} = H \qquad (\bar{s_3} \wedge \bar{s_2} \wedge s_1 \wedge s_0 \wedge t_3 \wedge t_2 \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_5*: \quad pos_{1064} = M \; \wedge \; pos_{1074} = I \qquad (\bar{s_3} \wedge s_2 \wedge \bar{s_1} \wedge \bar{s_0} \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+$$PI_6*: \quad pos_{1064} = W \; \wedge \; pos_{1074} = W \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_7*: \quad pos_{1064} = E \; \wedge \; pos_{1074} = E \qquad (s_3 \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_8*: \quad pos_{1064} = N \; \wedge \; pos_{1074} = I \qquad (s_3 \wedge \bar{s_2} \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+$$PI_9*: \quad pos_{1064} = H \; \wedge \; pos_{1074} = D \qquad (s_3 \wedge s_2 \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+$$PI_10*: \quad pos_{1064} = R \; \wedge \; pos_{1074} = F \qquad (s_3 \wedge s_2 \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_11*: \quad pos_{1064} = W \; \wedge \; pos_{1074} = Q \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge s_0 \wedge t_3 \wedge \bar{t_2} \wedge t_1 \wedge \bar{t_0})$$
+
+(* = essential prime implicant)
+
 ### Boolean Function
 
 ```
@@ -785,6 +1275,55 @@ Don't-care positions (conserved): 1 cells
 Never-seen pairs (off-set): 387 cells
 ```
 
+### Full 20 x 20 K-map Table
+
+Rows = residue at position 1064, columns = residue at position 1065. Cell values: **1** = mutation observed, **-1** = reference (don't-care), **0** = never observed.
+
+| i\j | A | I | L | V | M | F | Y | W | E | D | Q | N | H | K | R | S | T | C | P | G |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **A** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **I** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **L** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **V** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | -1 | 0 |
+| **M** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **F** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
+| **Y** | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **W** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **E** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **D** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Q** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **N** | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **H** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **K** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **R** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **S** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **T** | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **C** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **P** | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| **G** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+### Boolean Equation (LaTeX)
+
+$$f(pos_{1064}, pos_{1065}) = \bigvee_{k=1}^{11} \left( \bigwedge_{m \in S_k} b_m \right)$$
+
+where $b_m$ are the 8 binary variables (4 bits for position 1064, 4 bits for position 1065) and $S_k$ are the literal sets of prime implicant $k$.
+
+Explicit form:
+
+$$PI_1*: \quad pos_{1064} = V \; \wedge \; pos_{1065} = M \qquad (\bar{s_3} \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_2*: \quad pos_{1064} = M \; \wedge \; pos_{1065} = H \qquad (\bar{s_3} \wedge s_2 \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge t_2 \wedge \bar{t_0})$$
+$$PI_3*: \quad pos_{1064} = M \; \wedge \; pos_{1065} = Y \qquad (\bar{s_3} \wedge s_2 \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_2 \wedge t_1 \wedge \bar{t_0})$$
+$$PI_4*: \quad pos_{1064} = A \; \wedge \; pos_{1065} = Q \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge t_1 \wedge \bar{t_0})$$
+$$PI_5*: \quad pos_{1064} = W \; \wedge \; pos_{1065} = N \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge s_0 \wedge t_3 \wedge \bar{t_2} \wedge t_1 \wedge t_0)$$
+$$PI_6*: \quad pos_{1064} = Q \; \wedge \; pos_{1065} = K \qquad (s_3 \wedge \bar{s_2} \wedge s_1 \wedge \bar{s_0} \wedge t_3 \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_7*: \quad pos_{1064} = K \; \wedge \; pos_{1065} = A \qquad (s_3 \wedge s_2 \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_8*: \quad pos_{1064} = R \; \wedge \; pos_{1065} = I \qquad (s_3 \wedge s_2 \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+$$PI_9*: \quad pos_{1064} = A \; \wedge \; pos_{1065} = S \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_10*: \quad pos_{1064} = Y \; \wedge \; pos_{1065} = E \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_11*: \quad pos_{1064} = W \; \wedge \; pos_{1065} = W \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge t_1 \wedge t_0)$$
+
+(* = essential prime implicant)
+
 ### Boolean Function
 
 ```
@@ -858,6 +1397,56 @@ Co-evolutionary residue pairs (on-set):
 Don't-care positions (conserved): 1 cells
 Never-seen pairs (off-set): 385 cells
 ```
+
+### Full 20 x 20 K-map Table
+
+Rows = residue at position 413, columns = residue at position 428. Cell values: **1** = mutation observed, **-1** = reference (don't-care), **0** = never observed.
+
+| i\j | A | I | L | V | M | F | Y | W | E | D | Q | N | H | K | R | S | T | C | P | G |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **A** | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **I** | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **L** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **V** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **M** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **F** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Y** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **W** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **E** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **D** | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Q** | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **N** | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | -1 | 0 | 0 |
+| **H** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **K** | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+| **R** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **S** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **T** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
+| **C** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **P** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **G** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+
+### Boolean Equation (LaTeX)
+
+$$f(pos_{413}, pos_{428}) = \bigvee_{k=1}^{12} \left( \bigwedge_{m \in S_k} b_m \right)$$
+
+where $b_m$ are the 8 binary variables (4 bits for position 413, 4 bits for position 428) and $S_k$ are the literal sets of prime implicant $k$.
+
+Explicit form:
+
+$$PI_1*: \quad pos_{413} = A \; \wedge \; pos_{428} = I \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge \bar{t_3} \wedge \bar{t_1} \wedge t_0)$$
+$$PI_2*: \quad pos_{413} = I \; \wedge \; pos_{428} = F \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge t_0)$$
+$$PI_3*: \quad pos_{413} = H \; \wedge \; pos_{428} = K \qquad (s_3 \wedge s_2 \wedge \bar{s_0} \wedge t_3 \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_4*: \quad pos_{413} = A \; \wedge \; pos_{428} = M \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1})$$
+$$PI_5 : \quad pos_{413} = A \; \wedge \; pos_{428} = F \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_6*: \quad pos_{413} = A \; \wedge \; pos_{428} = S \qquad (\bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_7*: \quad pos_{413} = W \; \wedge \; pos_{428} = S \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge s_0 \wedge t_3 \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_8*: \quad pos_{413} = N \; \wedge \; pos_{428} = M \qquad (s_3 \wedge \bar{s_2} \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_9*: \quad pos_{413} = K \; \wedge \; pos_{428} = H \qquad (s_3 \wedge s_2 \wedge \bar{s_1} \wedge s_0 \wedge t_3 \wedge t_2 \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_10*: \quad pos_{413} = R \; \wedge \; pos_{428} = W \qquad (s_3 \wedge s_2 \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_11*: \quad pos_{413} = F \; \wedge \; pos_{428} = A \qquad (\bar{s_3} \wedge s_2 \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_12*: \quad pos_{413} = W \; \wedge \; pos_{428} = I \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge t_0)$$
+
+(* = essential prime implicant)
 
 ### Boolean Function
 
@@ -935,6 +1524,54 @@ Don't-care positions (conserved): 1 cells
 Never-seen pairs (off-set): 388 cells
 ```
 
+### Full 20 x 20 K-map Table
+
+Rows = residue at position 469, columns = residue at position 473. Cell values: **1** = mutation observed, **-1** = reference (don't-care), **0** = never observed.
+
+| i\j | A | I | L | V | M | F | Y | W | E | D | Q | N | H | K | R | S | T | C | P | G |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **A** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
+| **I** | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+| **L** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **V** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **M** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **F** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Y** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | -1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| **W** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **E** | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **D** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Q** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **N** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **H** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **K** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+| **R** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **S** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **T** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **C** | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **P** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **G** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+
+### Boolean Equation (LaTeX)
+
+$$f(pos_{469}, pos_{473}) = \bigvee_{k=1}^{10} \left( \bigwedge_{m \in S_k} b_m \right)$$
+
+where $b_m$ are the 8 binary variables (4 bits for position 469, 4 bits for position 473) and $S_k$ are the literal sets of prime implicant $k$.
+
+Explicit form:
+
+$$PI_1*: \quad pos_{469} = I \; \wedge \; pos_{473} = F \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge t_0)$$
+$$PI_2*: \quad pos_{469} = E \; \wedge \; pos_{473} = V \qquad (s_3 \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_1 \wedge t_0)$$
+$$PI_3*: \quad pos_{469} = I \; \wedge \; pos_{473} = L \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge \bar{t_2} \wedge t_1 \wedge \bar{t_0})$$
+$$PI_4*: \quad pos_{469} = L \; \wedge \; pos_{473} = W \qquad (\bar{s_3} \wedge \bar{s_2} \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_5*: \quad pos_{469} = Q \; \wedge \; pos_{473} = A \qquad (s_3 \wedge \bar{s_2} \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_6*: \quad pos_{469} = K \; \wedge \; pos_{473} = F \qquad (s_3 \wedge s_2 \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_7*: \quad pos_{469} = R \; \wedge \; pos_{473} = W \qquad (s_3 \wedge s_2 \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_8*: \quad pos_{469} = M \; \wedge \; pos_{473} = Q \qquad (\bar{s_3} \wedge s_2 \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge t_1 \wedge \bar{t_0})$$
+$$PI_9*: \quad pos_{469} = F \; \wedge \; pos_{473} = M \qquad (\bar{s_3} \wedge s_2 \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_10*: \quad pos_{469} = E \; \wedge \; pos_{473} = K \qquad (s_3 \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+
+(* = essential prime implicant)
+
 ### Boolean Function
 
 ```
@@ -1006,6 +1643,54 @@ Co-evolutionary residue pairs (on-set):
 Don't-care positions (conserved): 1 cells
 Never-seen pairs (off-set): 388 cells
 ```
+
+### Full 20 x 20 K-map Table
+
+Rows = residue at position 459, columns = residue at position 473. Cell values: **1** = mutation observed, **-1** = reference (don't-care), **0** = never observed.
+
+| i\j | A | I | L | V | M | F | Y | W | E | D | Q | N | H | K | R | S | T | C | P | G |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **A** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **I** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+| **L** | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **V** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **M** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **F** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Y** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **W** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **E** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
+| **D** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Q** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **N** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **H** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **K** | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+| **R** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+| **S** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **T** | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **C** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **P** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | -1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
+| **G** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+### Boolean Equation (LaTeX)
+
+$$f(pos_{459}, pos_{473}) = \bigvee_{k=1}^{10} \left( \bigwedge_{m \in S_k} b_m \right)$$
+
+where $b_m$ are the 8 binary variables (4 bits for position 459, 4 bits for position 473) and $S_k$ are the literal sets of prime implicant $k$.
+
+Explicit form:
+
+$$PI_1*: \quad pos_{459} = L \; \wedge \; pos_{473} = E \qquad (\bar{s_3} \wedge \bar{s_2} \wedge s_1 \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge \bar{t_1})$$
+$$PI_2*: \quad pos_{459} = W \; \wedge \; pos_{473} = I \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge \bar{t_2} \wedge t_0)$$
+$$PI_3*: \quad pos_{459} = W \; \wedge \; pos_{473} = V \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge t_1 \wedge t_0)$$
+$$PI_4*: \quad pos_{459} = L \; \wedge \; pos_{473} = W \qquad (\bar{s_3} \wedge \bar{s_2} \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_5*: \quad pos_{459} = N \; \wedge \; pos_{473} = L \qquad (s_3 \wedge \bar{s_2} \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge \bar{t_2} \wedge t_1 \wedge \bar{t_0})$$
+$$PI_6*: \quad pos_{459} = N \; \wedge \; pos_{473} = S \qquad (s_3 \wedge \bar{s_2} \wedge s_1 \wedge s_0 \wedge t_3 \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_7*: \quad pos_{459} = R \; \wedge \; pos_{473} = Y \qquad (s_3 \wedge s_2 \wedge s_1 \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge t_1 \wedge \bar{t_0})$$
+$$PI_8*: \quad pos_{459} = A \; \wedge \; pos_{473} = F \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_9*: \quad pos_{459} = I \; \wedge \; pos_{473} = W \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge t_1 \wedge t_0)$$
+$$PI_10*: \quad pos_{459} = M \; \wedge \; pos_{473} = A \qquad (\bar{s_3} \wedge s_2 \wedge \bar{s_1} \wedge \bar{s_0} \wedge \bar{t_3} \wedge \bar{t_2} \wedge \bar{t_1} \wedge \bar{t_0})$$
+
+(* = essential prime implicant)
 
 ### Boolean Function
 
@@ -1079,6 +1764,53 @@ Don't-care positions (conserved): 1 cells
 Never-seen pairs (off-set): 388 cells
 ```
 
+### Full 20 x 20 K-map Table
+
+Rows = residue at position 1064, columns = residue at position 1066. Cell values: **1** = mutation observed, **-1** = reference (don't-care), **0** = never observed.
+
+| i\j | A | I | L | V | M | F | Y | W | E | D | Q | N | H | K | R | S | T | C | P | G |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **A** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **I** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **L** | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **V** | -1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **M** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **F** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
+| **Y** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
+| **W** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **E** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **D** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Q** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **N** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
+| **H** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **K** | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **R** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **S** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **T** | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **C** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **P** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **G** | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+### Boolean Equation (LaTeX)
+
+$$f(pos_{1064}, pos_{1066}) = \bigvee_{k=1}^{9} \left( \bigwedge_{m \in S_k} b_m \right)$$
+
+where $b_m$ are the 8 binary variables (4 bits for position 1064, 4 bits for position 1066) and $S_k$ are the literal sets of prime implicant $k$.
+
+Explicit form:
+
+$$PI_1*: \quad pos_{1064} = A \; \wedge \; pos_{1066} = E \qquad (\bar{s_3} \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge \bar{t_1})$$
+$$PI_2*: \quad pos_{1064} = L \; \wedge \; pos_{1066} = N \qquad (\bar{s_2} \wedge s_1 \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge t_1 \wedge t_0)$$
+$$PI_3*: \quad pos_{1064} = M \; \wedge \; pos_{1066} = L \qquad (\bar{s_3} \wedge s_2 \wedge \bar{s_1} \wedge \bar{s_0} \wedge \bar{t_3} \wedge \bar{t_2} \wedge t_1)$$
+$$PI_4 : \quad pos_{1064} = V \; \wedge \; pos_{1066} = H \qquad (\bar{s_3} \wedge \bar{s_2} \wedge s_1 \wedge s_0 \wedge t_3 \wedge t_2 \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_5*: \quad pos_{1064} = W \; \wedge \; pos_{1066} = M \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_6*: \quad pos_{1064} = E \; \wedge \; pos_{1066} = Q \qquad (s_3 \wedge \bar{s_2} \wedge \bar{s_1} \wedge \bar{s_0} \wedge t_3 \wedge \bar{t_2} \wedge t_1 \wedge \bar{t_0})$$
+$$PI_7*: \quad pos_{1064} = K \; \wedge \; pos_{1066} = F \qquad (s_3 \wedge s_2 \wedge \bar{s_1} \wedge s_0 \wedge \bar{t_3} \wedge t_2 \wedge \bar{t_1} \wedge t_0)$$
+$$PI_8*: \quad pos_{1064} = R \; \wedge \; pos_{1066} = H \qquad (s_3 \wedge s_2 \wedge s_1 \wedge \bar{s_0} \wedge t_3 \wedge t_2 \wedge \bar{t_1} \wedge \bar{t_0})$$
+$$PI_9*: \quad pos_{1064} = W \; \wedge \; pos_{1066} = L \qquad (\bar{s_3} \wedge s_2 \wedge s_1 \wedge s_0 \wedge \bar{t_3} \wedge \bar{t_2} \wedge t_1 \wedge \bar{t_0})$$
+
+(* = essential prime implicant)
+
 ### Boolean Function
 
 ```
@@ -1128,18 +1860,25 @@ Rule 157: IF position 1064 = V AND position 1066 = H THEN co-evolutionary (MI = 
 | Metric | Value |
 |--------|-------|
 | Sequences | 1299 |
-| Variable positions | 57 |
+| Variable positions | 1249 |
 | Co-evolutionary pairs | 36918 |
 | Total inference rules | 162 |
 | Position pairs with rules | 15 |
 
+## Worked Example on a Real Sequence
+
+We take the first sequence in the dataset, **WRU87367.1 |surface glycoprotein [Severe acute respiratory syndrome coronavirus 2]** (full length 1,276 positions), and check it against the rules for the strongest pair (413, 427).
+
+1. The sequence has residue **A** at position 413 and **L** at position 427.
+2. The reference (majority) pair for (413, 427) is (N, G).
+3. The observed pair (A, L) is a mutation pair
+4. Checking the rules for (413, 427): the pair (A, L) does not match a prime implicant.
+
+This shows how a concrete sequence is evaluated against the 152-rule master function: each rule pair is checked, and the sequence is classified pair by pair.
+
 ## How to Apply
 
-1. Extract residues at positions 68-79 from a new sequence
+1. Extract residues at the 15 rule pair positions from a new sequence (full length 1,276)
 2. For each position pair, check if the residue pair matches any rule
 3. If YES: that position pair is co-evolutionary
 4. If position i mutates: find which residue at position j satisfies the co-evolutionary constraint
-
-**Example:** If position 76 mutates to Y, check rules for position 76.
-Rule 2 says: IF pos 76 = Y AND pos 77 = K THEN co-evolutionary.
-So position 77 must also mutate to K.

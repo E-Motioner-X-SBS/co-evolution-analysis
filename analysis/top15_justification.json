@@ -1,0 +1,82 @@
+{
+  "question": "Why top-15 pairs in master_boolean.py?",
+  "answer": "Rules scale linearly (~+10 essential per pair); pairs ranked 16+ are all in the S2-subunit cluster (1064-1074, 1026-1042) with MI ~2.28 vs 2.35 for rank 1, adding redundant rules without new biological regions.",
+  "rules_by_K": {
+    "10": {
+      "total_pis": 110,
+      "essential": 102
+    },
+    "12": {
+      "total_pis": 133,
+      "essential": 124
+    },
+    "14": {
+      "total_pis": 153,
+      "essential": 144
+    },
+    "15": {
+      "total_pis": 162,
+      "essential": 152
+    },
+    "16": {
+      "total_pis": 173,
+      "essential": 162
+    },
+    "17": {
+      "total_pis": 182,
+      "essential": 170
+    },
+    "18": {
+      "total_pis": 192,
+      "essential": 179
+    },
+    "20": {
+      "total_pis": 214,
+      "essential": 199
+    }
+  },
+  "pairs_ranked_16_20": [
+    {
+      "rank": 16,
+      "pos_i": 1064,
+      "pos_j": 1066,
+      "mi": 2.2816,
+      "n_mut": 278
+    },
+    {
+      "rank": 17,
+      "pos_i": 1030,
+      "pos_j": 1040,
+      "mi": 2.2814,
+      "n_mut": 278
+    },
+    {
+      "rank": 18,
+      "pos_i": 1026,
+      "pos_j": 1030,
+      "mi": 2.2814,
+      "n_mut": 278
+    },
+    {
+      "rank": 19,
+      "pos_i": 1030,
+      "pos_j": 1042,
+      "mi": 2.2814,
+      "n_mut": 278
+    },
+    {
+      "rank": 20,
+      "pos_i": 1025,
+      "pos_j": 1026,
+      "mi": 2.281,
+      "n_mut": 278
+    },
+    {
+      "rank": 21,
+      "pos_i": 1025,
+      "pos_j": 1040,
+      "mi": 2.281,
+      "n_mut": 278
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "n_pairs": 7589,
+  "spearman_ratio_MI": 0.7715047470774195,
+  "spearman_ratio_F": 0.05906382820311648,
+  "spearman_ratio_DI": 0.08665038340519432,
+  "spearman_MI_F": 0.05445348030396834,
+  "spearman_MI_DI": 0.09830180389822324,
+  "spearman_F_DI": 0.5575783131295813,
+  "conclusion": "MI and perplexity ratio are strongly correlated (both measure total correlation). Both are nearly uncorrelated with DCA F/DI (direct coupling). The three lenses are: total correlation (MI), determinism (perplexity ratio), direct coupling (DCA). They answer different questions."
+}

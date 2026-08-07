@@ -25,7 +25,7 @@ flowchart TD
     B --> C[Base-20 He 2012 encoding]
     C --> D[position arrays: int 0-19, -1 for gap]
     D --> E[entropy per position]
-    D --> F[MI for pairs |i-j| <= 30]
+    D --> F["MI for pairs |i-j| <= 30"]
     D --> G[majority reference per position]
     F --> H[co-evolving pairs list]
     G --> H
