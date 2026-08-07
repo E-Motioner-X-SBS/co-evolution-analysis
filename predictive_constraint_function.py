@@ -47,7 +47,7 @@ def parse_fasta(filepath):
 def compute_entropy(pos_arrays, pos, n_seqs):
     counts = Counter()
     for arr in pos_arrays[:n_seqs]:
-        if pos < len(arr) and arr[pos] >= 0:
+        if pos < len(arr) and 0 <= arr[pos] < 20:
             counts[int(arr[pos])] += 1
     total = sum(counts.values())
     if total == 0:
@@ -57,7 +57,7 @@ def compute_entropy(pos_arrays, pos, n_seqs):
 
 def get_majority_ref(pos_arrays, pos, n_seqs):
     return Counter(
-        int(a[pos]) for a in pos_arrays[:n_seqs] if pos < len(a) and a[pos] >= 0
+        int(a[pos]) for a in pos_arrays[:n_seqs] if pos < len(a) and 0 <= a[pos] < 20
     ).most_common(1)[0][0]
 
 
@@ -67,7 +67,7 @@ def compute_frequency_kmap(pos_arrays, pos_i, pos_j, n_seqs):
     for arr in pos_arrays[:n_seqs]:
         if pos_i < len(arr) and pos_j < len(arr):
             ci, cj = int(arr[pos_i]), int(arr[pos_j])
-            if ci >= 0 and cj >= 0:
+            if 0 <= ci < 20 and 0 <= cj < 20:
                 kmap[ci, cj] += 1
     total = kmap.sum()
     if total > 0:
@@ -126,9 +126,8 @@ def main():
     max_pos = len(sequences[0][1])
     pos_arrays = []
     for _, seq in sequences:
-        clean = "".join(aa for aa in seq if aa in encoder.encode)
         arr = np.array(
-            [encoder.encode.get(aa, -1) for aa in clean[:max_pos]], dtype=np.int32
+            [encoder.encode.get(aa, 20) for aa in seq[:max_pos]], dtype=np.int32
         )
         pos_arrays.append(arr)
 
@@ -241,7 +240,7 @@ def main():
         for arr in pos_arrays[:800]:
             if pos_i < len(arr) and pos_j < len(arr):
                 ci, cj = int(arr[pos_i]), int(arr[pos_j])
-                if ci >= 0 and cj >= 0:
+                if 0 <= ci < 20 and 0 <= cj < 20:
                     kmap_freq[ci, cj] += 1
         total_freq = kmap_freq.sum()
         if total_freq > 0:
@@ -253,7 +252,7 @@ def main():
         for arr in pos_arrays[800:]:
             if pos_i < len(arr) and pos_j < len(arr):
                 ci, cj = int(arr[pos_i]), int(arr[pos_j])
-                if ci >= 0 and cj >= 0:
+                if 0 <= ci < 20 and 0 <= cj < 20:
                     # BUG FIX: ref_i, ref_j are already int codes — no lookup needed
                     if ci != ref_i_code or cj != ref_j_code:
                         # This is a mutation pair

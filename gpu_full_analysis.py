@@ -65,11 +65,12 @@ def main():
     fl = len(seqs[0][1])
     print(f"  {n_all} sequences, {fl} positions (FULL LENGTH)")
 
-    # Build position arrays (He 2012 codes 0-19, -1 for gap)
+    # Build position arrays (He 2012 codes 0-19, 20 = gap, ALIGNED)
+    # CORRECTED (FIX A1): was gap-stripped (-1), which misaligned columns.
+    # Now keeps the alignment: '-' and unknown -> 20.
     pos_arrays = []
     for _, s in seqs:
-        clean = "".join(c for c in s if c in enc.encode)
-        arr = np.array([enc.encode.get(c, -1) for c in clean], dtype=np.int32)
+        arr = np.array([enc.encode.get(c, 20) for c in s], dtype=np.int32)
         pos_arrays.append(arr)
 
     # Move to GPU once
@@ -139,7 +140,7 @@ def main():
         for a in pos_arrays:
             if pi < len(a) and pj < len(a):
                 ci, cj = int(a[pi]), int(a[pj])
-                if ci >= 0 and cj >= 0:
+                if 0 <= ci < 20 and 0 <= cj < 20:
                     km[ci, cj] += 1
         t = km.sum()
         if t > 0:

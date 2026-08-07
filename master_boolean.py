@@ -135,7 +135,7 @@ def find_coevolutionary_pairs(
             for arr in pos_arrays[:n_seqs]:
                 if pos_i < len(arr) and pos_j < len(arr):
                     ci, cj = int(arr[pos_i]), int(arr[pos_j])
-                    if ci >= 0 and cj >= 0 and (ci != ref_i or cj != ref_j):
+                    if 0 <= ci < 20 and 0 <= cj < 20 and (ci != ref_i or cj != ref_j):
                         joint[(ci, cj)] += 1
                         marg_i[ci] += 1
                         marg_j[cj] += 1

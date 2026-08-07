@@ -74,9 +74,8 @@ def build_position_kmaps(sequences, encoder, max_positions=None, n_seqs=200):
 
     for i in range(n):
         _, seq = sequences[i]
-        clean_seq = "".join(aa for aa in seq if aa in encoder.encode)
-        for j in range(min(max_pos, len(clean_seq))):
-            aa = clean_seq[j]
+        for j in range(min(max_pos, len(seq))):
+            aa = seq[j]
             if aa in encoder.encode:
                 code = encoder.encode[aa]
                 pos_freq[j, code] += 1
@@ -110,11 +109,9 @@ def compute_position_pair_kmap(sequences, encoder, pos_i, pos_j, n_seqs=200):
 
     for i in range(n):
         _, seq = sequences[i]
-        clean_seq = "".join(aa for aa in seq if aa in encoder.encode)
-
-        if pos_i < len(clean_seq) and pos_j < len(clean_seq):
-            aa_i = clean_seq[pos_i]
-            aa_j = clean_seq[pos_j]
+        if pos_i < len(seq) and pos_j < len(seq):
+            aa_i = seq[pos_i]
+            aa_j = seq[pos_j]
             if aa_i in encoder.encode and aa_j in encoder.encode:
                 code_i = encoder.encode[aa_i]
                 code_j = encoder.encode[aa_j]
@@ -139,11 +136,9 @@ def compute_mutual_information(sequences, pos_i, pos_j, encoder, n_seqs=200):
 
     for i in range(n):
         _, seq = sequences[i]
-        clean_seq = "".join(aa for aa in seq if aa in encoder.encode)
-
-        if pos_i < len(clean_seq) and pos_j < len(clean_seq):
-            aa_i = clean_seq[pos_i]
-            aa_j = clean_seq[pos_j]
+        if pos_i < len(seq) and pos_j < len(seq):
+            aa_i = seq[pos_i]
+            aa_j = seq[pos_j]
             if aa_i in encoder.encode and aa_j in encoder.encode:
                 joint[(aa_i, aa_j)] += 1
                 marg_i[aa_i] += 1
@@ -176,8 +171,10 @@ def minimize_position_kmap(kmap_2d):
     threshold = np.percentile(nonzero, 70)
     kmap_bool = (kmap_2d >= threshold).astype(int)
 
-    # Flatten and minimize
-    bool_flat = kmap_bool.flatten().astype(int)
+    # CORRECTED (FIX A2): pad 20x20 -> 32x32 so QM uses 10 bits (no wrap).
+    padded = np.full((32, 32), -1, dtype=int)
+    padded[:20, :20] = kmap_bool
+    bool_flat = padded.flatten().astype(int)
     result = boolean_minimize_kmap(bool_flat, algorithm="qm")
 
     return {
@@ -250,13 +247,12 @@ def predict_coevolution_from_position_kmaps(
 
     n = min(n_seqs, len(sequences))
 
-    # Build clean sequences
+    # Build clean sequences (aligned; gap = 20 handled by encoder)
     clean_seqs = []
     for i in range(n):
         _, seq = sequences[i]
-        clean = "".join(aa for aa in seq if aa in encoder.encode)
-        if len(clean) > 100:
-            clean_seqs.append(clean)
+        if len(seq) > 100:
+            clean_seqs.append(seq)
 
     if len(clean_seqs) < 5:
         return {}
@@ -373,8 +369,8 @@ def main():
         # Build position arrays
         pos_arrays = []
         for _, seq in sequences[:n_seqs]:
-            clean = "".join(aa for aa in seq if aa in encoder.encode)
-            arr = np.array([encoder.encode.get(aa, -1) for aa in clean], dtype=np.int32)
+            # CORRECTED: aligned columns, gap = 20 (was gap-stripped, misaligned)
+            arr = np.array([encoder.encode.get(aa, 20) for aa in seq], dtype=np.int32)
             pos_arrays.append(arr)
         dense = cg.dense_to_gpu(pos_arrays)
         pairs = cg.all_pairs(dense.shape[1], max_gap=window)

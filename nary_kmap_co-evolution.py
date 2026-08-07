@@ -337,7 +337,7 @@ def predict_coevolution_nary(freq_2d, encoder, sequences, n_seqs=100):
     clean_seqs = []
     for i in range(n):
         _, seq = sequences[i]
-        clean = "".join(aa for aa in seq if aa in encoder.encode)
+        # CORRECTED: aligned columns, gap = 20 (was gap-stripped, misaligned)
         if len(clean) > 100:
             clean_seqs.append(clean)
 

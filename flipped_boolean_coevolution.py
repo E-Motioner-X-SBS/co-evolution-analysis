@@ -45,7 +45,7 @@ def parse_fasta(filepath):
 def compute_entropy(pos_arrays, pos, n_seqs):
     counts = Counter()
     for arr in pos_arrays[:n_seqs]:
-        if pos < len(arr) and arr[pos] >= 0:
+        if pos < len(arr) and 0 <= arr[pos] < 20:
             counts[int(arr[pos])] += 1
     total = sum(counts.values())
     if total == 0:
@@ -55,7 +55,7 @@ def compute_entropy(pos_arrays, pos, n_seqs):
 
 def get_majority_ref(pos_arrays, pos, n_seqs):
     return Counter(
-        int(a[pos]) for a in pos_arrays[:n_seqs] if pos < len(a) and a[pos] >= 0
+        int(a[pos]) for a in pos_arrays[:n_seqs] if pos < len(a) and 0 <= a[pos] < 20
     ).most_common(1)[0][0]
 
 
@@ -66,7 +66,7 @@ def compute_mi(pos_arrays, pos_i, pos_j, n_seqs):
     for arr in pos_arrays[:n_seqs]:
         if pos_i < len(arr) and pos_j < len(arr):
             ci, cj = int(arr[pos_i]), int(arr[pos_j])
-            if ci >= 0 and cj >= 0 and (ci != ref_i or cj != ref_j):
+            if 0 <= ci < 20 and 0 <= cj < 20 and (ci != ref_i or cj != ref_j):
                 joint[(ci, cj)] += 1
                 marg_i[ci] += 1
                 marg_j[cj] += 1
@@ -110,9 +110,8 @@ def main():
     max_pos = len(sequences[0][1])
     pos_arrays = []
     for _, seq in sequences:
-        clean = "".join(aa for aa in seq if aa in encoder.encode)
         arr = np.array(
-            [encoder.encode.get(aa, -1) for aa in clean[:max_pos]], dtype=np.int32
+            [encoder.encode.get(aa, 20) for aa in seq[:max_pos]], dtype=np.int32
         )
         pos_arrays.append(arr)
 
@@ -155,13 +154,17 @@ def main():
         #       doing nothing new.
         # The fix: start with all 1 (forbidden), mark observed pairs as 0 (allowed),
         # mark reference as -1 (DC). Cells that remain 1 are truly forbidden.
-        kmap = np.full((20, 20), 1, dtype=np.int32)  # All FORBIDDEN by default
+        # CORRECTED (FIX A2): 32x32 padded, rows/cols 20-31 don't-care.
+        # 20x20 region starts ALL FORBIDDEN (1); observed pairs -> 0 (allowed);
+        # reference -> -1 (DC). Cells that remain 1 are truly forbidden.
+        kmap = np.full((32, 32), -1, dtype=np.int32)  # padding = don't-care
+        kmap[:20, :20] = 1  # 20x20 region: all forbidden by default
 
         # Mark observed pairs as ALLOWED (0), reference pair as DC (-1)
         for arr in pos_arrays[:n_all]:
             if pos_i < len(arr) and pos_j < len(arr):
                 ci, cj = int(arr[pos_i]), int(arr[pos_j])
-                if ci >= 0 and cj >= 0:
+                if 0 <= ci < 20 and 0 <= cj < 20:
                     if ci == ref_i_code and cj == ref_j_code:
                         kmap[ci, cj] = -1  # DC (conserved reference)
                     else:
@@ -189,14 +192,12 @@ def main():
         for pi in result["prime_implicants"]:
             values = list(pi["values"])
             mask = list(pi["mask"])
-            while len(values) < 8:
+            while len(values) < 10:
                 values.append(0)
                 mask.append(False)
 
-            row_code = sum(values[j] * (2 ** (3 - j)) for j in range(4) if not mask[j])
-            col_code = sum(
-                values[j + 4] * (2 ** (3 - j)) for j in range(4) if not mask[j + 4]
-            )
+            row_code = sum(values[j] * (2 ** (4 - j)) for j in range(5) if not mask[j])
+            col_code = sum(values[j + 5] * (2 ** (4 - j)) for j in range(5) if not mask[j + 5])
 
             if row_code < 20 and col_code < 20:
                 aa_i = aa_list[row_code]

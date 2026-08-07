@@ -123,9 +123,8 @@ def main():
     max_pos = len(sequences[0][1])
     pos_arrays = []
     for _, seq in sequences:
-        clean = "".join(aa for aa in seq if aa in encoder.encode)
         arr = np.array(
-            [encoder.encode.get(aa, -1) for aa in clean[:max_pos]], dtype=np.int32
+            [encoder.encode.get(aa, 20) for aa in seq[:max_pos]], dtype=np.int32
         )
         pos_arrays.append(arr)
 
@@ -390,7 +389,12 @@ def main():
 
     for i in range(n_seq):
         for j in range(i + 1, n_seq):
-            valid = (features[i] >= 0) & (features[j] >= 0)
+            valid = (
+                (features[i] >= 0)
+                & (features[i] < 20)
+                & (features[j] >= 0)
+                & (features[j] < 20)
+            )
             if valid.sum() > 0:
                 dist = np.sum(features[i, valid] != features[j, valid]) / valid.sum()
             else:

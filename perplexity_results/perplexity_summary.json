@@ -1,27 +1,5 @@
 {
   "n_sequences": 1299,
-  "variable_positions": 8,
-  "results": [
-    {
-      "pos_i": 372,
-      "pos_j": 401,
-      "pp_marginal": 3.1854954754146454,
-      "pp_conditional": 1.134206655805024,
-      "ratio": 2.8085670800033182
-    },
-    {
-      "pos_i": 401,
-      "pos_j": 404,
-      "pp_marginal": 3.2709958551314204,
-      "pp_conditional": 1.211495590012628,
-      "ratio": 2.6999651357355128
-    },
-    {
-      "pos_i": 208,
-      "pos_j": 209,
-      "pp_marginal": 3.062615321459255,
-      "pp_conditional": 1.1060519056704305,
-      "ratio": 2.7689616606219385
-    }
-  ]
+  "variable_positions": 0,
+  "results": []
 }

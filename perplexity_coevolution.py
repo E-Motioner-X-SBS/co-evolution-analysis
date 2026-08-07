@@ -83,9 +83,8 @@ def main():
     max_pos = len(sequences[0][1])
     pos_arrays = []
     for _, seq in sequences:
-        clean = "".join(aa for aa in seq if aa in encoder.encode)
         arr = np.array(
-            [encoder.encode.get(aa, -1) for aa in clean[:max_pos]], dtype=np.int32
+            [encoder.encode.get(aa, 20) for aa in seq[:max_pos]], dtype=np.int32
         )
         pos_arrays.append(arr)
 
@@ -98,7 +97,7 @@ def main():
     for pos in range(max_pos):
         counts = Counter()
         for arr in pos_arrays[:n_all]:
-            if pos < len(arr) and arr[pos] >= 0:
+            if pos < len(arr) and 0 <= arr[pos] < 20:
                 counts[int(arr[pos])] += 1
         pos_counts[pos] = sum(counts.values())
         pos_entropy[pos] = compute_entropy(counts)
@@ -171,7 +170,7 @@ def main():
             for arr in pos_arrays[:n_all]:
                 if pos_i < len(arr) and pos_j < len(arr):
                     ci, cj = int(arr[pos_i]), int(arr[pos_j])
-                    if ci >= 0 and cj >= 0:
+                    if 0 <= ci < 20 and 0 <= cj < 20:
                         joint[(ci, cj)] += 1
                         marg_i[ci] += 1
                         marg_j[cj] += 1

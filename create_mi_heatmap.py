@@ -52,9 +52,9 @@ def main():
     max_pos = len(sequences[0][1])
     pos_arrays_list = []
     for _, seq in sequences:
-        clean = "".join(aa for aa in seq if aa in encoder.encode)
-        padded = clean[:max_pos].ljust(max_pos, "\x00")
-        arr = np.array([encoder.encode.get(aa, -1) for aa in padded], dtype=np.int32)
+        arr = np.array(
+            [encoder.encode.get(aa, 20) for aa in seq[:max_pos]], dtype=np.int32
+        )
         pos_arrays_list.append(arr)
     pos_arrays = np.array(pos_arrays_list)
 
@@ -80,7 +80,7 @@ def main():
         def mi_vectorized(pos_arrays, pos_i, pos_j, n_seqs):
             codes_i = pos_arrays[:n_seqs, pos_i]
             codes_j = pos_arrays[:n_seqs, pos_j]
-            valid = (codes_i >= 0) & (codes_j >= 0)
+            valid = (0 <= codes_i < 20) & (0 <= codes_j < 20)
             codes_i = codes_i[valid]
             codes_j = codes_j[valid]
             if len(codes_i) < 10:

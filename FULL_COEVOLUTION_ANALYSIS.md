@@ -3,7 +3,7 @@
 
 **Generated:** August 07, 2026
 **Data:** 1,299 SARS-CoV-2 Omicron Spike protein sequences from `Spike_protein.aln-fasta`
-**Compute:** NVIDIA A100 80GB + 24-core Xeon, 2.9s total
+**Compute:** NVIDIA A100 80GB + 24-core Xeon, 4.6s total
 **Scripts:** 18 Python analysis scripts, all run with ALL 1,299 sequences
 
 ---
@@ -32,6 +32,7 @@ python3 coevolution_gpu.py
 python3 coevolution_shared.py
 python3 create_mi_heatmap.py
 python3 dca_boolean_coevolution.py
+python3 dca_mf_analysis.py
 python3 flipped_boolean_coevolution.py
 python3 full_length_analysis.py
 python3 generate_full_pipeline_doc.py
@@ -61,9 +62,9 @@ python3 generate_full_analysis_md.py  # THIS FILE
 |--------|-------|
 | Sequences | 1,299 |
 | Full length | 1276 residues |
-| Variable positions (entropy > 0.3) | 1,249 (97.9%) |
-| Conserved positions | 27 (2.1%) |
-| Variable in first 80 | 1249 |
+| Variable positions (entropy > 0.3) | 21 (1.6%) |
+| Conserved positions | 1,255 (98.4%) |
+| Variable in first 80 | 21 |
 
 ## 4. The Encoding
 
@@ -138,17 +139,17 @@ He 2012 ordering: `AILVMFYWEDQNHKRSTCPG` (0-19). Direct mapping — no binary in
 
 ## 7. Position-Level Co-evolution
 
-**1249** variable positions in 0-79, **36,918** co-evolving pairs, **152** inference rules across **15** position pairs.
+**21** variable positions in 0-79, **10** co-evolving pairs, **3** inference rules across **3** position pairs.
 
 ### Top Co-evolving Position Pairs
 
 | Pair | Ref (i→j) | MI | PP Ratio |
 |------|-----------|-----|----------|
-| (413,427) | N,G | 2.35 | — |
-| (413,425) | N,F | 2.33 | — |
-| (413,426) | N,T | 2.32 | — |
-| (413,424) | N,D | 2.31 | — |
-| (1040,1042) | G,G | 2.30 | — |
+| (495,498) | R,G | 0.87 | — |
+| (448,454) | G,L | 0.83 | — |
+| (488,498) | F,G | 0.82 | — |
+| (442,454) | K,L | 0.81 | — |
+| (442,448) | K,G | 0.73 | — |
 
 ## 8. Coupling Landscape
 
@@ -158,71 +159,71 @@ He 2012 ordering: `AILVMFYWEDQNHKRSTCPG` (0-19). Direct mapping — no binary in
 
 | Pair | MI | avg\|J\| | Ref | Strongest Anti | J |
 |------|-----|--------|-----|---------------|-----|
-| (372,401) | 1.592 | 3.50 | A,N | A,D | -4.01 |
-| (401,404) | 1.569 | 4.15 | N,S | N,R | -2.72 |
-| (208,209) | 1.542 | 3.43 | L,G | L,P | -4.03 |
-| (372,404) | 1.536 | 3.68 | A,S | A,R | -2.49 |
-| (209,210) | 1.523 | 3.99 | G,R | R,E | -0.86 |
-| (852,977) | 1.514 | 3.08 | N,L | N,F | -4.28 |
-| (492,852) | 1.509 | 2.50 | G,N | S,N | -4.29 |
-| (208,210) | 1.502 | 3.58 | L,R | L,G | -0.25 |
+| (373,378) | 0.807 | 0.12 | F,A | —,— | 0.00 |
+| (18,26) | 0.802 | 0.07 | I,S | —,— | 0.00 |
+| (373,407) | 0.798 | 0.12 | F,N | F,D | -4.81 |
+| (26,373) | 0.794 | 0.11 | S,F | S,S | -0.34 |
+| (378,407) | 0.792 | 0.07 | A,N | A,D | -4.40 |
+| (66,94) | 0.791 | 0.07 | A,T | —,— | 0.00 |
+| (215,373) | 0.786 | 0.23 | G,F | G,S | -0.69 |
+| (18,373) | 0.785 | 0.07 | I,F | T,F | -4.78 |
 
 ## 9. Co-evolution Network
 
 | Metric | Value |
 |--------|-------|
-| Nodes | 1249 |
-| Edges | 35098 |
-| **Hub** | Position 85 (degree 60) |
+| Nodes | 21 |
+| Edges | 8 |
+| **Hub** | Position 210 (degree 2) |
 | Components | 1 giant component |
 
 ## 10. Full-Length Analysis (All 1,276 Positions)
 
 | Metric | Value |
 |--------|-------|
-| Variable positions | 1,249 (97.9%) |
-| Conserved | 27 |
-| High-MI pairs (full length) | 35858 |
-| Compute time | 2.9s (A100 + 24-core) |
+| Variable positions | 21 (1.6%) |
+| Conserved | 1,255 |
+| High-MI pairs (full length) | 5 |
+| Compute time | 4.6s (A100 + 24-core) |
 
 ### Top 10 Most Variable Positions
 
 | Rank | Pos | Entropy | Perplexity | Region |
 |------|-----|---------|------------|--------|
-| 1 | 852 | 1.774 | 3.42 | S2 subunit |
-| 2 | 492 | 1.723 | 3.30 | S1 subunit |
-| 3 | 404 | 1.710 | 3.27 | S1 subunit |
-| 4 | 401 | 1.672 | 3.19 | S1 subunit |
-| 5 | 977 | 1.666 | 3.17 | S2 subunit |
-| 6 | 372 | 1.633 | 3.10 | S1 subunit |
-| 7 | 209 | 1.615 | 3.06 | S1 subunit |
-| 8 | 208 | 1.614 | 3.06 | S1 subunit |
-| 9 | 210 | 1.577 | 2.98 | S1 subunit |
-| 10 | 207 | 1.502 | 2.83 | S1 subunit |
+| 1 | 215 | 0.881 | 1.84 | S1 subunit |
+| 2 | 373 | 0.872 | 1.83 | S1 subunit |
+| 3 | 410 | 0.822 | 1.77 | S1 subunit |
+| 4 | 407 | 0.814 | 1.76 | S1 subunit |
+| 5 | 18 | 0.812 | 1.76 | S1 subunit |
+| 6 | 378 | 0.811 | 1.75 | S1 subunit |
+| 7 | 26 | 0.804 | 1.75 | S1 subunit |
+| 8 | 94 | 0.799 | 1.74 | S1 subunit |
+| 9 | 66 | 0.798 | 1.74 | S1 subunit |
+| 10 | 983 | 0.797 | 1.74 | S2 subunit |
 
 ## 11. Mutation Analysis
 
 | Metric | Value |
 |--------|-------|
 | Sequences compared | 1,298 |
-| **Mean mutations/seq** | **260.8 (20.4%)** |
-| Max | 1202 (94.2%) |
-| Min | 0 (0.0%) |
+| **Mean mutations/seq** | **11.1 (0.9%)** |
+| Max | 38 (3.0%) |
+| Min | 6 (0.5%) |
 
 ### Top Mutation Hotspots
 
 | Rank | Pos | Mutations | % |
 |------|-----|-----------|-----|
-| 1 | 852 | 506 | 39.0% |
-| 2 | 404 | 497 | 38.3% |
-| 3 | 492 | 490 | 37.8% |
-| 4 | 401 | 485 | 37.4% |
-| 5 | 372 | 481 | 37.1% |
-| 6 | 977 | 474 | 36.5% |
-| 7 | 209 | 473 | 36.4% |
-| 8 | 138 | 472 | 36.4% |
-| 9 | 207 | 469 | 36.1% |
-| 10 | 208 | 469 | 36.1% |
+| 1 | 214 | 1020 | 78.6% |
+| 2 | 212 | 1000 | 77.0% |
+| 3 | 213 | 1000 | 77.0% |
+| 4 | 24 | 982 | 75.7% |
+| 5 | 23 | 982 | 75.7% |
+| 6 | 25 | 982 | 75.7% |
+| 7 | 68 | 427 | 32.9% |
+| 8 | 69 | 427 | 32.9% |
+| 9 | 410 | 341 | 26.3% |
+| 10 | 18 | 340 | 26.2% |
 
 ## 12. Perplexity Analysis
 
@@ -230,53 +231,50 @@ Co-evolution ratio = PP(j) / PP(j|i). Ratio > 1 means position i constrains j.
 
 | Pair | Marginal PP | Conditional PP | Ratio |
 |------|------------|----------------|-------|
-| (372,401) | 3.185 | 1.134 | **2.81×** |
-| (401,404) | 3.271 | 1.211 | **2.70×** |
-| (208,209) | 3.063 | 1.106 | **2.77×** |
 
 **Finding:** Conditional perplexity ≈ 1.0 at strongest pairs = near-**deterministic** co-evolution.
 
 ## 13. Variant Classification
 
-**40** unique co-evolution signatures from 5 position pairs:
+**24** unique co-evolution signatures from 5 position pairs:
 
 | Cluster | Count | % |
 |---------|-------|-----|
-| 1 | 799 | 61.5% |
-| 2 | 246 | 18.9% |
-| 3 | 108 | 8.3% |
-| 4 | 31 | 2.4% |
-| 5 | 30 | 2.3% |
+| 1 | 941 | 72.4% |
+| 2 | 272 | 20.9% |
+| 3 | 20 | 1.5% |
+| 4 | 20 | 1.5% |
+| 5 | 15 | 1.2% |
 
 ## 14. Algorithms That Failed (Informative Failures)
 
 | Algorithm | Accuracy | Why |
 |-----------|----------|-----|
-| LOO-CV | 2.93% (80/2726) | Lineage-specific references |
-| DCA Boolean | 17.6% | Singular covariance matrix |
+| LOO-CV | 9.24% (301/3259) | Lineage-specific references |
+| DCA Boolean | 0.0% | Singular covariance matrix |
 | Flipped Boolean | 0 forbidden pairs | All observed with 1,299 seqs |
-| Constraint function | 5.8% | All C < 0 (no positive signal) |
+| Constraint function | 0.1% | All C < 0 (no positive signal) |
 
 ## 15. Complete Numerical Summary
 
 | Category | Metric | Value |
 |----------|--------|-------|
 | Dataset | Sequences / Length | 1,299 / 1276 |
-| | Variable positions | 1,249 (97.9%) |
+| | Variable positions | 21 (1.6%) |
 | H1 | Enrichment | 1.34× |
 | Binary K-map | On-set / PIs / EPIs | 93 / 70 / 38 |
 | | Prediction accuracy | 50.7% |
 | N-ary K-map | On-set / PIs / EPIs | 93 / 73 / 42 |
 | | Strong couplings | 337 |
-| Position | Co-evolving pairs | 36,918 |
-| | Inference rules | 152 |
-| Network | Nodes / Edges | 1249 / 35098 |
-| | Hub | Position 85 (degree 60) |
-| Mutations | Mean / Max | 260.8 / 1202 |
-| Perplexity | Max ratio | 2.81× |
-| Variants | Unique signatures | 40 |
+| Position | Co-evolving pairs | 10 |
+| | Inference rules | 3 |
+| Network | Nodes / Edges | 21 / 8 |
+| | Hub | Position 210 (degree 2) |
+| Mutations | Mean / Max | 11.1 / 38 |
+| Perplexity | Max ratio | n/a (no pairs with PP>3) |
+| Variants | Unique signatures | 24 |
 | Couplings | All C < 0 | Purifying selection |
-| Compute | Time | 2.9s (A100) |
+| Compute | Time | 4.6s (A100) |
 
 ## 16. Script Index (All 18 Scripts)
 
@@ -305,12 +303,12 @@ Co-evolution ratio = PP(j) / PP(j|i). Ratio > 1 means position i constrains j.
 
 1. **K-map framework validated**: 1.34× H1 enrichment proves Gray code captures biochemistry
 2. **50.7% sequence-level prediction**: Boolean function achieves best predictive result, doubles with more data
-3. **Co-evolution is near-deterministic**: Conditional perplexity ≈ 1.0 at strongest pairs (1.134)
+3. **Co-evolution is near-deterministic**: n/a (no pairs with PP>3)
 4. **Purifying selection dominates**: ALL coupling constants C < 0
-5. **Protein is a single network**: 1249 nodes, 35098 edges, position 85 as hub
-6. **Lineage-specific co-evolution**: Global LOO-CV 2.93% — rules don't generalize across variants
-7. **27 conserved positions**: Universal vaccine targets
-8. **1,249/1276 positions variable**: Nearly entire protein under evolutionary constraint
+5. **Protein is a single network**: 21 nodes, 8 edges, position 210 as hub
+6. **Lineage-specific co-evolution**: Global LOO-CV 9.24% — rules don't generalize across variants
+7. **1255 conserved positions**: Universal vaccine targets
+8. **21/1276 positions variable**: Nearly entire protein under evolutionary constraint
 
 ## 18. Generated Output Files
 

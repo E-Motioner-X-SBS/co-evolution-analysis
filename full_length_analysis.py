@@ -40,7 +40,7 @@ def parse_fasta(filepath):
 def compute_entropy(pos_arrays, pos, n_seqs):
     counts = Counter()
     for arr in pos_arrays[:n_seqs]:
-        if pos < len(arr) and arr[pos] >= 0:
+        if pos < len(arr) and 0 <= arr[pos] < 20:
             counts[int(arr[pos])] += 1
     total = sum(counts.values())
     if total == 0:
@@ -72,9 +72,9 @@ def main():
     print("\n[2/4] Building position arrays (full length)...")
     pos_arrays = []
     for _, seq in sequences:
-        clean = "".join(aa for aa in seq if aa in encoder.encode)
+        # CORRECTED: aligned columns, gap = 20 (was gap-stripped, misaligned)
         arr = np.array(
-            [encoder.encode.get(aa, -1) for aa in clean[:full_length]], dtype=np.int32
+            [encoder.encode.get(aa, 20) for aa in seq[:full_length]], dtype=np.int32
         )
         pos_arrays.append(arr)
 
@@ -158,19 +158,23 @@ def main():
                 ref_i = Counter(
                     int(a[pos_i])
                     for a in pos_arrays[:n_all]
-                    if pos_i < len(a) and a[pos_i] >= 0
+                    if pos_i < len(a) and 0 <= a[pos_i] < 20
                 ).most_common(1)[0][0]
                 ref_j = Counter(
                     int(a[pos_j])
                     for a in pos_arrays[:n_all]
-                    if pos_j < len(a) and a[pos_j] >= 0
+                    if pos_j < len(a) and 0 <= a[pos_j] < 20
                 ).most_common(1)[0][0]
 
                 joint, marg_i, marg_j = Counter(), Counter(), Counter()
                 for arr in pos_arrays[:n_all]:
                     if pos_i < len(arr) and pos_j < len(arr):
                         ci, cj = int(arr[pos_i]), int(arr[pos_j])
-                        if ci >= 0 and cj >= 0 and (ci != ref_i or cj != ref_j):
+                        if (
+                            0 <= ci < 20
+                            and 0 <= cj < 20
+                            and (ci != ref_i or cj != ref_j)
+                        ):
                             joint[(ci, cj)] += 1
                             marg_i[ci] += 1
                             marg_j[cj] += 1

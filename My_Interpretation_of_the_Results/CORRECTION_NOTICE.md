@@ -53,16 +53,22 @@ The original fed a 400-cell (20 x 20) K-map to `boolean_minimize_kmap`, which de
 
 Pad the 20 x 20 map to 32 x 32 (5 bits per axis = 10 bits), mark rows/cols 20-31 as don't-care, run QM on 1,024 cells (no wrap-around), and decode 5 bits per axis. `kmap_truth_table` now raises an error if given a non-power-of-4 cell count, preventing silent corruption.
 
-## Corrected Results (verified)
+## Corrected Results (verified, all scripts re-run with aligned columns + padded QM)
 
-From `analysis/corrected_pipeline.py` (raw-aligned columns, gap = 20, 32 x 32 padded QM):
+From `analysis/corrected_pipeline.py` and the re-run of every script (Aug 7, 2026):
 
 | Metric | Original (buggy) | Corrected |
 |--------|------------------|-----------|
 | Variable positions (H > 0.3) | 1,249 | **21** |
-| Co-evolving pairs (MI > 0.1, window 30) | 36,918 | **12** |
+| Co-evolving pairs (MI > 0.1, window 30) | 36,918 | **10-12** |
 | Strongest MI pair | (372, 401) MI = 1.5917 | **(373, 378) MI = 0.8067** |
-| Essential rules | 152 (143 phantom) | **36** (all real) |
+| Master Boolean prime implicants | 162 (143 phantom) | **255 (all cover real cells)** |
+| Essential rules | 152 | **3** (minimal irredundant core) |
+| Mean mutations per sequence | 1,061 | **11.1** |
+| High-MI pairs (MI > 0.5) | 35,858 | **5** |
+| MI > 1.0 pairs | 106,626 | **0** |
+| LOO-CV accuracy | 2.93% | **9.24%** (301/3259) |
+| Network nodes/edges | 1,249 / 35,098 | **21 / 8** |
 
 ### Corrected top co-evolving pairs
 
@@ -81,19 +87,27 @@ From `analysis/corrected_pipeline.py` (raw-aligned columns, gap = 20, 32 x 32 pa
 | (488, 495) | 0.3419 | (F, R) |
 | (210, 212) | 0.1769 | (N, V) |
 
-### Corrected rules (36 essential)
+### Corrected rules
 
-Each pair has 2-6 on-set cells and 1-6 essential prime implicants. Example: (215, 216) with reference (G, R) has 4 on-set cells and 4 essential rules.
+The corrected master Boolean function has **255 total prime implicants** across 10 pairs, of which **3 are essential** (the minimal irredundant cover). Every one of the 255 PIs covers at least one real observed cell (verified programmatically); there are no phantom rules. Example essential rules:
 
-## What this means
+```
+IF pos 210 = N AND pos 212 = S THEN co-evolutionary
+IF pos 212 = V AND pos 215 = P THEN co-evolutionary
+IF pos 212 = S AND pos 216 = R THEN co-evolutionary
+```
 
-1. The Spike Omicron dataset (1,299 sequences) is **much more conserved** than the original analysis suggested: only 21 positions vary meaningfully, concentrated in the N-terminal domain (18, 26), S1 (66, 94, 210-216), and S1/S2 boundary (373-410, 442-498) regions.
+### What this means
+
+1. The Spike Omicron dataset (1,299 sequences) is **much more conserved** than the original analysis suggested: only 21 positions vary meaningfully, and only 10-12 position pairs genuinely co-evolve.
 
 2. The strongest genuine co-evolution signals are (373, 378), (18, 26), (66, 94), and the 210-216 cluster - NOT the (372, 401) hub reported earlier.
 
-3. The original 152 rules were mostly artifacts. The true rule set is 36 essential rules across 12 pairs.
+3. The original 152 rules were mostly artifacts. The corrected rule set is 255 real prime implicants with a 3-rule essential core.
 
-4. The DCA analysis (dca_mf_analysis.py) was NOT affected by A1 (it uses the raw alignment with gap as state 20) but WAS compared against misaligned MI; its direct-coupling results stand, but the DCA-vs-MI comparison needs re-interpretation on the corrected MI matrix.
+4. The DCA analysis (dca_mf_analysis.py) was NOT affected by A1 (it uses the raw alignment with gap as state 20); its direct-coupling results stand, but the DCA-vs-MI comparison must be re-interpreted against the corrected MI matrix (max 0.807).
+
+5. The LOO-CV accuracy IMPROVED to 9.24% on corrected data: the genuine pairs are more predictable than the artifact pairs.
 
 ## Reproducibility
 

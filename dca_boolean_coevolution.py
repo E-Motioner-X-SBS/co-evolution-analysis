@@ -60,9 +60,8 @@ def build_position_arrays(sequences, encoder, max_pos=200):
     """Pre-compute position arrays."""
     pos_arrays = []
     for _, seq in sequences:
-        clean = "".join(aa for aa in seq if aa in encoder.encode)
         arr = np.array(
-            [encoder.encode.get(aa, -1) for aa in clean[:max_pos]], dtype=np.int32
+            [encoder.encode.get(aa, 20) for aa in seq[:max_pos]], dtype=np.int32
         )
         pos_arrays.append(arr)
     return pos_arrays
@@ -82,7 +81,7 @@ def compute_covariance_matrix(pos_arrays, pos_i, pos_j, n_seqs):
     for arr in pos_arrays[:n_seqs]:
         if pos_i < len(arr) and pos_j < len(arr):
             ci, cj = int(arr[pos_i]), int(arr[pos_j])
-            if ci >= 0 and cj >= 0:
+            if 0 <= ci < 20 and 0 <= cj < 20:
                 joint[ci, cj] += 1
 
     total = joint.sum()
@@ -140,8 +139,14 @@ def threshold_to_boolean(J, threshold_percentile=75):
 
 
 def minimize_boolean(J_bool):
-    """Run Quine-McCluskey on Boolean coupling matrix."""
-    bool_flat = J_bool.flatten().astype(int)
+    """Run Quine-McCluskey on Boolean coupling matrix.
+
+    CORRECTED (FIX A2): pad 20x20 -> 32x32 (rows/cols 20-31 don't-care)
+    so QM uses 10 bits and cannot wrap cells 256-399.
+    """
+    padded = np.full((32, 32), -1, dtype=int)
+    padded[:20, :20] = J_bool
+    bool_flat = padded.flatten().astype(int)
     result = boolean_minimize_kmap(bool_flat, algorithm="qm")
     return result
 
@@ -171,7 +176,7 @@ def predict_from_J(J, pos_i, pos_j, pos_arrays, n_seqs, train_end=800):
     for arr in test_arrays:
         if pos_i < len(arr) and pos_j < len(arr):
             ci, cj = int(arr[pos_i]), int(arr[pos_j])
-            if ci >= 0 and cj >= 0:
+            if 0 <= ci < 20 and 0 <= cj < 20:
                 # Given residue ci at pos_i, predict best cj at pos_j
                 predicted_j = np.argmax(J_train[ci, :])
                 if predicted_j == cj:
@@ -216,7 +221,7 @@ def main():
         # variable positions (entropy > 0.3)
         vp = []
         for p in range(full_length):
-            cnt = _C(int(a[p]) for a in pos_arrays if p < len(a) and a[p] >= 0)
+            cnt = _C(int(a[p]) for a in pos_arrays if p < len(a) and 0 <= a[p] < 20)
             t = sum(cnt.values())
             if t == 0:
                 continue
@@ -294,13 +299,13 @@ def main():
         for pi_idx, pi in enumerate(result["essential_prime_implicants"]):
             values = list(pi["values"])
             mask = list(pi["mask"])
-            while len(values) < 8:
+            while len(values) < 10:
                 values.append(0)
                 mask.append(False)
 
-            row_code = sum(values[j] * (2 ** (3 - j)) for j in range(4) if not mask[j])
+            row_code = sum(values[j] * (2 ** (4 - j)) for j in range(5) if not mask[j])
             col_code = sum(
-                values[j + 4] * (2 ** (3 - j)) for j in range(4) if not mask[j + 4]
+                values[j + 5] * (2 ** (4 - j)) for j in range(5) if not mask[j + 5]
             )
 
             row_aa = aa_list[row_code % 20] if row_code < 20 else "?"

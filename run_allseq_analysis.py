@@ -46,12 +46,12 @@ def build_position_arrays(sequences, encoder, max_pos=None):
     pos_arrays = []
     min_len = 999999
     for _, seq in sequences:
-        clean = "".join(aa for aa in seq if aa in encoder.encode)
+        # CORRECTED: aligned columns, gap = 20 (was gap-stripped, misaligned)
         if max_pos is None:
-            arr = np.array([encoder.encode.get(aa, -1) for aa in clean], dtype=np.int32)
+            arr = np.array([encoder.encode.get(aa, 20) for aa in seq], dtype=np.int32)
         else:
             arr = np.array(
-                [encoder.encode.get(aa, -1) for aa in clean[:max_pos]], dtype=np.int32
+                [encoder.encode.get(aa, 20) for aa in seq[:max_pos]], dtype=np.int32
             )
         pos_arrays.append(arr)
         min_len = min(min_len, len(arr))
@@ -94,7 +94,7 @@ def compute_mi_matrix(pos_arrays, n_seqs, max_pos, window=30):
     for idx, (i, j) in enumerate(pairs):
         codes_i = dense[:, i]
         codes_j = dense[:, j]
-        valid = (codes_i >= 0) & (codes_j >= 0)
+        valid = (0 <= codes_i < 20) & (0 <= codes_j < 20)
         ci = codes_i[valid]
         cj = codes_j[valid]
         if len(ci) < 10:
@@ -129,7 +129,7 @@ def build_position_kmap(pos_arrays, encoder, pos_i, pos_j, n_seqs):
     for arr in pos_arrays[:n_seqs]:
         if pos_i < len(arr) and pos_j < len(arr):
             ci, cj = int(arr[pos_i]), int(arr[pos_j])
-            if ci >= 0 and cj >= 0:
+            if 0 <= ci < 20 and 0 <= cj < 20:
                 kmap[ci, cj] += 1
     total = kmap.sum()
     if total > 0:
@@ -151,13 +151,18 @@ def compute_coupling(kmap):
 
 
 def minimize_kmap(kmap_2d):
-    """Run QM minimization on position-pair K-map."""
+    """Run QM minimization on position-pair K-map.
+
+    CORRECTED (FIX A2): pad 20x20 -> 32x32 so QM uses 10 bits (no wrap).
+    """
     nonzero = kmap_2d[kmap_2d > 0]
     if len(nonzero) == 0:
         return None
     threshold = np.percentile(nonzero, 70)
     kmap_bool = (kmap_2d >= threshold).astype(int)
-    bool_flat = kmap_bool.flatten().astype(int)
+    padded = np.full((32, 32), -1, dtype=int)
+    padded[:20, :20] = kmap_bool
+    bool_flat = padded.flatten().astype(int)
     result = boolean_minimize_kmap(bool_flat, algorithm="qm")
     return result, kmap_bool, threshold
 

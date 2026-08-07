@@ -130,8 +130,8 @@ pos_freq = np.zeros((full_len_actual, N_AA), dtype=np.float64)
 for arr in pos_arrays[:n_all]:
     L = min(len(arr), full_len_actual)
     for pos in range(L):
-        if arr[pos] >= 0:
-            pos_freq[pos, arr[pos]] += 1
+        if 0 <= arr[pos] < N_AA:
+            pos_freq[pos, int(arr[pos])] += 1
 pos_freq /= n_all
 
 consensus = []

@@ -55,13 +55,13 @@ def main():
     # all zeros → 0 rules. Fixed to use the full sequence length.
     pos_arrays = []
     for _, seq in sequences:
-        clean = "".join(aa for aa in seq if aa in encoder.encode)
-        arr = np.array([encoder.encode.get(aa, -1) for aa in clean], dtype=np.int32)
+        # CORRECTED: aligned columns, gap = 20 (was gap-stripped, misaligned)
+        arr = np.array([encoder.encode.get(aa, 20) for aa in seq], dtype=np.int32)
         pos_arrays.append(arr)
 
     def get_majority(pos, n):
         return Counter(
-            int(a[pos]) for a in pos_arrays[:n] if pos < len(a) and a[pos] >= 0
+            int(a[pos]) for a in pos_arrays[:n] if pos < len(a) and 0 <= a[pos] < 20
         ).most_common(1)[0][0]
 
     def compute_coupling(pos_i, pos_j, n):
@@ -69,7 +69,7 @@ def main():
         for arr in pos_arrays[:n]:
             if pos_i < len(arr) and pos_j < len(arr):
                 ci, cj = int(arr[pos_i]), int(arr[pos_j])
-                if ci >= 0 and cj >= 0:
+                if 0 <= ci < 20 and 0 <= cj < 20:
                     joint[ci, cj] += 1
         total = joint.sum()
         if total == 0:
@@ -133,11 +133,12 @@ def main():
         ref_j_code = aa_list.index(ref_j) if ref_j in aa_list else 0
 
         # Build K-map
-        kmap = np.zeros((20, 20), dtype=np.int32)
+        # CORRECTED (FIX A2): 32x32 padded, rows/cols 20-31 don't-care
+        kmap = np.full((32, 32), -1, dtype=np.int32)
         for arr in pos_arrays[:n_all]:
             if pos_i < len(arr) and pos_j < len(arr):
                 ci, cj = int(arr[pos_i]), int(arr[pos_j])
-                if ci >= 0 and cj >= 0:
+                if 0 <= ci < 20 and 0 <= cj < 20:
                     kmap[ci, cj] = 1 if (ci != ref_i_code or cj != ref_j_code) else -1
 
         # Run QM
