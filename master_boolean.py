@@ -46,11 +46,13 @@ def parse_fasta(filepath):
 
 
 def compute_entropy(pos_arrays, pos, n_seqs):
-    """Compute Shannon entropy at a position."""
+    """Compute Shannon entropy at a position (gaps excluded)."""
     counts = Counter()
     for arr in pos_arrays[:n_seqs]:
-        if pos < len(arr) and arr[pos] >= 0:
-            counts[int(arr[pos])] += 1
+        if pos < len(arr):
+            c = int(arr[pos])
+            if 0 <= c < 20:  # exclude gaps (20) and legacy -1
+                counts[c] += 1
     total = sum(counts.values())
     if total == 0:
         return 0.0
@@ -157,29 +159,52 @@ def find_coevolutionary_pairs(
 
 
 def build_mutation_kmap(pos_arrays, pos_i, pos_j, ref_i, ref_j, n_seqs):
-    """Build 20x20 K-map with don't-care conditions for mutations."""
-    kmap = np.zeros((20, 20), dtype=np.int32)
+    """Build 20x20 mutation K-map, padded to 32x32 for correct QM encoding.
+
+    CORRECTED (FIX A2): The original passed a 400-cell map to a QM that
+    derives k_bits = int(log2(400))//2 = 4 -> 8 bits, wrapping cells
+    256-399 onto 0-143 and producing phantom rules (verified: 143/152
+    rules had labels never observed). Fix: build the 20x20 mutation map,
+    pad to 32x32 (5 bits per axis = 10 bits total), rows/cols 20-31 as
+    don't-care (-1). All 20 residues are now representable.
+
+    CORRECTED (FIX A1): callers must pass ALIGNED position arrays
+    (gap = 20 state) so column j is the same raw position in every
+    sequence. Cells with gaps are excluded (gap-gap pairs are not
+    counted as mutations; positions with gap in a sequence are skipped).
+    """
+    kmap = np.full((32, 32), -1, dtype=np.int32)  # all don't-care
     for arr in pos_arrays[:n_seqs]:
         if pos_i < len(arr) and pos_j < len(arr):
             ci, cj = int(arr[pos_i]), int(arr[pos_j])
-            if ci >= 0 and cj >= 0:
-                kmap[ci, cj] = 1 if (ci != ref_i or cj != ref_j) else -1
+            # skip gaps (state 20) and legacy -1
+            if ci < 0 or cj < 0 or ci >= 20 or cj >= 20:
+                continue
+            if ci == ref_i and cj == ref_j:
+                kmap[ci, cj] = -1  # reference: don't-care
+            else:
+                kmap[ci, cj] = 1  # observed mutation
     return kmap
 
 
 def extract_prime_implicants(result, aa_list):
-    """Extract all prime implicants from QM result."""
+    """Extract all prime implicants from QM result.
+
+    CORRECTED (FIX A2): the QM now runs on a 32x32 (10-bit) map, so each
+    implicant has 10 bits: 5 for row, 5 for column. Values 20-31 on either
+    axis are padding (don't-care) and are rejected.
+    """
     pis = []
     for pi in result["prime_implicants"]:
         values = list(pi["values"])
         mask = list(pi["mask"])
-        while len(values) < 8:
+        while len(values) < 10:
             values.append(0)
             mask.append(False)
 
-        row_code = sum(values[j] * (2 ** (3 - j)) for j in range(4) if not mask[j])
+        row_code = sum(values[j] * (2 ** (4 - j)) for j in range(5) if not mask[j])
         col_code = sum(
-            values[j + 4] * (2 ** (3 - j)) for j in range(4) if not mask[j + 4]
+            values[j + 5] * (2 ** (4 - j)) for j in range(5) if not mask[j + 5]
         )
 
         if row_code < 20 and col_code < 20:
@@ -216,14 +241,13 @@ def main():
     full_length = len(sequences[0][1])
     print(f"  Total: {n_all} sequences")
 
-    # 2. Build position arrays
-    print("\n[2/5] Building position arrays...")
+    # 2. Build position arrays — CORRECTED (FIX A1): aligned columns, gap = 20
+    print("\n[2/5] Building position arrays (aligned, gap=20)...")
     max_pos = len(sequences[0][1])
     pos_arrays = []
     for _, seq in sequences:
-        clean = "".join(aa for aa in seq if aa in encoder.encode)
         arr = np.array(
-            [encoder.encode.get(aa, -1) for aa in clean[:max_pos]], dtype=np.int32
+            [encoder.encode.get(aa, 20) for aa in seq[:max_pos]], dtype=np.int32
         )
         pos_arrays.append(arr)
 
@@ -243,9 +267,9 @@ def main():
     )
     print(f"  {'-' * 5} {'-' * 5} {'-' * 8} {'-' * 8} {'-' * 5} {'-' * 5}")
     for pos_i, pos_j, mi, n, ref_i, ref_j in co_evolving[:20]:
-        print(
-            f"  {pos_i:5d} {pos_j:5d} {mi:8.4f} {n:8d} {aa_list[ref_i]:>5s} {aa_list[ref_j]:>5s}"
-        )
+        ri = aa_list[ref_i] if 0 <= ref_i < 20 else "?"
+        rj = aa_list[ref_j] if 0 <= ref_j < 20 else "?"
+        print(f"  {pos_i:5d} {pos_j:5d} {mi:8.4f} {n:8d} {ri:>5s} {rj:>5s}")
 
     # 4. Build prime implicants for all pairs
     print("\n[4/5] Building prime implicants...")

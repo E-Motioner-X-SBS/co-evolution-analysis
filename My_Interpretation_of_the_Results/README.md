@@ -1,5 +1,15 @@
 # My Interpretation of the Results
 
+> **READ THIS FIRST (Aug 7, 2026):** Two confirmed defects in the original
+> pipeline invalidated the biological numbers in the earlier documentation:
+> (A1) gap-stripping misaligned columns, (A2) 8-bit QM wrap-around corrupted
+> rule labels. The verified corrected results are: 21 variable positions,
+> 12 co-evolving pairs (top: (373,378) MI=0.807), 36 essential rules.
+> See [CORRECTION_NOTICE.md](CORRECTION_NOTICE.md) and
+> `analysis/corrected_pipeline.py`. Files marked with a CORRECTION banner
+> describe the original (buggy) run.
+
+
 A complete, from-first-principles interpretation of every script and algorithm in the co-evolution analysis of the SARS-CoV-2 Spike protein.
 
 **Dataset:** 1,299 SARS-CoV-2 Omicron Spike protein sequences from GISAID (`Spike_protein.aln-fasta`), 1,276 positions per sequence (full length), base-20 He 2012 amino acid encoding unless stated otherwise.
@@ -33,7 +43,28 @@ A complete, from-first-principles interpretation of every script and algorithm i
 | 19 | [19_perplexity_coevolution.md](19_perplexity_coevolution.md) | `perplexity_coevolution.py` | How much does one residue constrain another? |
 | 20 | [20_advanced_co-evolution_analysis.md](20_advanced_co-evolution_analysis.md) | `advanced_co-evolution_analysis.py` | Network, spectrum, signatures, clusters |
 | 21 | [21_report_generators.md](21_report_generators.md) | `generate_*.py` (3 scripts) | How are the reports built? |
-| 22 | [22_rules_and_sequence_generation.md](22_rules_and_sequence_generation.md) | 152 rules synthesis | Can the 152 rules generate new Omicron sequences? |
+| 22 | [22_rules_and_sequence_generation.md](22_rules_and_sequence_generation.md) | 152 rules synthesis (original, buggy) | Can the rules generate new Omicron sequences? |
+| 23 | [CORRECTION_NOTICE.md](CORRECTION_NOTICE.md) | The two verified defects and corrected results |
+
+## Discovery Analyses (analysis/ folder)
+
+| Script | Question | Output |
+|--------|----------|--------|
+| `analysis/corrected_pipeline.py` | What are the results after fixing both defects? | corrected_results.json |
+| `analysis/justify_top15.py` | Why 15 pairs and not 16? | top15_justification.json |
+| `analysis/perplexity_deep_dive.py` | What do perplexity ratios really tell us? | perplexity_deep_dive.json |
+| `analysis/dca_vs_mi_vs_ratio.py` | How do MI, perplexity ratio, and DCA compare? | dca_vs_mi_vs_ratio.json |
+
+## Statistical Summary of Corrected Results
+
+| Metric | Corrected value |
+|--------|-----------------|
+| Variable positions (H > 0.3) | 21 of 1,276 |
+| Co-evolving pairs (MI > 0.1, window 30) | 12 |
+| Strongest MI pair | (373, 378) MI = 0.8067 |
+| Essential rules | 36 |
+| Original (buggy) values | 1,249 / 36,918 / 1.5917 / 152 |
+
 
 ---
 

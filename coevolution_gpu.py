@@ -51,20 +51,20 @@ def dense_to_gpu(pos_arrays, device=None) -> torch.Tensor:
 
 
 def majority_refs_gpu(dense: torch.Tensor) -> torch.Tensor:
-    """Most common valid code per position → int32 [max_pos] tensor."""
+    """Most common valid residue code per position (gaps excluded) → int32 [max_pos]."""
     max_pos = dense.shape[1]
-    valid = (dense >= 0).float()  # [n, max_pos]
-    idx = dense.clamp(min=0).long()  # -1 → 0 (masked)
+    valid = ((dense >= 0) & (dense < N_AA)).float()  # exclude gap (20) and -1
+    idx = dense.clamp(min=0, max=N_AA - 1).long()  # clamp so scatter never OOB
     onehot = torch.zeros(max_pos, N_AA, dtype=torch.float32, device=dense.device)
     onehot.scatter_add_(1, idx.T, valid.T)  # [max_pos, 20] counts
     return onehot.argmax(dim=1).to(torch.int32)
 
 
 def compute_entropy_gpu(dense: torch.Tensor) -> torch.Tensor:
-    """Shannon entropy (bits) per position → float [max_pos]."""
+    """Shannon entropy (bits) per position, gaps excluded → float [max_pos]."""
     max_pos = dense.shape[1]
-    valid = (dense >= 0).float()
-    idx = dense.clamp(min=0).long()
+    valid = ((dense >= 0) & (dense < N_AA)).float()
+    idx = dense.clamp(min=0, max=N_AA - 1).long()
     onehot = torch.zeros(max_pos, N_AA, dtype=torch.float32, device=dense.device)
     onehot.scatter_add_(1, idx.T, valid.T)  # [max_pos, 20]
     totals = onehot.sum(dim=1, keepdim=True).clamp(min=1.0)
@@ -109,7 +109,9 @@ def mi_matrix_gpu(
 
         ci = dense[:, ii]  # [n, P]
         cj = dense[:, jj]
-        valid = (ci >= 0) & (cj >= 0)  # [n, P]
+        # CORRECTED (FIX A1): aligned arrays use gap = 20; exclude gaps (-1
+        # legacy, 20 = gap) so MI is computed only over observed residue pairs.
+        valid = (ci >= 0) & (ci < N_AA) & (cj >= 0) & (cj < N_AA)  # [n, P]
 
         if mutation_only and refs is not None:
             ref_i = refs[ii]  # [P]
@@ -117,7 +119,12 @@ def mi_matrix_gpu(
             is_ref = (ci == ref_i[None, :]) & (cj == ref_j[None, :])
             valid = valid & ~is_ref
 
-        flat = ci.clamp(min=0).long() * N_AA + cj.clamp(min=0).long()
+        # CORRECTED (FIX A1): valid = residues only (0-19); gaps/legacy excluded.
+        # Clamp flat to [0, 399] so scatter_add never sees an out-of-range index.
+        flat = (
+            ci.clamp(min=0, max=N_AA - 1).long() * N_AA
+            + cj.clamp(min=0, max=N_AA - 1).long()
+        )
         flat = flat.masked_fill(~valid, 0)
 
         joint = torch.zeros(P, N_AA * N_AA, dtype=torch.float32, device=device)
@@ -167,11 +174,11 @@ def coupling_matrix_gpu(
     device = dense.device
     ci = dense[:, pos_i].long()
     cj = dense[:, pos_j].long()
-    valid = (ci >= 0) & (cj >= 0)
+    valid = (ci >= 0) & (ci < N_AA) & (cj >= 0) & (cj < N_AA)
     if mutation_only and refs is not None:
         is_ref = (ci == int(refs[pos_i])) & (cj == int(refs[pos_j]))
         valid = valid & ~is_ref
-    flat = ci.clamp(min=0) * N_AA + cj.clamp(min=0)
+    flat = ci.clamp(min=0, max=N_AA - 1) * N_AA + cj.clamp(min=0, max=N_AA - 1)
     flat = flat.masked_fill(~valid, 0)
     joint = torch.zeros(N_AA * N_AA, dtype=torch.float32, device=device)
     joint.scatter_add_(0, flat, valid.float())

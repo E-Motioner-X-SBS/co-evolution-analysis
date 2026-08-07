@@ -63,17 +63,29 @@ def parse_fasta(filepath):
 # ══════════════════════════════════════════════════════════════════════
 
 
-def load_position_arrays(fasta_path=None, max_pos=None, n_seqs=None, clear_cache=False):
+def load_position_arrays(
+    fasta_path=None, max_pos=None, n_seqs=None, clear_cache=False, aligned=True
+):
     """Load FASTA, He 2012 encode, return (pos_arrays, n_all, full_len).
 
-    max_pos=None → FULL sequence length (all positions).
+    max_pos=None -> FULL sequence length (all positions).
     Cached on first call. Pass clear_cache=True to force reload.
+
+    aligned=True (CORRECTED, default): keep the full alignment; encode '-'
+    and unknown characters as 20 (21 states). Every sequence has the same
+    length, so column j is the same raw alignment position in every sequence.
+
+    aligned=False (LEGACY, BUGGY): strip gaps, so column j mixes different
+    raw positions across sequences. This was the original behavior and is
+    kept only for reproducing the buggy results; it produces artifacts
+    (1,249 fake 'variable' positions, fake MI hubs). See analysis/
+    corrected_pipeline.py and the correction document.
     """
     if fasta_path is None:
         fasta_path = Path(__file__).resolve().parent / "Spike_protein.aln-fasta"
     fasta_path = Path(fasta_path)
 
-    cache_key = ("pos_arrays", str(fasta_path), max_pos, n_seqs)
+    cache_key = ("pos_arrays", str(fasta_path), max_pos, n_seqs, aligned)
     if not clear_cache and cache_key in _CACHE:
         return _CACHE[cache_key]
 
@@ -88,11 +100,19 @@ def load_position_arrays(fasta_path=None, max_pos=None, n_seqs=None, clear_cache
 
     pos_arrays = []
     for _, seq in seqs_raw[:n_all]:
-        clean = "".join(aa for aa in seq if aa in encoder.encode)
-        arr = np.array(
-            [encoder.encode.get(aa, -1) for aa in clean[:actual_max]],
-            dtype=np.int32,
-        )
+        if aligned:
+            # CORRECTED: keep alignment, gap/unknown = 20
+            arr = np.array(
+                [encoder.encode.get(aa, 20) for aa in seq[:actual_max]],
+                dtype=np.int32,
+            )
+        else:
+            # LEGACY (buggy): strip gaps -> column misalignment
+            clean = "".join(aa for aa in seq if aa in encoder.encode)
+            arr = np.array(
+                [encoder.encode.get(aa, -1) for aa in clean[:actual_max]],
+                dtype=np.int32,
+            )
         pos_arrays.append(arr)
 
     result = (pos_arrays, n_all, full_len)

@@ -1,0 +1,275 @@
+{
+  "fix_A1": "aligned columns, gaps = state 20 (was: gap-stripped, misaligned)",
+  "fix_A2": "32x32 padded QM, 10-bit, 5 bits per axis (was: 400 cells in 8 bits, wrap-around)",
+  "n_sequences": 1299,
+  "n_positions": 1276,
+  "n_variable_positions": 21,
+  "top_variable": [
+    {
+      "pos": 215,
+      "H": 0.881
+    },
+    {
+      "pos": 373,
+      "H": 0.872
+    },
+    {
+      "pos": 410,
+      "H": 0.8219
+    },
+    {
+      "pos": 407,
+      "H": 0.814
+    },
+    {
+      "pos": 18,
+      "H": 0.8116
+    },
+    {
+      "pos": 378,
+      "H": 0.811
+    },
+    {
+      "pos": 26,
+      "H": 0.8039
+    },
+    {
+      "pos": 94,
+      "H": 0.7995
+    },
+    {
+      "pos": 66,
+      "H": 0.7979
+    },
+    {
+      "pos": 983,
+      "H": 0.7966
+    },
+    {
+      "pos": 549,
+      "H": 0.7941
+    },
+    {
+      "pos": 858,
+      "H": 0.7905
+    },
+    {
+      "pos": 210,
+      "H": 0.7853
+    },
+    {
+      "pos": 498,
+      "H": 0.781
+    },
+    {
+      "pos": 216,
+      "H": 0.7642
+    },
+    {
+      "pos": 448,
+      "H": 0.7565
+    },
+    {
+      "pos": 212,
+      "H": 0.4617
+    },
+    {
+      "pos": 495,
+      "H": 0.4549
+    },
+    {
+      "pos": 454,
+      "H": 0.4218
+    },
+    {
+      "pos": 488,
+      "H": 0.4136
+    }
+  ],
+  "n_coevolving_pairs_MI01": 12,
+  "top_mi_pairs": [
+    {
+      "pos_i": 373,
+      "pos_j": 378,
+      "mi": 0.8067
+    },
+    {
+      "pos_i": 18,
+      "pos_j": 26,
+      "mi": 0.8024
+    },
+    {
+      "pos_i": 378,
+      "pos_j": 407,
+      "mi": 0.792
+    },
+    {
+      "pos_i": 66,
+      "pos_j": 94,
+      "mi": 0.7907
+    },
+    {
+      "pos_i": 215,
+      "pos_j": 216,
+      "mi": 0.7571
+    },
+    {
+      "pos_i": 210,
+      "pos_j": 215,
+      "mi": 0.7532
+    },
+    {
+      "pos_i": 407,
+      "pos_j": 410,
+      "mi": 0.7495
+    },
+    {
+      "pos_i": 210,
+      "pos_j": 216,
+      "mi": 0.7453
+    },
+    {
+      "pos_i": 212,
+      "pos_j": 215,
+      "mi": 0.3977
+    },
+    {
+      "pos_i": 212,
+      "pos_j": 216,
+      "mi": 0.3773
+    },
+    {
+      "pos_i": 488,
+      "pos_j": 495,
+      "mi": 0.3419
+    },
+    {
+      "pos_i": 210,
+      "pos_j": 212,
+      "mi": 0.1769
+    }
+  ],
+  "top15_rules": [
+    {
+      "pos_i": 373,
+      "pos_j": 378,
+      "mi": 0.8067,
+      "ref_i": "F",
+      "ref_j": "A",
+      "n_on": 3,
+      "n_PI": 8,
+      "n_essential": 2
+    },
+    {
+      "pos_i": 18,
+      "pos_j": 26,
+      "mi": 0.8024,
+      "ref_i": "I",
+      "ref_j": "S",
+      "n_on": 2,
+      "n_PI": 7,
+      "n_essential": 2
+    },
+    {
+      "pos_i": 378,
+      "pos_j": 407,
+      "mi": 0.792,
+      "ref_i": "A",
+      "ref_j": "N",
+      "n_on": 2,
+      "n_PI": 7,
+      "n_essential": 1
+    },
+    {
+      "pos_i": 66,
+      "pos_j": 94,
+      "mi": 0.7907,
+      "ref_i": "A",
+      "ref_j": "T",
+      "n_on": 2,
+      "n_PI": 7,
+      "n_essential": 2
+    },
+    {
+      "pos_i": 215,
+      "pos_j": 216,
+      "mi": 0.7571,
+      "ref_i": "G",
+      "ref_j": "R",
+      "n_on": 4,
+      "n_PI": 9,
+      "n_essential": 4
+    },
+    {
+      "pos_i": 210,
+      "pos_j": 215,
+      "mi": 0.7532,
+      "ref_i": "N",
+      "ref_j": "G",
+      "n_on": 4,
+      "n_PI": 9,
+      "n_essential": 4
+    },
+    {
+      "pos_i": 407,
+      "pos_j": 410,
+      "mi": 0.7495,
+      "ref_i": "N",
+      "ref_j": "S",
+      "n_on": 2,
+      "n_PI": 6,
+      "n_essential": 1
+    },
+    {
+      "pos_i": 210,
+      "pos_j": 216,
+      "mi": 0.7453,
+      "ref_i": "N",
+      "ref_j": "R",
+      "n_on": 4,
+      "n_PI": 9,
+      "n_essential": 4
+    },
+    {
+      "pos_i": 212,
+      "pos_j": 215,
+      "mi": 0.3977,
+      "ref_i": "V",
+      "ref_j": "G",
+      "n_on": 4,
+      "n_PI": 8,
+      "n_essential": 4
+    },
+    {
+      "pos_i": 212,
+      "pos_j": 216,
+      "mi": 0.3773,
+      "ref_i": "V",
+      "ref_j": "R",
+      "n_on": 6,
+      "n_PI": 10,
+      "n_essential": 6
+    },
+    {
+      "pos_i": 488,
+      "pos_j": 495,
+      "mi": 0.3419,
+      "ref_i": "F",
+      "ref_j": "R",
+      "n_on": 3,
+      "n_PI": 7,
+      "n_essential": 3
+    },
+    {
+      "pos_i": 210,
+      "pos_j": 212,
+      "mi": 0.1769,
+      "ref_i": "N",
+      "ref_j": "V",
+      "n_on": 4,
+      "n_PI": 8,
+      "n_essential": 3
+    }
+  ],
+  "total_essential_rules": 36
+}

@@ -1,3 +1,11 @@
+> **CORRECTION (Aug 7, 2026):** Two confirmed defects in the original pipeline
+> (gap-stripping column misalignment; 8-bit QM wrap-around on 400-cell maps)
+> invalidated the biological numbers in this file. See
+> [CORRECTION_NOTICE.md](CORRECTION_NOTICE.md) for the verified corrected
+> results (21 variable positions, 12 co-evolving pairs, 36 rules) and the
+> corrected pipeline (analysis/corrected_pipeline.py). Numbers in this file
+> describe the original (buggy) run unless stated otherwise.
+
 # 04. boolean_co-evolution.py - Binary K-map Boolean Minimization
 
 ## What the Program Does
