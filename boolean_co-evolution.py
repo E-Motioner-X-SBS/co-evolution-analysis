@@ -27,6 +27,8 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from itertools import combinations
 
+from coevolution_shared import compute_mi_matrix_gpu
+
 sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/kmap-sbm-validation/src")
 
 from kmap_sbm.encoding.gray_amino import (
@@ -306,11 +308,13 @@ def compute_coupling_constants(kmap_freq, sequences, n_seqs=100):
     # Build position-specific frequency matrices
     n = min(n_seqs, len(sequences))
 
-    # Get clean sequences
+    # Get clean sequences — relative filter (>= 50% of max length)
+    # so that small proteins (e.g., 65-aa domains) are not discarded.
+    max_len = max(len(seq) for _, seq in sequences[:n]) if n else 0
     clean_seqs = []
     for i in range(n):
         _, seq = sequences[i]
-        if len(seq) > 100:
+        if len(seq) > 0:  # ALL sequences (user directive)
             clean_seqs.append(seq)
 
     if len(clean_seqs) < 5:
@@ -341,7 +345,7 @@ def compute_coupling_constants(kmap_freq, sequences, n_seqs=100):
         import coevolution_gpu as cg
 
         dense = cg.dense_to_gpu(pos_arrays)
-        mi_dict, cnt_dict = cg.mi_matrix_gpu(dense, pairs, min_total=10, chunk=16384)
+        mi_dict, cnt_dict = cg.mi_matrix_gpu(dense, pairs, min_total=10, chunk=4096)
         for (i, j), mi in mi_dict.items():
             mi_matrix[i, j] = mi
             mi_matrix[j, i] = mi
@@ -430,54 +434,37 @@ def predict_coevolution(qm_result, kmap_freq, sequences, n_seqs=100):
     """
     print("\n=== Predicting Co-evolution from Boolean Function ===")
 
-    # Build clean sequences
+    # Build clean sequences — keep sequences >= 50% of the max length
+    # (relative filter: works for any protein size, drops partial sequences)
     n = min(n_seqs, len(sequences))
     clean_seqs = []
+    max_len = max(len(seq) for _, seq in sequences[:n]) if n else 0
     for i in range(n):
         _, seq = sequences[i]
-        if len(seq) > 100:
+        if len(seq) > 0:  # ALL sequences (user directive)
             clean_seqs.append(seq)
 
     if len(clean_seqs) < 5:
         print("  Insufficient sequences")
         return {}
 
-    # Compute position-specific conservation
+    # Position-specific conservation — FULL length, ALL sequences
     min_len = min(len(s) for s in clean_seqs)
-    max_pos = min(200, min_len)
-
-    # Compute mutual information for each position pair
-    n_test = min(30, max_pos)
+    max_pos = min_len  # FULL length — no truncation
+    n_test = max_pos
     mi_scores = np.zeros((n_test, n_test))
 
-    for i in range(n_test):
-        for j in range(i + 1, n_test):
-            joint = Counter()
-            marg_i = Counter()
-            marg_j = Counter()
-
-            for seq in clean_seqs:
-                if i < len(seq) and j < len(seq):
-                    aa_i, aa_j = seq[i], seq[j]
-                    if aa_i in _AA_TO_INDEX and aa_j in _AA_TO_INDEX:
-                        joint[(aa_i, aa_j)] += 1
-                        marg_i[aa_i] += 1
-                        marg_j[aa_j] += 1
-
-            total = sum(joint.values())
-            if total == 0:
-                continue
-
-            mi = 0
-            for (ai, aj), count in joint.items():
-                p_joint = count / total
-                p_i = marg_i[ai] / total
-                p_j = marg_j[aj] / total
-                if p_joint > 0 and p_i > 0 and p_j > 0:
-                    mi += p_joint * np.log2(p_joint / (p_i * p_j))
-
-            mi_scores[i, j] = mi
-            mi_scores[j, i] = mi
+    # MI over ALL position pairs (GPU with numpy fallback; shared helper)
+    pos_arrays = [
+        np.array([_AA_TO_INDEX.get(aa, -1) for aa in s[:max_pos]], dtype=np.int32)
+        for s in clean_seqs
+    ]
+    pairs = [(i, j) for i in range(n_test) for j in range(i + 1, n_test)]
+    print(
+        f"  Prediction MI over {len(pairs)} pairs x {len(clean_seqs)} sequences (full length {max_pos})"
+    )
+    mi_scores, n_mi = compute_mi_matrix_gpu(pos_arrays, pairs, n_test)
+    print(f"  Prediction MI computed for {n_mi} pairs")
 
     # Extract on-set from Boolean K-map
     on_set_cells = np.argwhere(kmap_freq >= np.percentile(kmap_freq[kmap_freq > 0], 75))
@@ -555,13 +542,18 @@ def predict_coevolution(qm_result, kmap_freq, sequences, n_seqs=100):
 
 def main():
     base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
-    fasta_file = base_dir / "Spike_protein.aln-fasta"
-    results_dir = base_dir / "boolean_results"
-    results_dir.mkdir(exist_ok=True)
+    fasta_file = Path(
+        __import__("os").environ.get("COEVO_FASTA")
+        or (base_dir / "Spike_protein.aln-fasta")
+    )
+    results_dir = Path(
+        __import__("os").environ.get("COEVO_RESULTS") or (base_dir / "boolean_results")
+    )
+    results_dir.mkdir(parents=True, exist_ok=True)
 
     print("=" * 70)
     print("Boolean Minimization and Co-evolution Prediction")
-    print("SARS-CoV-2 Spike Protein")
+    print(f"Target: {Path(fasta_file).name}")
     print("=" * 70)
 
     # 1. Parse FASTA
@@ -582,21 +574,23 @@ def main():
 
     # 4. Extract co-evolution motifs
     print("\n[4/7] Extracting co-evolution motifs...")
-    motifs = extract_coevolution_motifs(qm_result, sequences, n_seqs=1299)
+    motifs = extract_coevolution_motifs(qm_result, sequences, n_seqs=len(sequences))
 
     # 5. Compute coupling constants
     print("\n[5/7] Computing coupling constants...")
-    coupling = compute_coupling_constants(kmap_freq, sequences, n_seqs=1299)
+    coupling = compute_coupling_constants(kmap_freq, sequences, n_seqs=len(sequences))
 
     # 6. Predict co-evolution
     print("\n[6/7] Predicting co-evolution from Boolean function...")
-    prediction = predict_coevolution(qm_result, kmap_freq, sequences, n_seqs=1299)
+    prediction = predict_coevolution(
+        qm_result, kmap_freq, sequences, n_seqs=len(sequences)
+    )
 
     # 7. Save results
     print("\n[7/7] Saving results...")
 
     summary = {
-        "dataset": "SARS-CoV-2 Spike Protein Boolean Analysis",
+        "dataset": f"Boolean Analysis of {Path(fasta_file).name}",
         "num_sequences": len(sequences),
         "boolean_kmap": {
             "threshold": threshold,
@@ -611,9 +605,9 @@ def main():
         },
         "motifs": motifs[:20],
         "coupling": {
-            "n_positions": coupling["n_positions"],
-            "n_strong_couplings": len(coupling["strong_couplings"]),
-            "top_couplings": coupling["strong_couplings"][:20],
+            "n_positions": coupling.get("n_positions", 0),
+            "n_strong_couplings": len(coupling.get("strong_couplings", [])),
+            "top_couplings": coupling.get("strong_couplings", [])[:20],
         },
         "prediction": prediction,
     }
@@ -654,11 +648,8 @@ def main():
         f"\n  The minimized Boolean function captures {qm_result['n_prime_implicants']} essential"
     )
     print(f"  residue-pair motifs that define the co-evolutionary structure of the")
-    print(f"  SARS-CoV-2 Spike protein. These motifs can be used to predict")
+    print(f"  target protein. These motifs can be used to predict")
     print(f"  co-evolutionary coupling constants between residue positions.")
-
-
-
 
     # ============================================================
     # COMBINED MI + PERPLEXITY ANALYSIS (all experiments)
@@ -666,34 +657,44 @@ def main():
     print("\n=== Combined MI + Perplexity Analysis ===")
     try:
         from coevolution_shared import (
-            combined_pair_scores, compute_entropy_vectorized,
+            combined_pair_scores,
+            compute_entropy_vectorized,
             load_position_arrays as _lpa,
         )
+
         _pa, _na, _fl = _lpa(max_pos=None, aligned=True)
         _ent = compute_entropy_vectorized(_pa, _na, _fl)
         _var = [p for p in range(_fl) if _ent[p] > 0.3]
-        _pairs = [(i, j) for idx, i in enumerate(_var)
-                  for j in _var[idx + 1:] if j - i <= 30]
+        _pairs = [
+            (i, j) for idx, i in enumerate(_var) for j in _var[idx + 1 :] if j - i <= 30
+        ]
         _scored = combined_pair_scores(_pa, _pairs, _na, _ent)
         print(f"  Variable positions: {len(_var)}")
         print(f"  Pairs scored (MI + perplexity ratio): {len(_scored)}")
         print(f"  Top 5 combined (MI + ratio):")
         for _s in _scored[:5]:
-            print(f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
-                  f"ratio={_s['ratio']:.2f} combined={_s['combined']:.3f}")
-        _mi_top = sorted(_scored, key=lambda s: -s['mi'])[:5]
+            print(
+                f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
+                f"ratio={_s['ratio']:.2f} combined={_s['combined']:.3f}"
+            )
+        _mi_top = sorted(_scored, key=lambda s: -s["mi"])[:5]
         print(f"  Top 5 by MI alone:")
         for _s in _mi_top:
-            print(f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
-                  f"ratio={_s['ratio']:.2f}")
+            print(
+                f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
+                f"ratio={_s['ratio']:.2f}"
+            )
         # ranking agreement
-        _r_mi = {(_s['pos_i'], _s['pos_j']): idx
-                 for idx, _s in enumerate(sorted(_scored, key=lambda s: -s['mi']))}
-        _r_cb = {(_s['pos_i'], _s['pos_j']): idx
-                 for idx, _s in enumerate(_scored)}
+        _r_mi = {
+            (_s["pos_i"], _s["pos_j"]): idx
+            for idx, _s in enumerate(sorted(_scored, key=lambda s: -s["mi"]))
+        }
+        _r_cb = {(_s["pos_i"], _s["pos_j"]): idx for idx, _s in enumerate(_scored)}
         _same = sum(1 for k in _r_mi if _r_mi[k] == _r_cb[k])
-        print(f"  Ranking agreement (MI vs combined, top-5 same): "
-              f"{len([k for k in _r_mi if k in _r_cb and _r_mi[k] < 5 and _r_cb[k] < 5])}/5")
+        print(
+            f"  Ranking agreement (MI vs combined, top-5 same): "
+            f"{len([k for k in _r_mi if k in _r_cb and _r_mi[k] < 5 and _r_cb[k] < 5])}/5"
+        )
     except Exception as _e:
         print(f"  Combined analysis skipped: {_e}")
 

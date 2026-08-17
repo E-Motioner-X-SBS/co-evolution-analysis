@@ -1,0 +1,812 @@
+[
+ {
+  "target": "PF00071",
+  "master_boolean": {
+   "variable_positions": 1831,
+   "co_evolving_pairs": 17410,
+   "n_prime_implicants": 227,
+   "n_essential": 48,
+   "rules": [
+    {
+     "pos_i": 2065,
+     "pos_j": 2094,
+     "aa_i": "A",
+     "aa_j": "M",
+     "ref_i": "R",
+     "ref_j": "K",
+     "mi": 3.2810361125534238
+    },
+    {
+     "pos_i": 2065,
+     "pos_j": 2094,
+     "aa_i": "S",
+     "aa_j": "E",
+     "ref_i": "R",
+     "ref_j": "K",
+     "mi": 3.2810361125534238
+    },
+    {
+     "pos_i": 1044,
+     "pos_j": 1045,
+     "aa_i": "A",
+     "aa_j": "P",
+     "ref_i": "K",
+     "ref_j": "D",
+     "mi": 3.2711605081899315
+    },
+    {
+     "pos_i": 1044,
+     "pos_j": 1045,
+     "aa_i": "A",
+     "aa_j": "Q",
+     "ref_i": "K",
+     "ref_j": "D",
+     "mi": 3.2711605081899315
+    },
+    {
+     "pos_i": 1044,
+     "pos_j": 1045,
+     "aa_i": "Q",
+     "aa_j": "F",
+     "ref_i": "K",
+     "ref_j": "D",
+     "mi": 3.2711605081899315
+    },
+    {
+     "pos_i": 1044,
+     "pos_j": 1045,
+     "aa_i": "C",
+     "aa_j": "N",
+     "ref_i": "K",
+     "ref_j": "D",
+     "mi": 3.2711605081899315
+    },
+    {
+     "pos_i": 2078,
+     "pos_j": 2089,
+     "aa_i": "A",
+     "aa_j": "F",
+     "ref_i": "E",
+     "ref_j": "F",
+     "mi": 3.2430741894285697
+    },
+    {
+     "pos_i": 2078,
+     "pos_j": 2089,
+     "aa_i": "Q",
+     "aa_j": "T",
+     "ref_i": "E",
+     "ref_j": "F",
+     "mi": 3.2430741894285697
+    },
+    {
+     "pos_i": 2078,
+     "pos_j": 2089,
+     "aa_i": "R",
+     "aa_j": "E",
+     "ref_i": "E",
+     "ref_j": "F",
+     "mi": 3.2430741894285697
+    },
+    {
+     "pos_i": 2078,
+     "pos_j": 2089,
+     "aa_i": "L",
+     "aa_j": "G",
+     "ref_i": "E",
+     "ref_j": "F",
+     "mi": 3.2430741894285697
+    }
+   ],
+   "top_pairs": [
+    {
+     "pos_i": 2065,
+     "pos_j": 2094,
+     "mi": 3.2810361125534238,
+     "n": 18,
+     "ref_i": "R",
+     "ref_j": "K"
+    },
+    {
+     "pos_i": 1044,
+     "pos_j": 1045,
+     "mi": 3.2711605081899315,
+     "n": 26,
+     "ref_i": "K",
+     "ref_j": "D"
+    },
+    {
+     "pos_i": 2078,
+     "pos_j": 2089,
+     "mi": 3.2430741894285697,
+     "n": 25,
+     "ref_i": "E",
+     "ref_j": "F"
+    },
+    {
+     "pos_i": 2081,
+     "pos_j": 2099,
+     "mi": 3.2389012566026305,
+     "n": 13,
+     "ref_i": "E",
+     "ref_j": "I"
+    },
+    {
+     "pos_i": 1224,
+     "pos_j": 1237,
+     "mi": 3.182005814760214,
+     "n": 14,
+     "ref_i": "S",
+     "ref_j": "I"
+    }
+   ]
+  },
+  "boolean_equations": [
+   {
+    "aa_i": "A",
+    "aa_j": "M",
+    "expr": "\\bar{s4} \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
+    "coverage": 2
+   },
+   {
+    "aa_i": "S",
+    "aa_j": "E",
+    "expr": "\\bar{s4} \\cdot s3 \\cdot s2 \\cdot s1 \\cdot s0 \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
+    "coverage": 2
+   },
+   {
+    "aa_i": "A",
+    "aa_j": "P",
+    "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t4 \\cdot \\bar{t3} \\cdot t1 \\cdot \\bar{t0}",
+    "coverage": 4
+   },
+   {
+    "aa_i": "A",
+    "aa_j": "Q",
+    "expr": "\\bar{s4} \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
+    "coverage": 2
+   },
+   {
+    "aa_i": "Q",
+    "aa_j": "F",
+    "expr": "\\bar{s4} \\cdot s3 \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
+    "coverage": 2
+   },
+   {
+    "aa_i": "C",
+    "aa_j": "N",
+    "expr": "s4 \\cdot \\bar{s3} \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t4} \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot t0",
+    "coverage": 2
+   },
+   {
+    "aa_i": "A",
+    "aa_j": "F",
+    "expr": "\\bar{s4} \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
+    "coverage": 2
+   },
+   {
+    "aa_i": "Q",
+    "aa_j": "T",
+    "expr": "\\bar{s4} \\cdot s3 \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot t4 \\cdot \\bar{t3} \\cdot \\bar{t1} \\cdot \\bar{t0}",
+    "coverage": 2
+   },
+   {
+    "aa_i": "R",
+    "aa_j": "E",
+    "expr": "\\bar{s4} \\cdot s3 \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
+    "coverage": 2
+   },
+   {
+    "aa_i": "L",
+    "aa_j": "G",
+    "expr": "\\bar{s4} \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot t4 \\cdot \\bar{t2} \\cdot t1 \\cdot t0",
+    "coverage": 2
+   }
+  ],
+  "flipped": {
+   "n_forbidden": 5775,
+   "sample": [
+    {
+     "pos_i": 2065,
+     "pos_j": 2094,
+     "aa_i": "A",
+     "aa_j": "A",
+     "ref_i": "R",
+     "ref_j": "K",
+     "mi": 3.2810361125534238,
+     "is_essential": false,
+     "type": "forbidden"
+    },
+    {
+     "pos_i": 2065,
+     "pos_j": 2094,
+     "aa_i": "A",
+     "aa_j": "A",
+     "ref_i": "R",
+     "ref_j": "K",
+     "mi": 3.2810361125534238,
+     "is_essential": false,
+     "type": "forbidden"
+    },
+    {
+     "pos_i": 2065,
+     "pos_j": 2094,
+     "aa_i": "A",
+     "aa_j": "A",
+     "ref_i": "R",
+     "ref_j": "K",
+     "mi": 3.2810361125534238,
+     "is_essential": false,
+     "type": "forbidden"
+    },
+    {
+     "pos_i": 2065,
+     "pos_j": 2094,
+     "aa_i": "A",
+     "aa_j": "A",
+     "ref_i": "R",
+     "ref_j": "K",
+     "mi": 3.2810361125534238,
+     "is_essential": false,
+     "type": "forbidden"
+    },
+    {
+     "pos_i": 2065,
+     "pos_j": 2094,
+     "aa_i": "A",
+     "aa_j": "A",
+     "ref_i": "R",
+     "ref_j": "K",
+     "mi": 3.2810361125534238,
+     "is_essential": true,
+     "type": "forbidden"
+    }
+   ]
+  },
+  "nary": {
+   "n_PI": 119,
+   "n_essential": 29
+  },
+  "perplexity": []
+ },
+ {
+  "target": "PF00072",
+  "master_boolean": {
+   "variable_positions": 984,
+   "co_evolving_pairs": 9527,
+   "n_prime_implicants": 210,
+   "n_essential": 52,
+   "rules": [
+    {
+     "pos_i": 519,
+     "pos_j": 521,
+     "aa_i": "A",
+     "aa_j": "P",
+     "ref_i": "G",
+     "ref_j": "R",
+     "mi": 3.1219279766082764
+    },
+    {
+     "pos_i": 167,
+     "pos_j": 168,
+     "aa_i": "T",
+     "aa_j": "Q",
+     "ref_i": "L",
+     "ref_j": "A",
+     "mi": 3.093069314956665
+    },
+    {
+     "pos_i": 167,
+     "pos_j": 168,
+     "aa_i": "A",
+     "aa_j": "S",
+     "ref_i": "L",
+     "ref_j": "A",
+     "mi": 3.093069314956665
+    },
+    {
+     "pos_i": 167,
+     "pos_j": 168,
+     "aa_i": "R",
+     "aa_j": "Q",
+     "ref_i": "L",
+     "ref_j": "A",
+     "mi": 3.093069314956665
+    },
+    {
+     "pos_i": 251,
+     "pos_j": 259,
+     "aa_i": "D",
+     "aa_j": "L",
+     "ref_i": "M",
+     "ref_j": "L",
+     "mi": 3.0823283195495605
+    },
+    {
+     "pos_i": 251,
+     "pos_j": 259,
+     "aa_i": "A",
+     "aa_j": "P",
+     "ref_i": "M",
+     "ref_j": "L",
+     "mi": 3.0823283195495605
+    },
+    {
+     "pos_i": 251,
+     "pos_j": 259,
+     "aa_i": "T",
+     "aa_j": "F",
+     "ref_i": "M",
+     "ref_j": "L",
+     "mi": 3.0823283195495605
+    },
+    {
+     "pos_i": 251,
+     "pos_j": 259,
+     "aa_i": "R",
+     "aa_j": "R",
+     "ref_i": "M",
+     "ref_j": "L",
+     "mi": 3.0823283195495605
+    },
+    {
+     "pos_i": 925,
+     "pos_j": 935,
+     "aa_i": "E",
+     "aa_j": "A",
+     "ref_i": "G",
+     "ref_j": "S",
+     "mi": 3.049454689025879
+    },
+    {
+     "pos_i": 925,
+     "pos_j": 935,
+     "aa_i": "A",
+     "aa_j": "P",
+     "ref_i": "G",
+     "ref_j": "S",
+     "mi": 3.049454689025879
+    }
+   ],
+   "top_pairs": [
+    {
+     "pos_i": 519,
+     "pos_j": 521,
+     "mi": 3.1219279766082764,
+     "n": 10,
+     "ref_i": "G",
+     "ref_j": "R"
+    },
+    {
+     "pos_i": 167,
+     "pos_j": 168,
+     "mi": 3.093069314956665,
+     "n": 14,
+     "ref_i": "L",
+     "ref_j": "A"
+    },
+    {
+     "pos_i": 251,
+     "pos_j": 259,
+     "mi": 3.0823283195495605,
+     "n": 21,
+     "ref_i": "M",
+     "ref_j": "L"
+    },
+    {
+     "pos_i": 925,
+     "pos_j": 935,
+     "mi": 3.049454689025879,
+     "n": 35,
+     "ref_i": "G",
+     "ref_j": "S"
+    },
+    {
+     "pos_i": 259,
+     "pos_j": 260,
+     "mi": 3.0464391708374023,
+     "n": 20,
+     "ref_i": "L",
+     "ref_j": "E"
+    }
+   ]
+  },
+  "boolean_equations": [
+   {
+    "aa_i": "A",
+    "aa_j": "P",
+    "expr": "\\bar{s4} \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t4 \\cdot \\bar{t3} \\cdot t1 \\cdot \\bar{t0}",
+    "coverage": 2
+   },
+   {
+    "aa_i": "T",
+    "aa_j": "Q",
+    "expr": "s4 \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
+    "coverage": 2
+   },
+   {
+    "aa_i": "A",
+    "aa_j": "S",
+    "expr": "\\bar{s4} \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot t1 \\cdot t0",
+    "coverage": 2
+   },
+   {
+    "aa_i": "R",
+    "aa_j": "Q",
+    "expr": "\\bar{s4} \\cdot s3 \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
+    "coverage": 2
+   },
+   {
+    "aa_i": "D",
+    "aa_j": "L",
+    "expr": "s3 \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t4} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
+    "coverage": 4
+   },
+   {
+    "aa_i": "A",
+    "aa_j": "P",
+    "expr": "\\bar{s4} \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t4 \\cdot \\bar{t3} \\cdot t1 \\cdot \\bar{t0}",
+    "coverage": 2
+   },
+   {
+    "aa_i": "T",
+    "aa_j": "F",
+    "expr": "s4 \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
+    "coverage": 2
+   },
+   {
+    "aa_i": "R",
+    "aa_j": "R",
+    "expr": "\\bar{s4} \\cdot s3 \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot t1 \\cdot \\bar{t0}",
+    "coverage": 2
+   },
+   {
+    "aa_i": "E",
+    "aa_j": "A",
+    "expr": "s3 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t4} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
+    "coverage": 4
+   },
+   {
+    "aa_i": "A",
+    "aa_j": "P",
+    "expr": "\\bar{s4} \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t4 \\cdot \\bar{t3} \\cdot t1 \\cdot \\bar{t0}",
+    "coverage": 2
+   }
+  ],
+  "flipped": {
+   "n_forbidden": 4725,
+   "sample": [
+    {
+     "pos_i": 519,
+     "pos_j": 521,
+     "aa_i": "A",
+     "aa_j": "A",
+     "ref_i": "G",
+     "ref_j": "R",
+     "mi": 3.1219279766082764,
+     "is_essential": false,
+     "type": "forbidden"
+    },
+    {
+     "pos_i": 519,
+     "pos_j": 521,
+     "aa_i": "A",
+     "aa_j": "A",
+     "ref_i": "G",
+     "ref_j": "R",
+     "mi": 3.1219279766082764,
+     "is_essential": false,
+     "type": "forbidden"
+    },
+    {
+     "pos_i": 519,
+     "pos_j": 521,
+     "aa_i": "A",
+     "aa_j": "I",
+     "ref_i": "G",
+     "ref_j": "R",
+     "mi": 3.1219279766082764,
+     "is_essential": false,
+     "type": "forbidden"
+    },
+    {
+     "pos_i": 519,
+     "pos_j": 521,
+     "aa_i": "A",
+     "aa_j": "I",
+     "ref_i": "G",
+     "ref_j": "R",
+     "mi": 3.1219279766082764,
+     "is_essential": true,
+     "type": "forbidden"
+    },
+    {
+     "pos_i": 519,
+     "pos_j": 521,
+     "aa_i": "I",
+     "aa_j": "A",
+     "ref_i": "G",
+     "ref_j": "R",
+     "mi": 3.1219279766082764,
+     "is_essential": false,
+     "type": "forbidden"
+    }
+   ]
+  },
+  "nary": {
+   "n_PI": 81,
+   "n_essential": 27
+  },
+  "perplexity": []
+ },
+ {
+  "target": "PF00595",
+  "master_boolean": {
+   "variable_positions": 468,
+   "co_evolving_pairs": 5434,
+   "n_prime_implicants": 168,
+   "n_essential": 35,
+   "rules": [
+    {
+     "pos_i": 16,
+     "pos_j": 37,
+     "aa_i": "E",
+     "aa_j": "I",
+     "ref_i": "L",
+     "ref_j": "R",
+     "mi": 3.180833339691162
+    },
+    {
+     "pos_i": 16,
+     "pos_j": 37,
+     "aa_i": "L",
+     "aa_j": "N",
+     "ref_i": "L",
+     "ref_j": "R",
+     "mi": 3.180833339691162
+    },
+    {
+     "pos_i": 16,
+     "pos_j": 17,
+     "aa_i": "E",
+     "aa_j": "L",
+     "ref_i": "L",
+     "ref_j": "I",
+     "mi": 3.026987075805664
+    },
+    {
+     "pos_i": 16,
+     "pos_j": 17,
+     "aa_i": "I",
+     "aa_j": "Q",
+     "ref_i": "L",
+     "ref_j": "I",
+     "mi": 3.026987075805664
+    },
+    {
+     "pos_i": 16,
+     "pos_j": 17,
+     "aa_i": "P",
+     "aa_j": "E",
+     "ref_i": "L",
+     "ref_j": "I",
+     "mi": 3.026987075805664
+    },
+    {
+     "pos_i": 16,
+     "pos_j": 42,
+     "aa_i": "I",
+     "aa_j": "G",
+     "ref_i": "L",
+     "ref_j": "E",
+     "mi": 3.026987075805664
+    },
+    {
+     "pos_i": 16,
+     "pos_j": 42,
+     "aa_i": "P",
+     "aa_j": "T",
+     "ref_i": "L",
+     "ref_j": "E",
+     "mi": 3.026987075805664
+    },
+    {
+     "pos_i": 16,
+     "pos_j": 42,
+     "aa_i": "M",
+     "aa_j": "H",
+     "ref_i": "L",
+     "ref_j": "E",
+     "mi": 3.026987075805664
+    },
+    {
+     "pos_i": 138,
+     "pos_j": 140,
+     "aa_i": "A",
+     "aa_j": "H",
+     "ref_i": "V",
+     "ref_j": "A",
+     "mi": 2.984769344329834
+    },
+    {
+     "pos_i": 138,
+     "pos_j": 140,
+     "aa_i": "T",
+     "aa_j": "P",
+     "ref_i": "V",
+     "ref_j": "A",
+     "mi": 2.984769344329834
+    }
+   ],
+   "top_pairs": [
+    {
+     "pos_i": 16,
+     "pos_j": 37,
+     "mi": 3.180833339691162,
+     "n": 13,
+     "ref_i": "L",
+     "ref_j": "R"
+    },
+    {
+     "pos_i": 463,
+     "pos_j": 485,
+     "mi": 3.1219279766082764,
+     "n": 10,
+     "ref_i": "T",
+     "ref_j": "N"
+    },
+    {
+     "pos_i": 16,
+     "pos_j": 17,
+     "mi": 3.026987075805664,
+     "n": 13,
+     "ref_i": "L",
+     "ref_j": "I"
+    },
+    {
+     "pos_i": 16,
+     "pos_j": 42,
+     "mi": 3.026987075805664,
+     "n": 13,
+     "ref_i": "L",
+     "ref_j": "E"
+    },
+    {
+     "pos_i": 138,
+     "pos_j": 140,
+     "mi": 2.984769344329834,
+     "n": 19,
+     "ref_i": "V",
+     "ref_j": "A"
+    }
+   ]
+  },
+  "boolean_equations": [
+   {
+    "aa_i": "E",
+    "aa_j": "I",
+    "expr": "s3 \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t4} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot t0",
+    "coverage": 2
+   },
+   {
+    "aa_i": "L",
+    "aa_j": "N",
+    "expr": "\\bar{s4} \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot t0",
+    "coverage": 2
+   },
+   {
+    "aa_i": "E",
+    "aa_j": "L",
+    "expr": "s3 \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t4} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t1",
+    "coverage": 4
+   },
+   {
+    "aa_i": "I",
+    "aa_j": "Q",
+    "expr": "\\bar{s4} \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot s0 \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
+    "coverage": 2
+   },
+   {
+    "aa_i": "P",
+    "aa_j": "E",
+    "expr": "s4 \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot \\bar{t4} \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
+    "coverage": 2
+   },
+   {
+    "aa_i": "I",
+    "aa_j": "G",
+    "expr": "\\bar{s4} \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot s0 \\cdot t4 \\cdot \\bar{t3} \\cdot t1 \\cdot t0",
+    "coverage": 4
+   },
+   {
+    "aa_i": "P",
+    "aa_j": "T",
+    "expr": "s4 \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot t4 \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
+    "coverage": 2
+   },
+   {
+    "aa_i": "M",
+    "aa_j": "H",
+    "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t4} \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
+    "coverage": 2
+   },
+   {
+    "aa_i": "A",
+    "aa_j": "H",
+    "expr": "\\bar{s4} \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
+    "coverage": 2
+   },
+   {
+    "aa_i": "T",
+    "aa_j": "P",
+    "expr": "s4 \\cdot \\bar{s3} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t4 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
+    "coverage": 2
+   }
+  ],
+  "flipped": {
+   "n_forbidden": 4414,
+   "sample": [
+    {
+     "pos_i": 16,
+     "pos_j": 37,
+     "aa_i": "A",
+     "aa_j": "T",
+     "ref_i": "L",
+     "ref_j": "R",
+     "mi": 3.180833339691162,
+     "is_essential": true,
+     "type": "forbidden"
+    },
+    {
+     "pos_i": 16,
+     "pos_j": 37,
+     "aa_i": "T",
+     "aa_j": "A",
+     "ref_i": "L",
+     "ref_j": "R",
+     "mi": 3.180833339691162,
+     "is_essential": false,
+     "type": "forbidden"
+    },
+    {
+     "pos_i": 16,
+     "pos_j": 37,
+     "aa_i": "T",
+     "aa_j": "A",
+     "ref_i": "L",
+     "ref_j": "R",
+     "mi": 3.180833339691162,
+     "is_essential": false,
+     "type": "forbidden"
+    },
+    {
+     "pos_i": 16,
+     "pos_j": 37,
+     "aa_i": "T",
+     "aa_j": "A",
+     "ref_i": "L",
+     "ref_j": "R",
+     "mi": 3.180833339691162,
+     "is_essential": false,
+     "type": "forbidden"
+    },
+    {
+     "pos_i": 16,
+     "pos_j": 37,
+     "aa_i": "M",
+     "aa_j": "A",
+     "ref_i": "L",
+     "ref_j": "R",
+     "mi": 3.180833339691162,
+     "is_essential": false,
+     "type": "forbidden"
+    }
+   ]
+  },
+  "nary": {
+   "n_PI": 149,
+   "n_essential": 35
+  },
+  "perplexity": []
+ }
+]

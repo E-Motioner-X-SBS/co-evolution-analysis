@@ -52,9 +52,13 @@ def compute_entropy(pos_arrays, pos, n_seqs):
 
 
 def get_majority_ref(pos_arrays, pos, n_seqs):
-    return Counter(
+    cnt = Counter(
         int(a[pos]) for a in pos_arrays[:n_seqs] if pos < len(a) and 0 <= a[pos] < 20
-    ).most_common(1)[0][0]
+    )
+    if not cnt:
+        return 0
+    best = max(cnt.values())
+    return min(c for c, n in cnt.items() if n == best)
 
 
 def compute_mi(pos_arrays, pos_i, pos_j, n_seqs):
@@ -153,9 +157,9 @@ def decode_pi(pi, aa_list):
 
 def main():
     base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
-    fasta_file = base_dir / "Spike_protein.aln-fasta"
-    results_dir = base_dir / "kmap_boolean_coevolution"
-    results_dir.mkdir(exist_ok=True)
+    fasta_file = Path(__import__("os").environ.get("COEVO_FASTA") or (base_dir / "Spike_protein.aln-fasta"))
+    results_dir = Path(__import__("os").environ.get("COEVO_RESULTS") or (base_dir / "kmap_boolean_coevolution"))
+    results_dir.mkdir(parents=True, exist_ok=True)
     # CORRECTED (Aug 7): write to a distinct file. COEVOLUTION_KMAP_BOOLEAN.md
     # is produced by generate_co-evolution_md.py (the master_boolean report);
     # both scripts writing the same path caused silent clobbering.

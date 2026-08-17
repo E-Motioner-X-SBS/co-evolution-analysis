@@ -1,0 +1,14 @@
+{
+ "index": 875,
+ "accession": "USB22024.1",
+ "full_header": "USB22024.1 |surface glycoprotein [Severe acute respiratory syndrome coronavirus 2]",
+ "uid": "u0128",
+ "md5": "ea9295b6bf2b73e2678122b99d387187",
+ "project_id": "d0a970",
+ "n_models": 6,
+ "pdb_files": [
+  "01.pdb.gz",
+  "02.pdb.gz",
+  "03.pdb.gz"
+ ]
+}

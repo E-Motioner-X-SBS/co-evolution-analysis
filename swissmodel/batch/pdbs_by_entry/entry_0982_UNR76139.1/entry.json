@@ -1,0 +1,17 @@
+{
+ "index": 982,
+ "accession": "UNR76139.1",
+ "full_header": "UNR76139.1 |surface glycoprotein [Severe acute respiratory syndrome coronavirus 2]",
+ "uid": "u0208",
+ "md5": "bc603d8f0d76dcb9cf6544b329e6b3bc",
+ "project_id": "74e39e",
+ "n_models": 12,
+ "pdb_files": [
+  "01.pdb.gz",
+  "02.pdb.gz",
+  "03.pdb.gz",
+  "04.pdb.gz",
+  "05.pdb.gz",
+  "06.pdb.gz"
+ ]
+}

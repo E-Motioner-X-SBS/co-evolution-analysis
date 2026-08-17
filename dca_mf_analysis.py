@@ -49,15 +49,19 @@ sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/n-ary-kmap/src")
 from nkmap.encoding.bio_sequences import AMINO_HE_2012
 
 BASE = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
-FASTA = BASE / "Spike_protein.aln-fasta"
-OUT = BASE / "dca_results"
-OUT.mkdir(exist_ok=True)
+FASTA = Path(__import__("os").environ.get("COEVO_FASTA") or (BASE / "Spike_protein.aln-fasta"))
+OUT = Path(__import__("os").environ.get("COEVO_RESULTS") or (BASE / "dca_results"))
+OUT.mkdir(parents=True, exist_ok=True)
 
 Q = 21  # 20 AAs + gap
 Q_USED = 20  # states in covariance (q-1, gap removed)
 THETA = 0.2  # reweighting threshold (80% identity)
 LAMBDA = 0.5  # pseudocount
-DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+try:
+    import coevolution_gpu as _cg
+    DEVICE = _cg.get_device()  # memory-fraction capped; fails fast on OOM
+except Exception:
+    DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # He 2012 order + gap at index 20
 AA_ORDER = AMINO_HE_2012 + "-"
@@ -269,7 +273,8 @@ def main():
     # Regularize: add small diagonal for numerical stability
     reg = 1e-4 * torch.eye(C_gpu.shape[0], dtype=torch.float64, device=DEVICE)
     invC = torch.linalg.inv(C_gpu + reg)
-    torch.cuda.synchronize()
+    if DEVICE.type == "cuda":
+        torch.cuda.synchronize()
     print(f"  Inversion: {time.time() - t2:.1f}s")
     # Couplings J = -invC, reshaped to [L, L, q-1, q-1], padded to [L, L, q, q]
     # invC rows/cols are indexed (i, a) -> reshape [L, q-1, L, q-1] then

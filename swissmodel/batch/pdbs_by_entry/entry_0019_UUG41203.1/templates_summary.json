@@ -1,0 +1,50 @@
+[
+ {
+  "model_id": "01",
+  "gmqe": 0.7096048843788754,
+  "qsqe": 0.9150668407237462,
+  "qmean4_z": -1.968201264387588,
+  "qmean_global": null,
+  "oligo_state": "homo-trimer",
+  "coverage": 1.0,
+  "sequence_identity": 99.36858367919922,
+  "sequence_similarity": 0.616414487361908,
+  "template_qualified_name": "8d55.1.C",
+  "template_found_by": "HHblits",
+  "template_method": "ELECTRON MICROSCOPY",
+  "template_gmqe": 0.6785463690757751,
+  "template_title": "Closed state of SARS-CoV-2 BA.2 variant spike protein"
+ },
+ {
+  "model_id": "02",
+  "gmqe": 0.7047509597409727,
+  "qsqe": 0.8841495688235107,
+  "qmean4_z": -1.798955728344152,
+  "qmean_global": null,
+  "oligo_state": "homo-trimer",
+  "coverage": 1.0,
+  "sequence_identity": 99.36858367919922,
+  "sequence_similarity": 0.616414487361908,
+  "template_qualified_name": "8d56.1.C",
+  "template_found_by": "HHblits",
+  "template_method": "ELECTRON MICROSCOPY",
+  "template_gmqe": 0.6676324605941772,
+  "template_title": "One RBD-up state of SARS-CoV-2 BA.2 variant spike protein"
+ },
+ {
+  "model_id": "03",
+  "gmqe": 0.4077698542018522,
+  "qsqe": null,
+  "qmean4_z": -4.897077898059371,
+  "qmean_global": null,
+  "oligo_state": "monomer",
+  "coverage": 0.9423835873603821,
+  "sequence_identity": 88.6097183227539,
+  "sequence_similarity": 0.5781669616699219,
+  "template_qualified_name": "8hxk.1.B",
+  "template_found_by": "HHblits",
+  "template_method": "ELECTRON MICROSCOPY",
+  "template_gmqe": 0.3655488193035126,
+  "template_title": "BANAL-20-236 S1 in complex with R. Affinis ACE2"
+ }
+]

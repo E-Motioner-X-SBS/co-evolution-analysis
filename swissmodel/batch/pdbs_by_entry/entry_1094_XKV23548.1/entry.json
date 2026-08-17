@@ -1,0 +1,16 @@
+{
+ "index": 1094,
+ "accession": "XKV23548.1",
+ "full_header": "XKV23548.1 |surface glycoprotein [Severe acute respiratory syndrome coronavirus 2]",
+ "uid": "u0278",
+ "md5": "42c20187118d47358ea29846eee915ef",
+ "project_id": "b9d190",
+ "n_models": 10,
+ "pdb_files": [
+  "01.pdb.gz",
+  "02.pdb.gz",
+  "03.pdb.gz",
+  "04.pdb.gz",
+  "05.pdb.gz"
+ ]
+}

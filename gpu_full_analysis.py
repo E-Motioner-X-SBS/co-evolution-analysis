@@ -22,9 +22,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import coevolution_gpu as cg
 
 BASE = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
-FASTA = BASE / "Spike_protein.aln-fasta"
-OUT = BASE / "full_gpu_results"
-OUT.mkdir(exist_ok=True)
+FASTA = Path(__import__("os").environ.get("COEVO_FASTA") or (BASE / "Spike_protein.aln-fasta"))
+OUT = Path(__import__("os").environ.get("COEVO_RESULTS") or (BASE / "full_gpu_results"))
+OUT.mkdir(parents=True, exist_ok=True)
 AA = list(AMINO_HE_2012)
 
 import torch
@@ -113,7 +113,7 @@ def main():
     print("\n  Computing FULL MI matrix on GPU (all pairs, full length)...")
     all_pairs = cg.all_pairs(dense_fl)  # full matrix, ~813K pairs
     print(f"  Pairs: {len(all_pairs)}")
-    mi_dict, cnt_dict = cg.mi_matrix_gpu(dense, all_pairs, min_total=5, chunk=32768)
+    mi_dict, cnt_dict = cg.mi_matrix_gpu(dense, all_pairs, min_total=5, chunk=4096)
 
     # Build MI matrix + sorted pair list
     mi_mat = np.zeros((dense_fl, dense_fl), dtype=np.float64)

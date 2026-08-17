@@ -42,3 +42,12 @@ Thumbs.db
 
 # Data files (large, use Git LFS)
 # *.fasta  # Keep tracked - needed for reproducibility
+
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+
+# Derived validation artifacts (reproducible via scripts/) — not tracked
+/data/
+/results/

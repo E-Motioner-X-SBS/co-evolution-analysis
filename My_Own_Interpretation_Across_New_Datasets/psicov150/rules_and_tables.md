@@ -1,0 +1,3901 @@
+# psicov150 — Rules, Prime Implicants & Boolean Equations
+
+## 1a3aA
+- variable positions: 143, pairs: 3795, **PIs: 913, essential: 399**
+  - IF pos 66=A AND pos 69=A → co-evolutionary
+  - IF pos 66=A AND pos 69=M → co-evolutionary
+  - IF pos 66=S AND pos 69=E → co-evolutionary
+  - IF pos 66=S AND pos 69=E → co-evolutionary
+  - IF pos 66=G AND pos 69=D → co-evolutionary
+  - IF pos 66=A AND pos 69=A → co-evolutionary
+  - IF pos 66=A AND pos 69=I → co-evolutionary
+  - IF pos 66=A AND pos 69=E → co-evolutionary
+  - IF pos 66=T AND pos 69=A → co-evolutionary
+  - IF pos 66=T AND pos 69=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t2 \cdot \bar{t1}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot s0 \cdot t3` (coverage 16)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3` (coverage 16)
+  - `s4 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t0` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+- Flipped/forbidden rules: 5645
+- N-ary: 102 PIs, 25 essential
+
+## 1a6mA
+- variable positions: 147, pairs: 3853, **PIs: 894, essential: 410**
+  - IF pos 144=Q AND pos 148=L → co-evolutionary
+  - IF pos 144=A AND pos 148=A → co-evolutionary
+  - IF pos 144=Y AND pos 148=I → co-evolutionary
+  - IF pos 144=D AND pos 148=L → co-evolutionary
+  - IF pos 144=A AND pos 148=L → co-evolutionary
+  - IF pos 144=T AND pos 148=L → co-evolutionary
+  - IF pos 144=G AND pos 148=E → co-evolutionary
+  - IF pos 144=G AND pos 148=S → co-evolutionary
+  - IF pos 142=D AND pos 148=L → co-evolutionary
+  - IF pos 142=A AND pos 148=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s3 \cdot s1 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 2)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 2)
+  - `s3 \cdot \bar{s2} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 5217
+- N-ary: 121 PIs, 35 essential
+
+## 1a70A
+- variable positions: 92, pairs: 2162, **PIs: 1040, essential: 475**
+  - IF pos 90=A AND pos 95=D → co-evolutionary
+  - IF pos 90=E AND pos 95=T → co-evolutionary
+  - IF pos 90=D AND pos 95=A → co-evolutionary
+  - IF pos 90=A AND pos 95=D → co-evolutionary
+  - IF pos 90=E AND pos 95=H → co-evolutionary
+  - IF pos 90=E AND pos 95=V → co-evolutionary
+  - IF pos 90=E AND pos 95=D → co-evolutionary
+  - IF pos 90=I AND pos 95=D → co-evolutionary
+  - IF pos 90=L AND pos 95=V → co-evolutionary
+  - IF pos 90=K AND pos 95=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t0}` (coverage 16)
+  - `s3 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s1} \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+- Flipped/forbidden rules: 5876
+- N-ary: 130 PIs, 30 essential
+
+## 1aapA
+- variable positions: 50, pairs: 982, **PIs: 352, essential: 128**
+  - IF pos 11=A AND pos 36=G → co-evolutionary
+  - IF pos 11=G AND pos 36=A → co-evolutionary
+  - IF pos 11=G AND pos 36=A → co-evolutionary
+  - IF pos 11=E AND pos 36=E → co-evolutionary
+  - IF pos 11=E AND pos 36=G → co-evolutionary
+  - IF pos 11=G AND pos 36=D → co-evolutionary
+  - IF pos 11=T AND pos 36=N → co-evolutionary
+  - IF pos 11=M AND pos 36=G → co-evolutionary
+  - IF pos 11=P AND pos 36=G → co-evolutionary
+  - IF pos 11=A AND pos 36=W → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot t4 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 16)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t2}` (coverage 16)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t2}` (coverage 16)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot t3 \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+  - `s4 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t0` (coverage 8)
+  - `s4 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `s4 \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot t0` (coverage 2)
+- Flipped/forbidden rules: 3193
+- N-ary: 178 PIs, 45 essential
+
+## 1abaA
+- variable positions: 83, pairs: 1987, **PIs: 544, essential: 226**
+  - IF pos 70=A AND pos 82=M → co-evolutionary
+  - IF pos 44=H AND pos 58=L → co-evolutionary
+  - IF pos 44=R AND pos 58=A → co-evolutionary
+  - IF pos 44=E AND pos 58=G → co-evolutionary
+  - IF pos 44=E AND pos 58=G → co-evolutionary
+  - IF pos 44=A AND pos 58=E → co-evolutionary
+  - IF pos 44=E AND pos 58=M → co-evolutionary
+  - IF pos 44=E AND pos 58=M → co-evolutionary
+  - IF pos 44=E AND pos 58=K → co-evolutionary
+  - IF pos 44=P AND pos 58=T → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 8)
+  - `s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s1} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot \bar{s1} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 5382
+- N-ary: 148 PIs, 37 essential
+
+## 1ag6A
+- variable positions: 94, pairs: 2291, **PIs: 1347, essential: 609**
+  - IF pos 82=A AND pos 87=E → co-evolutionary
+  - IF pos 82=A AND pos 87=M → co-evolutionary
+  - IF pos 82=I AND pos 87=A → co-evolutionary
+  - IF pos 82=H AND pos 87=A → co-evolutionary
+  - IF pos 82=E AND pos 87=T → co-evolutionary
+  - IF pos 82=A AND pos 87=F → co-evolutionary
+  - IF pos 82=A AND pos 87=P → co-evolutionary
+  - IF pos 82=E AND pos 87=L → co-evolutionary
+  - IF pos 82=I AND pos 87=Y → co-evolutionary
+  - IF pos 82=H AND pos 87=T → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot t3 \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t2` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot s0 \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 16)
+  - `s3 \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot t1` (coverage 16)
+  - `s3 \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot t2 \cdot t1` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s0} \cdot t4 \cdot \bar{t0}` (coverage 16)
+- Flipped/forbidden rules: 5332
+- N-ary: 161 PIs, 34 essential
+
+## 1aoeA
+- variable positions: 188, pairs: 5076, **PIs: 1015, essential: 485**
+  - IF pos 44=E AND pos 45=A → co-evolutionary
+  - IF pos 44=E AND pos 45=A → co-evolutionary
+  - IF pos 44=E AND pos 45=P → co-evolutionary
+  - IF pos 44=D AND pos 45=T → co-evolutionary
+  - IF pos 44=E AND pos 45=P → co-evolutionary
+  - IF pos 44=A AND pos 45=T → co-evolutionary
+  - IF pos 44=T AND pos 45=A → co-evolutionary
+  - IF pos 44=E AND pos 45=A → co-evolutionary
+  - IF pos 44=T AND pos 45=T → co-evolutionary
+  - IF pos 44=A AND pos 45=D → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot t4 \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot s0 \cdot t4 \cdot \bar{t3} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot t4 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t0` (coverage 8)
+- Flipped/forbidden rules: 6321
+- N-ary: 152 PIs, 38 essential
+
+## 1atlA
+- variable positions: 193, pairs: 5219, **PIs: 744, essential: 288**
+  - IF pos 143=H AND pos 149=Y → co-evolutionary
+  - IF pos 143=H AND pos 149=Y → co-evolutionary
+  - IF pos 143=H AND pos 149=D → co-evolutionary
+  - IF pos 143=Y AND pos 149=Y → co-evolutionary
+  - IF pos 143=Y AND pos 149=H → co-evolutionary
+  - IF pos 143=Q AND pos 149=W → co-evolutionary
+  - IF pos 143=Y AND pos 149=N → co-evolutionary
+  - IF pos 143=D AND pos 149=R → co-evolutionary
+  - IF pos 143=N AND pos 149=H → co-evolutionary
+  - IF pos 1=A AND pos 23=L → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot t2 \cdot t1` (coverage 8)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t2 \cdot t1` (coverage 8)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t2 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 4185
+- N-ary: 125 PIs, 33 essential
+
+## 1atzA
+- variable positions: 74, pairs: 1739, **PIs: 1025, essential: 424**
+  - IF pos 46=T AND pos 54=A → co-evolutionary
+  - IF pos 46=A AND pos 54=A → co-evolutionary
+  - IF pos 46=A AND pos 54=I → co-evolutionary
+  - IF pos 46=A AND pos 54=L → co-evolutionary
+  - IF pos 46=E AND pos 54=T → co-evolutionary
+  - IF pos 46=A AND pos 54=Q → co-evolutionary
+  - IF pos 46=E AND pos 54=E → co-evolutionary
+  - IF pos 46=L AND pos 54=E → co-evolutionary
+  - IF pos 46=T AND pos 54=E → co-evolutionary
+  - IF pos 46=A AND pos 54=Y → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4}` (coverage 32)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 16)
+  - `\bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 16)
+  - `\bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t1` (coverage 16)
+  - `s3 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot t3 \cdot \bar{t1}` (coverage 16)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t2 \cdot t1` (coverage 16)
+- Flipped/forbidden rules: 4430
+- N-ary: 122 PIs, 39 essential
+
+## 1avsA
+- variable positions: 78, pairs: 1818, **PIs: 252, essential: 84**
+  - IF pos 1=A AND pos 21=M → co-evolutionary
+  - IF pos 1=A AND pos 21=M → co-evolutionary
+  - IF pos 1=A AND pos 4=Q → co-evolutionary
+  - IF pos 1=A AND pos 4=A → co-evolutionary
+  - IF pos 1=A AND pos 13=K → co-evolutionary
+  - IF pos 1=A AND pos 13=R → co-evolutionary
+  - IF pos 1=A AND pos 13=A → co-evolutionary
+  - IF pos 1=A AND pos 15=F → co-evolutionary
+  - IF pos 1=A AND pos 16=K → co-evolutionary
+  - IF pos 1=A AND pos 16=T → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 1)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+- Flipped/forbidden rules: 2632
+- N-ary: 122 PIs, 38 essential
+
+## 1bdoA
+- variable positions: 77, pairs: 1764, **PIs: 1223, essential: 521**
+  - IF pos 40=A AND pos 47=A → co-evolutionary
+  - IF pos 40=A AND pos 47=E → co-evolutionary
+  - IF pos 40=A AND pos 47=N → co-evolutionary
+  - IF pos 40=A AND pos 47=E → co-evolutionary
+  - IF pos 40=E AND pos 47=A → co-evolutionary
+  - IF pos 40=A AND pos 47=L → co-evolutionary
+  - IF pos 40=A AND pos 47=T → co-evolutionary
+  - IF pos 40=I AND pos 47=A → co-evolutionary
+  - IF pos 40=E AND pos 47=A → co-evolutionary
+  - IF pos 40=I AND pos 47=M → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2}` (coverage 32)
+  - `\bar{s4} \cdot \bar{s3} \cdot t3 \cdot \bar{t2} \cdot \bar{t0}` (coverage 32)
+  - `\bar{s4} \cdot \bar{s2} \cdot t3 \cdot t1 \cdot t0` (coverage 32)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2}` (coverage 16)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 16)
+  - `\bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t1}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot t2 \cdot \bar{t1}` (coverage 16)
+- Flipped/forbidden rules: 4934
+- N-ary: 131 PIs, 31 essential
+
+## 1bebA
+- variable positions: 153, pairs: 4100, **PIs: 1038, essential: 476**
+  - IF pos 132=A AND pos 154=H → co-evolutionary
+  - IF pos 132=Q AND pos 154=A → co-evolutionary
+  - IF pos 132=E AND pos 154=A → co-evolutionary
+  - IF pos 132=E AND pos 154=T → co-evolutionary
+  - IF pos 132=E AND pos 154=Q → co-evolutionary
+  - IF pos 132=E AND pos 154=H → co-evolutionary
+  - IF pos 132=Q AND pos 154=T → co-evolutionary
+  - IF pos 132=K AND pos 154=A → co-evolutionary
+  - IF pos 132=Q AND pos 154=T → co-evolutionary
+  - IF pos 132=V AND pos 154=Q → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot \bar{s1} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t2` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot t1 \cdot \bar{t0}` (coverage 8)
+- Flipped/forbidden rules: 5788
+- N-ary: 137 PIs, 45 essential
+
+## 1behA
+- variable positions: 179, pairs: 4831, **PIs: 269, essential: 47**
+  - IF pos 33=D AND pos 49=K → co-evolutionary
+  - IF pos 33=H AND pos 49=Q → co-evolutionary
+  - IF pos 49=K AND pos 77=L → co-evolutionary
+  - IF pos 49=T AND pos 77=K → co-evolutionary
+  - IF pos 49=A AND pos 77=D → co-evolutionary
+  - IF pos 49=S AND pos 77=E → co-evolutionary
+  - IF pos 49=K AND pos 77=S → co-evolutionary
+  - IF pos 49=S AND pos 77=R → co-evolutionary
+  - IF pos 8=A AND pos 30=L → co-evolutionary
+  - IF pos 8=A AND pos 30=V → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s3 \cdot \bar{s2} \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot s0 \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 2)
+- Flipped/forbidden rules: 3633
+- N-ary: 141 PIs, 38 essential
+
+## 1bkrA
+- variable positions: 107, pairs: 2726, **PIs: 772, essential: 319**
+  - IF pos 99=A AND pos 106=N → co-evolutionary
+  - IF pos 99=A AND pos 106=K → co-evolutionary
+  - IF pos 99=A AND pos 106=K → co-evolutionary
+  - IF pos 99=S AND pos 106=E → co-evolutionary
+  - IF pos 99=S AND pos 106=H → co-evolutionary
+  - IF pos 99=S AND pos 106=H → co-evolutionary
+  - IF pos 99=A AND pos 106=E → co-evolutionary
+  - IF pos 99=E AND pos 106=N → co-evolutionary
+  - IF pos 99=C AND pos 106=H → co-evolutionary
+  - IF pos 99=L AND pos 106=R → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+  - `\bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot s0 \cdot t3 \cdot t2` (coverage 8)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t2` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t1}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 5058
+- N-ary: 145 PIs, 38 essential
+
+## 1brfA
+- variable positions: 45, pairs: 820, **PIs: 602, essential: 257**
+  - IF pos 17=D AND pos 20=A → co-evolutionary
+  - IF pos 17=E AND pos 20=Q → co-evolutionary
+  - IF pos 17=D AND pos 20=E → co-evolutionary
+  - IF pos 17=A AND pos 20=A → co-evolutionary
+  - IF pos 17=A AND pos 20=E → co-evolutionary
+  - IF pos 17=A AND pos 20=E → co-evolutionary
+  - IF pos 17=A AND pos 20=E → co-evolutionary
+  - IF pos 17=A AND pos 20=E → co-evolutionary
+  - IF pos 17=I AND pos 20=E → co-evolutionary
+  - IF pos 17=C AND pos 20=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s3 \cdot \bar{s2} \cdot s0 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot t3 \cdot t1` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot t3` (coverage 16)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+- Flipped/forbidden rules: 3911
+- N-ary: 164 PIs, 39 essential
+
+## 1bsgA
+- variable positions: 259, pairs: 7157, **PIs: 1217, essential: 563**
+  - IF pos 121=T AND pos 143=A → co-evolutionary
+  - IF pos 121=T AND pos 143=A → co-evolutionary
+  - IF pos 121=P AND pos 143=A → co-evolutionary
+  - IF pos 121=P AND pos 143=A → co-evolutionary
+  - IF pos 121=P AND pos 143=E → co-evolutionary
+  - IF pos 121=P AND pos 143=E → co-evolutionary
+  - IF pos 121=P AND pos 143=E → co-evolutionary
+  - IF pos 121=P AND pos 143=E → co-evolutionary
+  - IF pos 121=E AND pos 143=G → co-evolutionary
+  - IF pos 121=P AND pos 143=H → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s4 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `s4 \cdot \bar{s3} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2}` (coverage 16)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3` (coverage 16)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3` (coverage 16)
+  - `s4 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t0}` (coverage 16)
+  - `s4 \cdot s1 \cdot \bar{t4} \cdot t3 \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `s3 \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 16)
+  - `s4 \cdot s1 \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t1}` (coverage 16)
+- Flipped/forbidden rules: 5258
+- N-ary: 130 PIs, 34 essential
+
+## 1c44A
+- variable positions: 119, pairs: 3087, **PIs: 586, essential: 243**
+  - IF pos 117=A AND pos 118=E → co-evolutionary
+  - IF pos 117=E AND pos 118=A → co-evolutionary
+  - IF pos 117=A AND pos 118=P → co-evolutionary
+  - IF pos 117=Y AND pos 118=A → co-evolutionary
+  - IF pos 117=E AND pos 118=P → co-evolutionary
+  - IF pos 117=A AND pos 118=N → co-evolutionary
+  - IF pos 117=N AND pos 118=A → co-evolutionary
+  - IF pos 117=M AND pos 118=Q → co-evolutionary
+  - IF pos 117=V AND pos 118=D → co-evolutionary
+  - IF pos 117=A AND pos 118=E → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3` (coverage 16)
+  - `s3 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `s2 \cdot s1 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+  - `s3 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot \bar{s1} \cdot t3 \cdot \bar{t2} \cdot t1` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 4738
+- N-ary: 112 PIs, 32 essential
+
+## 1c52A
+- variable positions: 125, pairs: 3251, **PIs: 355, essential: 100**
+  - IF pos 95=T AND pos 125=A → co-evolutionary
+  - IF pos 95=L AND pos 125=Q → co-evolutionary
+  - IF pos 95=L AND pos 125=R → co-evolutionary
+  - IF pos 95=V AND pos 125=D → co-evolutionary
+  - IF pos 95=D AND pos 125=P → co-evolutionary
+  - IF pos 95=A AND pos 125=G → co-evolutionary
+  - IF pos 95=E AND pos 125=E → co-evolutionary
+  - IF pos 95=E AND pos 125=E → co-evolutionary
+  - IF pos 95=A AND pos 125=L → co-evolutionary
+  - IF pos 118=A AND pos 128=E → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s1} \cdot s0 \cdot t4 \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 1)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 4343
+- N-ary: 130 PIs, 26 essential
+
+## 1c9oA
+- variable positions: 60, pairs: 1282, **PIs: 657, essential: 288**
+  - IF pos 29=A AND pos 37=A → co-evolutionary
+  - IF pos 29=I AND pos 37=A → co-evolutionary
+  - IF pos 29=A AND pos 37=M → co-evolutionary
+  - IF pos 29=A AND pos 37=L → co-evolutionary
+  - IF pos 29=I AND pos 37=A → co-evolutionary
+  - IF pos 29=A AND pos 37=F → co-evolutionary
+  - IF pos 29=A AND pos 37=F → co-evolutionary
+  - IF pos 29=M AND pos 37=L → co-evolutionary
+  - IF pos 29=M AND pos 37=Y → co-evolutionary
+  - IF pos 29=Q AND pos 37=L → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{t3} \cdot t2 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t3} \cdot t1` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot \bar{t3} \cdot \bar{t1}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 16)
+  - `\bar{s4} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 16)
+  - `s2 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 16)
+  - `\bar{s4} \cdot s2 \cdot \bar{s0} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot \bar{s0} \cdot t1 \cdot \bar{t0}` (coverage 16)
+- Flipped/forbidden rules: 4163
+- N-ary: 142 PIs, 38 essential
+
+## 1cc8A
+- variable positions: 68, pairs: 1547, **PIs: 345, essential: 97**
+  - IF pos 42=H AND pos 70=E → co-evolutionary
+  - IF pos 42=A AND pos 70=Q → co-evolutionary
+  - IF pos 42=R AND pos 70=E → co-evolutionary
+  - IF pos 42=V AND pos 70=E → co-evolutionary
+  - IF pos 42=T AND pos 70=T → co-evolutionary
+  - IF pos 42=T AND pos 70=R → co-evolutionary
+  - IF pos 61=A AND pos 70=E → co-evolutionary
+  - IF pos 61=I AND pos 70=Q → co-evolutionary
+  - IF pos 61=A AND pos 70=E → co-evolutionary
+  - IF pos 61=A AND pos 70=K → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s3 \cdot s2 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot s2 \cdot s1 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `\bar{s3} \cdot \bar{s2} \cdot s0 \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+- Flipped/forbidden rules: 3374
+- N-ary: 100 PIs, 26 essential
+
+## 1chdA
+- variable positions: 188, pairs: 4980, **PIs: 276, essential: 83**
+  - IF pos 190=A AND pos 194=A → co-evolutionary
+  - IF pos 191=A AND pos 192=K → co-evolutionary
+  - IF pos 191=H AND pos 192=H → co-evolutionary
+  - IF pos 191=T AND pos 192=A → co-evolutionary
+  - IF pos 191=A AND pos 192=T → co-evolutionary
+  - IF pos 191=V AND pos 192=G → co-evolutionary
+  - IF pos 191=Q AND pos 192=K → co-evolutionary
+  - IF pos 191=A AND pos 192=Q → co-evolutionary
+  - IF pos 174=I AND pos 194=Q → co-evolutionary
+  - IF pos 174=F AND pos 194=H → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 1)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t0` (coverage 8)
+  - `s3 \cdot s2 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t3} \cdot t1 \cdot t0` (coverage 4)
+  - `s3 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot t3 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 2783
+- N-ary: 125 PIs, 29 essential
+
+## 1cjwA
+- variable positions: 164, pairs: 4354, **PIs: 596, essential: 206**
+  - IF pos 2=A AND pos 28=E → co-evolutionary
+  - IF pos 2=A AND pos 28=E → co-evolutionary
+  - IF pos 2=A AND pos 28=H → co-evolutionary
+  - IF pos 2=A AND pos 28=A → co-evolutionary
+  - IF pos 2=A AND pos 28=A → co-evolutionary
+  - IF pos 2=M AND pos 28=A → co-evolutionary
+  - IF pos 2=A AND pos 28=P → co-evolutionary
+  - IF pos 2=M AND pos 28=L → co-evolutionary
+  - IF pos 2=T AND pos 28=T → co-evolutionary
+  - IF pos 2=M AND pos 28=L → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t1}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t1}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2` (coverage 16)
+  - `\bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot t1` (coverage 8)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t1}` (coverage 8)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot t1` (coverage 8)
+- Flipped/forbidden rules: 3937
+- N-ary: 131 PIs, 28 essential
+
+## 1ckeA
+- variable positions: 195, pairs: 5046, **PIs: 454, essential: 145**
+  - IF pos 138=N AND pos 141=R → co-evolutionary
+  - IF pos 138=A AND pos 141=M → co-evolutionary
+  - IF pos 138=A AND pos 141=D → co-evolutionary
+  - IF pos 138=A AND pos 141=K → co-evolutionary
+  - IF pos 138=V AND pos 141=K → co-evolutionary
+  - IF pos 138=Q AND pos 141=N → co-evolutionary
+  - IF pos 138=A AND pos 141=V → co-evolutionary
+  - IF pos 138=A AND pos 141=C → co-evolutionary
+  - IF pos 152=A AND pos 177=M → co-evolutionary
+  - IF pos 152=A AND pos 177=T → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot s0 \cdot t3 \cdot t2 \cdot t1` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t0` (coverage 4)
+  - `\bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t2 \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+- Flipped/forbidden rules: 4650
+- N-ary: 105 PIs, 26 essential
+
+## 1ctfA
+- variable positions: 59, pairs: 1210, **PIs: 407, essential: 136**
+  - IF pos 23=A AND pos 26=G → co-evolutionary
+  - IF pos 23=A AND pos 26=N → co-evolutionary
+  - IF pos 23=A AND pos 26=G → co-evolutionary
+  - IF pos 23=T AND pos 26=D → co-evolutionary
+  - IF pos 23=T AND pos 26=S → co-evolutionary
+  - IF pos 23=T AND pos 26=C → co-evolutionary
+  - IF pos 23=T AND pos 26=P → co-evolutionary
+  - IF pos 23=E AND pos 26=N → co-evolutionary
+  - IF pos 23=A AND pos 26=A → co-evolutionary
+  - IF pos 23=P AND pos 26=T → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s3} \cdot \bar{s2} \cdot t4 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t1 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot t4 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t0` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+- Flipped/forbidden rules: 3786
+- N-ary: 122 PIs, 22 essential
+
+## 1cxyA
+- variable positions: 80, pairs: 1925, **PIs: 1106, essential: 487**
+  - IF pos 36=N AND pos 37=A → co-evolutionary
+  - IF pos 36=Q AND pos 37=P → co-evolutionary
+  - IF pos 36=T AND pos 37=L → co-evolutionary
+  - IF pos 36=Y AND pos 37=A → co-evolutionary
+  - IF pos 36=L AND pos 37=P → co-evolutionary
+  - IF pos 36=Y AND pos 37=P → co-evolutionary
+  - IF pos 36=H AND pos 37=P → co-evolutionary
+  - IF pos 36=T AND pos 37=N → co-evolutionary
+  - IF pos 36=Y AND pos 37=K → co-evolutionary
+  - IF pos 36=Q AND pos 37=K → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s3 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot s1 \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t4 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot s1 \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+- Flipped/forbidden rules: 5421
+- N-ary: 132 PIs, 39 essential
+
+## 1cznA
+- variable positions: 166, pairs: 4472, **PIs: 640, essential: 262**
+  - IF pos 124=H AND pos 154=R → co-evolutionary
+  - IF pos 124=A AND pos 154=R → co-evolutionary
+  - IF pos 124=N AND pos 154=T → co-evolutionary
+  - IF pos 124=N AND pos 154=R → co-evolutionary
+  - IF pos 139=A AND pos 154=E → co-evolutionary
+  - IF pos 139=A AND pos 154=T → co-evolutionary
+  - IF pos 139=D AND pos 154=E → co-evolutionary
+  - IF pos 140=A AND pos 154=K → co-evolutionary
+  - IF pos 140=A AND pos 154=R → co-evolutionary
+  - IF pos 140=N AND pos 154=I → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s3 \cdot s2 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 4)
+- Flipped/forbidden rules: 5022
+- N-ary: 138 PIs, 34 essential
+
+## 1d0qA
+- variable positions: 101, pairs: 2524, **PIs: 576, essential: 216**
+  - IF pos 41=H AND pos 62=A → co-evolutionary
+  - IF pos 41=H AND pos 62=E → co-evolutionary
+  - IF pos 41=H AND pos 62=E → co-evolutionary
+  - IF pos 41=R AND pos 62=A → co-evolutionary
+  - IF pos 41=H AND pos 62=T → co-evolutionary
+  - IF pos 41=R AND pos 62=I → co-evolutionary
+  - IF pos 41=Q AND pos 62=R → co-evolutionary
+  - IF pos 41=T AND pos 62=S → co-evolutionary
+  - IF pos 41=C AND pos 62=I → co-evolutionary
+  - IF pos 41=A AND pos 62=S → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s3 \cdot s2 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2}` (coverage 8)
+  - `s3 \cdot s2 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `s3 \cdot s2 \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 8)
+  - `s3 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot t1` (coverage 8)
+  - `s4 \cdot \bar{s1} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 8)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 4)
+- Flipped/forbidden rules: 4303
+- N-ary: 142 PIs, 41 essential
+
+## 1d1qA
+- variable positions: 152, pairs: 4011, **PIs: 482, essential: 171**
+  - IF pos 32=A AND pos 39=D → co-evolutionary
+  - IF pos 32=A AND pos 39=N → co-evolutionary
+  - IF pos 32=L AND pos 39=D → co-evolutionary
+  - IF pos 32=A AND pos 39=G → co-evolutionary
+  - IF pos 32=E AND pos 39=G → co-evolutionary
+  - IF pos 32=R AND pos 39=L → co-evolutionary
+  - IF pos 32=H AND pos 39=K → co-evolutionary
+  - IF pos 32=R AND pos 39=S → co-evolutionary
+  - IF pos 32=A AND pos 39=A → co-evolutionary
+  - IF pos 32=H AND pos 39=N → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot t1 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot t0` (coverage 4)
+  - `s3 \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 2)
+- Flipped/forbidden rules: 4688
+- N-ary: 122 PIs, 38 essential
+
+## 1d4oA
+- variable positions: 139, pairs: 2904, **PIs: 495, essential: 231**
+  - IF pos 164=A AND pos 175=D → co-evolutionary
+  - IF pos 164=A AND pos 175=Q → co-evolutionary
+  - IF pos 152=A AND pos 175=E → co-evolutionary
+  - IF pos 12=M AND pos 16=A → co-evolutionary
+  - IF pos 12=E AND pos 16=E → co-evolutionary
+  - IF pos 12=D AND pos 16=E → co-evolutionary
+  - IF pos 12=M AND pos 16=N → co-evolutionary
+  - IF pos 12=M AND pos 16=N → co-evolutionary
+  - IF pos 12=D AND pos 16=D → co-evolutionary
+  - IF pos 12=D AND pos 16=D → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s2 \cdot \bar{s1} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 16)
+  - `\bar{s4} \cdot s2 \cdot \bar{s0} \cdot t3 \cdot t1 \cdot t0` (coverage 16)
+  - `s2 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t1 \cdot t0` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot s0 \cdot t3 \cdot \bar{t2} \cdot t0` (coverage 16)
+  - `s3 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t0` (coverage 16)
+- Flipped/forbidden rules: 3790
+- N-ary: 135 PIs, 38 essential
+
+## 1dbxA
+- variable positions: 150, pairs: 3999, **PIs: 892, essential: 396**
+  - IF pos 122=P AND pos 129=A → co-evolutionary
+  - IF pos 122=G AND pos 129=A → co-evolutionary
+  - IF pos 122=A AND pos 129=A → co-evolutionary
+  - IF pos 122=T AND pos 129=T → co-evolutionary
+  - IF pos 122=T AND pos 129=T → co-evolutionary
+  - IF pos 122=E AND pos 129=L → co-evolutionary
+  - IF pos 122=T AND pos 129=T → co-evolutionary
+  - IF pos 122=N AND pos 129=A → co-evolutionary
+  - IF pos 122=S AND pos 129=A → co-evolutionary
+  - IF pos 122=G AND pos 129=E → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s4 \cdot s1 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `s4 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t1}` (coverage 8)
+  - `s4 \cdot \bar{s2} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t1}` (coverage 8)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t1}` (coverage 8)
+- Flipped/forbidden rules: 4786
+- N-ary: 108 PIs, 22 essential
+
+## 1dixA
+- variable positions: 200, pairs: 5350, **PIs: 1163, essential: 570**
+  - IF pos 174=Y AND pos 177=A → co-evolutionary
+  - IF pos 174=I AND pos 177=H → co-evolutionary
+  - IF pos 174=A AND pos 177=G → co-evolutionary
+  - IF pos 174=A AND pos 177=G → co-evolutionary
+  - IF pos 174=Y AND pos 177=E → co-evolutionary
+  - IF pos 174=E AND pos 177=Y → co-evolutionary
+  - IF pos 174=R AND pos 177=E → co-evolutionary
+  - IF pos 174=D AND pos 177=Y → co-evolutionary
+  - IF pos 174=N AND pos 177=Y → co-evolutionary
+  - IF pos 174=A AND pos 177=V → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot t3 \cdot t2` (coverage 16)
+  - `\bar{s4} \cdot \bar{s2} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot t0` (coverage 16)
+  - `\bar{s4} \cdot \bar{s2} \cdot t4 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 16)
+  - `\bar{s4} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot \bar{s1} \cdot \bar{t3} \cdot t2 \cdot t1` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot t3 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot s0 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `s3 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t2 \cdot t1` (coverage 16)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t1 \cdot t0` (coverage 8)
+- Flipped/forbidden rules: 6205
+- N-ary: 176 PIs, 49 essential
+
+## 1dlwA
+- variable positions: 114, pairs: 2919, **PIs: 960, essential: 420**
+  - IF pos 40=A AND pos 51=F → co-evolutionary
+  - IF pos 40=A AND pos 51=A → co-evolutionary
+  - IF pos 40=A AND pos 51=A → co-evolutionary
+  - IF pos 40=A AND pos 51=L → co-evolutionary
+  - IF pos 40=M AND pos 51=A → co-evolutionary
+  - IF pos 40=M AND pos 51=A → co-evolutionary
+  - IF pos 40=A AND pos 51=Q → co-evolutionary
+  - IF pos 40=H AND pos 51=A → co-evolutionary
+  - IF pos 40=F AND pos 51=A → co-evolutionary
+  - IF pos 40=F AND pos 51=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{t3} \cdot t2 \cdot t0` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot t1` (coverage 8)
+  - `s2 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 8)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+- Flipped/forbidden rules: 5066
+- N-ary: 125 PIs, 31 essential
+
+## 1dmgA
+- variable positions: 172, pairs: 4686, **PIs: 508, essential: 186**
+  - IF pos 108=A AND pos 132=P → co-evolutionary
+  - IF pos 108=P AND pos 132=A → co-evolutionary
+  - IF pos 108=M AND pos 132=E → co-evolutionary
+  - IF pos 108=Q AND pos 132=L → co-evolutionary
+  - IF pos 108=H AND pos 132=L → co-evolutionary
+  - IF pos 108=P AND pos 132=I → co-evolutionary
+  - IF pos 108=R AND pos 132=A → co-evolutionary
+  - IF pos 108=P AND pos 132=I → co-evolutionary
+  - IF pos 108=Y AND pos 132=V → co-evolutionary
+  - IF pos 108=Q AND pos 132=Q → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot t4 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1}` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 4)
+  - `\bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 6013
+- N-ary: 106 PIs, 29 essential
+
+## 1dqgA
+- variable positions: 127, pairs: 3199, **PIs: 785, essential: 352**
+  - IF pos 120=I AND pos 130=H → co-evolutionary
+  - IF pos 120=A AND pos 130=Q → co-evolutionary
+  - IF pos 120=A AND pos 130=H → co-evolutionary
+  - IF pos 120=V AND pos 130=Q → co-evolutionary
+  - IF pos 120=P AND pos 130=H → co-evolutionary
+  - IF pos 120=W AND pos 130=Y → co-evolutionary
+  - IF pos 120=V AND pos 130=L → co-evolutionary
+  - IF pos 120=Y AND pos 130=F → co-evolutionary
+  - IF pos 120=F AND pos 130=R → co-evolutionary
+  - IF pos 120=Q AND pos 130=N → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot t3 \cdot t2 \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot \bar{s1} \cdot s0 \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 2)
+- Flipped/forbidden rules: 6394
+- N-ary: 170 PIs, 39 essential
+
+## 1dsxA
+- variable positions: 85, pairs: 2055, **PIs: 873, essential: 354**
+  - IF pos 32=A AND pos 62=G → co-evolutionary
+  - IF pos 32=R AND pos 62=E → co-evolutionary
+  - IF pos 32=Q AND pos 62=P → co-evolutionary
+  - IF pos 32=G AND pos 62=M → co-evolutionary
+  - IF pos 32=G AND pos 62=M → co-evolutionary
+  - IF pos 32=G AND pos 62=M → co-evolutionary
+  - IF pos 32=Q AND pos 62=V → co-evolutionary
+  - IF pos 32=G AND pos 62=P → co-evolutionary
+  - IF pos 32=R AND pos 62=H → co-evolutionary
+  - IF pos 32=G AND pos 62=N → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot t0` (coverage 16)
+  - `s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot t4 \cdot \bar{t2} \cdot t1` (coverage 16)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t2 \cdot \bar{t1}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t2 \cdot \bar{t1}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t2 \cdot \bar{t1}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+  - `s4 \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot t3 \cdot t2 \cdot \bar{t1}` (coverage 8)
+  - `s4 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t1 \cdot t0` (coverage 8)
+- Flipped/forbidden rules: 4974
+- N-ary: 143 PIs, 36 essential
+
+## 1eazA
+- variable positions: 99, pairs: 2489, **PIs: 479, essential: 196**
+  - IF pos 84=E AND pos 101=Q → co-evolutionary
+  - IF pos 84=A AND pos 101=K → co-evolutionary
+  - IF pos 84=I AND pos 101=H → co-evolutionary
+  - IF pos 84=E AND pos 101=Q → co-evolutionary
+  - IF pos 84=A AND pos 101=N → co-evolutionary
+  - IF pos 84=C AND pos 101=N → co-evolutionary
+  - IF pos 84=R AND pos 101=N → co-evolutionary
+  - IF pos 84=S AND pos 101=H → co-evolutionary
+  - IF pos 84=A AND pos 101=A → co-evolutionary
+  - IF pos 78=A AND pos 101=Q → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s3 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot t3 \cdot t2 \cdot \bar{t1}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `s3 \cdot s2 \cdot s1 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t1}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 1)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot t3 \cdot t1 \cdot \bar{t0}` (coverage 16)
+- Flipped/forbidden rules: 3279
+- N-ary: 137 PIs, 28 essential
+
+## 1ej0A
+- variable positions: 172, pairs: 4577, **PIs: 980, essential: 430**
+  - IF pos 96=A AND pos 97=A → co-evolutionary
+  - IF pos 96=A AND pos 97=I → co-evolutionary
+  - IF pos 96=A AND pos 97=E → co-evolutionary
+  - IF pos 96=L AND pos 97=M → co-evolutionary
+  - IF pos 96=A AND pos 97=G → co-evolutionary
+  - IF pos 96=A AND pos 97=G → co-evolutionary
+  - IF pos 96=M AND pos 97=P → co-evolutionary
+  - IF pos 96=C AND pos 97=E → co-evolutionary
+  - IF pos 96=G AND pos 97=E → co-evolutionary
+  - IF pos 96=A AND pos 97=S → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `s2 \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot t3 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 4)
+- Flipped/forbidden rules: 5482
+- N-ary: 134 PIs, 32 essential
+
+## 1ej8A
+- variable positions: 137, pairs: 3617, **PIs: 501, essential: 186**
+  - IF pos 9=F AND pos 16=A → co-evolutionary
+  - IF pos 9=A AND pos 16=A → co-evolutionary
+  - IF pos 9=I AND pos 16=T → co-evolutionary
+  - IF pos 9=Y AND pos 16=A → co-evolutionary
+  - IF pos 9=A AND pos 16=N → co-evolutionary
+  - IF pos 9=T AND pos 16=D → co-evolutionary
+  - IF pos 9=Y AND pos 16=C → co-evolutionary
+  - IF pos 9=Q AND pos 16=P → co-evolutionary
+  - IF pos 9=A AND pos 16=H → co-evolutionary
+  - IF pos 9=T AND pos 16=P → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot t4 \cdot \bar{t3} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t1 \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 2)
+- Flipped/forbidden rules: 5741
+- N-ary: 172 PIs, 41 essential
+
+## 1ek0A
+- variable positions: 160, pairs: 4209, **PIs: 1131, essential: 420**
+  - IF pos 37=A AND pos 38=E → co-evolutionary
+  - IF pos 37=E AND pos 38=E → co-evolutionary
+  - IF pos 37=A AND pos 38=N → co-evolutionary
+  - IF pos 37=I AND pos 38=Q → co-evolutionary
+  - IF pos 37=A AND pos 38=A → co-evolutionary
+  - IF pos 37=A AND pos 38=T → co-evolutionary
+  - IF pos 37=A AND pos 38=T → co-evolutionary
+  - IF pos 37=A AND pos 38=E → co-evolutionary
+  - IF pos 37=T AND pos 38=A → co-evolutionary
+  - IF pos 37=A AND pos 38=T → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3` (coverage 32)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot t3` (coverage 32)
+  - `\bar{s3} \cdot \bar{s2} \cdot t3 \cdot t1 \cdot t0` (coverage 32)
+  - `\bar{s4} \cdot \bar{s2} \cdot s0 \cdot t3 \cdot t1` (coverage 32)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t1}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot t3 \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `s4 \cdot \bar{s3} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t0}` (coverage 16)
+- Flipped/forbidden rules: 4091
+- N-ary: 127 PIs, 34 essential
+
+## 1f6bA
+- variable positions: 167, pairs: 4324, **PIs: 1176, essential: 531**
+  - IF pos 39=M AND pos 40=I → co-evolutionary
+  - IF pos 39=E AND pos 40=L → co-evolutionary
+  - IF pos 39=E AND pos 40=F → co-evolutionary
+  - IF pos 39=G AND pos 40=A → co-evolutionary
+  - IF pos 39=G AND pos 40=A → co-evolutionary
+  - IF pos 39=G AND pos 40=A → co-evolutionary
+  - IF pos 39=G AND pos 40=A → co-evolutionary
+  - IF pos 39=G AND pos 40=A → co-evolutionary
+  - IF pos 39=D AND pos 40=I → co-evolutionary
+  - IF pos 39=A AND pos 40=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s2 \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t1} \cdot t0` (coverage 16)
+  - `s3 \cdot \bar{s1} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 16)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t3} \cdot \bar{t2}` (coverage 16)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t1}` (coverage 16)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t1}` (coverage 16)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t2}` (coverage 16)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t2}` (coverage 16)
+  - `s3 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t1} \cdot t0` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t0}` (coverage 8)
+- Flipped/forbidden rules: 5860
+- N-ary: 125 PIs, 33 essential
+
+## 1fcyA
+- variable positions: 235, pairs: 6583, **PIs: 1170, essential: 532**
+  - IF pos 5=E AND pos 30=A → co-evolutionary
+  - IF pos 5=E AND pos 30=M → co-evolutionary
+  - IF pos 5=E AND pos 30=T → co-evolutionary
+  - IF pos 5=E AND pos 30=M → co-evolutionary
+  - IF pos 5=A AND pos 30=E → co-evolutionary
+  - IF pos 5=A AND pos 30=T → co-evolutionary
+  - IF pos 5=E AND pos 30=A → co-evolutionary
+  - IF pos 5=E AND pos 30=I → co-evolutionary
+  - IF pos 5=D AND pos 30=A → co-evolutionary
+  - IF pos 5=A AND pos 30=N → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s0} \cdot t2 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t3} \cdot t2` (coverage 16)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 8)
+  - `s3 \cdot \bar{s1} \cdot s0 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t1 \cdot t0` (coverage 8)
+- Flipped/forbidden rules: 5839
+- N-ary: 103 PIs, 32 essential
+
+## 1fk5A
+- variable positions: 84, pairs: 1946, **PIs: 706, essential: 281**
+  - IF pos 53=A AND pos 82=T → co-evolutionary
+  - IF pos 53=N AND pos 82=A → co-evolutionary
+  - IF pos 53=N AND pos 82=A → co-evolutionary
+  - IF pos 53=N AND pos 82=A → co-evolutionary
+  - IF pos 53=N AND pos 82=I → co-evolutionary
+  - IF pos 53=D AND pos 82=S → co-evolutionary
+  - IF pos 53=A AND pos 82=F → co-evolutionary
+  - IF pos 53=F AND pos 82=M → co-evolutionary
+  - IF pos 53=N AND pos 82=T → co-evolutionary
+  - IF pos 53=V AND pos 82=W → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `s3 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `s3 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 8)
+  - `s3 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 8)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t2} \cdot \bar{t1}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t2 \cdot t1 \cdot t0` (coverage 4)
+- Flipped/forbidden rules: 5112
+- N-ary: 111 PIs, 30 essential
+
+## 1fl0A
+- variable positions: 162, pairs: 4329, **PIs: 1031, essential: 461**
+  - IF pos 24=A AND pos 42=Q → co-evolutionary
+  - IF pos 24=A AND pos 42=G → co-evolutionary
+  - IF pos 24=A AND pos 42=G → co-evolutionary
+  - IF pos 24=L AND pos 42=A → co-evolutionary
+  - IF pos 24=A AND pos 42=G → co-evolutionary
+  - IF pos 24=N AND pos 42=A → co-evolutionary
+  - IF pos 24=S AND pos 42=Q → co-evolutionary
+  - IF pos 24=K AND pos 42=G → co-evolutionary
+  - IF pos 24=V AND pos 42=A → co-evolutionary
+  - IF pos 24=T AND pos 42=N → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot t4 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot t0` (coverage 4)
+  - `s3 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot s0 \cdot t3 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s0 \cdot t4 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 2)
+- Flipped/forbidden rules: 5319
+- N-ary: 147 PIs, 31 essential
+
+## 1fnaA
+- variable positions: 88, pairs: 2099, **PIs: 1072, essential: 453**
+  - IF pos 80=T AND pos 88=A → co-evolutionary
+  - IF pos 80=E AND pos 88=A → co-evolutionary
+  - IF pos 80=A AND pos 88=E → co-evolutionary
+  - IF pos 80=A AND pos 88=T → co-evolutionary
+  - IF pos 80=I AND pos 88=T → co-evolutionary
+  - IF pos 80=I AND pos 88=T → co-evolutionary
+  - IF pos 80=A AND pos 88=Q → co-evolutionary
+  - IF pos 80=T AND pos 88=E → co-evolutionary
+  - IF pos 80=P AND pos 88=E → co-evolutionary
+  - IF pos 80=E AND pos 88=D → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s4 \cdot \bar{s3} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2}` (coverage 32)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s2} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot s0 \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot s0 \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2}` (coverage 16)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3` (coverage 16)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot t3 \cdot t0` (coverage 16)
+- Flipped/forbidden rules: 3987
+- N-ary: 148 PIs, 32 essential
+
+## 1fqtA
+- variable positions: 106, pairs: 2674, **PIs: 1346, essential: 565**
+  - IF pos 47=A AND pos 64=A → co-evolutionary
+  - IF pos 47=A AND pos 64=L → co-evolutionary
+  - IF pos 47=A AND pos 64=M → co-evolutionary
+  - IF pos 47=A AND pos 64=Q → co-evolutionary
+  - IF pos 47=Y AND pos 64=A → co-evolutionary
+  - IF pos 47=M AND pos 64=M → co-evolutionary
+  - IF pos 47=I AND pos 64=L → co-evolutionary
+  - IF pos 47=V AND pos 64=M → co-evolutionary
+  - IF pos 47=L AND pos 64=Y → co-evolutionary
+  - IF pos 47=M AND pos 64=Y → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot t2 \cdot \bar{t1}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t1` (coverage 16)
+  - `s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{t3} \cdot t2` (coverage 16)
+  - `s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t2 \cdot \bar{t1}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `s2 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot t1` (coverage 16)
+- Flipped/forbidden rules: 4697
+- N-ary: 134 PIs, 29 essential
+
+## 1fvgA
+- variable positions: 176, pairs: 4432, **PIs: 906, essential: 389**
+  - IF pos 30=A AND pos 32=E → co-evolutionary
+  - IF pos 30=T AND pos 32=A → co-evolutionary
+  - IF pos 30=E AND pos 32=A → co-evolutionary
+  - IF pos 30=A AND pos 32=D → co-evolutionary
+  - IF pos 30=E AND pos 32=T → co-evolutionary
+  - IF pos 30=E AND pos 32=T → co-evolutionary
+  - IF pos 30=E AND pos 32=T → co-evolutionary
+  - IF pos 30=E AND pos 32=I → co-evolutionary
+  - IF pos 30=Q AND pos 32=A → co-evolutionary
+  - IF pos 30=Q AND pos 32=T → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2}` (coverage 16)
+  - `s4 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1}` (coverage 16)
+  - `s3 \cdot \bar{s2} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t0` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot t4 \cdot \bar{t3} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot t4 \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `s3 \cdot \bar{s2} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `s3 \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 16)
+  - `s3 \cdot s1 \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot t4 \cdot \bar{t3} \cdot \bar{t0}` (coverage 16)
+- Flipped/forbidden rules: 4968
+- N-ary: 165 PIs, 43 essential
+
+## 1fvkA
+- variable positions: 182, pairs: 4898, **PIs: 389, essential: 134**
+  - IF pos 36=A AND pos 40=E → co-evolutionary
+  - IF pos 36=A AND pos 40=H → co-evolutionary
+  - IF pos 36=A AND pos 40=N → co-evolutionary
+  - IF pos 36=E AND pos 40=D → co-evolutionary
+  - IF pos 36=E AND pos 40=Q → co-evolutionary
+  - IF pos 36=V AND pos 40=E → co-evolutionary
+  - IF pos 36=V AND pos 40=P → co-evolutionary
+  - IF pos 36=S AND pos 40=H → co-evolutionary
+  - IF pos 36=S AND pos 40=H → co-evolutionary
+  - IF pos 41=A AND pos 64=L → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot s1 \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t4 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot s0 \cdot t3 \cdot t2 \cdot \bar{t1}` (coverage 4)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t1}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 4238
+- N-ary: 122 PIs, 33 essential
+
+## 1fx2A
+- variable positions: 111, pairs: 2835, **PIs: 422, essential: 159**
+  - IF pos 98=A AND pos 101=E → co-evolutionary
+  - IF pos 98=E AND pos 101=F → co-evolutionary
+  - IF pos 98=Q AND pos 101=E → co-evolutionary
+  - IF pos 98=Y AND pos 101=E → co-evolutionary
+  - IF pos 98=E AND pos 101=T → co-evolutionary
+  - IF pos 98=E AND pos 101=T → co-evolutionary
+  - IF pos 98=Y AND pos 101=M → co-evolutionary
+  - IF pos 98=E AND pos 101=E → co-evolutionary
+  - IF pos 98=Y AND pos 101=A → co-evolutionary
+  - IF pos 98=G AND pos 101=T → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot s1 \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot s2 \cdot s1 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 5514
+- N-ary: 114 PIs, 33 essential
+
+## 1g2rA
+- variable positions: 89, pairs: 2095, **PIs: 665, essential: 274**
+  - IF pos 86=A AND pos 89=C → co-evolutionary
+  - IF pos 86=A AND pos 89=A → co-evolutionary
+  - IF pos 86=A AND pos 89=E → co-evolutionary
+  - IF pos 86=A AND pos 89=V → co-evolutionary
+  - IF pos 86=A AND pos 89=C → co-evolutionary
+  - IF pos 86=T AND pos 89=L → co-evolutionary
+  - IF pos 86=A AND pos 89=K → co-evolutionary
+  - IF pos 86=P AND pos 89=E → co-evolutionary
+  - IF pos 84=A AND pos 85=T → co-evolutionary
+  - IF pos 84=Q AND pos 85=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t1}` (coverage 8)
+- Flipped/forbidden rules: 5752
+- N-ary: 149 PIs, 40 essential
+
+## 1g9oA
+- variable positions: 88, pairs: 2156, **PIs: 598, essential: 260**
+  - IF pos 1=Q AND pos 26=A → co-evolutionary
+  - IF pos 1=E AND pos 26=V → co-evolutionary
+  - IF pos 1=V AND pos 26=T → co-evolutionary
+  - IF pos 1=K AND pos 26=E → co-evolutionary
+  - IF pos 1=K AND pos 26=L → co-evolutionary
+  - IF pos 1=A AND pos 26=M → co-evolutionary
+  - IF pos 1=A AND pos 26=T → co-evolutionary
+  - IF pos 1=L AND pos 26=T → co-evolutionary
+  - IF pos 1=A AND pos 26=F → co-evolutionary
+  - IF pos 1=F AND pos 26=E → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2}` (coverage 8)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t2} \cdot t1` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 6091
+- N-ary: 134 PIs, 33 essential
+
+## 1gbsA
+- variable positions: 180, pairs: 4777, **PIs: 189, essential: 42**
+  - IF pos 0=A AND pos 24=S → co-evolutionary
+  - IF pos 0=A AND pos 13=Y → co-evolutionary
+  - IF pos 0=A AND pos 13=S → co-evolutionary
+  - IF pos 0=K AND pos 13=S → co-evolutionary
+  - IF pos 0=A AND pos 30=I → co-evolutionary
+  - IF pos 0=A AND pos 3=C → co-evolutionary
+  - IF pos 0=L AND pos 3=C → co-evolutionary
+  - IF pos 0=A AND pos 3=F → co-evolutionary
+  - IF pos 0=A AND pos 3=Q → co-evolutionary
+  - IF pos 0=R AND pos 3=E → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+- Flipped/forbidden rules: 3126
+- N-ary: 153 PIs, 32 essential
+
+## 1gmiA
+- variable positions: 135, pairs: 3570, **PIs: 1032, essential: 424**
+  - IF pos 1=T AND pos 27=A → co-evolutionary
+  - IF pos 1=T AND pos 27=A → co-evolutionary
+  - IF pos 1=I AND pos 27=A → co-evolutionary
+  - IF pos 1=T AND pos 27=A → co-evolutionary
+  - IF pos 1=A AND pos 27=P → co-evolutionary
+  - IF pos 1=V AND pos 27=A → co-evolutionary
+  - IF pos 1=V AND pos 27=A → co-evolutionary
+  - IF pos 1=P AND pos 27=L → co-evolutionary
+  - IF pos 1=I AND pos 27=K → co-evolutionary
+  - IF pos 1=P AND pos 27=Q → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s4 \cdot \bar{s3} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 16)
+  - `s4 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot t3 \cdot t2 \cdot t0` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot t1` (coverage 8)
+- Flipped/forbidden rules: 5446
+- N-ary: 146 PIs, 34 essential
+
+## 1gmxA
+- variable positions: 103, pairs: 2596, **PIs: 693, essential: 304**
+  - IF pos 78=A AND pos 104=T → co-evolutionary
+  - IF pos 78=A AND pos 104=T → co-evolutionary
+  - IF pos 78=A AND pos 104=A → co-evolutionary
+  - IF pos 78=A AND pos 104=T → co-evolutionary
+  - IF pos 78=I AND pos 104=T → co-evolutionary
+  - IF pos 78=Q AND pos 104=E → co-evolutionary
+  - IF pos 78=H AND pos 104=H → co-evolutionary
+  - IF pos 78=Q AND pos 104=Q → co-evolutionary
+  - IF pos 78=Q AND pos 104=H → co-evolutionary
+  - IF pos 78=A AND pos 104=T → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot s0 \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t1` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t2` (coverage 8)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 4769
+- N-ary: 123 PIs, 31 essential
+
+## 1guuA
+- variable positions: 48, pairs: 947, **PIs: 1183, essential: 485**
+  - IF pos 36=A AND pos 40=E → co-evolutionary
+  - IF pos 36=A AND pos 40=E → co-evolutionary
+  - IF pos 36=E AND pos 40=E → co-evolutionary
+  - IF pos 36=Q AND pos 40=E → co-evolutionary
+  - IF pos 36=E AND pos 40=H → co-evolutionary
+  - IF pos 36=A AND pos 40=A → co-evolutionary
+  - IF pos 36=A AND pos 40=A → co-evolutionary
+  - IF pos 36=A AND pos 40=M → co-evolutionary
+  - IF pos 36=L AND pos 40=A → co-evolutionary
+  - IF pos 36=A AND pos 40=E → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot t3` (coverage 128)
+  - `\bar{s4} \cdot \bar{s0} \cdot t3 \cdot \bar{t2}` (coverage 64)
+  - `\bar{s4} \cdot s3 \cdot \bar{t4} \cdot t3` (coverage 64)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot t3` (coverage 64)
+  - `\bar{s4} \cdot s3 \cdot t3 \cdot t2` (coverage 64)
+  - `\bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2}` (coverage 32)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 32)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s0} \cdot t2 \cdot \bar{t0}` (coverage 32)
+  - `\bar{s4} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2}` (coverage 32)
+  - `\bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3` (coverage 32)
+- Flipped/forbidden rules: 3573
+- N-ary: 162 PIs, 39 essential
+
+## 1gz2A
+- variable positions: 131, pairs: 3374, **PIs: 735, essential: 314**
+  - IF pos 59=P AND pos 65=M → co-evolutionary
+  - IF pos 59=P AND pos 65=M → co-evolutionary
+  - IF pos 59=N AND pos 65=I → co-evolutionary
+  - IF pos 59=D AND pos 65=H → co-evolutionary
+  - IF pos 59=A AND pos 65=F → co-evolutionary
+  - IF pos 59=I AND pos 65=D → co-evolutionary
+  - IF pos 59=I AND pos 65=H → co-evolutionary
+  - IF pos 59=A AND pos 65=R → co-evolutionary
+  - IF pos 59=L AND pos 65=D → co-evolutionary
+  - IF pos 59=L AND pos 65=Q → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t3} \cdot t2` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot t2` (coverage 8)
+  - `s3 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t2` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot t3 \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 6824
+- N-ary: 162 PIs, 39 essential
+
+## 1gzcA
+- variable positions: 235, pairs: 6515, **PIs: 492, essential: 171**
+  - IF pos 219=E AND pos 220=L → co-evolutionary
+  - IF pos 219=E AND pos 220=E → co-evolutionary
+  - IF pos 219=E AND pos 220=D → co-evolutionary
+  - IF pos 219=E AND pos 220=N → co-evolutionary
+  - IF pos 219=E AND pos 220=N → co-evolutionary
+  - IF pos 219=A AND pos 220=D → co-evolutionary
+  - IF pos 219=E AND pos 220=L → co-evolutionary
+  - IF pos 219=A AND pos 220=G → co-evolutionary
+  - IF pos 219=E AND pos 220=G → co-evolutionary
+  - IF pos 219=R AND pos 220=D → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot t1` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot \bar{s1} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+  - `s3 \cdot \bar{s1} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+  - `\bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `s3 \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t0` (coverage 4)
+- Flipped/forbidden rules: 6078
+- N-ary: 145 PIs, 32 essential
+
+## 1h0pA
+- variable positions: 175, pairs: 4622, **PIs: 392, essential: 128**
+  - IF pos 172=E AND pos 173=A → co-evolutionary
+  - IF pos 172=K AND pos 173=A → co-evolutionary
+  - IF pos 172=P AND pos 173=L → co-evolutionary
+  - IF pos 172=K AND pos 173=L → co-evolutionary
+  - IF pos 172=P AND pos 173=F → co-evolutionary
+  - IF pos 172=A AND pos 173=A → co-evolutionary
+  - IF pos 172=A AND pos 173=F → co-evolutionary
+  - IF pos 172=Y AND pos 173=E → co-evolutionary
+  - IF pos 172=E AND pos 173=V → co-evolutionary
+  - IF pos 172=Y AND pos 173=E → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s3 \cdot \bar{s2} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 8)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot t1` (coverage 8)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 8)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t2 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 3643
+- N-ary: 186 PIs, 42 essential
+
+## 1h2eA
+- variable positions: 199, pairs: 5319, **PIs: 589, essential: 251**
+  - IF pos 186=A AND pos 205=E → co-evolutionary
+  - IF pos 203=A AND pos 205=E → co-evolutionary
+  - IF pos 203=A AND pos 205=D → co-evolutionary
+  - IF pos 203=I AND pos 205=K → co-evolutionary
+  - IF pos 203=Q AND pos 205=K → co-evolutionary
+  - IF pos 193=L AND pos 204=E → co-evolutionary
+  - IF pos 193=E AND pos 204=E → co-evolutionary
+  - IF pos 193=A AND pos 204=K → co-evolutionary
+  - IF pos 193=A AND pos 204=R → co-evolutionary
+  - IF pos 193=V AND pos 204=E → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 4)
+- Flipped/forbidden rules: 4500
+- N-ary: 149 PIs, 36 essential
+
+## 1h4xA
+- variable positions: 110, pairs: 2832, **PIs: 689, essential: 277**
+  - IF pos 46=A AND pos 56=G → co-evolutionary
+  - IF pos 46=D AND pos 56=Q → co-evolutionary
+  - IF pos 46=V AND pos 56=G → co-evolutionary
+  - IF pos 46=Q AND pos 56=G → co-evolutionary
+  - IF pos 46=Q AND pos 56=G → co-evolutionary
+  - IF pos 46=E AND pos 56=A → co-evolutionary
+  - IF pos 46=N AND pos 56=A → co-evolutionary
+  - IF pos 46=A AND pos 56=F → co-evolutionary
+  - IF pos 17=A AND pos 46=D → co-evolutionary
+  - IF pos 17=E AND pos 46=D → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot t3 \cdot t1` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t4 \cdot t1 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot t4 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+  - `s3 \cdot s1 \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+  - `s3 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `\bar{s2} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 16)
+  - `s3 \cdot \bar{s2} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t0` (coverage 16)
+- Flipped/forbidden rules: 3976
+- N-ary: 90 PIs, 26 essential
+
+## 1h98A
+- variable positions: 68, pairs: 1451, **PIs: 1101, essential: 487**
+  - IF pos 43=A AND pos 66=A → co-evolutionary
+  - IF pos 43=A AND pos 66=A → co-evolutionary
+  - IF pos 43=A AND pos 66=M → co-evolutionary
+  - IF pos 43=A AND pos 66=I → co-evolutionary
+  - IF pos 43=L AND pos 66=A → co-evolutionary
+  - IF pos 43=A AND pos 66=M → co-evolutionary
+  - IF pos 43=A AND pos 66=M → co-evolutionary
+  - IF pos 43=E AND pos 66=I → co-evolutionary
+  - IF pos 43=M AND pos 66=I → co-evolutionary
+  - IF pos 43=M AND pos 66=L → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t2 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t1}` (coverage 16)
+  - `\bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot \bar{t1}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1}` (coverage 16)
+  - `s3 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 16)
+  - `s2 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 16)
+  - `s2 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 16)
+- Flipped/forbidden rules: 5213
+- N-ary: 154 PIs, 28 essential
+
+## 1hdoA
+- variable positions: 202, pairs: 5554, **PIs: 1052, essential: 362**
+  - IF pos 193=T AND pos 203=N → co-evolutionary
+  - IF pos 193=A AND pos 203=E → co-evolutionary
+  - IF pos 193=I AND pos 203=D → co-evolutionary
+  - IF pos 150=A AND pos 153=A → co-evolutionary
+  - IF pos 150=T AND pos 153=A → co-evolutionary
+  - IF pos 150=T AND pos 153=A → co-evolutionary
+  - IF pos 150=A AND pos 153=M → co-evolutionary
+  - IF pos 150=P AND pos 153=A → co-evolutionary
+  - IF pos 150=P AND pos 153=A → co-evolutionary
+  - IF pos 150=P AND pos 153=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{t3} \cdot \bar{t1}` (coverage 32)
+  - `s4 \cdot \bar{s3} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3}` (coverage 32)
+  - `s4 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3}` (coverage 32)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t3} \cdot t2` (coverage 32)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot \bar{s0} \cdot \bar{t4}` (coverage 32)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0}` (coverage 32)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4}` (coverage 32)
+- Flipped/forbidden rules: 2794
+- N-ary: 119 PIs, 29 essential
+
+## 1hfcA
+- variable positions: 145, pairs: 3685, **PIs: 1347, essential: 631**
+  - IF pos 63=A AND pos 78=F → co-evolutionary
+  - IF pos 63=A AND pos 78=F → co-evolutionary
+  - IF pos 63=D AND pos 78=A → co-evolutionary
+  - IF pos 63=A AND pos 78=F → co-evolutionary
+  - IF pos 63=C AND pos 78=Y → co-evolutionary
+  - IF pos 63=N AND pos 78=T → co-evolutionary
+  - IF pos 63=A AND pos 78=L → co-evolutionary
+  - IF pos 63=A AND pos 78=Y → co-evolutionary
+  - IF pos 63=L AND pos 78=T → co-evolutionary
+  - IF pos 63=A AND pos 78=Y → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{t4} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 32)
+  - `\bar{s4} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 32)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 16)
+  - `s4 \cdot s0 \cdot \bar{t4} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot s1 \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s3} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 8)
+- Flipped/forbidden rules: 6191
+- N-ary: 172 PIs, 37 essential
+
+## 1hh8A
+- variable positions: 190, pairs: 4883, **PIs: 462, essential: 165**
+  - IF pos 169=E AND pos 187=E → co-evolutionary
+  - IF pos 169=I AND pos 187=Y → co-evolutionary
+  - IF pos 169=L AND pos 187=F → co-evolutionary
+  - IF pos 169=V AND pos 187=E → co-evolutionary
+  - IF pos 169=F AND pos 187=E → co-evolutionary
+  - IF pos 169=F AND pos 187=E → co-evolutionary
+  - IF pos 169=S AND pos 187=H → co-evolutionary
+  - IF pos 169=S AND pos 187=K → co-evolutionary
+  - IF pos 169=A AND pos 187=D → co-evolutionary
+  - IF pos 169=T AND pos 187=I → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s3 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot \bar{s1} \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot \bar{s1} \cdot s0 \cdot t3 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot s0 \cdot t3 \cdot t2 \cdot \bar{t1}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot s0 \cdot t3 \cdot t2 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 2)
+- Flipped/forbidden rules: 5586
+- N-ary: 108 PIs, 34 essential
+
+## 1htwA
+- variable positions: 144, pairs: 3502, **PIs: 628, essential: 246**
+  - IF pos 26=A AND pos 28=Y → co-evolutionary
+  - IF pos 26=A AND pos 28=H → co-evolutionary
+  - IF pos 26=Q AND pos 28=T → co-evolutionary
+  - IF pos 26=A AND pos 28=D → co-evolutionary
+  - IF pos 26=A AND pos 28=N → co-evolutionary
+  - IF pos 26=A AND pos 28=G → co-evolutionary
+  - IF pos 26=G AND pos 28=A → co-evolutionary
+  - IF pos 26=G AND pos 28=A → co-evolutionary
+  - IF pos 26=R AND pos 28=L → co-evolutionary
+  - IF pos 26=Q AND pos 28=Q → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot t1 \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot s0 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1` (coverage 4)
+- Flipped/forbidden rules: 5118
+- N-ary: 145 PIs, 36 essential
+
+## 1hxnA
+- variable positions: 205, pairs: 5629, **PIs: 150, essential: 27**
+  - IF pos 166=A AND pos 169=F → co-evolutionary
+  - IF pos 166=G AND pos 169=W → co-evolutionary
+  - IF pos 165=A AND pos 169=Q → co-evolutionary
+  - IF pos 165=I AND pos 169=R → co-evolutionary
+  - IF pos 164=F AND pos 166=A → co-evolutionary
+  - IF pos 164=A AND pos 166=L → co-evolutionary
+  - IF pos 165=A AND pos 166=W → co-evolutionary
+  - IF pos 165=R AND pos 166=G → co-evolutionary
+  - IF pos 164=A AND pos 169=E → co-evolutionary
+  - IF pos 164=F AND pos 169=F → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 1)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot t0` (coverage 4)
+  - `s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 2)
+- Flipped/forbidden rules: 3515
+- N-ary: 149 PIs, 47 essential
+
+## 1i1jA
+- variable positions: 103, pairs: 2537, **PIs: 515, essential: 231**
+  - IF pos 2=A AND pos 21=C → co-evolutionary
+  - IF pos 2=G AND pos 21=C → co-evolutionary
+  - IF pos 2=A AND pos 21=E → co-evolutionary
+  - IF pos 2=T AND pos 21=G → co-evolutionary
+  - IF pos 68=A AND pos 71=E → co-evolutionary
+  - IF pos 68=Q AND pos 71=A → co-evolutionary
+  - IF pos 68=G AND pos 71=E → co-evolutionary
+  - IF pos 68=A AND pos 71=E → co-evolutionary
+  - IF pos 68=A AND pos 71=D → co-evolutionary
+  - IF pos 68=A AND pos 71=N → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s4 \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2}` (coverage 8)
+  - `s3 \cdot s1 \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t1 \cdot t0` (coverage 4)
+- Flipped/forbidden rules: 5858
+- N-ary: 155 PIs, 40 essential
+
+## 1i1nA
+- variable positions: 220, pairs: 6034, **PIs: 529, essential: 218**
+  - IF pos 218=A AND pos 222=D → co-evolutionary
+  - IF pos 218=A AND pos 221=Q → co-evolutionary
+  - IF pos 187=A AND pos 211=V → co-evolutionary
+  - IF pos 187=E AND pos 211=M → co-evolutionary
+  - IF pos 187=A AND pos 211=Q → co-evolutionary
+  - IF pos 187=Q AND pos 211=A → co-evolutionary
+  - IF pos 187=Q AND pos 211=M → co-evolutionary
+  - IF pos 187=M AND pos 211=Q → co-evolutionary
+  - IF pos 187=A AND pos 211=M → co-evolutionary
+  - IF pos 187=T AND pos 211=M → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t1}` (coverage 8)
+  - `s3 \cdot s1 \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t1` (coverage 8)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 3935
+- N-ary: 117 PIs, 24 essential
+
+## 1i4jA
+- variable positions: 108, pairs: 2752, **PIs: 950, essential: 455**
+  - IF pos 94=H AND pos 96=Q → co-evolutionary
+  - IF pos 94=H AND pos 96=Q → co-evolutionary
+  - IF pos 94=H AND pos 96=M → co-evolutionary
+  - IF pos 94=R AND pos 96=A → co-evolutionary
+  - IF pos 94=K AND pos 96=A → co-evolutionary
+  - IF pos 94=A AND pos 96=L → co-evolutionary
+  - IF pos 94=A AND pos 96=Y → co-evolutionary
+  - IF pos 94=A AND pos 96=P → co-evolutionary
+  - IF pos 94=A AND pos 96=Y → co-evolutionary
+  - IF pos 94=T AND pos 96=T → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot t3 \cdot t1` (coverage 32)
+  - `s3 \cdot s2 \cdot \bar{t4} \cdot t3 \cdot t1` (coverage 32)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s1} \cdot t2 \cdot \bar{t1}` (coverage 16)
+  - `s3 \cdot s2 \cdot s1 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot t4 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+- Flipped/forbidden rules: 5405
+- N-ary: 121 PIs, 30 essential
+
+## 1i58A
+- variable positions: 184, pairs: 4483, **PIs: 1445, essential: 540**
+  - IF pos 111=A AND pos 114=A → co-evolutionary
+  - IF pos 111=L AND pos 114=A → co-evolutionary
+  - IF pos 111=A AND pos 114=M → co-evolutionary
+  - IF pos 111=M AND pos 114=M → co-evolutionary
+  - IF pos 111=I AND pos 114=T → co-evolutionary
+  - IF pos 111=F AND pos 114=A → co-evolutionary
+  - IF pos 111=A AND pos 114=F → co-evolutionary
+  - IF pos 111=A AND pos 114=Q → co-evolutionary
+  - IF pos 111=M AND pos 114=I → co-evolutionary
+  - IF pos 111=A AND pos 114=G → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t1}` (coverage 32)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0}` (coverage 32)
+  - `\bar{s4} \cdot \bar{s3} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 32)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{t4} \cdot t2` (coverage 32)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot s0 \cdot t4` (coverage 32)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4}` (coverage 32)
+  - `\bar{s4} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 32)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot t3 \cdot t1` (coverage 32)
+  - `s2 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t1} \cdot t0` (coverage 32)
+  - `\bar{s4} \cdot \bar{s3} \cdot t4 \cdot t1 \cdot t0` (coverage 32)
+- Flipped/forbidden rules: 4280
+- N-ary: 132 PIs, 25 essential
+
+## 1i5gA
+- variable positions: 142, pairs: 3791, **PIs: 339, essential: 145**
+  - IF pos 2=Q AND pos 25=S → co-evolutionary
+  - IF pos 2=A AND pos 25=W → co-evolutionary
+  - IF pos 2=S AND pos 25=A → co-evolutionary
+  - IF pos 2=K AND pos 25=F → co-evolutionary
+  - IF pos 2=S AND pos 25=Y → co-evolutionary
+  - IF pos 2=S AND pos 25=Y → co-evolutionary
+  - IF pos 2=L AND pos 8=E → co-evolutionary
+  - IF pos 2=V AND pos 8=T → co-evolutionary
+  - IF pos 2=L AND pos 8=G → co-evolutionary
+  - IF pos 2=A AND pos 8=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot t0` (coverage 2)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t3} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t4 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+- Flipped/forbidden rules: 4370
+- N-ary: 141 PIs, 37 essential
+
+## 1i71A
+- variable positions: 72, pairs: 1560, **PIs: 508, essential: 188**
+  - IF pos 30=L AND pos 33=E → co-evolutionary
+  - IF pos 30=L AND pos 33=H → co-evolutionary
+  - IF pos 30=L AND pos 33=A → co-evolutionary
+  - IF pos 30=L AND pos 33=L → co-evolutionary
+  - IF pos 30=P AND pos 33=A → co-evolutionary
+  - IF pos 30=P AND pos 33=A → co-evolutionary
+  - IF pos 30=L AND pos 33=Y → co-evolutionary
+  - IF pos 30=E AND pos 33=H → co-evolutionary
+  - IF pos 30=P AND pos 33=E → co-evolutionary
+  - IF pos 30=E AND pos 33=H → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot t3 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot t3 \cdot t2` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t1` (coverage 8)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 8)
+  - `\bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot t3 \cdot t2 \cdot \bar{t1}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot \bar{s1} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+- Flipped/forbidden rules: 4492
+- N-ary: 190 PIs, 39 essential
+
+## 1ihzA
+- variable positions: 132, pairs: 3457, **PIs: 935, essential: 402**
+  - IF pos 16=T AND pos 29=A → co-evolutionary
+  - IF pos 16=T AND pos 29=A → co-evolutionary
+  - IF pos 16=Q AND pos 29=A → co-evolutionary
+  - IF pos 16=T AND pos 29=E → co-evolutionary
+  - IF pos 16=T AND pos 29=A → co-evolutionary
+  - IF pos 16=Q AND pos 29=L → co-evolutionary
+  - IF pos 16=Q AND pos 29=Q → co-evolutionary
+  - IF pos 16=R AND pos 29=Q → co-evolutionary
+  - IF pos 16=A AND pos 29=A → co-evolutionary
+  - IF pos 16=A AND pos 29=Y → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2}` (coverage 16)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t0}` (coverage 16)
+  - `s3 \cdot s1 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3` (coverage 16)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t1}` (coverage 16)
+  - `s3 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot t1` (coverage 16)
+  - `s3 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t1` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot t3 \cdot t1` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 8)
+- Flipped/forbidden rules: 4733
+- N-ary: 140 PIs, 30 essential
+
+## 1iibA
+- variable positions: 97, pairs: 2384, **PIs: 481, essential: 210**
+  - IF pos 77=A AND pos 100=A → co-evolutionary
+  - IF pos 5=L AND pos 11=A → co-evolutionary
+  - IF pos 5=I AND pos 11=A → co-evolutionary
+  - IF pos 5=I AND pos 11=M → co-evolutionary
+  - IF pos 5=M AND pos 11=M → co-evolutionary
+  - IF pos 5=L AND pos 11=N → co-evolutionary
+  - IF pos 5=M AND pos 11=I → co-evolutionary
+  - IF pos 5=M AND pos 11=T → co-evolutionary
+  - IF pos 5=L AND pos 11=P → co-evolutionary
+  - IF pos 5=V AND pos 11=G → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 1)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t1}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 2)
+- Flipped/forbidden rules: 3961
+- N-ary: 113 PIs, 26 essential
+
+## 1im5A
+- variable positions: 177, pairs: 4807, **PIs: 1607, essential: 608**
+  - IF pos 101=A AND pos 127=A → co-evolutionary
+  - IF pos 101=A AND pos 127=A → co-evolutionary
+  - IF pos 101=M AND pos 127=L → co-evolutionary
+  - IF pos 101=A AND pos 127=A → co-evolutionary
+  - IF pos 101=A AND pos 127=E → co-evolutionary
+  - IF pos 101=L AND pos 127=A → co-evolutionary
+  - IF pos 101=T AND pos 127=A → co-evolutionary
+  - IF pos 101=A AND pos 127=E → co-evolutionary
+  - IF pos 101=A AND pos 127=T → co-evolutionary
+  - IF pos 101=M AND pos 127=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s1} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 32)
+  - `\bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 32)
+  - `\bar{s3} \cdot s2 \cdot \bar{t4} \cdot \bar{t2} \cdot t1` (coverage 32)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t2} \cdot \bar{t1}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s3} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t0}` (coverage 16)
+  - `s4 \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot t4 \cdot \bar{t3} \cdot \bar{t1}` (coverage 16)
+  - `\bar{s3} \cdot s2 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t1}` (coverage 16)
+- Flipped/forbidden rules: 4210
+- N-ary: 122 PIs, 26 essential
+
+## 1iwdA
+- variable positions: 205, pairs: 5434, **PIs: 845, essential: 366**
+  - IF pos 55=A AND pos 62=C → co-evolutionary
+  - IF pos 55=C AND pos 62=I → co-evolutionary
+  - IF pos 55=C AND pos 62=L → co-evolutionary
+  - IF pos 55=N AND pos 62=E → co-evolutionary
+  - IF pos 55=C AND pos 62=D → co-evolutionary
+  - IF pos 55=Q AND pos 62=N → co-evolutionary
+  - IF pos 55=T AND pos 62=A → co-evolutionary
+  - IF pos 55=T AND pos 62=A → co-evolutionary
+  - IF pos 55=T AND pos 62=A → co-evolutionary
+  - IF pos 55=Q AND pos 62=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t2} \cdot t0` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t2} \cdot t1` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2}` (coverage 8)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 5030
+- N-ary: 159 PIs, 37 essential
+
+## 1j3aA
+- variable positions: 123, pairs: 3119, **PIs: 772, essential: 352**
+  - IF pos 50=H AND pos 52=A → co-evolutionary
+  - IF pos 50=H AND pos 52=L → co-evolutionary
+  - IF pos 50=G AND pos 52=A → co-evolutionary
+  - IF pos 50=Q AND pos 52=F → co-evolutionary
+  - IF pos 50=G AND pos 52=L → co-evolutionary
+  - IF pos 50=Y AND pos 52=H → co-evolutionary
+  - IF pos 50=Y AND pos 52=H → co-evolutionary
+  - IF pos 50=C AND pos 52=Y → co-evolutionary
+  - IF pos 50=C AND pos 52=V → co-evolutionary
+  - IF pos 50=D AND pos 52=G → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t0}` (coverage 16)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t1` (coverage 16)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot \bar{s0} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1}` (coverage 4)
+  - `\bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t1}` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s1} \cdot s0 \cdot t4 \cdot \bar{t3} \cdot t1 \cdot t0` (coverage 4)
+- Flipped/forbidden rules: 5743
+- N-ary: 147 PIs, 38 essential
+
+## 1jbeA
+- variable positions: 124, pairs: 2654, **PIs: 1084, essential: 433**
+  - IF pos 98=E AND pos 106=T → co-evolutionary
+  - IF pos 98=E AND pos 106=E → co-evolutionary
+  - IF pos 98=E AND pos 106=E → co-evolutionary
+  - IF pos 98=E AND pos 106=E → co-evolutionary
+  - IF pos 98=E AND pos 106=P → co-evolutionary
+  - IF pos 98=A AND pos 106=E → co-evolutionary
+  - IF pos 98=E AND pos 106=A → co-evolutionary
+  - IF pos 98=A AND pos 106=P → co-evolutionary
+  - IF pos 98=L AND pos 106=T → co-evolutionary
+  - IF pos 98=T AND pos 106=E → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot s3 \cdot t4 \cdot \bar{t0}` (coverage 64)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot t3` (coverage 64)
+  - `\bar{s4} \cdot s3 \cdot t3 \cdot \bar{t0}` (coverage 64)
+  - `\bar{s4} \cdot s3 \cdot t3 \cdot \bar{t2}` (coverage 64)
+  - `\bar{s4} \cdot s3 \cdot t4 \cdot t1` (coverage 64)
+  - `\bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3` (coverage 32)
+  - `\bar{s4} \cdot s3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 32)
+  - `\bar{s4} \cdot t4 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 32)
+  - `\bar{s4} \cdot s1 \cdot t4 \cdot \bar{t2} \cdot \bar{t0}` (coverage 32)
+  - `s4 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t0}` (coverage 32)
+- Flipped/forbidden rules: 2790
+- N-ary: 95 PIs, 31 essential
+
+## 1jbkA
+- variable positions: 179, pairs: 4668, **PIs: 1238, essential: 511**
+  - IF pos 98=A AND pos 127=T → co-evolutionary
+  - IF pos 98=A AND pos 127=T → co-evolutionary
+  - IF pos 98=A AND pos 127=T → co-evolutionary
+  - IF pos 98=T AND pos 127=A → co-evolutionary
+  - IF pos 98=A AND pos 127=T → co-evolutionary
+  - IF pos 98=M AND pos 127=A → co-evolutionary
+  - IF pos 98=L AND pos 127=T → co-evolutionary
+  - IF pos 98=I AND pos 127=T → co-evolutionary
+  - IF pos 98=A AND pos 127=N → co-evolutionary
+  - IF pos 98=A AND pos 127=N → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s2} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `s4 \cdot \bar{s2} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s3} \cdot s2 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot s1 \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot s0 \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot t3 \cdot t1 \cdot t0` (coverage 16)
+  - `\bar{s3} \cdot \bar{s1} \cdot \bar{t4} \cdot t3 \cdot t1 \cdot t0` (coverage 16)
+- Flipped/forbidden rules: 4521
+- N-ary: 142 PIs, 33 essential
+
+## 1jfuA
+- variable positions: 174, pairs: 4741, **PIs: 400, essential: 107**
+  - IF pos 3=A AND pos 33=Q → co-evolutionary
+  - IF pos 3=A AND pos 33=I → co-evolutionary
+  - IF pos 3=A AND pos 33=T → co-evolutionary
+  - IF pos 3=E AND pos 33=E → co-evolutionary
+  - IF pos 3=D AND pos 33=R → co-evolutionary
+  - IF pos 3=Q AND pos 33=K → co-evolutionary
+  - IF pos 3=A AND pos 19=M → co-evolutionary
+  - IF pos 3=K AND pos 19=K → co-evolutionary
+  - IF pos 3=V AND pos 19=A → co-evolutionary
+  - IF pos 3=A AND pos 19=K → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s0 \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 2)
+- Flipped/forbidden rules: 4439
+- N-ary: 142 PIs, 35 essential
+
+## 1jfxA
+- variable positions: 214, pairs: 5911, **PIs: 330, essential: 108**
+  - IF pos 188=A AND pos 215=T → co-evolutionary
+  - IF pos 97=E AND pos 99=S → co-evolutionary
+  - IF pos 97=A AND pos 99=A → co-evolutionary
+  - IF pos 97=A AND pos 99=G → co-evolutionary
+  - IF pos 97=Y AND pos 99=T → co-evolutionary
+  - IF pos 97=Y AND pos 99=T → co-evolutionary
+  - IF pos 97=V AND pos 99=Q → co-evolutionary
+  - IF pos 97=D AND pos 99=Q → co-evolutionary
+  - IF pos 188=K AND pos 214=A → co-evolutionary
+  - IF pos 188=K AND pos 214=Q → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `s3 \cdot s2 \cdot s0 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot s2 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1` (coverage 8)
+- Flipped/forbidden rules: 2986
+- N-ary: 147 PIs, 34 essential
+
+## 1jkxA
+- variable positions: 202, pairs: 5414, **PIs: 1100, essential: 472**
+  - IF pos 86=N AND pos 88=T → co-evolutionary
+  - IF pos 86=N AND pos 88=T → co-evolutionary
+  - IF pos 86=G AND pos 88=I → co-evolutionary
+  - IF pos 86=G AND pos 88=L → co-evolutionary
+  - IF pos 86=G AND pos 88=T → co-evolutionary
+  - IF pos 86=Q AND pos 88=R → co-evolutionary
+  - IF pos 86=Q AND pos 88=R → co-evolutionary
+  - IF pos 86=S AND pos 88=E → co-evolutionary
+  - IF pos 86=A AND pos 88=N → co-evolutionary
+  - IF pos 86=A AND pos 88=N → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot s0 \cdot t4` (coverage 32)
+  - `s3 \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t3} \cdot \bar{t2}` (coverage 16)
+  - `s4 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t1} \cdot t0` (coverage 16)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t1` (coverage 16)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t4` (coverage 16)
+  - `s3 \cdot s1 \cdot \bar{t4} \cdot t3 \cdot t2 \cdot t1` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot t3 \cdot t2 \cdot t1` (coverage 16)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t1 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+- Flipped/forbidden rules: 5686
+- N-ary: 121 PIs, 28 essential
+
+## 1jl1A
+- variable positions: 145, pairs: 3735, **PIs: 1056, essential: 482**
+  - IF pos 145=A AND pos 147=D → co-evolutionary
+  - IF pos 145=A AND pos 147=Q → co-evolutionary
+  - IF pos 145=C AND pos 147=A → co-evolutionary
+  - IF pos 145=T AND pos 147=E → co-evolutionary
+  - IF pos 145=T AND pos 147=E → co-evolutionary
+  - IF pos 145=E AND pos 147=T → co-evolutionary
+  - IF pos 145=E AND pos 147=T → co-evolutionary
+  - IF pos 145=L AND pos 147=Q → co-evolutionary
+  - IF pos 145=T AND pos 147=Q → co-evolutionary
+  - IF pos 145=G AND pos 147=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 5668
+- N-ary: 151 PIs, 46 essential
+
+## 1jo0A
+- variable positions: 95, pairs: 2381, **PIs: 971, essential: 447**
+  - IF pos 20=T AND pos 39=A → co-evolutionary
+  - IF pos 20=H AND pos 39=A → co-evolutionary
+  - IF pos 20=H AND pos 39=A → co-evolutionary
+  - IF pos 20=L AND pos 39=A → co-evolutionary
+  - IF pos 20=A AND pos 39=H → co-evolutionary
+  - IF pos 20=V AND pos 39=A → co-evolutionary
+  - IF pos 20=T AND pos 39=A → co-evolutionary
+  - IF pos 20=T AND pos 39=A → co-evolutionary
+  - IF pos 20=L AND pos 39=H → co-evolutionary
+  - IF pos 20=L AND pos 39=G → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s4 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 16)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 8)
+  - `s3 \cdot s2 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot s1 \cdot s0 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot t4 \cdot t1 \cdot t0` (coverage 8)
+- Flipped/forbidden rules: 5780
+- N-ary: 132 PIs, 30 essential
+
+## 1jo8A
+- variable positions: 55, pairs: 1165, **PIs: 782, essential: 338**
+  - IF pos 40=L AND pos 56=A → co-evolutionary
+  - IF pos 40=Q AND pos 56=A → co-evolutionary
+  - IF pos 40=A AND pos 56=D → co-evolutionary
+  - IF pos 40=A AND pos 56=Q → co-evolutionary
+  - IF pos 40=T AND pos 56=K → co-evolutionary
+  - IF pos 40=S AND pos 56=E → co-evolutionary
+  - IF pos 40=A AND pos 56=A → co-evolutionary
+  - IF pos 40=A AND pos 56=T → co-evolutionary
+  - IF pos 40=I AND pos 56=A → co-evolutionary
+  - IF pos 40=A AND pos 56=T → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t2} \cdot \bar{t1}` (coverage 16)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot t3 \cdot \bar{t1} \cdot t0` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot t3 \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `s4 \cdot \bar{s1} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot t0` (coverage 16)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+- Flipped/forbidden rules: 3049
+- N-ary: 140 PIs, 34 essential
+
+## 1josA
+- variable positions: 96, pairs: 2387, **PIs: 753, essential: 357**
+  - IF pos 40=S AND pos 55=E → co-evolutionary
+  - IF pos 40=A AND pos 55=A → co-evolutionary
+  - IF pos 40=A AND pos 55=L → co-evolutionary
+  - IF pos 40=A AND pos 55=E → co-evolutionary
+  - IF pos 40=A AND pos 55=Q → co-evolutionary
+  - IF pos 40=K AND pos 55=L → co-evolutionary
+  - IF pos 40=R AND pos 55=I → co-evolutionary
+  - IF pos 40=H AND pos 55=P → co-evolutionary
+  - IF pos 40=H AND pos 55=P → co-evolutionary
+  - IF pos 40=G AND pos 55=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot s0 \cdot t3` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t2} \cdot t1` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t1` (coverage 8)
+  - `s3 \cdot s2 \cdot s0 \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot t4 \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot t4 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 5465
+- N-ary: 105 PIs, 28 essential
+
+## 1jvwA
+- variable positions: 158, pairs: 4261, **PIs: 273, essential: 84**
+  - IF pos 148=A AND pos 157=Q → co-evolutionary
+  - IF pos 148=Q AND pos 157=E → co-evolutionary
+  - IF pos 142=A AND pos 157=Q → co-evolutionary
+  - IF pos 129=I AND pos 156=A → co-evolutionary
+  - IF pos 129=E AND pos 156=A → co-evolutionary
+  - IF pos 129=H AND pos 156=E → co-evolutionary
+  - IF pos 129=Q AND pos 156=A → co-evolutionary
+  - IF pos 129=E AND pos 156=K → co-evolutionary
+  - IF pos 129=K AND pos 156=T → co-evolutionary
+  - IF pos 129=I AND pos 156=T → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1` (coverage 4)
+  - `s3 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s1} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+- Flipped/forbidden rules: 3660
+- N-ary: 163 PIs, 30 essential
+
+## 1jwqA
+- variable positions: 173, pairs: 4630, **PIs: 932, essential: 427**
+  - IF pos 52=A AND pos 63=R → co-evolutionary
+  - IF pos 52=A AND pos 63=R → co-evolutionary
+  - IF pos 52=A AND pos 63=Q → co-evolutionary
+  - IF pos 52=Q AND pos 63=I → co-evolutionary
+  - IF pos 52=R AND pos 63=A → co-evolutionary
+  - IF pos 52=T AND pos 63=W → co-evolutionary
+  - IF pos 52=T AND pos 63=W → co-evolutionary
+  - IF pos 52=T AND pos 63=W → co-evolutionary
+  - IF pos 52=I AND pos 63=R → co-evolutionary
+  - IF pos 52=E AND pos 63=R → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 8)
+  - `s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 8)
+  - `s4 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot t2 \cdot t1 \cdot t0` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t2 \cdot t1 \cdot t0` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s0} \cdot \bar{t4} \cdot t2 \cdot t1 \cdot t0` (coverage 8)
+  - `\bar{s1} \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s1} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 8)
+- Flipped/forbidden rules: 6022
+- N-ary: 109 PIs, 29 essential
+
+## 1jyhA
+- variable positions: 154, pairs: 4149, **PIs: 1231, essential: 573**
+  - IF pos 131=A AND pos 133=Y → co-evolutionary
+  - IF pos 131=A AND pos 133=Y → co-evolutionary
+  - IF pos 131=I AND pos 133=Y → co-evolutionary
+  - IF pos 131=A AND pos 133=M → co-evolutionary
+  - IF pos 131=E AND pos 133=T → co-evolutionary
+  - IF pos 131=A AND pos 133=Y → co-evolutionary
+  - IF pos 131=E AND pos 133=I → co-evolutionary
+  - IF pos 131=E AND pos 133=L → co-evolutionary
+  - IF pos 131=L AND pos 133=H → co-evolutionary
+  - IF pos 131=Q AND pos 133=I → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot s0 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot t0` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot t1` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot t3 \cdot t2 \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 8)
+- Flipped/forbidden rules: 5498
+- N-ary: 139 PIs, 35 essential
+
+## 1k6kA
+- variable positions: 140, pairs: 3731, **PIs: 1099, essential: 493**
+  - IF pos 106=H AND pos 134=A → co-evolutionary
+  - IF pos 106=M AND pos 134=A → co-evolutionary
+  - IF pos 106=H AND pos 134=E → co-evolutionary
+  - IF pos 106=H AND pos 134=E → co-evolutionary
+  - IF pos 106=A AND pos 134=K → co-evolutionary
+  - IF pos 106=A AND pos 134=R → co-evolutionary
+  - IF pos 106=A AND pos 134=E → co-evolutionary
+  - IF pos 106=A AND pos 134=L → co-evolutionary
+  - IF pos 106=A AND pos 134=E → co-evolutionary
+  - IF pos 106=D AND pos 134=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s1} \cdot \bar{s0}` (coverage 32)
+  - `s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s0} \cdot t3 \cdot \bar{t2}` (coverage 16)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3` (coverage 16)
+  - `\bar{s4} \cdot \bar{s2} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot t3 \cdot t2 \cdot t1` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot s0 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+- Flipped/forbidden rules: 5766
+- N-ary: 109 PIs, 26 essential
+
+## 1k7cA
+- variable positions: 225, pairs: 6168, **PIs: 404, essential: 134**
+  - IF pos 205=A AND pos 228=A → co-evolutionary
+  - IF pos 201=D AND pos 230=S → co-evolutionary
+  - IF pos 224=A AND pos 225=T → co-evolutionary
+  - IF pos 224=A AND pos 225=T → co-evolutionary
+  - IF pos 224=P AND pos 225=A → co-evolutionary
+  - IF pos 224=T AND pos 225=D → co-evolutionary
+  - IF pos 224=N AND pos 225=A → co-evolutionary
+  - IF pos 224=E AND pos 225=D → co-evolutionary
+  - IF pos 224=E AND pos 225=D → co-evolutionary
+  - IF pos 224=D AND pos 225=D → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 1)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot s0 \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t0` (coverage 8)
+  - `s3 \cdot s1 \cdot s0 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot t3 \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t0` (coverage 8)
+  - `s3 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 8)
+- Flipped/forbidden rules: 4515
+- N-ary: 118 PIs, 31 essential
+
+## 1k7jA
+- variable positions: 204, pairs: 5634, **PIs: 713, essential: 291**
+  - IF pos 152=A AND pos 153=L → co-evolutionary
+  - IF pos 152=T AND pos 153=L → co-evolutionary
+  - IF pos 152=T AND pos 153=L → co-evolutionary
+  - IF pos 152=T AND pos 153=L → co-evolutionary
+  - IF pos 152=T AND pos 153=L → co-evolutionary
+  - IF pos 152=L AND pos 153=P → co-evolutionary
+  - IF pos 152=A AND pos 153=A → co-evolutionary
+  - IF pos 152=A AND pos 153=L → co-evolutionary
+  - IF pos 152=A AND pos 153=L → co-evolutionary
+  - IF pos 152=A AND pos 153=E → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t1 \cdot \bar{t0}` (coverage 32)
+  - `s4 \cdot \bar{s3} \cdot \bar{t4} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `s4 \cdot \bar{s2} \cdot \bar{t4} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `s4 \cdot \bar{s3} \cdot \bar{s0} \cdot \bar{t4} \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot t4 \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{t4} \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s3} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+- Flipped/forbidden rules: 4292
+- N-ary: 130 PIs, 32 essential
+
+## 1kidA
+- variable positions: 172, pairs: 4376, **PIs: 511, essential: 191**
+  - IF pos 122=A AND pos 151=G → co-evolutionary
+  - IF pos 122=G AND pos 151=A → co-evolutionary
+  - IF pos 122=G AND pos 151=A → co-evolutionary
+  - IF pos 122=E AND pos 151=G → co-evolutionary
+  - IF pos 122=G AND pos 151=D → co-evolutionary
+  - IF pos 122=A AND pos 151=N → co-evolutionary
+  - IF pos 122=A AND pos 151=K → co-evolutionary
+  - IF pos 122=N AND pos 151=N → co-evolutionary
+  - IF pos 122=N AND pos 151=G → co-evolutionary
+  - IF pos 122=A AND pos 151=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot t0` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot s0 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t0` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t3} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+- Flipped/forbidden rules: 4441
+- N-ary: 146 PIs, 36 essential
+
+## 1kq6A
+- variable positions: 138, pairs: 3655, **PIs: 712, essential: 302**
+  - IF pos 2=T AND pos 3=F → co-evolutionary
+  - IF pos 2=N AND pos 3=Y → co-evolutionary
+  - IF pos 2=A AND pos 3=F → co-evolutionary
+  - IF pos 2=T AND pos 3=H → co-evolutionary
+  - IF pos 2=A AND pos 3=R → co-evolutionary
+  - IF pos 2=I AND pos 3=N → co-evolutionary
+  - IF pos 2=K AND pos 3=T → co-evolutionary
+  - IF pos 2=R AND pos 3=E → co-evolutionary
+  - IF pos 2=G AND pos 3=F → co-evolutionary
+  - IF pos 2=E AND pos 3=I → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s4 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `s3 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t1}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot t4 \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 2)
+- Flipped/forbidden rules: 6633
+- N-ary: 137 PIs, 33 essential
+
+## 1kqrA
+- variable positions: 128, pairs: 2896, **PIs: 347, essential: 100**
+  - IF pos 100=C AND pos 102=A → co-evolutionary
+  - IF pos 100=C AND pos 102=L → co-evolutionary
+  - IF pos 100=V AND pos 102=M → co-evolutionary
+  - IF pos 100=Y AND pos 102=V → co-evolutionary
+  - IF pos 100=N AND pos 102=F → co-evolutionary
+  - IF pos 100=A AND pos 102=F → co-evolutionary
+  - IF pos 100=C AND pos 102=W → co-evolutionary
+  - IF pos 111=L AND pos 121=E → co-evolutionary
+  - IF pos 111=I AND pos 121=T → co-evolutionary
+  - IF pos 111=A AND pos 121=P → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot s0 \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot \bar{t3} \cdot t2 \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 3826
+- N-ary: 168 PIs, 39 essential
+
+## 1ktgA
+- variable positions: 133, pairs: 3407, **PIs: 236, essential: 58**
+  - IF pos 116=A AND pos 135=N → co-evolutionary
+  - IF pos 116=R AND pos 135=A → co-evolutionary
+  - IF pos 116=L AND pos 135=N → co-evolutionary
+  - IF pos 116=Y AND pos 135=K → co-evolutionary
+  - IF pos 127=L AND pos 135=N → co-evolutionary
+  - IF pos 127=E AND pos 135=N → co-evolutionary
+  - IF pos 127=V AND pos 135=N → co-evolutionary
+  - IF pos 127=K AND pos 135=D → co-evolutionary
+  - IF pos 127=R AND pos 135=G → co-evolutionary
+  - IF pos 124=R AND pos 135=E → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 2951
+- N-ary: 129 PIs, 36 essential
+
+## 1ku3A
+- variable positions: 58, pairs: 1268, **PIs: 315, essential: 86**
+  - IF pos 53=A AND pos 59=A → co-evolutionary
+  - IF pos 53=K AND pos 59=K → co-evolutionary
+  - IF pos 53=A AND pos 59=K → co-evolutionary
+  - IF pos 53=M AND pos 59=H → co-evolutionary
+  - IF pos 49=A AND pos 59=E → co-evolutionary
+  - IF pos 49=A AND pos 59=T → co-evolutionary
+  - IF pos 49=A AND pos 59=K → co-evolutionary
+  - IF pos 49=H AND pos 59=Q → co-evolutionary
+  - IF pos 49=F AND pos 59=E → co-evolutionary
+  - IF pos 49=A AND pos 59=L → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t2 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 1)
+- Flipped/forbidden rules: 3253
+- N-ary: 131 PIs, 31 essential
+
+## 1kw4A
+- variable positions: 68, pairs: 1567, **PIs: 1163, essential: 581**
+  - IF pos 20=T AND pos 50=A → co-evolutionary
+  - IF pos 20=D AND pos 50=E → co-evolutionary
+  - IF pos 20=V AND pos 50=E → co-evolutionary
+  - IF pos 20=D AND pos 50=L → co-evolutionary
+  - IF pos 20=D AND pos 50=Q → co-evolutionary
+  - IF pos 20=N AND pos 50=E → co-evolutionary
+  - IF pos 20=A AND pos 50=T → co-evolutionary
+  - IF pos 20=A AND pos 50=Y → co-evolutionary
+  - IF pos 20=D AND pos 50=A → co-evolutionary
+  - IF pos 20=E AND pos 50=I → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s4 \cdot \bar{s3} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot \bar{t1}` (coverage 16)
+  - `s3 \cdot \bar{s2} \cdot s0 \cdot \bar{t4} \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `s3 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1` (coverage 16)
+  - `s3 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 8)
+- Flipped/forbidden rules: 5202
+- N-ary: 111 PIs, 34 essential
+
+## 1lm4A
+- variable positions: 175, pairs: 4431, **PIs: 467, essential: 183**
+  - IF pos 51=A AND pos 61=F → co-evolutionary
+  - IF pos 51=L AND pos 61=E → co-evolutionary
+  - IF pos 51=I AND pos 61=F → co-evolutionary
+  - IF pos 51=A AND pos 61=H → co-evolutionary
+  - IF pos 51=F AND pos 61=A → co-evolutionary
+  - IF pos 51=F AND pos 61=A → co-evolutionary
+  - IF pos 51=L AND pos 61=Y → co-evolutionary
+  - IF pos 51=L AND pos 61=F → co-evolutionary
+  - IF pos 51=Q AND pos 61=E → co-evolutionary
+  - IF pos 51=R AND pos 61=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 5263
+- N-ary: 131 PIs, 32 essential
+
+## 1lo7A
+- variable positions: 139, pairs: 3687, **PIs: 1014, essential: 447**
+  - IF pos 122=A AND pos 138=I → co-evolutionary
+  - IF pos 122=A AND pos 138=C → co-evolutionary
+  - IF pos 122=A AND pos 138=C → co-evolutionary
+  - IF pos 122=T AND pos 138=V → co-evolutionary
+  - IF pos 122=T AND pos 138=M → co-evolutionary
+  - IF pos 123=A AND pos 138=C → co-evolutionary
+  - IF pos 123=A AND pos 138=I → co-evolutionary
+  - IF pos 123=S AND pos 138=I → co-evolutionary
+  - IF pos 123=G AND pos 138=M → co-evolutionary
+  - IF pos 22=A AND pos 30=E → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 4)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 16)
+- Flipped/forbidden rules: 4601
+- N-ary: 116 PIs, 24 essential
+
+## 1lpyA
+- variable positions: 157, pairs: 4162, **PIs: 577, essential: 232**
+  - IF pos 37=A AND pos 40=A → co-evolutionary
+  - IF pos 37=A AND pos 40=N → co-evolutionary
+  - IF pos 37=C AND pos 40=L → co-evolutionary
+  - IF pos 37=T AND pos 40=K → co-evolutionary
+  - IF pos 37=T AND pos 40=R → co-evolutionary
+  - IF pos 37=V AND pos 40=K → co-evolutionary
+  - IF pos 37=P AND pos 40=G → co-evolutionary
+  - IF pos 37=T AND pos 40=T → co-evolutionary
+  - IF pos 37=F AND pos 40=D → co-evolutionary
+  - IF pos 37=S AND pos 40=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t1 \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot t1` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s4 \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+- Flipped/forbidden rules: 7148
+- N-ary: 142 PIs, 39 essential
+
+## 1m4jA
+- variable positions: 133, pairs: 3513, **PIs: 959, essential: 443**
+  - IF pos 126=A AND pos 130=E → co-evolutionary
+  - IF pos 126=A AND pos 130=Q → co-evolutionary
+  - IF pos 126=V AND pos 130=E → co-evolutionary
+  - IF pos 126=I AND pos 130=R → co-evolutionary
+  - IF pos 126=A AND pos 130=I → co-evolutionary
+  - IF pos 126=T AND pos 130=A → co-evolutionary
+  - IF pos 126=A AND pos 130=F → co-evolutionary
+  - IF pos 126=E AND pos 130=T → co-evolutionary
+  - IF pos 126=E AND pos 130=T → co-evolutionary
+  - IF pos 126=E AND pos 130=T → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot s0 \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 5963
+- N-ary: 111 PIs, 28 essential
+
+## 1m8aA
+- variable positions: 57, pairs: 1202, **PIs: 731, essential: 340**
+  - IF pos 21=E AND pos 30=Q → co-evolutionary
+  - IF pos 21=Q AND pos 30=E → co-evolutionary
+  - IF pos 21=L AND pos 30=T → co-evolutionary
+  - IF pos 21=Q AND pos 30=A → co-evolutionary
+  - IF pos 21=H AND pos 30=E → co-evolutionary
+  - IF pos 21=A AND pos 30=K → co-evolutionary
+  - IF pos 21=A AND pos 30=K → co-evolutionary
+  - IF pos 21=E AND pos 30=K → co-evolutionary
+  - IF pos 21=H AND pos 30=K → co-evolutionary
+  - IF pos 21=I AND pos 30=L → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot t1` (coverage 16)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3` (coverage 16)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s1} \cdot t3 \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 4)
+- Flipped/forbidden rules: 5030
+- N-ary: 153 PIs, 41 essential
+
+## 1mk0A
+- variable positions: 96, pairs: 2408, **PIs: 413, essential: 131**
+  - IF pos 85=Y AND pos 94=V → co-evolutionary
+  - IF pos 85=Y AND pos 94=P → co-evolutionary
+  - IF pos 85=L AND pos 94=S → co-evolutionary
+  - IF pos 91=A AND pos 94=A → co-evolutionary
+  - IF pos 91=M AND pos 94=A → co-evolutionary
+  - IF pos 91=A AND pos 94=V → co-evolutionary
+  - IF pos 91=A AND pos 94=R → co-evolutionary
+  - IF pos 83=P AND pos 94=L → co-evolutionary
+  - IF pos 91=A AND pos 93=T → co-evolutionary
+  - IF pos 91=A AND pos 93=N → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t4 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot s2 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+- Flipped/forbidden rules: 4516
+- N-ary: 145 PIs, 37 essential
+
+## 1mugA
+- variable positions: 161, pairs: 4298, **PIs: 485, essential: 185**
+  - IF pos 22=A AND pos 30=T → co-evolutionary
+  - IF pos 22=S AND pos 30=A → co-evolutionary
+  - IF pos 22=A AND pos 30=A → co-evolutionary
+  - IF pos 22=A AND pos 30=S → co-evolutionary
+  - IF pos 22=S AND pos 30=L → co-evolutionary
+  - IF pos 22=S AND pos 30=M → co-evolutionary
+  - IF pos 22=S AND pos 30=Q → co-evolutionary
+  - IF pos 22=S AND pos 30=W → co-evolutionary
+  - IF pos 22=A AND pos 30=V → co-evolutionary
+  - IF pos 22=A AND pos 30=F → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t3} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 4)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1` (coverage 4)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t2 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 2)
+- Flipped/forbidden rules: 5292
+- N-ary: 127 PIs, 36 essential
+
+## 1nb9A
+- variable positions: 135, pairs: 3328, **PIs: 457, essential: 178**
+  - IF pos 143=T AND pos 144=F → co-evolutionary
+  - IF pos 143=Q AND pos 144=K → co-evolutionary
+  - IF pos 119=N AND pos 144=K → co-evolutionary
+  - IF pos 119=A AND pos 144=I → co-evolutionary
+  - IF pos 119=A AND pos 144=Q → co-evolutionary
+  - IF pos 119=T AND pos 144=E → co-evolutionary
+  - IF pos 132=E AND pos 144=A → co-evolutionary
+  - IF pos 132=E AND pos 144=E → co-evolutionary
+  - IF pos 132=E AND pos 144=K → co-evolutionary
+  - IF pos 132=A AND pos 144=L → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `s3 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 2)
+- Flipped/forbidden rules: 4590
+- N-ary: 129 PIs, 33 essential
+
+## 1ne2A
+- variable positions: 172, pairs: 4617, **PIs: 173, essential: 46**
+  - IF pos 150=K AND pos 173=H → co-evolutionary
+  - IF pos 143=A AND pos 173=Y → co-evolutionary
+  - IF pos 143=A AND pos 173=H → co-evolutionary
+  - IF pos 143=V AND pos 173=S → co-evolutionary
+  - IF pos 168=A AND pos 173=Y → co-evolutionary
+  - IF pos 168=K AND pos 173=L → co-evolutionary
+  - IF pos 168=D AND pos 173=S → co-evolutionary
+  - IF pos 154=L AND pos 173=H → co-evolutionary
+  - IF pos 154=T AND pos 173=H → co-evolutionary
+  - IF pos 154=S AND pos 173=Y → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot t3 \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 2)
+- Flipped/forbidden rules: 3260
+- N-ary: 129 PIs, 28 essential
+
+## 1npsA
+- variable positions: 85, pairs: 2046, **PIs: 298, essential: 115**
+  - IF pos 72=A AND pos 86=A → co-evolutionary
+  - IF pos 16=E AND pos 24=A → co-evolutionary
+  - IF pos 16=A AND pos 24=L → co-evolutionary
+  - IF pos 16=A AND pos 24=D → co-evolutionary
+  - IF pos 16=L AND pos 24=L → co-evolutionary
+  - IF pos 16=V AND pos 24=L → co-evolutionary
+  - IF pos 16=D AND pos 24=L → co-evolutionary
+  - IF pos 16=L AND pos 24=D → co-evolutionary
+  - IF pos 16=L AND pos 24=N → co-evolutionary
+  - IF pos 16=G AND pos 24=L → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 1)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t2} \cdot t1` (coverage 8)
+  - `s3 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot t3 \cdot t1 \cdot t0` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t2} \cdot t1` (coverage 8)
+- Flipped/forbidden rules: 2979
+- N-ary: 152 PIs, 42 essential
+
+## 1nrvA
+- variable positions: 97, pairs: 2399, **PIs: 863, essential: 388**
+  - IF pos 2=E AND pos 23=A → co-evolutionary
+  - IF pos 2=E AND pos 23=A → co-evolutionary
+  - IF pos 2=A AND pos 23=K → co-evolutionary
+  - IF pos 2=L AND pos 23=Y → co-evolutionary
+  - IF pos 2=I AND pos 23=H → co-evolutionary
+  - IF pos 2=L AND pos 23=Y → co-evolutionary
+  - IF pos 2=I AND pos 23=K → co-evolutionary
+  - IF pos 2=V AND pos 23=F → co-evolutionary
+  - IF pos 2=E AND pos 23=R → co-evolutionary
+  - IF pos 2=Q AND pos 23=Q → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot t3 \cdot t2 \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot s1 \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot s0 \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot \bar{s1} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1` (coverage 8)
+- Flipped/forbidden rules: 6081
+- N-ary: 143 PIs, 37 essential
+
+## 1ny1A
+- variable positions: 231, pairs: 6384, **PIs: 618, essential: 251**
+  - IF pos 20=A AND pos 35=F → co-evolutionary
+  - IF pos 20=I AND pos 35=Y → co-evolutionary
+  - IF pos 20=V AND pos 35=Y → co-evolutionary
+  - IF pos 20=A AND pos 35=F → co-evolutionary
+  - IF pos 20=A AND pos 35=Y → co-evolutionary
+  - IF pos 20=E AND pos 35=Y → co-evolutionary
+  - IF pos 20=T AND pos 35=Y → co-evolutionary
+  - IF pos 20=M AND pos 35=W → co-evolutionary
+  - IF pos 20=M AND pos 35=W → co-evolutionary
+  - IF pos 20=D AND pos 35=G → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot s0 \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot t0` (coverage 4)
+  - `s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot t0` (coverage 4)
+  - `s3 \cdot \bar{s1} \cdot s0 \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+- Flipped/forbidden rules: 6298
+- N-ary: 131 PIs, 32 essential
+
+## 1o1zA
+- variable positions: 221, pairs: 6070, **PIs: 400, essential: 92**
+  - IF pos 1=A AND pos 5=L → co-evolutionary
+  - IF pos 1=A AND pos 12=A → co-evolutionary
+  - IF pos 1=A AND pos 13=S → co-evolutionary
+  - IF pos 1=A AND pos 14=G → co-evolutionary
+  - IF pos 1=A AND pos 26=L → co-evolutionary
+  - IF pos 36=A AND pos 52=D → co-evolutionary
+  - IF pos 36=E AND pos 52=A → co-evolutionary
+  - IF pos 36=L AND pos 52=D → co-evolutionary
+  - IF pos 36=D AND pos 52=E → co-evolutionary
+  - IF pos 36=E AND pos 52=D → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 1)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s3 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+- Flipped/forbidden rules: 3110
+- N-ary: 117 PIs, 36 essential
+
+## 1p90A
+- variable positions: 121, pairs: 3117, **PIs: 279, essential: 109**
+  - IF pos 2=A AND pos 17=I → co-evolutionary
+  - IF pos 2=V AND pos 17=E → co-evolutionary
+  - IF pos 2=I AND pos 17=G → co-evolutionary
+  - IF pos 2=T AND pos 17=T → co-evolutionary
+  - IF pos 2=A AND pos 17=R → co-evolutionary
+  - IF pos 2=H AND pos 17=E → co-evolutionary
+  - IF pos 2=Q AND pos 17=K → co-evolutionary
+  - IF pos 2=K AND pos 17=V → co-evolutionary
+  - IF pos 2=T AND pos 6=T → co-evolutionary
+  - IF pos 2=A AND pos 6=K → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot t4 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 2)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+- Flipped/forbidden rules: 4039
+- N-ary: 110 PIs, 27 essential
+
+## 1pchA
+- variable positions: 84, pairs: 2029, **PIs: 401, essential: 143**
+  - IF pos 0=A AND pos 14=A → co-evolutionary
+  - IF pos 0=S AND pos 14=A → co-evolutionary
+  - IF pos 78=L AND pos 85=E → co-evolutionary
+  - IF pos 78=A AND pos 85=A → co-evolutionary
+  - IF pos 78=T AND pos 85=A → co-evolutionary
+  - IF pos 78=A AND pos 85=E → co-evolutionary
+  - IF pos 78=A AND pos 85=D → co-evolutionary
+  - IF pos 78=A AND pos 85=G → co-evolutionary
+  - IF pos 78=A AND pos 85=G → co-evolutionary
+  - IF pos 78=A AND pos 85=G → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot t4 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+- Flipped/forbidden rules: 3226
+- N-ary: 95 PIs, 24 essential
+
+## 1pkoA
+- variable positions: 121, pairs: 3062, **PIs: 137, essential: 22**
+  - IF pos 101=L AND pos 122=G → co-evolutionary
+  - IF pos 101=K AND pos 122=T → co-evolutionary
+  - IF pos 101=I AND pos 122=T → co-evolutionary
+  - IF pos 113=P AND pos 122=G → co-evolutionary
+  - IF pos 104=T AND pos 122=G → co-evolutionary
+  - IF pos 102=A AND pos 122=G → co-evolutionary
+  - IF pos 96=V AND pos 122=G → co-evolutionary
+  - IF pos 111=A AND pos 122=S → co-evolutionary
+  - IF pos 111=Q AND pos 122=T → co-evolutionary
+  - IF pos 111=I AND pos 122=T → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 2)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 2)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t4 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 2)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+- Flipped/forbidden rules: 2140
+- N-ary: 131 PIs, 32 essential
+
+## 1qf9A
+- variable positions: 187, pairs: 5073, **PIs: 928, essential: 428**
+  - IF pos 165=E AND pos 191=A → co-evolutionary
+  - IF pos 165=Q AND pos 191=A → co-evolutionary
+  - IF pos 165=A AND pos 191=M → co-evolutionary
+  - IF pos 165=E AND pos 191=I → co-evolutionary
+  - IF pos 165=K AND pos 191=A → co-evolutionary
+  - IF pos 165=F AND pos 191=C → co-evolutionary
+  - IF pos 165=E AND pos 191=R → co-evolutionary
+  - IF pos 165=R AND pos 191=L → co-evolutionary
+  - IF pos 165=K AND pos 191=I → co-evolutionary
+  - IF pos 165=R AND pos 191=E → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s3 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t1}` (coverage 16)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 8)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot s2 \cdot \bar{s1} \cdot s0 \cdot t4 \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot t1` (coverage 8)
+  - `s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot t1` (coverage 8)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t0}` (coverage 8)
+- Flipped/forbidden rules: 6322
+- N-ary: 135 PIs, 33 essential
+
+## 1qjpA
+- variable positions: 133, pairs: 3495, **PIs: 947, essential: 392**
+  - IF pos 1=A AND pos 5=T → co-evolutionary
+  - IF pos 1=A AND pos 5=Y → co-evolutionary
+  - IF pos 1=T AND pos 5=D → co-evolutionary
+  - IF pos 1=E AND pos 5=P → co-evolutionary
+  - IF pos 1=N AND pos 5=P → co-evolutionary
+  - IF pos 1=N AND pos 5=P → co-evolutionary
+  - IF pos 1=N AND pos 5=P → co-evolutionary
+  - IF pos 1=A AND pos 5=A → co-evolutionary
+  - IF pos 1=A AND pos 5=T → co-evolutionary
+  - IF pos 1=A AND pos 5=E → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot t1` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t0` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 8)
+  - `s3 \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t3} \cdot t1` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t2} \cdot t1` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 4)
+- Flipped/forbidden rules: 4585
+- N-ary: 141 PIs, 34 essential
+
+## 1ql0A
+- variable positions: 232, pairs: 6322, **PIs: 303, essential: 81**
+  - IF pos 232=A AND pos 233=P → co-evolutionary
+  - IF pos 232=L AND pos 233=T → co-evolutionary
+  - IF pos 232=L AND pos 233=T → co-evolutionary
+  - IF pos 232=A AND pos 233=R → co-evolutionary
+  - IF pos 232=K AND pos 233=A → co-evolutionary
+  - IF pos 232=H AND pos 233=S → co-evolutionary
+  - IF pos 232=A AND pos 233=A → co-evolutionary
+  - IF pos 232=T AND pos 233=N → co-evolutionary
+  - IF pos 5=A AND pos 19=E → co-evolutionary
+  - IF pos 5=A AND pos 19=H → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot s2 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 4293
+- N-ary: 137 PIs, 34 essential
+
+## 1r26A
+- variable positions: 108, pairs: 2713, **PIs: 240, essential: 77**
+  - IF pos 2=L AND pos 6=E → co-evolutionary
+  - IF pos 2=A AND pos 6=Q → co-evolutionary
+  - IF pos 2=M AND pos 6=M → co-evolutionary
+  - IF pos 2=V AND pos 6=T → co-evolutionary
+  - IF pos 2=V AND pos 6=T → co-evolutionary
+  - IF pos 2=V AND pos 6=A → co-evolutionary
+  - IF pos 2=V AND pos 6=R → co-evolutionary
+  - IF pos 2=A AND pos 17=T → co-evolutionary
+  - IF pos 2=A AND pos 17=T → co-evolutionary
+  - IF pos 2=I AND pos 17=E → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t2}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t3} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 2812
+- N-ary: 135 PIs, 32 essential
+
+## 1roaA
+- variable positions: 109, pairs: 2780, **PIs: 605, essential: 254**
+  - IF pos 27=A AND pos 29=D → co-evolutionary
+  - IF pos 27=T AND pos 29=A → co-evolutionary
+  - IF pos 27=I AND pos 29=K → co-evolutionary
+  - IF pos 27=E AND pos 29=G → co-evolutionary
+  - IF pos 27=M AND pos 29=K → co-evolutionary
+  - IF pos 27=H AND pos 29=R → co-evolutionary
+  - IF pos 27=S AND pos 29=R → co-evolutionary
+  - IF pos 27=S AND pos 29=G → co-evolutionary
+  - IF pos 81=E AND pos 83=A → co-evolutionary
+  - IF pos 81=L AND pos 83=E → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 2)
+  - `s3 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t2}` (coverage 8)
+- Flipped/forbidden rules: 6123
+- N-ary: 123 PIs, 32 essential
+
+## 1rw1A
+- variable positions: 110, pairs: 2805, **PIs: 947, essential: 400**
+  - IF pos 5=Y AND pos 28=A → co-evolutionary
+  - IF pos 5=G AND pos 28=A → co-evolutionary
+  - IF pos 5=G AND pos 28=A → co-evolutionary
+  - IF pos 5=A AND pos 28=E → co-evolutionary
+  - IF pos 5=E AND pos 28=A → co-evolutionary
+  - IF pos 5=Y AND pos 28=A → co-evolutionary
+  - IF pos 5=F AND pos 28=A → co-evolutionary
+  - IF pos 5=E AND pos 28=E → co-evolutionary
+  - IF pos 5=C AND pos 28=E → co-evolutionary
+  - IF pos 5=G AND pos 28=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3}` (coverage 16)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3}` (coverage 16)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s1} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s3} \cdot s2 \cdot s1 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s3} \cdot s2 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+- Flipped/forbidden rules: 5516
+- N-ary: 145 PIs, 33 essential
+
+## 1rw7A
+- variable positions: 230, pairs: 6293, **PIs: 1212, essential: 596**
+  - IF pos 15=A AND pos 27=T → co-evolutionary
+  - IF pos 15=L AND pos 27=A → co-evolutionary
+  - IF pos 15=T AND pos 27=A → co-evolutionary
+  - IF pos 15=T AND pos 27=A → co-evolutionary
+  - IF pos 15=A AND pos 27=V → co-evolutionary
+  - IF pos 15=I AND pos 27=T → co-evolutionary
+  - IF pos 15=A AND pos 27=T → co-evolutionary
+  - IF pos 15=T AND pos 27=A → co-evolutionary
+  - IF pos 15=T AND pos 27=A → co-evolutionary
+  - IF pos 15=L AND pos 27=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot s1 \cdot \bar{s0} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot t4 \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s3} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `s4 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s3} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+- Flipped/forbidden rules: 6022
+- N-ary: 130 PIs, 32 essential
+
+## 1rybA
+- variable positions: 170, pairs: 4277, **PIs: 473, essential: 152**
+  - IF pos 172=D AND pos 184=N → co-evolutionary
+  - IF pos 172=E AND pos 184=T → co-evolutionary
+  - IF pos 172=A AND pos 184=N → co-evolutionary
+  - IF pos 172=L AND pos 184=M → co-evolutionary
+  - IF pos 172=T AND pos 184=T → co-evolutionary
+  - IF pos 172=G AND pos 184=N → co-evolutionary
+  - IF pos 98=L AND pos 123=M → co-evolutionary
+  - IF pos 98=A AND pos 123=G → co-evolutionary
+  - IF pos 98=P AND pos 123=E → co-evolutionary
+  - IF pos 98=A AND pos 123=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s3 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t1 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t2 \cdot \bar{t1}` (coverage 8)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t1}` (coverage 8)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 4498
+- N-ary: 123 PIs, 34 essential
+
+## 1smxA
+- variable positions: 84, pairs: 1977, **PIs: 1360, essential: 613**
+  - IF pos 32=G AND pos 35=A → co-evolutionary
+  - IF pos 32=E AND pos 35=A → co-evolutionary
+  - IF pos 32=D AND pos 35=E → co-evolutionary
+  - IF pos 32=D AND pos 35=L → co-evolutionary
+  - IF pos 32=D AND pos 35=E → co-evolutionary
+  - IF pos 32=D AND pos 35=E → co-evolutionary
+  - IF pos 32=S AND pos 35=A → co-evolutionary
+  - IF pos 32=G AND pos 35=E → co-evolutionary
+  - IF pos 32=A AND pos 35=A → co-evolutionary
+  - IF pos 32=A AND pos 35=E → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s4 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t2}` (coverage 32)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 16)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot t3` (coverage 16)
+  - `s3 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot s0 \cdot t3 \cdot \bar{t2}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot s0 \cdot t3 \cdot \bar{t1}` (coverage 16)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t0}` (coverage 16)
+  - `s4 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t0}` (coverage 8)
+- Flipped/forbidden rules: 5522
+- N-ary: 151 PIs, 36 essential
+
+## 1svyA
+- variable positions: 99, pairs: 2471, **PIs: 820, essential: 352**
+  - IF pos 71=A AND pos 97=T → co-evolutionary
+  - IF pos 71=A AND pos 97=T → co-evolutionary
+  - IF pos 71=A AND pos 97=A → co-evolutionary
+  - IF pos 71=I AND pos 97=A → co-evolutionary
+  - IF pos 71=T AND pos 97=A → co-evolutionary
+  - IF pos 71=P AND pos 97=A → co-evolutionary
+  - IF pos 71=A AND pos 97=P → co-evolutionary
+  - IF pos 71=D AND pos 97=A → co-evolutionary
+  - IF pos 71=I AND pos 97=E → co-evolutionary
+  - IF pos 71=I AND pos 97=E → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot t4 \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot t4 \cdot \bar{t3} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot s1 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+- Flipped/forbidden rules: 4472
+- N-ary: 148 PIs, 35 essential
+
+## 1t8kA
+- variable positions: 75, pairs: 1753, **PIs: 1384, essential: 543**
+  - IF pos 14=A AND pos 15=E → co-evolutionary
+  - IF pos 14=A AND pos 15=E → co-evolutionary
+  - IF pos 14=A AND pos 15=A → co-evolutionary
+  - IF pos 14=A AND pos 15=L → co-evolutionary
+  - IF pos 14=L AND pos 15=A → co-evolutionary
+  - IF pos 14=A AND pos 15=D → co-evolutionary
+  - IF pos 14=A AND pos 15=D → co-evolutionary
+  - IF pos 14=T AND pos 15=E → co-evolutionary
+  - IF pos 14=T AND pos 15=E → co-evolutionary
+  - IF pos 14=A AND pos 15=K → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot t3 \cdot \bar{t2}` (coverage 32)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot t3 \cdot \bar{t2}` (coverage 32)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t2} \cdot t1` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t0` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s0} \cdot t3 \cdot \bar{t1} \cdot t0` (coverage 16)
+  - `s4 \cdot \bar{s3} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `s4 \cdot \bar{s2} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s2} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 16)
+- Flipped/forbidden rules: 4242
+- N-ary: 111 PIs, 29 essential
+
+## 1tifA
+- variable positions: 70, pairs: 1567, **PIs: 389, essential: 115**
+  - IF pos 35=T AND pos 41=D → co-evolutionary
+  - IF pos 35=A AND pos 41=D → co-evolutionary
+  - IF pos 35=I AND pos 41=F → co-evolutionary
+  - IF pos 35=C AND pos 41=D → co-evolutionary
+  - IF pos 35=A AND pos 41=I → co-evolutionary
+  - IF pos 35=A AND pos 41=E → co-evolutionary
+  - IF pos 35=T AND pos 41=Q → co-evolutionary
+  - IF pos 35=M AND pos 41=R → co-evolutionary
+  - IF pos 35=A AND pos 61=E → co-evolutionary
+  - IF pos 35=A AND pos 61=E → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot t3 \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot s0 \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 2)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t0}` (coverage 8)
+- Flipped/forbidden rules: 3192
+- N-ary: 118 PIs, 31 essential
+
+## 1tqgA
+- variable positions: 102, pairs: 2549, **PIs: 664, essential: 234**
+  - IF pos 49=A AND pos 67=E → co-evolutionary
+  - IF pos 49=E AND pos 67=R → co-evolutionary
+  - IF pos 49=G AND pos 67=D → co-evolutionary
+  - IF pos 42=A AND pos 67=E → co-evolutionary
+  - IF pos 42=V AND pos 67=E → co-evolutionary
+  - IF pos 42=R AND pos 67=E → co-evolutionary
+  - IF pos 42=H AND pos 67=A → co-evolutionary
+  - IF pos 48=A AND pos 67=E → co-evolutionary
+  - IF pos 48=A AND pos 67=R → co-evolutionary
+  - IF pos 48=K AND pos 67=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot s1 \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot s2 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot s2 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 4701
+- N-ary: 99 PIs, 25 essential
+
+## 1tqhA
+- variable positions: 238, pairs: 6563, **PIs: 649, essential: 267**
+  - IF pos 4=A AND pos 30=A → co-evolutionary
+  - IF pos 4=A AND pos 30=P → co-evolutionary
+  - IF pos 4=I AND pos 30=M → co-evolutionary
+  - IF pos 4=Y AND pos 30=A → co-evolutionary
+  - IF pos 4=F AND pos 30=A → co-evolutionary
+  - IF pos 4=E AND pos 30=I → co-evolutionary
+  - IF pos 4=Q AND pos 30=A → co-evolutionary
+  - IF pos 4=F AND pos 30=I → co-evolutionary
+  - IF pos 4=F AND pos 30=M → co-evolutionary
+  - IF pos 4=H AND pos 30=L → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot t1` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot \bar{t3} \cdot t2 \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t3} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `s3 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot s2 \cdot \bar{s1} \cdot s0 \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 8)
+- Flipped/forbidden rules: 4743
+- N-ary: 130 PIs, 33 essential
+
+## 1tzvA
+- variable positions: 136, pairs: 3573, **PIs: 540, essential: 182**
+  - IF pos 2=A AND pos 22=D → co-evolutionary
+  - IF pos 2=M AND pos 22=T → co-evolutionary
+  - IF pos 2=L AND pos 22=P → co-evolutionary
+  - IF pos 2=H AND pos 22=Q → co-evolutionary
+  - IF pos 2=N AND pos 22=E → co-evolutionary
+  - IF pos 2=V AND pos 22=N → co-evolutionary
+  - IF pos 2=V AND pos 22=K → co-evolutionary
+  - IF pos 2=R AND pos 22=D → co-evolutionary
+  - IF pos 2=N AND pos 22=P → co-evolutionary
+  - IF pos 2=N AND pos 22=N → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s1} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t2} \cdot t1` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot s0 \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+- Flipped/forbidden rules: 4315
+- N-ary: 99 PIs, 26 essential
+
+## 1vfyA
+- variable positions: 59, pairs: 1192, **PIs: 349, essential: 115**
+  - IF pos 46=M AND pos 63=A → co-evolutionary
+  - IF pos 46=E AND pos 63=L → co-evolutionary
+  - IF pos 46=L AND pos 63=L → co-evolutionary
+  - IF pos 46=P AND pos 63=A → co-evolutionary
+  - IF pos 46=T AND pos 63=V → co-evolutionary
+  - IF pos 46=H AND pos 63=I → co-evolutionary
+  - IF pos 46=P AND pos 63=V → co-evolutionary
+  - IF pos 46=K AND pos 63=L → co-evolutionary
+  - IF pos 46=G AND pos 63=L → co-evolutionary
+  - IF pos 46=D AND pos 63=R → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot s0 \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 4492
+- N-ary: 162 PIs, 34 essential
+
+## 1vhuA
+- variable positions: 190, pairs: 5232, **PIs: 538, essential: 221**
+  - IF pos 63=A AND pos 90=H → co-evolutionary
+  - IF pos 63=A AND pos 90=Q → co-evolutionary
+  - IF pos 63=E AND pos 90=S → co-evolutionary
+  - IF pos 63=R AND pos 90=G → co-evolutionary
+  - IF pos 63=A AND pos 90=L → co-evolutionary
+  - IF pos 63=Q AND pos 90=A → co-evolutionary
+  - IF pos 63=W AND pos 90=Y → co-evolutionary
+  - IF pos 63=K AND pos 90=W → co-evolutionary
+  - IF pos 68=L AND pos 90=H → co-evolutionary
+  - IF pos 68=R AND pos 90=D → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 4)
+  - `s3 \cdot s2 \cdot s1 \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t3} \cdot t2 \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t3 \cdot t0` (coverage 8)
+- Flipped/forbidden rules: 6361
+- N-ary: 124 PIs, 29 essential
+
+## 1vjkA
+- variable positions: 87, pairs: 2139, **PIs: 976, essential: 402**
+  - IF pos 44=A AND pos 55=A → co-evolutionary
+  - IF pos 44=A AND pos 55=D → co-evolutionary
+  - IF pos 44=L AND pos 55=E → co-evolutionary
+  - IF pos 44=M AND pos 55=I → co-evolutionary
+  - IF pos 44=A AND pos 55=F → co-evolutionary
+  - IF pos 44=I AND pos 55=E → co-evolutionary
+  - IF pos 44=Y AND pos 55=E → co-evolutionary
+  - IF pos 44=Y AND pos 55=E → co-evolutionary
+  - IF pos 44=L AND pos 55=D → co-evolutionary
+  - IF pos 44=H AND pos 55=E → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot s1 \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 16)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t1} \cdot t0` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s0} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot s1 \cdot t3 \cdot \bar{t2}` (coverage 16)
+  - `\bar{s3} \cdot s2 \cdot s1 \cdot \bar{t4} \cdot t3 \cdot \bar{t2}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot t0` (coverage 16)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3` (coverage 16)
+- Flipped/forbidden rules: 4076
+- N-ary: 120 PIs, 31 essential
+
+## 1vmbA
+- variable positions: 103, pairs: 2594, **PIs: 260, essential: 58**
+  - IF pos 75=G AND pos 104=E → co-evolutionary
+  - IF pos 78=M AND pos 104=T → co-evolutionary
+  - IF pos 83=M AND pos 104=H → co-evolutionary
+  - IF pos 94=I AND pos 102=D → co-evolutionary
+  - IF pos 94=L AND pos 102=D → co-evolutionary
+  - IF pos 94=T AND pos 102=K → co-evolutionary
+  - IF pos 94=L AND pos 102=D → co-evolutionary
+  - IF pos 94=T AND pos 102=V → co-evolutionary
+  - IF pos 94=T AND pos 102=Q → co-evolutionary
+  - IF pos 94=E AND pos 102=K → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot t3 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 2)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 2)
+- Flipped/forbidden rules: 3652
+- N-ary: 142 PIs, 35 essential
+
+## 1vp6A
+- variable positions: 129, pairs: 3372, **PIs: 668, essential: 268**
+  - IF pos 2=Q AND pos 6=A → co-evolutionary
+  - IF pos 2=Q AND pos 6=A → co-evolutionary
+  - IF pos 2=E AND pos 6=E → co-evolutionary
+  - IF pos 2=K AND pos 6=A → co-evolutionary
+  - IF pos 2=D AND pos 6=E → co-evolutionary
+  - IF pos 2=E AND pos 6=Q → co-evolutionary
+  - IF pos 2=Q AND pos 6=H → co-evolutionary
+  - IF pos 2=Q AND pos 6=D → co-evolutionary
+  - IF pos 2=K AND pos 6=E → co-evolutionary
+  - IF pos 2=R AND pos 6=D → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s3 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 16)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t0` (coverage 8)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2}` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot t3 \cdot \bar{t1} \cdot t0` (coverage 8)
+- Flipped/forbidden rules: 3895
+- N-ary: 128 PIs, 29 essential
+
+## 1w0hA
+- variable positions: 195, pairs: 5282, **PIs: 787, essential: 348**
+  - IF pos 1=E AND pos 24=Y → co-evolutionary
+  - IF pos 1=A AND pos 24=Y → co-evolutionary
+  - IF pos 1=E AND pos 24=F → co-evolutionary
+  - IF pos 1=Q AND pos 24=E → co-evolutionary
+  - IF pos 1=Q AND pos 24=Y → co-evolutionary
+  - IF pos 1=A AND pos 24=P → co-evolutionary
+  - IF pos 1=N AND pos 24=T → co-evolutionary
+  - IF pos 1=E AND pos 24=S → co-evolutionary
+  - IF pos 1=R AND pos 24=F → co-evolutionary
+  - IF pos 1=N AND pos 24=N → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s3 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 2)
+  - `s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 2)
+- Flipped/forbidden rules: 4797
+- N-ary: 116 PIs, 29 essential
+
+## 1whiA
+- variable positions: 113, pairs: 2755, **PIs: 656, essential: 250**
+  - IF pos 99=V AND pos 104=H → co-evolutionary
+  - IF pos 99=G AND pos 104=E → co-evolutionary
+  - IF pos 99=G AND pos 104=D → co-evolutionary
+  - IF pos 99=A AND pos 104=H → co-evolutionary
+  - IF pos 99=A AND pos 104=H → co-evolutionary
+  - IF pos 99=V AND pos 104=M → co-evolutionary
+  - IF pos 99=Y AND pos 104=E → co-evolutionary
+  - IF pos 99=I AND pos 104=S → co-evolutionary
+  - IF pos 99=V AND pos 104=W → co-evolutionary
+  - IF pos 99=A AND pos 104=W → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot t2` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot \bar{t2}` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t2 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot t0` (coverage 2)
+- Flipped/forbidden rules: 5144
+- N-ary: 140 PIs, 36 essential
+
+## 1wjxA
+- variable positions: 98, pairs: 2248, **PIs: 485, essential: 200**
+  - IF pos 85=A AND pos 90=P → co-evolutionary
+  - IF pos 85=A AND pos 90=A → co-evolutionary
+  - IF pos 43=E AND pos 52=L → co-evolutionary
+  - IF pos 43=A AND pos 52=I → co-evolutionary
+  - IF pos 43=A AND pos 52=L → co-evolutionary
+  - IF pos 43=A AND pos 52=L → co-evolutionary
+  - IF pos 43=A AND pos 52=Y → co-evolutionary
+  - IF pos 43=E AND pos 52=L → co-evolutionary
+  - IF pos 43=I AND pos 52=T → co-evolutionary
+  - IF pos 43=L AND pos 52=E → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 1)
+  - `s3 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 32)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 16)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 16)
+  - `\bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 16)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 16)
+  - `s3 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot t1` (coverage 16)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot s0 \cdot t4 \cdot \bar{t1}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot t3 \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+- Flipped/forbidden rules: 3107
+- N-ary: 146 PIs, 37 essential
+
+## 1wkcA
+- variable positions: 159, pairs: 4097, **PIs: 702, essential: 284**
+  - IF pos 102=A AND pos 132=T → co-evolutionary
+  - IF pos 102=A AND pos 132=C → co-evolutionary
+  - IF pos 102=A AND pos 132=F → co-evolutionary
+  - IF pos 102=C AND pos 132=A → co-evolutionary
+  - IF pos 102=A AND pos 132=G → co-evolutionary
+  - IF pos 102=A AND pos 132=A → co-evolutionary
+  - IF pos 102=L AND pos 132=T → co-evolutionary
+  - IF pos 102=A AND pos 132=W → co-evolutionary
+  - IF pos 102=L AND pos 132=S → co-evolutionary
+  - IF pos 101=A AND pos 119=L → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot t4 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t2 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot t3 \cdot t2 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot t1 \cdot \bar{t0}` (coverage 2)
+- Flipped/forbidden rules: 4133
+- N-ary: 131 PIs, 34 essential
+
+## 1xdzA
+- variable positions: 229, pairs: 6267, **PIs: 533, essential: 210**
+  - IF pos 36=E AND pos 57=L → co-evolutionary
+  - IF pos 36=E AND pos 57=E → co-evolutionary
+  - IF pos 36=E AND pos 57=Q → co-evolutionary
+  - IF pos 36=H AND pos 57=D → co-evolutionary
+  - IF pos 36=N AND pos 57=E → co-evolutionary
+  - IF pos 36=A AND pos 57=A → co-evolutionary
+  - IF pos 36=A AND pos 57=V → co-evolutionary
+  - IF pos 36=A AND pos 57=D → co-evolutionary
+  - IF pos 36=A AND pos 57=V → co-evolutionary
+  - IF pos 36=A AND pos 57=R → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot t1` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t1` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `s3 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 5217
+- N-ary: 124 PIs, 31 essential
+
+## 1xffA
+- variable positions: 227, pairs: 6108, **PIs: 1352, essential: 572**
+  - IF pos 76=A AND pos 99=E → co-evolutionary
+  - IF pos 76=E AND pos 99=E → co-evolutionary
+  - IF pos 76=A AND pos 99=Q → co-evolutionary
+  - IF pos 76=A AND pos 99=A → co-evolutionary
+  - IF pos 76=A AND pos 99=T → co-evolutionary
+  - IF pos 76=A AND pos 99=T → co-evolutionary
+  - IF pos 76=M AND pos 99=A → co-evolutionary
+  - IF pos 76=A AND pos 99=E → co-evolutionary
+  - IF pos 76=T AND pos 99=T → co-evolutionary
+  - IF pos 76=T AND pos 99=I → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2}` (coverage 32)
+  - `\bar{s4} \cdot s3 \cdot \bar{s0} \cdot t3 \cdot \bar{t2}` (coverage 32)
+  - `\bar{s4} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1` (coverage 32)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s4} \cdot \bar{s1} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `s2 \cdot \bar{s1} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 16)
+  - `s4 \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 16)
+  - `s4 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 16)
+- Flipped/forbidden rules: 5188
+- N-ary: 130 PIs, 35 essential
+
+## 1xkrA
+- variable positions: 202, pairs: 5563, **PIs: 395, essential: 138**
+  - IF pos 158=K AND pos 159=D → co-evolutionary
+  - IF pos 158=V AND pos 159=T → co-evolutionary
+  - IF pos 158=N AND pos 159=I → co-evolutionary
+  - IF pos 158=A AND pos 159=L → co-evolutionary
+  - IF pos 157=A AND pos 159=D → co-evolutionary
+  - IF pos 157=I AND pos 159=Q → co-evolutionary
+  - IF pos 157=L AND pos 159=D → co-evolutionary
+  - IF pos 157=A AND pos 159=G → co-evolutionary
+  - IF pos 157=I AND pos 159=K → co-evolutionary
+  - IF pos 157=N AND pos 159=I → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot t3 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 1)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t1} \cdot t0` (coverage 4)
+- Flipped/forbidden rules: 5360
+- N-ary: 122 PIs, 31 essential
+
+## 2arcA
+- variable positions: 156, pairs: 4151, **PIs: 384, essential: 136**
+  - IF pos 21=M AND pos 30=M → co-evolutionary
+  - IF pos 21=M AND pos 30=E → co-evolutionary
+  - IF pos 21=M AND pos 30=E → co-evolutionary
+  - IF pos 21=F AND pos 30=M → co-evolutionary
+  - IF pos 21=F AND pos 30=M → co-evolutionary
+  - IF pos 21=K AND pos 30=E → co-evolutionary
+  - IF pos 21=R AND pos 30=Y → co-evolutionary
+  - IF pos 21=R AND pos 30=N → co-evolutionary
+  - IF pos 21=F AND pos 30=V → co-evolutionary
+  - IF pos 21=K AND pos 30=R → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{t4} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot \bar{t1}` (coverage 4)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t3 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 2)
+- Flipped/forbidden rules: 5714
+- N-ary: 148 PIs, 34 essential
+
+## 2cuaA
+- variable positions: 120, pairs: 3096, **PIs: 426, essential: 159**
+  - IF pos 3=A AND pos 10=T → co-evolutionary
+  - IF pos 3=A AND pos 10=K → co-evolutionary
+  - IF pos 3=V AND pos 10=R → co-evolutionary
+  - IF pos 3=A AND pos 10=Q → co-evolutionary
+  - IF pos 3=M AND pos 10=N → co-evolutionary
+  - IF pos 3=R AND pos 10=Q → co-evolutionary
+  - IF pos 3=A AND pos 31=E → co-evolutionary
+  - IF pos 3=L AND pos 31=E → co-evolutionary
+  - IF pos 3=Q AND pos 31=E → co-evolutionary
+  - IF pos 3=A AND pos 31=K → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot t2 \cdot t1` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 2)
+- Flipped/forbidden rules: 4136
+- N-ary: 168 PIs, 40 essential
+
+## 2hs1A
+- variable positions: 40, pairs: 462, **PIs: 1136, essential: 528**
+  - IF pos 38=P AND pos 66=A → co-evolutionary
+  - IF pos 38=P AND pos 66=A → co-evolutionary
+  - IF pos 38=T AND pos 66=E → co-evolutionary
+  - IF pos 38=E AND pos 66=E → co-evolutionary
+  - IF pos 38=E AND pos 66=E → co-evolutionary
+  - IF pos 38=P AND pos 66=A → co-evolutionary
+  - IF pos 38=E AND pos 66=C → co-evolutionary
+  - IF pos 38=T AND pos 66=C → co-evolutionary
+  - IF pos 38=P AND pos 66=I → co-evolutionary
+  - IF pos 38=L AND pos 66=C → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot \bar{s0} \cdot \bar{t4}` (coverage 32)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 16)
+  - `s4 \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 16)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 16)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot t0` (coverage 16)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t4 \cdot t0` (coverage 16)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot s1 \cdot t4 \cdot \bar{t3} \cdot t0` (coverage 16)
+- Flipped/forbidden rules: 4837
+- N-ary: 169 PIs, 41 essential
+
+## 2mhrA
+- variable positions: 111, pairs: 2756, **PIs: 385, essential: 109**
+  - IF pos 2=A AND pos 19=I → co-evolutionary
+  - IF pos 4=E AND pos 6=A → co-evolutionary
+  - IF pos 4=E AND pos 6=L → co-evolutionary
+  - IF pos 4=K AND pos 6=I → co-evolutionary
+  - IF pos 4=A AND pos 6=A → co-evolutionary
+  - IF pos 4=A AND pos 6=Q → co-evolutionary
+  - IF pos 4=E AND pos 6=T → co-evolutionary
+  - IF pos 4=A AND pos 6=K → co-evolutionary
+  - IF pos 4=T AND pos 6=Q → co-evolutionary
+  - IF pos 4=P AND pos 6=T → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 1)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 4063
+- N-ary: 97 PIs, 30 essential
+
+## 2phyA
+- variable positions: 123, pairs: 3181, **PIs: 335, essential: 91**
+  - IF pos 1=A AND pos 17=Y → co-evolutionary
+  - IF pos 1=A AND pos 17=F → co-evolutionary
+  - IF pos 1=A AND pos 5=A → co-evolutionary
+  - IF pos 1=A AND pos 16=R → co-evolutionary
+  - IF pos 2=I AND pos 27=E → co-evolutionary
+  - IF pos 2=E AND pos 27=I → co-evolutionary
+  - IF pos 2=Q AND pos 27=E → co-evolutionary
+  - IF pos 2=K AND pos 27=A → co-evolutionary
+  - IF pos 2=A AND pos 27=E → co-evolutionary
+  - IF pos 2=T AND pos 27=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s0 \cdot t3 \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `s3 \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 8)
+  - `\bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+- Flipped/forbidden rules: 2968
+- N-ary: 129 PIs, 29 essential
+
+## 2tpsA
+- variable positions: 222, pairs: 6138, **PIs: 525, essential: 219**
+  - IF pos 7=A AND pos 16=A → co-evolutionary
+  - IF pos 7=E AND pos 16=E → co-evolutionary
+  - IF pos 7=T AND pos 16=L → co-evolutionary
+  - IF pos 7=I AND pos 16=Y → co-evolutionary
+  - IF pos 7=Q AND pos 16=A → co-evolutionary
+  - IF pos 7=T AND pos 16=A → co-evolutionary
+  - IF pos 7=M AND pos 16=N → co-evolutionary
+  - IF pos 7=E AND pos 16=C → co-evolutionary
+  - IF pos 7=K AND pos 16=T → co-evolutionary
+  - IF pos 7=R AND pos 16=F → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot \bar{t1}` (coverage 4)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s2} \cdot \bar{s1} \cdot s0 \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t1 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 2)
+- Flipped/forbidden rules: 5235
+- N-ary: 105 PIs, 32 essential
+
+## 2vxnA
+- variable positions: 221, pairs: 5475, **PIs: 683, essential: 270**
+  - IF pos 234=I AND pos 236=L → co-evolutionary
+  - IF pos 234=A AND pos 236=W → co-evolutionary
+  - IF pos 234=T AND pos 236=F → co-evolutionary
+  - IF pos 234=Y AND pos 236=H → co-evolutionary
+  - IF pos 234=A AND pos 236=I → co-evolutionary
+  - IF pos 234=A AND pos 236=M → co-evolutionary
+  - IF pos 234=A AND pos 236=T → co-evolutionary
+  - IF pos 234=A AND pos 236=L → co-evolutionary
+  - IF pos 234=S AND pos 236=T → co-evolutionary
+  - IF pos 172=A AND pos 173=P → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot t0` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot t0` (coverage 4)
+  - `\bar{s4} \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot t1` (coverage 8)
+- Flipped/forbidden rules: 4138
+- N-ary: 144 PIs, 37 essential
+
+## 3borA
+- variable positions: 178, pairs: 4394, **PIs: 597, essential: 245**
+  - IF pos 116=T AND pos 119=I → co-evolutionary
+  - IF pos 116=T AND pos 119=A → co-evolutionary
+  - IF pos 116=T AND pos 119=R → co-evolutionary
+  - IF pos 116=A AND pos 119=R → co-evolutionary
+  - IF pos 116=N AND pos 119=T → co-evolutionary
+  - IF pos 116=T AND pos 119=K → co-evolutionary
+  - IF pos 116=S AND pos 119=A → co-evolutionary
+  - IF pos 116=N AND pos 119=R → co-evolutionary
+  - IF pos 116=N AND pos 119=R → co-evolutionary
+  - IF pos 116=S AND pos 119=K → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t0` (coverage 16)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3}` (coverage 16)
+  - `s4 \cdot \bar{s3} \cdot \bar{t4} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot s0 \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 4)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot s0 \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s3 \cdot s2 \cdot s1 \cdot s0 \cdot \bar{t4} \cdot t3 \cdot t2 \cdot t0` (coverage 4)
+- Flipped/forbidden rules: 4103
+- N-ary: 138 PIs, 29 essential
+
+## 3dqgA
+- variable positions: 143, pairs: 3756, **PIs: 1309, essential: 563**
+  - IF pos 122=A AND pos 126=A → co-evolutionary
+  - IF pos 122=A AND pos 126=A → co-evolutionary
+  - IF pos 122=A AND pos 126=A → co-evolutionary
+  - IF pos 122=M AND pos 126=A → co-evolutionary
+  - IF pos 122=A AND pos 126=M → co-evolutionary
+  - IF pos 122=M AND pos 126=I → co-evolutionary
+  - IF pos 122=M AND pos 126=I → co-evolutionary
+  - IF pos 122=C AND pos 126=A → co-evolutionary
+  - IF pos 122=C AND pos 126=A → co-evolutionary
+  - IF pos 122=A AND pos 126=N → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot s2 \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1}` (coverage 8)
+  - `s2 \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 8)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t0` (coverage 8)
+  - `s4 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t0}` (coverage 8)
+  - `s4 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t1} \cdot \bar{t0}` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot t1 \cdot t0` (coverage 8)
+- Flipped/forbidden rules: 4995
+- N-ary: 145 PIs, 41 essential
+
+## 5ptpA
+- variable positions: 218, pairs: 5800, **PIs: 741, essential: 311**
+  - IF pos 119=A AND pos 147=C → co-evolutionary
+  - IF pos 119=A AND pos 147=C → co-evolutionary
+  - IF pos 119=A AND pos 147=C → co-evolutionary
+  - IF pos 119=G AND pos 147=A → co-evolutionary
+  - IF pos 119=G AND pos 147=A → co-evolutionary
+  - IF pos 119=G AND pos 147=A → co-evolutionary
+  - IF pos 119=A AND pos 147=C → co-evolutionary
+  - IF pos 119=A AND pos 147=C → co-evolutionary
+  - IF pos 119=Q AND pos 147=C → co-evolutionary
+  - IF pos 119=A AND pos 147=A → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `\bar{s4} \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 32)
+  - `t4 \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 32)
+  - `\bar{s4} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot t0` (coverage 32)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0` (coverage 32)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot s0 \cdot \bar{t4}` (coverage 32)
+  - `s4 \cdot \bar{s2} \cdot s1 \cdot s0 \cdot \bar{t4}` (coverage 32)
+  - `\bar{s3} \cdot \bar{s2} \cdot t4 \cdot \bar{t2} \cdot \bar{t1} \cdot t0` (coverage 16)
+  - `\bar{s3} \cdot \bar{s2} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot t0` (coverage 16)
+  - `\bar{s4} \cdot s3 \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot t0` (coverage 8)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1}` (coverage 4)
+- Flipped/forbidden rules: 4862
+- N-ary: 140 PIs, 33 essential

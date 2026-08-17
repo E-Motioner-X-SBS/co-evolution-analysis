@@ -188,9 +188,9 @@ def predict_from_J(J, pos_i, pos_j, pos_arrays, n_seqs, train_end=800):
 
 def main():
     base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
-    fasta_file = base_dir / "Spike_protein.aln-fasta"
-    results_dir = base_dir / "dca_boolean_results"
-    results_dir.mkdir(exist_ok=True)
+    fasta_file = Path(__import__("os").environ.get("COEVO_FASTA") or (base_dir / "Spike_protein.aln-fasta"))
+    results_dir = Path(__import__("os").environ.get("COEVO_RESULTS") or (base_dir / "dca_boolean_results"))
+    results_dir.mkdir(parents=True, exist_ok=True)
 
     print("=" * 70)
     print("DCA → Boolean Minimization Pipeline")

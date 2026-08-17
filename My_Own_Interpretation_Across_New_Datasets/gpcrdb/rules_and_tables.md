@@ -1,0 +1,53 @@
+# gpcrdb — Rules, Prime Implicants & Boolean Equations
+
+## 5ht1a
+- variable positions: 416, pairs: 6691, **PIs: 263, essential: 62**
+  - IF pos 470=K AND pos 474=A → co-evolutionary
+  - IF pos 470=R AND pos 474=G → co-evolutionary
+  - IF pos 470=A AND pos 474=A → co-evolutionary
+  - IF pos 546=A AND pos 558=H → co-evolutionary
+  - IF pos 546=L AND pos 558=H → co-evolutionary
+  - IF pos 546=A AND pos 558=F → co-evolutionary
+  - IF pos 546=A AND pos 558=N → co-evolutionary
+  - IF pos 546=E AND pos 558=Y → co-evolutionary
+  - IF pos 546=V AND pos 558=Q → co-evolutionary
+  - IF pos 546=G AND pos 558=L → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot t1 \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 1)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot t2 \cdot \bar{t1}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot t1 \cdot t0` (coverage 2)
+  - `s3 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot s0 \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `s4 \cdot \bar{s3} \cdot s1 \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 2)
+- Flipped/forbidden rules: 5373
+- N-ary: 146 PIs, 33 essential
+
+## b2ar
+- variable positions: 422, pairs: 8004, **PIs: 228, essential: 43**
+  - IF pos 505=T AND pos 525=M → co-evolutionary
+  - IF pos 505=K AND pos 525=E → co-evolutionary
+  - IF pos 505=Q AND pos 525=C → co-evolutionary
+  - IF pos 536=T AND pos 538=E → co-evolutionary
+  - IF pos 537=A AND pos 538=P → co-evolutionary
+  - IF pos 537=P AND pos 538=Q → co-evolutionary
+  - IF pos 537=T AND pos 538=P → co-evolutionary
+  - IF pos 521=R AND pos 525=H → co-evolutionary
+  - IF pos 521=A AND pos 525=C → co-evolutionary
+  - IF pos 521=F AND pos 525=M → co-evolutionary
+- Boolean equations (kmap_boolean):
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `s3 \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `s4 \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot \bar{t4} \cdot t3 \cdot \bar{t2} \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+  - `\bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 4)
+  - `s4 \cdot \bar{s3} \cdot \bar{s2} \cdot s1 \cdot \bar{s0} \cdot t3 \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `s4 \cdot \bar{s3} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t2} \cdot t1 \cdot \bar{t0}` (coverage 2)
+  - `\bar{s4} \cdot s3 \cdot s2 \cdot s1 \cdot t3 \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 4)
+  - `\bar{s4} \cdot \bar{s3} \cdot \bar{s2} \cdot \bar{s1} \cdot \bar{s0} \cdot t4 \cdot \bar{t3} \cdot \bar{t1} \cdot t0` (coverage 2)
+  - `\bar{s3} \cdot s2 \cdot \bar{s1} \cdot s0 \cdot \bar{t4} \cdot \bar{t3} \cdot t2 \cdot \bar{t1} \cdot \bar{t0}` (coverage 2)
+- Flipped/forbidden rules: 5084
+- N-ary: 142 PIs, 37 essential

@@ -96,7 +96,7 @@ def find_coevolutionary_pairs(
             refs=refs,
             mutation_only=True,
             min_total=5,
-            chunk=16384,
+            chunk=4096,
         )
         for (pos_i, pos_j), mi in mi_dict.items():
             n_mut = cnt_dict[(pos_i, pos_j)]
@@ -116,16 +116,18 @@ def find_coevolutionary_pairs(
                 continue
 
             # Majority reference (exclude gap state 20)
-            ref_i = Counter(
+            _cnt_i = Counter(
                 int(a[pos_i])
                 for a in pos_arrays[:n_seqs]
                 if pos_i < len(a) and 0 <= int(a[pos_i]) < 20
-            ).most_common(1)[0][0]
-            ref_j = Counter(
+            )
+            ref_i = min(c for c, n in _cnt_i.items() if n == max(_cnt_i.values()))
+            _cnt_j = Counter(
                 int(a[pos_j])
                 for a in pos_arrays[:n_seqs]
                 if pos_j < len(a) and 0 <= int(a[pos_j]) < 20
-            ).most_common(1)[0][0]
+            )
+            ref_j = min(c for c, n in _cnt_j.items() if n == max(_cnt_j.values()))
 
             # Joint distribution of mutations
             joint = Counter()
@@ -225,9 +227,9 @@ def extract_prime_implicants(result, aa_list):
 
 def main():
     base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
-    fasta_file = base_dir / "Spike_protein.aln-fasta"
-    results_dir = base_dir / "master_boolean"
-    results_dir.mkdir(exist_ok=True)
+    fasta_file = Path(__import__("os").environ.get("COEVO_FASTA") or (base_dir / "Spike_protein.aln-fasta"))
+    results_dir = Path(__import__("os").environ.get("COEVO_RESULTS") or (base_dir / "master_boolean"))
+    results_dir.mkdir(parents=True, exist_ok=True)
 
     print("=" * 80)
     print("MASTER BOOLEAN FUNCTION FOR CO-EVOLUTION")

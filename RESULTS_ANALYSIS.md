@@ -1,8 +1,17 @@
-# Co-Evolution Pipeline — Full-Length GPU Results & Rigorous Analysis
+# Co-Evolution Pipeline — Corrected Full-Length GPU Results & Rigorous Analysis
 
-**Date:** Aug 7, 2026 | **Repo:** https://github.com/E-Motioner-X-SBS/co-evolution-analysis
+**Date:** Aug 7, 2026 (corrected) · **Last verified:** Aug 17, 2026
+**Repo:** https://github.com/E-Motioner-X-SBS/co-evolution-analysis
 **Dataset:** 1,299 SARS-CoV-2 Omicron Spike sequences, 1,276 positions (FULL LENGTH)
 **Compute:** NVIDIA A100 80GB PCIe, torch 2.12.1+cu130 (CUDA), numba 0.66.0
+
+> **CORRECTION NOTICE:** Two confirmed defects in the original pipeline were
+> fixed on Aug 7, 2026 (A1: gap-stripping column misalignment; A2: 8-bit QM
+> wrap-around). All numbers below are the **verified corrected** values. The
+> pre-correction values (1,249 variable positions, MI 1.5917, 152 rules, LOO
+> 2.93%) were artifacts of those defects and are documented in
+> [My_Interpretation_of_the_Results/CORRECTION_NOTICE.md](My_Interpretation_of_the_Results/CORRECTION_NOTICE.md).
+> This file supersedes any earlier draft that carried the stale numbers.
 
 ---
 
@@ -22,89 +31,100 @@ CPU baseline for the same MI matrix: **20+ minutes** (timed out). GPU: **1.6 s**
 
 ---
 
-## 2. All 19 Scripts — FULL-LENGTH Results (no truncation)
+## 2. All 23 Scripts — FULL-LENGTH Corrected Results (no truncation)
 
-| # | Script | Status | Key Result |
-|---|--------|--------|------------|
-| 1 | `run_kmap_analysis.py` | ✅ | H1=0.2160, 1.34× (5-bit Gray, group-order) |
-| 2 | `boolean_co-evolution.py` | ✅ GPU | **796,953 pairs** (full 1263 pos), 38 essential PIs, 50.74% acc |
-| 3 | `nary_kmap_co-evolution.py` | ✅ | 73 PIs, 42 essential (base-20) |
-| 4 | `position_kmap_coevolution.py` | ✅ GPU | **25,199 co-evolving pairs** (was 302 @ 100 pos) |
-| 5 | `run_allseq_analysis.py` | ✅ GPU | **34,892 pairs MI>0.005** (full length) |
-| 6 | `master_boolean.py` | ✅ GPU | **36 distinct PIs (2 essential)**, 10 pairs |
-| 7 | `kmap_boolean_coevolution.py` | ✅ GPU | 36 rules across 10 pairs |
-| 8 | `flipped_boolean_coevolution.py` | ✅ GPU | **345 forbidden rules** |
-| 9 | `variable_position_coevolution.py` | ✅ GPU | 20 top pairs (full-length MI) |
-| 10 | `predictive_constraint_function.py` | ✅ GPU | 5.84% train/test acc |
-| 11 | `allseq_constraint_function.py` | ✅ GPU | LOO-CV **2.93%** (80/2726), deterministic ✓ |
-| 12 | `dca_boolean_coevolution.py` | ✅ | avg acc 0.0 (local precision, NOT DCA) |
-| 13 | `perplexity_coevolution.py` | ✅ | 3 pairs, ratio up to 2.81 |
-| 14 | `advanced_co-evolution_analysis.py` | ✅ | 1,249 nodes, 35,098 edges, 5 clusters |
-| 15 | `full_length_analysis.py` | ✅ GPU | 1249 var, **35,858 high-MI pairs** (was 4,949) |
-| 16 | `gpu_full_analysis.py` | ✅ GPU | **Max MI=1.5917** at (372,401), full MI matrix saved |
-| 17 | `create_mi_heatmap.py` | ✅ GPU | 813,450 pairs, max MI=1.5917, 106,626 high-MI |
-| 18 | `generate_full_analysis_md.py` | ✅ | FULL_COEVOLUTION_ANALYSIS.md |
-| 19 | `generate_full_pipeline_doc.py` | ✅ | FULL_PIPELINE_ANALYSIS.md |
+| # | Script | Status | Key Result (corrected) |
+|---|--------|--------|------------------------|
+| 1 | `coevolution_shared.py` | ✅ | shared module: FASTA, MI, entropy, coupling, GPU pair-finder |
+| 2 | `coevolution_gpu.py` | ✅ GPU | CUDA kernels: MI matrix, entropy, refs, H1, coupling |
+| 3 | ` `master_boolean.py` | ✅ GPU | **36 distinct PIs (2 essential)**, 10 pairs |
+| 4 | `boolean_co-evolution.py` | ✅ GPU | whole-protein dipeptide Boolean minimization |
+| 5 | `nary_kmap_co-evolution.py` | ✅ | base-20 (n-ary) K-map motifs (no position info) |
+| 6 | `position_kmap_coevolution.py` | ✅ GPU | per-position-pair K-maps with MI |
+| 7 | `run_allseq_analysis.py` | ✅ GPU | all-sequence MI matrix (window 30) |
+| 8 | `run_kmap_analysis.py` | ✅ | H1 Gray adjacency 0.2167 (**1.34×**), Walsh–Hadamard |
+| 9 | `flipped_boolean_coevolution.py` | ✅ GPU | **490 forbidden rules** (117 unique position pairs) |
+| 10 | `kmap_boolean_coevolution.py` | ✅ GPU | 36 rules across 10 pairs (5-bit Gray literals) |
+| 11 | `variable_position_coevolution.py` | ✅ GPU | variable-positions-only K-maps with don't-cares |
+| 12 | `predictive_constraint_function.py` | ✅ GPU | train/test accuracy **0.11%** |
+| 13 | `allseq_constraint_function.py` | ✅ CPU | LOO-CV **9.24%** (301/3259), deterministic |
+| 14 | `dca_boolean_coevolution.py` | ✅ | local-precision → Boolean, avg accuracy 0.0 (NOT real DCA) |
+| 15 | `dca_mf_analysis.py` | ✅ | proper mfDCA: top DI (454,495)=0.37, ρ(DI,MI)=0.06 |
+| 16 | `perplexity_coevolution.py` | ✅ | perplexity ratio up to 2.81× |
+| 17 | `advanced_co-evolution_analysis.py` | ✅ | network **21 nodes / 8 edges**, 40 variant signatures |
+| 18 | `full_length_analysis.py` | ✅ GPU | 21 var, **5 high-MI pairs** (MI > 0.5) |
+| 19 | `gpu_full_analysis.py` | ✅ GPU | max MI = **0.8067** at (373,378), full matrix saved |
+| 20 | `create_mi_heatmap.py` | ✅ GPU | 813,450 pairs, max MI = 0.8067 |
+| 21 | `generate_co-evolution_md.py` | ✅ | COEVOLUTION_KMAP_BOOLEAN.md (36 rules) |
+| 22 | `generate_full_analysis_md.py` | ✅ | FULL_COEVOLUTION_ANALYSIS.md |
+| 23 | `generate_full_pipeline_doc.py` | ✅ | FULL_PIPELINE_ANALYSIS.md |
 
 ---
 
-## 3. Cross-Script Consistency (verified)
+## 3. Cross-Script Consistency (verified, corrected)
 
 | Metric | Value | Scripts agreeing |
 |--------|-------|------------------|
-| Max MI | **1.5917** at (372,401) | gpu_full ✓, mi_heatmap ✓, full_length ✓ |
-| Variable positions | 1,249/1,276 | all 5 scripts ✓ |
-| Co-evolving pairs | 36,918 | master_boolean, flipped, allseq ✓ |
-| Master rules | 36 (2 essential) | master_boolean, kmap_boolean, pipeline doc ✓ |
-| H1 (He-2012 direct) | 0.1905 (1.18×) | gpu_full ✓ |
-| H1 (5-bit group-order) | 0.2160 (1.34×) | run_kmap ✓ |
+| Max MI | **0.8067** at (373,378) | gpu_full ✓, full_length ✓ |
+| Variable positions | **21** / 1,276 | all scripts ✓ |
+| Co-evolving pairs (mutation-only MI > 0.1) | **10** | master_boolean ✓, flipped ✓ |
+| Master rules | **36 distinct PIs (2 essential)** | master_boolean ✓, kmap_boolean ✓, docs ✓ |
+| Forbidden rules | **490** | flipped ✓ |
+| H1 (5-bit group-order Gray) | 0.2167 (**1.34×**) | run_kmap ✓, gpu_full ✓ |
+| Network | 21 nodes / 8 edges | advanced ✓ |
 
-**NOTE on H1:** The two encodings (He-2012 direct Gray vs 5-bit group-order Gray) give different H1 because they are different Gray-code embeddings of the 20 amino acids. Both are verified correct against the Lean proofs (`BaseNAminoEncoding.lean` vs `AminoAcidEncoding.lean`). The difference is documented, not a bug.
+**NOTE on H1:** The two encodings (He-2012 direct Gray vs 5-bit group-order
+Gray) give different H1 because they are different Gray-code embeddings of the
+20 amino acids. Both are verified correct against the Lean proofs. The
+1.34× enrichment is the group-order-Gray result.
 
 ---
 
 ## 4. LOO-CV Determinism Verification
 
-The earlier session reported LOO-CV = 7.26% (198/2726) for allseq_constraint_function. After the GPU pair-finder change, it is 2.93% (80/2726).
+LOO-CV accuracy = **9.24% (301/3259)** — the corrected, reproducible value.
 
 **Verification performed:**
 - ✓ Pair set identical (same top-10, verified MI values equal)
-- ✓ Reference codes: 0 mismatches across all 1,269 positions (CPU get_majority_ref vs GPU majority_refs_gpu)
-- ✓ LOO-CV deterministic: re-run twice → 1/265 = 0.0038 both times for (462,473)
-- ✓ Tested 4 combinations (refs × sign): none reproduce the old 60/265 → the old value came from a pre-fix code state
+- ✓ Reference codes: 0 mismatches across all positions (CPU vs GPU, lowest-code tie-break)
+- ✓ LOO-CV deterministic: re-run reproduces identical results
+- ✓ The earlier reported 2.93% / 7.26% came from the pre-correction (buggy) code state
 
-**Conclusion:** 2.93% is the correct, reproducible LOO-CV accuracy for the current (verified) implementation. The decrease from the earlier reported 7.26% is because the earlier run was made with the pre-fix code (before cj/aj comprehension fix changed mutation counting).
-
----
-
-## 5. Biological Interpretation (Full-Length)
-
-1. **Strongest co-evolution:** (372,401) MI=1.5917 — in S2 subunit
-2. **Near-deterministic pairs:** perplexity ratio 2.81× at (372,401)
-3. **Negative selection:** 345 forbidden pairs (never co-observed)
-4. **Network:** 1,249 variable positions, 35,098 edges, single giant component
-5. **35,858 high-MI pairs** full-length (vs 4,949 when limited to top-100 variable positions) — 7× more co-evolution detected
-6. **LOO-CV 2.93%:** co-evolution is probabilistic + lineage-specific; K-map captures structure, not specific outcomes
+**Conclusion:** 9.24% is the correct LOO-CV accuracy. Co-evolution is
+probabilistic + lineage-specific; the K-map captures structural constraints,
+not specific outcomes.
 
 ---
 
-## 6. Files Modified (this session)
+## 5. Biological Interpretation (Full-Length, Corrected)
 
-### New
-- `coevolution_gpu.py` — GPU kernels (MI matrix, entropy, refs, coupling, H1)
+1. **Strongest co-evolution:** (373,378) MI = 0.8067 — but this pair is NOT
+   3D-close (13–27 Å); its covariation is immune/lineage-driven.
+2. **Structurally-real pairs:** (407,410) 9.3×, (210,214) 4.0×, (212,215) 3.6×,
+   (210,215) 3.4×, (500,503) 10.5×, (503,507) 10.4× — p ≤ 1e-8 (3D validation).
+3. **Negative selection:** 490 forbidden pairs (never co-observed); partial
+   steric support at NTD pairs (210,215)/(212,215).
+4. **Network:** 21 variable positions, 8 edges — small, interpretable.
+5. **5 high-MI pairs** (MI > 0.5) full-length.
+6. **Housekeeping confirmed:** conserved positions buried (52%), variable
+   exposed (26%); Spearman(entropy, burial) = −0.17, p = 6e-9.
+7. **Perplexity ratio** is the strongest single 3D-contact correlate
+   (ρ = 0.67, p = 0.006).
+8. **LOO-CV 9.24%:** co-evolution is lineage-specific; rules don't generalize
+   across variants.
 
-### Modified for full-length + GPU
-- `boolean_co-evolution.py` — full 1263 positions, GPU MI (was 80-pos limit)
-- `run_allseq_analysis.py` — full length, GPU MI (was 80-pos limit)
-- `position_kmap_coevolution.py` — full length, GPU MI (was 100-pos limit)
-- `full_length_analysis.py` — all variable positions, GPU (was top-100)
-- `gpu_full_analysis.py` — full MI matrix on GPU, saves mi_matrix_full.npy
-- `create_mi_heatmap.py` — GPU MI for all 813K pairs
-- `master_boolean.py`, `kmap_boolean_coevolution.py`, `allseq_constraint_function.py`, `predictive_constraint_function.py`, `flipped_boolean_coevolution.py` — GPU pair-finder via `coevolution_shared.find_coevolving_pairs_gpu`
-- `coevolution_shared.py` — added `find_coevolving_pairs_gpu` helper
+---
 
-### Results regenerated (full-length GPU)
-All 17 result JSONs + 3 report MDs + `full_gpu_results/mi_matrix_full.{npy,csv}`
+## 6. The Two Corrected Defects (summary)
+
+| Defect | Effect | Fix |
+|--------|--------|-----|
+| **A1** gap-stripping | "column j" mixed different raw positions → 1,249 fake variable positions, MI 1.59 artifacts | keep alignment, gap = state 20, exclude from counts (`aligned=True`) |
+| **A2** 8-bit QM wrap-around | 20×20 (400-cell) map → 8 bits → cells 256–399 wrapped onto 0–143 → 143/152 phantom rules | pad to 32×32 (5 bits/axis, 10 bits), rows/cols 20–31 don't-care; `kmap_truth_table` raises on non-power-of-4 |
+
+**Corrected headline numbers:** 21 variable positions · 10 co-evolving pairs ·
+36 distinct prime implicants (2 essential) · 490 forbidden rules · max MI
+0.8067 · LOO-CV 9.24% · 0 phantom rules.
 
 ---
 
@@ -112,10 +132,16 @@ All 17 result JSONs + 3 report MDs + `full_gpu_results/mi_matrix_full.{npy,csv}`
 
 ```bash
 G=/store/shuvam/.venv/bin/python   # torch 2.12.1+cu130, numba 0.66.0
+export OMP_PROC_BIND=FALSE         # REQUIRED: torch otherwise pins to CPU 0
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 D=/store/shuvam/E-motioner-X-SBS/datasets/co-evolution
 cd $D
+
+# Reproduce the corrected rule set (regression-verified: 36/2)
+$G master_boolean.py
+
+# Full-length GPU analyses
 nohup $G -u $D/gpu_full_analysis.py > logs/gpu_full_analysis.log 2>&1 &
-nohup $G -u $D/boolean_co-evolution.py > logs/boolean_gpu.log 2>&1 &
 nohup $G -u $D/full_length_analysis.py > logs/full_length_gpu.log 2>&1 &
 nohup $G -u $D/create_mi_heatmap.py > logs/mi_heatmap_gpu.log 2>&1 &
 # monitor: nvidia-smi, tail -f logs/*.log
@@ -123,49 +149,16 @@ nohup $G -u $D/create_mi_heatmap.py > logs/mi_heatmap_gpu.log 2>&1 &
 
 ---
 
-## 8. FULL AUDIT — All 20 Scripts (Aug 7, 2026, final pass)
+## 8. Multi-Dataset Validation (the campaign)
 
-### 8.1 Script completion & full-length verification
+The 23-script suite was run on 6 external benchmark datasets (3,735 audited
+runs; 3,729 ok, 6 documented-infeasible GPU-OOM giants on Pfam 222–486k seqs).
+Coverage audit: 0 truncation flags. GPU/CPU consistency: 5/5 PASS. See
+`My_Own_Interpretation_Across_New_Datasets/` and `plans/` for the full
+campaign, and `agents.md` for the reproducibility commands.
 
-| # | Script | Result | Full-length? | GPU? | Key metric |
-|---|--------|--------|--------------|------|------------|
-| 1 | run_kmap_analysis.py | ✅ | ✅ | — | H1=0.2163 (1.34×), 1,647,830 pairs (ALL 1299 seqs) |
-| 2 | boolean_co-evolution.py | ✅ | ✅ 1263 pos | ✅ | 796,953 pairs, 50.74% acc, top J=(372,401) 1.5917 |
-| 3 | nary_kmap_co-evolution.py | ✅ | ✅ | — | 73 PIs, 42 essential |
-| 4 | position_kmap_coevolution.py | ✅ | ✅ | ✅ | 25,199 co-evolving pairs |
-| 5 | run_allseq_analysis.py | ✅ | ✅ | ✅ | 34,892 pairs MI>0.005 |
-| 6 | master_boolean.py | ✅ | ✅ | ✅ | 36 distinct PIs, 2 essential, 10 pairs |
-| 7 | kmap_boolean_coevolution.py | ✅ | ✅ | ✅ | 36 rules |
-| 8 | flipped_boolean_coevolution.py | ✅ | ✅ | ✅ | 345 forbidden rules |
-| 9 | variable_position_coevolution.py | ✅ | ✅ | ✅ | 20 top pairs |
-| 10 | predictive_constraint_function.py | ✅ | ✅ | ✅ | 5.84% acc (800/499 split) |
-| 11 | allseq_constraint_function.py | ✅ | ✅ | ✅ | LOO-CV 2.93% (deterministic) |
-| 12 | dca_boolean_coevolution.py | ✅ | ✅ (dynamic pairs) | ✅ | **17.6% acc** (was 0.0% hardcoded) |
-| 13 | perplexity_coevolution.py | ✅ | ✅ | — | 3 pairs, ratio ≤2.81 |
-| 14 | advanced_co-evolution_analysis.py | ✅ | ✅ (Walsh/cluster/signatures) | ✅ | 1,249 nodes, **40 signatures** (was 11) |
-| 15 | full_length_analysis.py | ✅ | ✅ | ✅ | 1,249 var, 35,858 hi-MI pairs |
-| 16 | gpu_full_analysis.py | ✅ | ✅ | ✅ | max MI=1.5917, full matrix saved |
-| 17 | create_mi_heatmap.py | ✅ | ✅ | ✅ | 813,450 pairs, max MI=1.5917 |
-| 18 | generate_co-evolution_md.py | ✅ | ✅ | — | 162 rules MD |
-| 19 | generate_full_analysis_md.py | ✅ | ✅ | — | FULL_COEVOLUTION_ANALYSIS.md |
-| 20 | generate_full_pipeline_doc.py | ✅ | ✅ (fixed 200→full) | — | FULL_PIPELINE_ANALYSIS.md, max MI=1.5917 at (372,401) |
+---
 
-### 8.2 Remaining bugs fixed this pass
-1. **generate_full_pipeline_doc.py** — was `load_position_arrays(max_pos=200)` + MI over first 80 → FULL_PIPELINE_ANALYSIS.md only covered 80 positions. Fixed: full length. Top MI pair changed from (74,76) 1.37 → **(372,401) 1.5917**.
-2. **run_kmap_analysis.py** — H1 used 200/1299 sequences. Fixed: all 1299 → 1,647,830 pairs.
-3. **perplexity_coevolution.py** — display limited to first 80. Fixed: full-length summary.
-4. **dca_boolean_coevolution.py** — hardcoded 68-78 pairs. Fixed: dynamic full-length GPU pairs → accuracy 0.0% → **17.6%**.
-5. **advanced_co-evolution_analysis.py** — Walsh consensus + clustering + variant signatures limited to 68-80. Fixed: full length. Signatures 11 → **40**; fixed tuple-unpacking bug.
-
-### 8.3 Result consistency (final)
-| Metric | Value | Scripts |
-|--------|-------|---------|
-| Max MI | 1.5917 @ (372,401) | gpu_full ✓ boolean ✓ heatmap ✓ pipeline-doc ✓ |
-| Variable positions | 1,249 | all scripts ✓ |
-| Co-evolving pairs | 36,918 | master ✓ flipped ✓ allseq ✓ |
-| Master rules | 36 (2 essential) | master ✓ kmap_boolean ✓ docs ✓ |
-
-### 8.4 Repo completeness
-- `co-evolution-analysis` repo vs `datasets/co-evolution`: **0 differing/missing files** (verified by cmp)
-- All 20 scripts + 17 result JSONs + 3 report MDs + CSVs + npy + FASTA + README + RESULTS_ANALYSIS.md present
-- Log files intentionally excluded (.gitignore) — they are run artifacts, not results
+*All numbers above are taken from the corrected result JSONs in
+`datasets/co-evolution/` (master_boolean_summary, flipped_boolean_summary,
+full_gpu_results, etc.) and are verified, not approximated.*

@@ -1,0 +1,50 @@
+[
+ {
+  "model_id": "03",
+  "gmqe": 0.7092472808598387,
+  "qsqe": null,
+  "qmean4_z": -1.4975701671223005,
+  "qmean_global": null,
+  "oligo_state": "monomer",
+  "coverage": 0.9525691866874695,
+  "sequence_identity": 95.02074432373047,
+  "sequence_similarity": 0.5977301001548767,
+  "template_qualified_name": "8z6s.1.G",
+  "template_found_by": "HHblits",
+  "template_method": "ELECTRON MICROSCOPY",
+  "template_gmqe": 0.6939396858215332,
+  "template_title": "Structure of XBB.1.16 S trimer with 2 down-RBDs complex with antibody CYFN1006-1."
+ },
+ {
+  "model_id": "01",
+  "gmqe": 0.6878844872721545,
+  "qsqe": 0.90539531334365,
+  "qmean4_z": -2.503337204932259,
+  "qmean_global": null,
+  "oligo_state": "homo-trimer",
+  "coverage": 0.9588932991027832,
+  "sequence_identity": 93.81698608398438,
+  "sequence_similarity": 0.5915345549583435,
+  "template_qualified_name": "6zgf.1.C",
+  "template_found_by": "HHblits",
+  "template_method": "ELECTRON MICROSCOPY",
+  "template_gmqe": 0.7122289538383484,
+  "template_title": "Spike Protein of RaTG13 Bat Coronavirus in Closed Conformation"
+ },
+ {
+  "model_id": "02",
+  "gmqe": 0.6903921129953027,
+  "qsqe": 0.929464374946812,
+  "qmean4_z": -2.461388576862926,
+  "qmean_global": null,
+  "oligo_state": "homo-trimer",
+  "coverage": 0.9533596634864807,
+  "sequence_identity": 89.71807861328125,
+  "sequence_similarity": 0.5806506872177124,
+  "template_qualified_name": "7cn8.1.C",
+  "template_found_by": "HHblits",
+  "template_method": "ELECTRON MICROSCOPY",
+  "template_gmqe": 0.672651469707489,
+  "template_title": "Cryo-EM structure of PCoV_GX spike glycoprotein"
+ }
+]

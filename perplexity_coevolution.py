@@ -57,9 +57,9 @@ def compute_perplexity(entropy):
 
 def main():
     base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
-    fasta_file = base_dir / "Spike_protein.aln-fasta"
-    results_dir = base_dir / "perplexity_results"
-    results_dir.mkdir(exist_ok=True)
+    fasta_file = Path(__import__("os").environ.get("COEVO_FASTA") or (base_dir / "Spike_protein.aln-fasta"))
+    results_dir = Path(__import__("os").environ.get("COEVO_RESULTS") or (base_dir / "perplexity_results"))
+    results_dir.mkdir(parents=True, exist_ok=True)
 
     print("=" * 80)
     print("Perplexity-Based Co-evolution Analysis")

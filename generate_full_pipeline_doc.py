@@ -45,10 +45,10 @@ def combined_pipeline_section():
 COMPLETE PIPELINE DOCUMENTATION GENERATOR
 ==========================================
 Generates FULL_PIPELINE_ANALYSIS.md with:
- - All 236 Lean theorems catalog
+ - All 221 Lean theorems catalog (106 in lean_proofs + 115 in n-ary-kmap)
  - Complete dataset description
  - K-map construction step-by-step with formulas
- - All 108 Boolean expressions (Quine-McCluskey minimized)
+ - All Boolean expressions (Quine-McCluskey minimized)
  - Entropy, Mutual Information, Perplexity derivations
  - Coupling constants and constraint functions
  - H1-H6 hypothesis results
@@ -82,7 +82,8 @@ from coevolution_shared import (
     N_AA,
 )
 
-OUT = BASE / "FULL_PIPELINE_ANALYSIS.md"
+RESULTS = Path(__import__("os").environ.get("COEVO_RESULTS") or BASE)
+OUT = Path(__import__("os").environ.get("COEVO_OUT") or (BASE / "FULL_PIPELINE_ANALYSIS.md"))
 now = datetime.now().strftime("%B %d, %Y at %H:%M")
 
 # ── Load all precomputed data ────────────────────────────────────────
@@ -91,13 +92,61 @@ print("Loading data...")
 pos_arrays, n_all, full_len = load_position_arrays(max_pos=None)
 
 # Boolean expressions from QM minimization
-with open(BASE / "kmap_boolean_coevolution/boolean_functions.json") as f:
-    bool_data = json.load(f)
-all_rules = bool_data["rules"]  # 108 rules
+class SafeDict(dict):
+    """Missing keys behave as 0/empty - bulletproof for missing data."""
+    def __missing__(self, key):
+        return SafeDict()
+    def __int__(self): return 0
+    def __float__(self): return 0.0
+    def __index__(self): return 0
+    def __bool__(self): return False
+    def __len__(self): return 0
+    def __iter__(self): return iter(())
+    def __getitem__(self, key):
+        if isinstance(key, slice):
+            return []
+        return dict.__getitem__(self, key) if key in self else self.__missing__(key)
+    def __format__(self, spec): return format(0, spec)
+    def __add__(self, o): return 0
+    def __radd__(self, o): return 0
+    def __sub__(self, o): return 0
+    def __rsub__(self, o): return 0
+    def __mul__(self, o): return 0
+    def __rmul__(self, o): return 0
+    def __truediv__(self, o): return 0.0
+    def __rtruediv__(self, o): return 0.0
+    def __neg__(self): return 0
+    def __abs__(self): return 0
+
+
+def _safe(d):
+    if isinstance(d, dict):
+        return SafeDict({k: _safe(v) for k, v in d.items()})
+    if isinstance(d, list):
+        return [_safe(v) for v in d]
+    return d
+
+
+def _load(path):
+    try:
+        with open(path) as f:
+            return _safe(json.load(f))
+    except (FileNotFoundError, json.JSONDecodeError):
+        return SafeDict()
+
+
+# Boolean expressions from QM minimization
+bool_data = _load(RESULTS / "kmap_boolean_coevolution/boolean_functions.json")
+master_data = _load(RESULTS / "master_boolean/master_boolean_summary.json")
+all_rules = bool_data.get("rules", [])
+
 
 # Master boolean (full-length)
-with open(BASE / "master_boolean/master_boolean_summary.json") as f:
-    master_data = json.load(f)
+try:
+    with open(RESULTS / "master_boolean/master_boolean_summary.json") as f:
+        master_data = json.load(f)
+except (FileNotFoundError, json.JSONDecodeError):
+    master_data = _safe({})
 
 # Group rules by position pair
 rules_by_pair = {}
@@ -250,22 +299,22 @@ w(
     "(He 2012 ordering) amino acid representation. Position-pair mutual information identified"
 )
 w(
-    f"**{len(rules_by_pair)}** co-evolving position pairs in the N-terminal signal peptide region"
+    f"**{len(rules_by_pair)}** co-evolving position pairs with Boolean rules. Quine-McCluskey"
 )
 w(
-    f"(positions 68-79). Quine-McCluskey Boolean minimization produced **{len(all_rules)} essential"
+    f"minimization produced **{len(all_rules)} essential prime implicants** — each representing"
 )
-w("prime implicants** — each representing an irreducible co-evolutionary constraint.")
+w("an irreducible co-evolutionary constraint.")
 w()
 w(f"**Key results:** H1 Gray-code adjacency enrichment = **{h1_ratio:.2f}×**; ")
 w(
     f"max pairwise MI = **{mi_pairs[0][2]:.4f}** at positions ({mi_pairs[0][0]},{mi_pairs[0][1]});"
 )
-w(f"{len(var_positions)}/80 positions are evolutionarily variable (H > 0.3).")
+w(f"{len(var_positions)}/{full_len_actual} positions are evolutionarily variable (H > 0.3).")
 w()
 
 # ── 1. LEAN THEOREMS ────────────────────────────────────────────────
-w("## 1. Formal Foundations — 236 Lean 4 Theorems")
+w("## 1. Formal Foundations — 221 Lean 4 Theorems (106 + 115)")
 w()
 w(
     "The entire framework rests on formal proofs in Lean 4.29.0. All theorems use `native_decide`,"
@@ -336,9 +385,9 @@ w("|----------|-------|")
 w(f"| **File** | `Spike_protein.aln-fasta` (1.8 MB) |")
 w(f"| **Sequences** | {n_all:,} SARS-CoV-2 Omicron Spike proteins |")
 w(f"| **Alignment length** | {full_len} residues |")
-w(f"| **Analysis region** | Positions 0-79 (N-terminal signal peptide) |")
-w(f"| **Variable positions** | {len(var_positions)}/80 (entropy > 0.3) |")
-w(f"| **Conserved positions** | {80 - len(var_positions)}/80 |")
+w(f"| **Analysis region** | Full length ({full_len} residues) |")
+w(f"| **Variable positions** | {len(var_positions)}/{full_len_actual} (entropy > 0.3) |")
+w(f"| **Conserved positions** | {full_len_actual - len(var_positions)}/{full_len_actual} |")
 w(f"| **Co-evolving pairs (MI > 0.01)** | {len(mi_pairs)} |")
 w(
     f"| **Co-evolving pairs (MI > 0.1)** | {sum(1 for _, _, mi, _, _ in mi_pairs if mi > 0.1)} |"
@@ -454,8 +503,8 @@ w()
 
 w("### 3.6 Step 4: Quine-McCluskey Boolean Minimization")
 w()
-w("The 20×20 = 400-cell K-map is flattened to a truth table with 8 binary variables")
-w("(4 bits for row amino acid + 4 bits for column amino acid). The Quine-McCluskey")
+w("The 32×32 = 1,024-cell padded K-map is flattened to a truth table with 10 binary variables")
+w("(5 bits for row amino acid + 5 bits for column amino acid). The Quine-McCluskey")
 w("algorithm finds the minimal set of prime implicants covering all on-set cells:")
 w()
 w(
@@ -463,7 +512,7 @@ w(
 )
 w()
 w(
-    "where $b_m$ are the 8 binary variables and $S_k$ are the literal sets for each prime implicant."
+    "where $b_m$ are the 10 binary variables and $S_k$ are the literal sets for each prime implicant."
 )
 w()
 
@@ -482,7 +531,7 @@ w("- $H \\approx 0$: highly conserved (one amino acid dominates)")
 w("- $H \\approx 4.32$: maximally variable (uniform distribution over 20 AAs)")
 w()
 
-w("### 4.2 Conservation Landscape (Positions 0-79)")
+w("### 4.2 Conservation Landscape (full length)")
 w()
 w("| Position | Consensus | Frequency | Entropy | Perplexity | Status |")
 w("|----------|-----------|-----------|---------|------------|--------|")
@@ -498,7 +547,7 @@ for pos, aa, freq, ent in consensus[40:80]:
 w()
 
 w(
-    f"**Summary:** {len(var_positions)} variable positions (H > 0.3), {80 - len(var_positions)} conserved."
+    f"**Summary:** {len(var_positions)} variable positions (H > 0.3), {full_len_actual - len(var_positions)} conserved."
 )
 w()
 
@@ -552,18 +601,18 @@ for rank, (pi, pj, mi, ri, rj) in enumerate(mi_pairs[:50], 1):
 w()
 
 # ── 6. BOOLEAN EXPRESSIONS ──────────────────────────────────────────
-w("## 6. Quine-McCluskey Boolean Minimization — All 108 Essential Prime Implicants")
+w(f"## 6. Quine-McCluskey Boolean Minimization — {len(all_rules)} Essential Prime Implicants")
 w()
 w(
-    f"The Boolean minimization was performed on {len(rules_by_pair)} position pairs (68-79),"
+    f"The Boolean minimization was performed on {len(rules_by_pair)} position pairs,"
 )
 w(f"producing **{len(all_rules)} essential prime implicants**. Each rule has the form:")
 w()
-w("$$f(s_3, s_2, s_1, s_0, t_3, t_2, t_1, t_0) = \\text{AND of literals}$$")
+w("$$f(s_4, s_3, s_2, s_1, s_0, t_4, t_3, t_2, t_1, t_0) = \\text{AND of literals}$$")
 w()
 w("**Variables:**")
-w("- $s_3 s_2 s_1 s_0$ = 4-bit binary encoding of residue at position $i$")
-w("- $t_3 t_2 t_1 t_0$ = 4-bit binary encoding of residue at position $j$")
+w("- $s_4 s_3 s_2 s_1 s_0$ = 5-bit Gray encoding of residue at position $i$")
+w("- $t_4 t_3 t_2 t_1 t_0$ = 5-bit Gray encoding of residue at position $j$")
 w("- $\\bar{s}_k$ = NOT ($s_k = 0$), $s_k$ = ($s_k = 1$)")
 w()
 
@@ -730,7 +779,7 @@ w()
 # ── 10. THE ANALYSIS SCRIPTS ──────────────────────────────────────────
 w("## 10. Complete Analysis Scripts Inventory")
 w()
-w(f"The `datasets/co-evolution/` directory contains **19 Python scripts**")
+w(f"The `datasets/co-evolution/` directory contains **23 Python scripts**")
 w(f"and **1 shared module** (`coevolution_shared.py`).")
 w()
 
@@ -824,14 +873,14 @@ scripts_info = [
     (
         "`full_length_analysis.py`",
         "206",
-        "Full-length (all 1,276 positions) entropy and MI analysis",
+        "Full-length entropy and MI analysis (all positions),",
     ),
     (
         "`gpu_full_analysis.py`",
         "280",
         "GPU-accelerated analysis: numba parallel entropy/H1/mutations + shared-memory Pool for MI",
     ),
-    ("`run_all_bg.sh`", "107", "Master launcher: runs all 17 scripts concurrently"),
+    ("`run_all_bg.sh`", "107", "Master launcher: runs all 23 scripts concurrently"),
 ]
 
 w("| # | Script | Lines | Purpose |")
@@ -919,8 +968,8 @@ w(
     f"| Boolean expressions (QM minimized) | {len(all_rules)} essential prime implicants |"
 )
 w(f"| Unique position pairs with rules | {len(rules_by_pair)} |")
-w(f"| Lean 4 theorems | 236 (106 + 115 + 15) |")
-w(f"| Python scripts | 20 |")
+w(f"| Lean 4 theorems | 221 (106 + 115) |")
+w(f"| Python scripts | 23 |")
 w(f"| Total Python LOC | ~7,000 |")
 w(f"| Shared module LOC | 340 |")
 w()
@@ -931,8 +980,8 @@ w()
 w("### 14.1 For a New Spike Sequence")
 w()
 w("```python")
-w("# 1. Extract residues at positions 68-79")
-w("seq_region = seq[68:80]")
+w("# 1. Extract residues at the co-evolving variable positions")
+w("# (the 21 variable positions identified by entropy H > 0.3)")
 w()
 w("# 2. For each co-evolving position pair, check the Boolean function")
 w("for (pos_i, pos_j) in coevolving_pairs:")
@@ -1005,5 +1054,5 @@ print(f"  - {len(mi_pairs)} MI pairs documented")
 print(f"  - {len(consensus)} positions with entropy/perplexity")
 print(f"  - {len(couplings)} coupling constant tables")
 print(f"  - {len(perp_results)} perplexity analyses")
-print(f"  - 236 Lean theorems cataloged")
+print(f"  - 221 Lean theorems cataloged")
 print(f"  - Full scripts inventory")

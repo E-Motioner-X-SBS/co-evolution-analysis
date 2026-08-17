@@ -1,0 +1,7043 @@
+{
+ "n_unique": 299,
+ "index": [
+  {
+   "uid": "u0000",
+   "header": "WRU87367.1",
+   "n_orig_sequences": 1,
+   "project_id": "2870bf",
+   "n_models": 4,
+   "best_model_id": "01",
+   "best_gmqe": 0.7087175702012315,
+   "best_qsqe": 0.9467219413866089,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 98.26498413085938,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B",
+    "9gdx.1.C"
+   ]
+  },
+  {
+   "uid": "u0001",
+   "header": "UZT65502.1",
+   "n_orig_sequences": 1,
+   "project_id": "1d9528",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7150099353872478,
+   "best_qsqe": 0.9467935209386557,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 98.97476196289062,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0002",
+   "header": "UWQ88577.1",
+   "n_orig_sequences": 1,
+   "project_id": "16f26c",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7125324386376781,
+   "best_qsqe": 0.9506081837595463,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 98.5804443359375,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0003",
+   "header": "UTV95146.1",
+   "n_orig_sequences": 1,
+   "project_id": "ebe80f",
+   "n_models": 5,
+   "best_model_id": "04",
+   "best_gmqe": 0.7184458964042773,
+   "best_qsqe": null,
+   "best_template": "8gjm.1.A",
+   "best_template_identity": 99.21260070800781,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6acd.1.C",
+    "7cn8.1.C",
+    "7krs.1.C",
+    "8gjm.1.A",
+    "8z6s.1.G"
+   ]
+  },
+  {
+   "uid": "u0004",
+   "header": "UZT65191.1",
+   "n_orig_sequences": 1,
+   "project_id": "fba4a5",
+   "n_models": 5,
+   "best_model_id": "04",
+   "best_gmqe": 0.7188499365466332,
+   "best_qsqe": null,
+   "best_template": "8gjm.1.A",
+   "best_template_identity": 99.37007904052734,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "7cn8.1.C",
+    "7krs.1.C",
+    "8gjm.1.A",
+    "8z6s.1.G",
+    "8zy3.1.C"
+   ]
+  },
+  {
+   "uid": "u0005",
+   "header": "UVA49184.1",
+   "n_orig_sequences": 1,
+   "project_id": "6f3815",
+   "n_models": 5,
+   "best_model_id": "04",
+   "best_gmqe": 0.7185700078690436,
+   "best_qsqe": null,
+   "best_template": "8gjm.1.A",
+   "best_template_identity": 98.89763641357422,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "7cn8.1.C",
+    "7krs.1.C",
+    "8gjm.1.A",
+    "8z6s.1.G",
+    "8zy3.1.C"
+   ]
+  },
+  {
+   "uid": "u0006",
+   "header": "USJ14995.1",
+   "n_orig_sequences": 1,
+   "project_id": "ef3a52",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7087032207521351,
+   "best_qsqe": 0.9189296303561602,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.13385772705078,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0007",
+   "header": "USH50608.1",
+   "n_orig_sequences": 1,
+   "project_id": "f5fb16",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.709359269445891,
+   "best_qsqe": 0.9195328335295131,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 98.89763641357422,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0008",
+   "header": "UUS51649.1",
+   "n_orig_sequences": 1,
+   "project_id": "e84032",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7135549445706443,
+   "best_qsqe": 0.9443974545207293,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.44707489013672,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0009",
+   "header": "UTS51010.1",
+   "n_orig_sequences": 1,
+   "project_id": "f5bce3",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7111998411535249,
+   "best_qsqe": 0.9430281177344605,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 98.81329345703125,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0010",
+   "header": "UUT04895.1",
+   "n_orig_sequences": 1,
+   "project_id": "046bf0",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7136312880903906,
+   "best_qsqe": 0.9362524869293899,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.44795227050781,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0011",
+   "header": "UTX56155.1",
+   "n_orig_sequences": 1,
+   "project_id": "1c97f5",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.710771902221426,
+   "best_qsqe": 0.9436058037821472,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.44795227050781,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0012",
+   "header": "WKJ85382.1",
+   "n_orig_sequences": 1,
+   "project_id": "2e9d1d",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7150019979831482,
+   "best_qsqe": 0.9440555814990176,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.52644348144531,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0013",
+   "header": "URO68692.1",
+   "n_orig_sequences": 2,
+   "project_id": "1ad1da",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7139507683990147,
+   "best_qsqe": 0.9650426770336503,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.44795227050781,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B",
+    "8wq0.1.C"
+   ]
+  },
+  {
+   "uid": "u0014",
+   "header": "UXU97258.1",
+   "n_orig_sequences": 1,
+   "project_id": "72b7c0",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7119960954358576,
+   "best_qsqe": 0.9461275765322078,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.44751739501953,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0015",
+   "header": "UUG11866.1",
+   "n_orig_sequences": 1,
+   "project_id": "21fa73",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7108155014295707,
+   "best_qsqe": 0.9553685515030871,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.44795227050781,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0016",
+   "header": "UYN44749.1",
+   "n_orig_sequences": 2,
+   "project_id": "de0296",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7106831393378463,
+   "best_qsqe": 0.954747329720966,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.44795227050781,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B",
+    "8wq0.1.C"
+   ]
+  },
+  {
+   "uid": "u0017",
+   "header": "UUG41203.1",
+   "n_orig_sequences": 1,
+   "project_id": "516020",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7096048843788754,
+   "best_qsqe": 0.9150668407237462,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.36858367919922,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0018",
+   "header": "UVH03756.1",
+   "n_orig_sequences": 1,
+   "project_id": "0ee465",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7160487043045483,
+   "best_qsqe": 0.9351042195923628,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.76322174072266,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B",
+    "8wq0.1.C"
+   ]
+  },
+  {
+   "uid": "u0019",
+   "header": "URO26109.1",
+   "n_orig_sequences": 3,
+   "project_id": "474811",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7119935987727974,
+   "best_qsqe": 0.943595900249825,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.44795227050781,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0020",
+   "header": "UZM40132.1",
+   "n_orig_sequences": 41,
+   "project_id": "69b410",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7106182899964651,
+   "best_qsqe": 0.9553521739196592,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.52681732177734,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0021",
+   "header": "UUS97384.1",
+   "n_orig_sequences": 22,
+   "project_id": "7753ab",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7103640074554015,
+   "best_qsqe": 0.9569606011459183,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.44795227050781,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0022",
+   "header": "UTX57901.1",
+   "n_orig_sequences": 1,
+   "project_id": "0a2c08",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7147582619241144,
+   "best_qsqe": 0.9539957583461299,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.28853607177734,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0023",
+   "header": "UXM48598.1",
+   "n_orig_sequences": 1,
+   "project_id": "591e4d",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7139347690071245,
+   "best_qsqe": 0.9389707394773664,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.13043212890625,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0024",
+   "header": "WBC33467.1",
+   "n_orig_sequences": 1,
+   "project_id": "aec334",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7128063403968466,
+   "best_qsqe": 0.9571070522739714,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.28965759277344,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0025",
+   "header": "UUG64979.1",
+   "n_orig_sequences": 1,
+   "project_id": "45e3f3",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7123076899893904,
+   "best_qsqe": 0.9463886601603996,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.13180541992188,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0026",
+   "header": "UYH11637.1",
+   "n_orig_sequences": 1,
+   "project_id": "ec00fb",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7132604897187181,
+   "best_qsqe": 0.9387345869590104,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.05138397216797,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0027",
+   "header": "UXY08260.1",
+   "n_orig_sequences": 1,
+   "project_id": "15a649",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.713267729051204,
+   "best_qsqe": 0.9425375716883414,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.44664001464844,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0028",
+   "header": "UXY08224.1",
+   "n_orig_sequences": 1,
+   "project_id": "2de518",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7153693958201893,
+   "best_qsqe": 0.9450435845345467,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.44707489013672,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0029",
+   "header": "UTS03921.1",
+   "n_orig_sequences": 1,
+   "project_id": "f842d9",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7119837012995849,
+   "best_qsqe": 0.9244316543284269,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.6053695678711,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "22ov.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0030",
+   "header": "UXM10089.1",
+   "n_orig_sequences": 1,
+   "project_id": "67637c",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7132181906992994,
+   "best_qsqe": 0.9445973053454394,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.36908721923828,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0031",
+   "header": "UTZ47146.1",
+   "n_orig_sequences": 1,
+   "project_id": "6056e7",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7110297437390691,
+   "best_qsqe": 0.9437336519132123,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.36908721923828,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0032",
+   "header": "USF35758.1",
+   "n_orig_sequences": 1,
+   "project_id": "487c78",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7114672491368903,
+   "best_qsqe": 0.9445924740333239,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.36908721923828,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0033",
+   "header": "UVB58420.1",
+   "n_orig_sequences": 1,
+   "project_id": "979e7a",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7127911201222523,
+   "best_qsqe": 0.9441189120948902,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.36908721923828,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0034",
+   "header": "WNH93088.1",
+   "n_orig_sequences": 1,
+   "project_id": "999c41",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.713479217119238,
+   "best_qsqe": 0.9451328153298449,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.29022216796875,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0035",
+   "header": "WFI67514.1",
+   "n_orig_sequences": 1,
+   "project_id": "1254b7",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7124130715221624,
+   "best_qsqe": 0.9465083476387869,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.44751739501953,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0036",
+   "header": "UUR63590.1",
+   "n_orig_sequences": 3,
+   "project_id": "b738f5",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7143911825556298,
+   "best_qsqe": 0.957631123115353,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.36908721923828,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0037",
+   "header": "UVH03554.1",
+   "n_orig_sequences": 1,
+   "project_id": "b51e40",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7140761385020786,
+   "best_qsqe": 0.9275010754006309,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.76284790039062,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0038",
+   "header": "UZM61617.1",
+   "n_orig_sequences": 1,
+   "project_id": "5c3b7a",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7127303829186498,
+   "best_qsqe": 0.9443375974026568,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.36908721923828,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0039",
+   "header": "UWJ82662.1",
+   "n_orig_sequences": 1,
+   "project_id": "d1e7d6",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7114651470101337,
+   "best_qsqe": 0.9428089983218747,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.36908721923828,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0040",
+   "header": "USU68411.1",
+   "n_orig_sequences": 1,
+   "project_id": "7ee037",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.709508771068012,
+   "best_qsqe": 0.9144327778189582,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.28965759277344,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0041",
+   "header": "WED31829.1",
+   "n_orig_sequences": 1,
+   "project_id": "55f5a1",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.710317214049133,
+   "best_qsqe": 0.953648117428049,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.36908721923828,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0042",
+   "header": "URA26260.1",
+   "n_orig_sequences": 10,
+   "project_id": "a83e05",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7131559318341119,
+   "best_qsqe": 0.9428423372294642,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.7634048461914,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0043",
+   "header": "WJF13317.1",
+   "n_orig_sequences": 1,
+   "project_id": "e78109",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7074781571470871,
+   "best_qsqe": 0.9289376497793883,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.76359558105469,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "22ov.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0044",
+   "header": "USV28446.1",
+   "n_orig_sequences": 1,
+   "project_id": "2f9698",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7085472116243252,
+   "best_qsqe": 0.9455102194788368,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0045",
+   "header": "WEP65848.1",
+   "n_orig_sequences": 1,
+   "project_id": "41e4ed",
+   "n_models": 3,
+   "best_model_id": "02",
+   "best_gmqe": 0.7151372955491928,
+   "best_qsqe": 0.9045526183976916,
+   "best_template": "8d56.1.C",
+   "best_template_identity": 99.92082214355469,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0046",
+   "header": "WVQ42669.1",
+   "n_orig_sequences": 1,
+   "project_id": "e07a98",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7092130321147024,
+   "best_qsqe": 0.9258564114763014,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.52568817138672,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0047",
+   "header": "UPR94936.1",
+   "n_orig_sequences": 1,
+   "project_id": "388f81",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7123481003755618,
+   "best_qsqe": 0.9478156254804709,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92101287841797,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0048",
+   "header": "URS68518.1",
+   "n_orig_sequences": 1,
+   "project_id": "45f9a8",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7183238488887758,
+   "best_qsqe": 0.923769265753687,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92101287841797,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "22ov.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0049",
+   "header": "UQG44197.1",
+   "n_orig_sequences": 3,
+   "project_id": "1b04b9",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7099255571459584,
+   "best_qsqe": 0.9219521242833307,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.52568817138672,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0050",
+   "header": "UNU67751.1",
+   "n_orig_sequences": 1,
+   "project_id": "a510bd",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.704725456051021,
+   "best_qsqe": 0.9224606195752557,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92101287841797,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0051",
+   "header": "UUA55284.1",
+   "n_orig_sequences": 1,
+   "project_id": "78dbd8",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7084181888714873,
+   "best_qsqe": 0.9213496727826623,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.6850357055664,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0052",
+   "header": "USG93517.1",
+   "n_orig_sequences": 1,
+   "project_id": "a39630",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.717161474550538,
+   "best_qsqe": 0.9438263251257876,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.13043212890625,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0053",
+   "header": "WCL04860.1",
+   "n_orig_sequences": 1,
+   "project_id": "fc0d92",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7135666866991658,
+   "best_qsqe": 0.9465651571626504,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.7634048461914,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0054",
+   "header": "UQT22892.1",
+   "n_orig_sequences": 1,
+   "project_id": "26ec11",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7091537426569592,
+   "best_qsqe": 0.9198969332589545,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.6847915649414,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "22ov.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0055",
+   "header": "URF77220.1",
+   "n_orig_sequences": 1,
+   "project_id": "458114",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7089986463034536,
+   "best_qsqe": 0.9183942645066495,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.6847915649414,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "22ov.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0056",
+   "header": "UNK07207.1",
+   "n_orig_sequences": 1,
+   "project_id": "0ebc1c",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7140069472648725,
+   "best_qsqe": 0.9453334877142653,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.6063003540039,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0057",
+   "header": "UNV47060.1",
+   "n_orig_sequences": 1,
+   "project_id": "617c8c",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7033127363360455,
+   "best_qsqe": 0.9236514237657601,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.28910064697266,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "22ov.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0058",
+   "header": "USH55599.1",
+   "n_orig_sequences": 1,
+   "project_id": "d52264",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7111805236072584,
+   "best_qsqe": 0.9223677813716215,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.52755737304688,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0059",
+   "header": "URD13340.1",
+   "n_orig_sequences": 1,
+   "project_id": "9c2b09",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7118392235510378,
+   "best_qsqe": 0.9230212971462347,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.6063003540039,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0060",
+   "header": "URN57491.1",
+   "n_orig_sequences": 1,
+   "project_id": "8c50e6",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7091913099733573,
+   "best_qsqe": 0.9329853395935744,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.6063003540039,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0061",
+   "header": "UQJ89174.1",
+   "n_orig_sequences": 1,
+   "project_id": "33ac40",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7150278385274267,
+   "best_qsqe": 0.9234591927367369,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.76359558105469,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0062",
+   "header": "UPN51341.1",
+   "n_orig_sequences": 1,
+   "project_id": "3052b7",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7098566165872451,
+   "best_qsqe": 0.9463500824423213,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 100.0,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0063",
+   "header": "UYE06292.1",
+   "n_orig_sequences": 1,
+   "project_id": "1c495a",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7061950432889814,
+   "best_qsqe": 0.9307846480160363,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.52718353271484,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "22ov.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0064",
+   "header": "URZ78741.1",
+   "n_orig_sequences": 1,
+   "project_id": "4f9990",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7060670750832807,
+   "best_qsqe": 0.9308291275618604,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.60598754882812,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "22ov.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0065",
+   "header": "XNG61809.1",
+   "n_orig_sequences": 1,
+   "project_id": "09aeac",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7085987027284857,
+   "best_qsqe": 0.9287915436260398,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84214782714844,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0066",
+   "header": "URD11393.1",
+   "n_orig_sequences": 1,
+   "project_id": "7c2b70",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.71046092259934,
+   "best_qsqe": 0.9243562056265663,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.6850357055664,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0067",
+   "header": "UUI80216.1",
+   "n_orig_sequences": 1,
+   "project_id": "b5f74e",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7086270412032862,
+   "best_qsqe": 0.9470085336422215,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0068",
+   "header": "WKJ19839.1",
+   "n_orig_sequences": 1,
+   "project_id": "f4502d",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7075895449488573,
+   "best_qsqe": 0.92364069978895,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0069",
+   "header": "UPH32376.1",
+   "n_orig_sequences": 1,
+   "project_id": "4ff7e8",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.70763424963287,
+   "best_qsqe": 0.9234624645565043,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0070",
+   "header": "UOH87215.1",
+   "n_orig_sequences": 1,
+   "project_id": "28e90a",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7107712649260655,
+   "best_qsqe": 0.9455542786492145,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0071",
+   "header": "UNT46487.1",
+   "n_orig_sequences": 4,
+   "project_id": "c2c373",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7112040960919191,
+   "best_qsqe": 0.9574343375075532,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0072",
+   "header": "ULV13451.1",
+   "n_orig_sequences": 1,
+   "project_id": "690cb2",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7114193645695722,
+   "best_qsqe": 0.9408620400965634,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.76377868652344,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0073",
+   "header": "ULM10480.1",
+   "n_orig_sequences": 1,
+   "project_id": "56954b",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.71239483314006,
+   "best_qsqe": 0.9439984138977074,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.76359558105469,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0074",
+   "header": "WEP72148.1",
+   "n_orig_sequences": 1,
+   "project_id": "5f0cf4",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7138234247465166,
+   "best_qsqe": 0.9515997591293058,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92113494873047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0075",
+   "header": "WEP75139.1",
+   "n_orig_sequences": 1,
+   "project_id": "df31e8",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7112359823220986,
+   "best_qsqe": 0.9375563448429031,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.44795227050781,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0076",
+   "header": "XQN94520.1",
+   "n_orig_sequences": 1,
+   "project_id": "23453e",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7124131122707738,
+   "best_qsqe": 0.9150624335650283,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92113494873047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "22ov.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0077",
+   "header": "XQO29398.1",
+   "n_orig_sequences": 1,
+   "project_id": "265465",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7146635861548793,
+   "best_qsqe": 0.9321215055842723,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92107391357422,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0078",
+   "header": "UTH81547.1",
+   "n_orig_sequences": 1,
+   "project_id": "7047b3",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7111595235918943,
+   "best_qsqe": 0.9204525607343249,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.52681732177734,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "22ov.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0079",
+   "header": "UVW59598.1",
+   "n_orig_sequences": 1,
+   "project_id": "02294a",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7086805513347395,
+   "best_qsqe": 0.9217039522100948,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.76377868652344,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0080",
+   "header": "UPG44193.1",
+   "n_orig_sequences": 1,
+   "project_id": "d32509",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7136698649965645,
+   "best_qsqe": 0.9247961496893663,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84214782714844,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0081",
+   "header": "UQI56290.1",
+   "n_orig_sequences": 1,
+   "project_id": "0734f3",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.711221506668021,
+   "best_qsqe": 0.9239485363229812,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.7634048461914,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0082",
+   "header": "UPM99974.1",
+   "n_orig_sequences": 1,
+   "project_id": "ec7e55",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7125195381394676,
+   "best_qsqe": 0.9236201879586728,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.60505676269531,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0083",
+   "header": "USA98663.1",
+   "n_orig_sequences": 1,
+   "project_id": "ec96e8",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7081920985971537,
+   "best_qsqe": 0.9205586926462602,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.6847915649414,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0084",
+   "header": "UPS25857.1",
+   "n_orig_sequences": 1,
+   "project_id": "dcb191",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7145954431887475,
+   "best_qsqe": 0.9222429953995684,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.68453979492188,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0085",
+   "header": "WGP65601.1",
+   "n_orig_sequences": 1,
+   "project_id": "94230e",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7147211790829534,
+   "best_qsqe": 0.9470322115912287,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.76359558105469,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0086",
+   "header": "WGR53336.1",
+   "n_orig_sequences": 2,
+   "project_id": "72e8b5",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7176068823276557,
+   "best_qsqe": 0.9435530014755898,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.52681732177734,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0087",
+   "header": "WGP50081.1",
+   "n_orig_sequences": 2,
+   "project_id": "a36344",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7111793519830306,
+   "best_qsqe": 0.9231954317214704,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92119598388672,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0088",
+   "header": "WGP52667.1",
+   "n_orig_sequences": 1,
+   "project_id": "33f092",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7137332870562122,
+   "best_qsqe": 0.9566933142807558,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.44751739501953,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0089",
+   "header": "WGR39840.1",
+   "n_orig_sequences": 1,
+   "project_id": "1eae71",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7127433707360497,
+   "best_qsqe": 0.940776314902458,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.7634048461914,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0090",
+   "header": "WGQ39005.1",
+   "n_orig_sequences": 1,
+   "project_id": "4935ce",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7150969357083267,
+   "best_qsqe": 0.9241473756753261,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84226989746094,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0091",
+   "header": "UTT98417.1",
+   "n_orig_sequences": 6,
+   "project_id": "1f3221",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7098362672730224,
+   "best_qsqe": 0.9235924507732741,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0092",
+   "header": "WKR01219.1",
+   "n_orig_sequences": 1,
+   "project_id": "2ab8d5",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7100809683683217,
+   "best_qsqe": 0.9232541787506964,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0093",
+   "header": "UOL15931.1",
+   "n_orig_sequences": 1,
+   "project_id": "a8f2e9",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.709925171493306,
+   "best_qsqe": 0.9239877724020827,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0094",
+   "header": "USL93425.1",
+   "n_orig_sequences": 1,
+   "project_id": "178595",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7112805179299385,
+   "best_qsqe": 0.922070881880431,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0095",
+   "header": "UQE42885.1",
+   "n_orig_sequences": 1,
+   "project_id": "081563",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7097107872490976,
+   "best_qsqe": 0.9218528483851126,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0096",
+   "header": "UQK31209.1",
+   "n_orig_sequences": 1,
+   "project_id": "74721c",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7107483416840621,
+   "best_qsqe": 0.9236505018411972,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0097",
+   "header": "UTI95421.1",
+   "n_orig_sequences": 1,
+   "project_id": "7906ad",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7095726385065698,
+   "best_qsqe": 0.9227583401284282,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0098",
+   "header": "USL63091.1",
+   "n_orig_sequences": 1,
+   "project_id": "3bf7dd",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7089469183490029,
+   "best_qsqe": 0.9273216341572835,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.60598754882812,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0099",
+   "header": "UVC25092.1",
+   "n_orig_sequences": 1,
+   "project_id": "ea0362",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7143166602246296,
+   "best_qsqe": 0.9213566174225886,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 100.0,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0100",
+   "header": "URO28724.1",
+   "n_orig_sequences": 1,
+   "project_id": "ad26a9",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7097017421385259,
+   "best_qsqe": 0.9229992572739177,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0101",
+   "header": "UYE30753.1",
+   "n_orig_sequences": 1,
+   "project_id": "99da95",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7106886366473418,
+   "best_qsqe": 0.9435328364382983,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.60598754882812,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0102",
+   "header": "URG33212.1",
+   "n_orig_sequences": 1,
+   "project_id": "c2dc96",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7114008864498031,
+   "best_qsqe": 0.9387484971081127,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.52681732177734,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0103",
+   "header": "UTM81461.1",
+   "n_orig_sequences": 1,
+   "project_id": "ac332b",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7117810094583844,
+   "best_qsqe": 0.9450241616921778,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0104",
+   "header": "URT54005.1",
+   "n_orig_sequences": 1,
+   "project_id": "6ee67e",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7105378810902521,
+   "best_qsqe": 0.9223065854709723,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0105",
+   "header": "WGT98536.1",
+   "n_orig_sequences": 1,
+   "project_id": "c84d42",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7079504789684109,
+   "best_qsqe": 0.9230645747688698,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0106",
+   "header": "URX96369.1",
+   "n_orig_sequences": 1,
+   "project_id": "2ae2c6",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7119201851678166,
+   "best_qsqe": 0.940790459593028,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84239196777344,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0107",
+   "header": "WCO35823.1",
+   "n_orig_sequences": 1,
+   "project_id": "b3aafd",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7111871374106294,
+   "best_qsqe": 0.9405215211042789,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0108",
+   "header": "USG84400.1",
+   "n_orig_sequences": 1,
+   "project_id": "a4a649",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7109980288658629,
+   "best_qsqe": 0.9413914506182549,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0109",
+   "header": "URZ24634.1",
+   "n_orig_sequences": 1,
+   "project_id": "0d2524",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7108614961541636,
+   "best_qsqe": 0.941760201137331,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0110",
+   "header": "USI11742.1",
+   "n_orig_sequences": 587,
+   "project_id": "cff13f",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7107430631945988,
+   "best_qsqe": 0.9327278226500474,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 100.0,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0111",
+   "header": "WEP79436.1",
+   "n_orig_sequences": 1,
+   "project_id": "137828",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7118162164008137,
+   "best_qsqe": 0.9590615677031967,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 100.0,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0112",
+   "header": "USW90737.1",
+   "n_orig_sequences": 1,
+   "project_id": "494cf6",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7091741491604763,
+   "best_qsqe": 0.932636387759178,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 100.0,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0113",
+   "header": "UYE25168.1",
+   "n_orig_sequences": 17,
+   "project_id": "006b43",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7100508023217799,
+   "best_qsqe": 0.9547632422347981,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.6847915649414,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0114",
+   "header": "UYD87997.1",
+   "n_orig_sequences": 1,
+   "project_id": "88a4ae",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7074899059051043,
+   "best_qsqe": 0.921896206093412,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0115",
+   "header": "URO28998.1",
+   "n_orig_sequences": 2,
+   "project_id": "c40a1e",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7168862044082177,
+   "best_qsqe": 0.9574915136550729,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0116",
+   "header": "UOO03960.1",
+   "n_orig_sequences": 1,
+   "project_id": "b72d45",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7133788829497781,
+   "best_qsqe": 0.9209736754718737,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0117",
+   "header": "UOZ36567.1",
+   "n_orig_sequences": 1,
+   "project_id": "be69d9",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7112099713722494,
+   "best_qsqe": 0.9409729929376308,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0118",
+   "header": "USG40981.1",
+   "n_orig_sequences": 1,
+   "project_id": "b0ddf1",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7110915413167685,
+   "best_qsqe": 0.9226414898789058,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 100.0,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "22ov.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0119",
+   "header": "USG40669.1",
+   "n_orig_sequences": 1,
+   "project_id": "ad9a43",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7103029317502076,
+   "best_qsqe": 0.9231612200369709,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0120",
+   "header": "UPQ60504.1",
+   "n_orig_sequences": 6,
+   "project_id": "9a2a2d",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7108482971081098,
+   "best_qsqe": 0.9332200690751894,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0121",
+   "header": "USU60463.1",
+   "n_orig_sequences": 2,
+   "project_id": "2733b5",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7102981711497892,
+   "best_qsqe": 0.9253729813790371,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B",
+    "8wq0.1.C"
+   ]
+  },
+  {
+   "uid": "u0122",
+   "header": "WAA90929.1",
+   "n_orig_sequences": 20,
+   "project_id": "670d8d",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.71067218904651,
+   "best_qsqe": 0.9336879571069582,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0123",
+   "header": "USH13386.1",
+   "n_orig_sequences": 10,
+   "project_id": "ba0b28",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7139304658585345,
+   "best_qsqe": 0.9234287438036185,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84239196777344,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0124",
+   "header": "USN65530.1",
+   "n_orig_sequences": 8,
+   "project_id": "8eb031",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7111644861211031,
+   "best_qsqe": 0.951283269807287,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0125",
+   "header": "URO57819.1",
+   "n_orig_sequences": 4,
+   "project_id": "f26eab",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7112651174008182,
+   "best_qsqe": 0.9573126894627214,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0126",
+   "header": "UQH67180.1",
+   "n_orig_sequences": 7,
+   "project_id": "87a724",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7137159738091869,
+   "best_qsqe": 0.9220219437177658,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0127",
+   "header": "UPY01699.1",
+   "n_orig_sequences": 7,
+   "project_id": "a6add3",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7110370024528596,
+   "best_qsqe": 0.9209011977842415,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84239196777344,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0128",
+   "header": "USB22024.1",
+   "n_orig_sequences": 1,
+   "project_id": "d0a970",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7112823264134661,
+   "best_qsqe": 0.9461694567937559,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0129",
+   "header": "USM87037.1",
+   "n_orig_sequences": 1,
+   "project_id": "d1f034",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7105377801739213,
+   "best_qsqe": 0.9247704417309702,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0130",
+   "header": "URO13290.1",
+   "n_orig_sequences": 1,
+   "project_id": "6872f7",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7088876684269022,
+   "best_qsqe": 0.9459165604837382,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0131",
+   "header": "URP82453.1",
+   "n_orig_sequences": 2,
+   "project_id": "a1d8fc",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7166860056558952,
+   "best_qsqe": 0.9573581503078622,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0132",
+   "header": "BDP28708.1",
+   "n_orig_sequences": 1,
+   "project_id": "ca8054",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7108338050442328,
+   "best_qsqe": 0.9573628319731543,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0133",
+   "header": "UQG07276.1",
+   "n_orig_sequences": 1,
+   "project_id": "3a9fc3",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7109652912845988,
+   "best_qsqe": 0.9458122224344035,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0134",
+   "header": "USO94000.1",
+   "n_orig_sequences": 1,
+   "project_id": "24f13c",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.708132471825198,
+   "best_qsqe": 0.93317643483871,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0135",
+   "header": "URC53209.1",
+   "n_orig_sequences": 1,
+   "project_id": "d2a226",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7100157263578909,
+   "best_qsqe": 0.9232917705461027,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0136",
+   "header": "UPV53991.1",
+   "n_orig_sequences": 1,
+   "project_id": "c18949",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7101843839113788,
+   "best_qsqe": 0.9227246974198658,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0137",
+   "header": "UPX26433.1",
+   "n_orig_sequences": 1,
+   "project_id": "9b4ad7",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7110487808083926,
+   "best_qsqe": 0.9325465590113341,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0138",
+   "header": "URN53750.1",
+   "n_orig_sequences": 2,
+   "project_id": "529aeb",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7111397732829434,
+   "best_qsqe": 0.932484768901153,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0139",
+   "header": "UTD74183.1",
+   "n_orig_sequences": 1,
+   "project_id": "abaeca",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7100936546333521,
+   "best_qsqe": 0.9226181411766016,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0140",
+   "header": "UPM87760.1",
+   "n_orig_sequences": 1,
+   "project_id": "81ffdb",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7100186385860153,
+   "best_qsqe": 0.9222073593646022,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0141",
+   "header": "UPU55092.1",
+   "n_orig_sequences": 1,
+   "project_id": "29daf5",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7107956930725948,
+   "best_qsqe": 0.932155192982094,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0142",
+   "header": "XVY17802.1",
+   "n_orig_sequences": 4,
+   "project_id": "7d7e92",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7107509156878863,
+   "best_qsqe": 0.9328567392393802,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0143",
+   "header": "UQD67808.1",
+   "n_orig_sequences": 1,
+   "project_id": "c8f8f7",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.71309826071008,
+   "best_qsqe": 0.9228259294334303,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0144",
+   "header": "USF45350.1",
+   "n_orig_sequences": 2,
+   "project_id": "5fde19",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7073023741826726,
+   "best_qsqe": 0.9217101837495695,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0145",
+   "header": "UQD67867.1",
+   "n_orig_sequences": 2,
+   "project_id": "4b117e",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7126662244554193,
+   "best_qsqe": 0.9218981849744913,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0146",
+   "header": "UOZ40316.1",
+   "n_orig_sequences": 1,
+   "project_id": "4c4cea",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7129419552280646,
+   "best_qsqe": 0.9226169381629997,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0147",
+   "header": "USM30009.1",
+   "n_orig_sequences": 1,
+   "project_id": "c10b83",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7102054168772748,
+   "best_qsqe": 0.92381793542657,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0148",
+   "header": "UPE24064.1",
+   "n_orig_sequences": 1,
+   "project_id": "4bacb7",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7114933179454896,
+   "best_qsqe": 0.9572398933877572,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0149",
+   "header": "UOZ75945.1",
+   "n_orig_sequences": 1,
+   "project_id": "5963b7",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.710752929410093,
+   "best_qsqe": 0.9219800612604253,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0150",
+   "header": "UPQ36095.1",
+   "n_orig_sequences": 1,
+   "project_id": "e2e42f",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7097707167364024,
+   "best_qsqe": 0.9221277588294458,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0151",
+   "header": "UYE83355.1",
+   "n_orig_sequences": 1,
+   "project_id": "f6ee2f",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7102424809268204,
+   "best_qsqe": 0.9220489053365756,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0152",
+   "header": "UPU86785.1",
+   "n_orig_sequences": 1,
+   "project_id": "3781ff",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7075992108431977,
+   "best_qsqe": 0.9455776071241039,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0153",
+   "header": "USG79912.1",
+   "n_orig_sequences": 1,
+   "project_id": "67cb9d",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7132280341942897,
+   "best_qsqe": 0.9229382986488378,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0154",
+   "header": "WWE38853.1",
+   "n_orig_sequences": 1,
+   "project_id": "ac942b",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7105600688125022,
+   "best_qsqe": 0.922951096337964,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0155",
+   "header": "UNZ81090.1",
+   "n_orig_sequences": 1,
+   "project_id": "408064",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7110577325757528,
+   "best_qsqe": 0.9325558554417531,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0156",
+   "header": "UQR54433.1",
+   "n_orig_sequences": 1,
+   "project_id": "3dda76",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7104065982125334,
+   "best_qsqe": 0.9272807204474637,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0157",
+   "header": "URC47580.1",
+   "n_orig_sequences": 2,
+   "project_id": "552ad0",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7129687341992997,
+   "best_qsqe": 0.922934471807069,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0158",
+   "header": "YBU47397.1",
+   "n_orig_sequences": 4,
+   "project_id": "32e0fc",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7102246600183019,
+   "best_qsqe": 0.9223395152611317,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0159",
+   "header": "WAS49029.1",
+   "n_orig_sequences": 1,
+   "project_id": "f472a0",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7101431206056559,
+   "best_qsqe": 0.9244631706208383,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0160",
+   "header": "UNO95520.1",
+   "n_orig_sequences": 3,
+   "project_id": "be2c0c",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7103322021427256,
+   "best_qsqe": 0.9220631171428914,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0161",
+   "header": "UQJ86943.1",
+   "n_orig_sequences": 1,
+   "project_id": "2a4d6c",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7102007884565352,
+   "best_qsqe": 0.9220011598023622,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0162",
+   "header": "URW22669.1",
+   "n_orig_sequences": 1,
+   "project_id": "50bc03",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7094971146304714,
+   "best_qsqe": 0.9224972987206072,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84239196777344,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0163",
+   "header": "UZB73124.1",
+   "n_orig_sequences": 2,
+   "project_id": "b2f4b2",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7106524814240447,
+   "best_qsqe": 0.922124080167139,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0164",
+   "header": "WGP54708.1",
+   "n_orig_sequences": 1,
+   "project_id": "a95867",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7112827944400297,
+   "best_qsqe": 0.9229685301203933,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 100.0,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0165",
+   "header": "UPN48327.1",
+   "n_orig_sequences": 1,
+   "project_id": "618021",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7098303247620625,
+   "best_qsqe": 0.922985675089912,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0166",
+   "header": "USE86999.1",
+   "n_orig_sequences": 1,
+   "project_id": "162f94",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7097181930673314,
+   "best_qsqe": 0.922544791341804,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0167",
+   "header": "UYD73975.1",
+   "n_orig_sequences": 1,
+   "project_id": "e95528",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.713757932853441,
+   "best_qsqe": 0.9211498099013727,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0168",
+   "header": "UQU29879.1",
+   "n_orig_sequences": 1,
+   "project_id": "619b82",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.70922484949342,
+   "best_qsqe": 0.9450322723595886,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0169",
+   "header": "UOQ01080.1",
+   "n_orig_sequences": 1,
+   "project_id": "bda894",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7112176919187798,
+   "best_qsqe": 0.9456849484617763,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0170",
+   "header": "URZ65732.1",
+   "n_orig_sequences": 1,
+   "project_id": "0c9909",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7130579818474364,
+   "best_qsqe": 0.9221599920035121,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0171",
+   "header": "UPU50968.1",
+   "n_orig_sequences": 1,
+   "project_id": "a0ca48",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7098915002292163,
+   "best_qsqe": 0.9219224017616666,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0172",
+   "header": "UYD77943.1",
+   "n_orig_sequences": 1,
+   "project_id": "5c4a77",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7077639251414198,
+   "best_qsqe": 0.9222015643913629,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0173",
+   "header": "USU55344.1",
+   "n_orig_sequences": 1,
+   "project_id": "5d55d0",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7074507336148961,
+   "best_qsqe": 0.9215361603453766,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0174",
+   "header": "URF56255.1",
+   "n_orig_sequences": 8,
+   "project_id": "860b8d",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7105569748780134,
+   "best_qsqe": 0.9225800424748355,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0175",
+   "header": "UVN72472.1",
+   "n_orig_sequences": 1,
+   "project_id": "22e5d4",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7150083824378436,
+   "best_qsqe": 0.9235128575858572,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92119598388672,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0176",
+   "header": "URZ70428.1",
+   "n_orig_sequences": 1,
+   "project_id": "7228a8",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7101608114473181,
+   "best_qsqe": 0.9221341114678631,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0177",
+   "header": "UNZ81365.1",
+   "n_orig_sequences": 1,
+   "project_id": "1a9457",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7103251109321744,
+   "best_qsqe": 0.9220586720517813,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0178",
+   "header": "UQR75481.1",
+   "n_orig_sequences": 2,
+   "project_id": "389e5b",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7108309297339084,
+   "best_qsqe": 0.9332020027531617,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0179",
+   "header": "URS89718.1",
+   "n_orig_sequences": 2,
+   "project_id": "83e4cf",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.710426243054689,
+   "best_qsqe": 0.9331548442473084,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0180",
+   "header": "UQD64873.1",
+   "n_orig_sequences": 1,
+   "project_id": "e9b684",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7078122363661151,
+   "best_qsqe": 0.9220031161904062,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0181",
+   "header": "UPI46569.1",
+   "n_orig_sequences": 3,
+   "project_id": "532e87",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7103612681055738,
+   "best_qsqe": 0.9328550570730599,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0182",
+   "header": "USF85285.1",
+   "n_orig_sequences": 1,
+   "project_id": "a4f172",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7174534178070531,
+   "best_qsqe": 0.922565054375824,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 100.0,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0183",
+   "header": "UPW64739.1",
+   "n_orig_sequences": 1,
+   "project_id": "36972d",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7110372244698371,
+   "best_qsqe": 0.9217099795483107,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0184",
+   "header": "UOZ56661.1",
+   "n_orig_sequences": 1,
+   "project_id": "c4de2f",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7099396756070154,
+   "best_qsqe": 0.9230862224862365,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0185",
+   "header": "URW11401.1",
+   "n_orig_sequences": 2,
+   "project_id": "e6c24d",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7102997041014427,
+   "best_qsqe": 0.9229526761695533,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0186",
+   "header": "UYD75938.1",
+   "n_orig_sequences": 1,
+   "project_id": "ed5796",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7112138682583293,
+   "best_qsqe": 0.9457974990839954,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0187",
+   "header": "URW08020.1",
+   "n_orig_sequences": 1,
+   "project_id": "98a9b4",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7102197615310412,
+   "best_qsqe": 0.9226175075842377,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0188",
+   "header": "UPE15912.1",
+   "n_orig_sequences": 1,
+   "project_id": "f31d3c",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7104331791248736,
+   "best_qsqe": 0.9217828363822355,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0189",
+   "header": "UPO55093.1",
+   "n_orig_sequences": 1,
+   "project_id": "cc7af0",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7104139926031435,
+   "best_qsqe": 0.9226011158484385,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0190",
+   "header": "URC62132.1",
+   "n_orig_sequences": 1,
+   "project_id": "8b4428",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7166736517675759,
+   "best_qsqe": 0.9222053607779003,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0191",
+   "header": "USQ30582.1",
+   "n_orig_sequences": 1,
+   "project_id": "03c7a2",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7081049453401845,
+   "best_qsqe": 0.922486895661976,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0192",
+   "header": "URX08127.1",
+   "n_orig_sequences": 2,
+   "project_id": "a76594",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7098388033823659,
+   "best_qsqe": 0.9220258328297027,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0193",
+   "header": "UPH25438.1",
+   "n_orig_sequences": 1,
+   "project_id": "792801",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7079174947061831,
+   "best_qsqe": 0.9221918886871759,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0194",
+   "header": "UTB02910.1",
+   "n_orig_sequences": 1,
+   "project_id": "d21637",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7100543685822203,
+   "best_qsqe": 0.9241546209073864,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0195",
+   "header": "UOB40012.1",
+   "n_orig_sequences": 1,
+   "project_id": "4fbb72",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7132324662256926,
+   "best_qsqe": 0.9224278983780859,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0196",
+   "header": "UPP13626.1",
+   "n_orig_sequences": 1,
+   "project_id": "e68a69",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.7106259723214431,
+   "best_qsqe": 0.9198106731357231,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84239196777344,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "22ov.1.C",
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0197",
+   "header": "UPT80353.1",
+   "n_orig_sequences": 1,
+   "project_id": "f0ddd7",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7102897299053436,
+   "best_qsqe": 0.92249648045292,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0198",
+   "header": "UTE68317.1",
+   "n_orig_sequences": 1,
+   "project_id": "bd9fc0",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7101527935020273,
+   "best_qsqe": 0.9228200331823039,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 100.0,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0199",
+   "header": "URG87723.1",
+   "n_orig_sequences": 1,
+   "project_id": "a462e4",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7097348468973765,
+   "best_qsqe": 0.922153088347433,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 100.0,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0200",
+   "header": "WJF10610.1",
+   "n_orig_sequences": 1,
+   "project_id": "e46e9c",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7111777298507159,
+   "best_qsqe": 0.9450919767312874,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0201",
+   "header": "UNO90513.1",
+   "n_orig_sequences": 1,
+   "project_id": "b47018",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7111654547555785,
+   "best_qsqe": 0.9450085811888681,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0202",
+   "header": "UYE38582.1",
+   "n_orig_sequences": 1,
+   "project_id": "7b40e9",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7103744304053583,
+   "best_qsqe": 0.9207412473346878,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0203",
+   "header": "UQS50777.1",
+   "n_orig_sequences": 1,
+   "project_id": "0f8c8b",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7130529752000362,
+   "best_qsqe": 0.9531517850757235,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.84239196777344,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0204",
+   "header": "UNY47435.1",
+   "n_orig_sequences": 1,
+   "project_id": "758cd9",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7123812332976942,
+   "best_qsqe": 0.9228000478013586,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.60598754882812,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0205",
+   "header": "USF43039.1",
+   "n_orig_sequences": 1,
+   "project_id": "d635c5",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.7104521410202246,
+   "best_qsqe": 0.9222776729505445,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0206",
+   "header": "YDZ81990.1",
+   "n_orig_sequences": 1,
+   "project_id": "cac983",
+   "n_models": 3,
+   "best_model_id": "01",
+   "best_gmqe": 0.715506627988387,
+   "best_qsqe": 0.9398542373983653,
+   "best_template": "8d55.1.C",
+   "best_template_identity": 97.54747009277344,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "8d55.1.C",
+    "8d56.1.C",
+    "8hxk.1.B"
+   ]
+  },
+  {
+   "uid": "u0207",
+   "header": "UJM81066.1",
+   "n_orig_sequences": 1,
+   "project_id": "fcc000",
+   "n_models": 4,
+   "best_model_id": "01",
+   "best_gmqe": 0.7095640908645455,
+   "best_qsqe": 0.9463783933509599,
+   "best_template": "9d8i.1.C",
+   "best_template_identity": 96.20048522949219,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "7cn8.1.C",
+    "7fg3.1.A",
+    "9d8i.1.C",
+    "9d8j.1.C"
+   ]
+  },
+  {
+   "uid": "u0208",
+   "header": "UNR76139.1",
+   "n_orig_sequences": 1,
+   "project_id": "74e39e",
+   "n_models": 6,
+   "best_model_id": "04",
+   "best_gmqe": 0.7181412920851699,
+   "best_qsqe": null,
+   "best_template": "8gjm.1.A",
+   "best_template_identity": 98.74015808105469,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6acd.1.C",
+    "7krs.1.C",
+    "8ajl.1.C",
+    "8gjm.1.A",
+    "8hxk.1.B",
+    "8z6s.1.G"
+   ]
+  },
+  {
+   "uid": "u0209",
+   "header": "UNR76928.1",
+   "n_orig_sequences": 1,
+   "project_id": "c867a6",
+   "n_models": 6,
+   "best_model_id": "03",
+   "best_gmqe": 0.6956927998809791,
+   "best_qsqe": 0.9159951797965357,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 88.44884490966797,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8upx.1.C",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0210",
+   "header": "UIO04081.1",
+   "n_orig_sequences": 1,
+   "project_id": "f6a88b",
+   "n_models": 5,
+   "best_model_id": "05",
+   "best_gmqe": 0.7047698633947257,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.01993560791016,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8upx.1.C",
+    "8z6s.1.G",
+    "8zy3.1.C"
+   ]
+  },
+  {
+   "uid": "u0211",
+   "header": "UJY88964.1",
+   "n_orig_sequences": 1,
+   "project_id": "4d3bd4",
+   "n_models": 5,
+   "best_model_id": "05",
+   "best_gmqe": 0.704521446344559,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.45364379882812,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8upx.1.C",
+    "8z6s.1.G",
+    "9k75.1.C"
+   ]
+  },
+  {
+   "uid": "u0212",
+   "header": "UOV26178.1",
+   "n_orig_sequences": 1,
+   "project_id": "c8107c",
+   "n_models": 5,
+   "best_model_id": "03",
+   "best_gmqe": 0.7014550922587441,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.46280670166016,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6acd.1.C",
+    "7wec.1.H",
+    "8hxk.1.B",
+    "8wlu.1.C",
+    "8z6s.1.G"
+   ]
+  },
+  {
+   "uid": "u0213",
+   "header": "UNS03038.1",
+   "n_orig_sequences": 1,
+   "project_id": "f7f0a2",
+   "n_models": 4,
+   "best_model_id": "03",
+   "best_gmqe": 0.7050247676391262,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.38016510009766,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6acd.1.C",
+    "8ajl.1.C",
+    "8hxk.1.B",
+    "8z6s.1.G"
+   ]
+  },
+  {
+   "uid": "u0214",
+   "header": "UNS09196.2",
+   "n_orig_sequences": 1,
+   "project_id": "9f25e8",
+   "n_models": 5,
+   "best_model_id": "03",
+   "best_gmqe": 0.7038407132152634,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.2052993774414,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6acd.1.C",
+    "7fg3.1.A",
+    "8ajl.1.C",
+    "8hxk.1.B",
+    "8z6s.1.G"
+   ]
+  },
+  {
+   "uid": "u0215",
+   "header": "UPH80123.1",
+   "n_orig_sequences": 1,
+   "project_id": "764f22",
+   "n_models": 7,
+   "best_model_id": "04",
+   "best_gmqe": 0.7069643787732558,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.H",
+   "best_template_identity": 94.0495834350586,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz",
+    "07.pdb.gz"
+   ],
+   "templates_used": [
+    "22ov.1.C",
+    "6acd.1.C",
+    "7fg3.1.A",
+    "8ajl.1.C",
+    "8hxk.1.B",
+    "8z6s.1.G",
+    "8z6s.1.H"
+   ]
+  },
+  {
+   "uid": "u0216",
+   "header": "UHR99764.1",
+   "n_orig_sequences": 1,
+   "project_id": "cd7aaf",
+   "n_models": 5,
+   "best_model_id": "01",
+   "best_gmqe": 0.7016996806274407,
+   "best_qsqe": 0.9624160035874499,
+   "best_template": "7sbo.1.C",
+   "best_template_identity": 98.89415740966797,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "7sbo.1.C",
+    "8ajl.1.C",
+    "8hxk.1.B",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0217",
+   "header": "UHV93651.1",
+   "n_orig_sequences": 1,
+   "project_id": "b2eff2",
+   "n_models": 5,
+   "best_model_id": "01",
+   "best_gmqe": 0.7071096685062235,
+   "best_qsqe": 0.9542630593734504,
+   "best_template": "7sbo.1.C",
+   "best_template_identity": 98.97557067871094,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "7sbo.1.C",
+    "8ajl.1.C",
+    "8hxk.1.B",
+    "9z1m.1.F"
+   ]
+  },
+  {
+   "uid": "u0218",
+   "header": "UHU31979.1",
+   "n_orig_sequences": 1,
+   "project_id": "d96a13",
+   "n_models": 4,
+   "best_model_id": "04",
+   "best_gmqe": 0.7118911159435567,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.27385711669922,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8z6s.1.G",
+    "8zy3.1.C"
+   ]
+  },
+  {
+   "uid": "u0219",
+   "header": "UIY97990.1",
+   "n_orig_sequences": 1,
+   "project_id": "93515f",
+   "n_models": 4,
+   "best_model_id": "04",
+   "best_gmqe": 0.7107607666530134,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.53642272949219,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8z6s.1.G",
+    "8zy3.1.C"
+   ]
+  },
+  {
+   "uid": "u0220",
+   "header": "UPG58322.1",
+   "n_orig_sequences": 1,
+   "project_id": "779874",
+   "n_models": 6,
+   "best_model_id": "04",
+   "best_gmqe": 0.713227011554898,
+   "best_qsqe": null,
+   "best_template": "8gjm.1.A",
+   "best_template_identity": 98.42890930175781,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6acd.1.C",
+    "7krs.1.C",
+    "8ajl.1.C",
+    "8gjm.1.A",
+    "8hxk.1.B",
+    "8z6s.1.G"
+   ]
+  },
+  {
+   "uid": "u0221",
+   "header": "UPA70570.1",
+   "n_orig_sequences": 1,
+   "project_id": "d4cd16",
+   "n_models": 8,
+   "best_model_id": "07",
+   "best_gmqe": 0.6977693711961366,
+   "best_qsqe": null,
+   "best_template": "7wec.1.H",
+   "best_template_identity": 99.13385772705078,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz",
+    "07.pdb.gz",
+    "08.pdb.gz"
+   ],
+   "templates_used": [
+    "6acd.1.C",
+    "7web.1.G",
+    "7wec.1.H",
+    "8hxk.1.B",
+    "8wlu.1.C",
+    "8wlz.1.C",
+    "8wq0.1.C",
+    "9ue7.1.D"
+   ]
+  },
+  {
+   "uid": "u0222",
+   "header": "UNP42094.1",
+   "n_orig_sequences": 1,
+   "project_id": "bda045",
+   "n_models": 4,
+   "best_model_id": "04",
+   "best_gmqe": 0.7104565824178152,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.69759368896484,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8z6s.1.G",
+    "8zy3.1.C"
+   ]
+  },
+  {
+   "uid": "u0223",
+   "header": "WMP14360.1",
+   "n_orig_sequences": 1,
+   "project_id": "bb9780",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.7040036700357428,
+   "best_qsqe": 0.9199591402644777,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.37623596191406,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0224",
+   "header": "ULC64366.1",
+   "n_orig_sequences": 2,
+   "project_id": "2d7310",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.7050912386015762,
+   "best_qsqe": 0.9144543754925744,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.66556549072266,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0225",
+   "header": "UHO75121.1",
+   "n_orig_sequences": 1,
+   "project_id": "ba8b13",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.7046606096112856,
+   "best_qsqe": 0.917157355010349,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.68595123291016,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0226",
+   "header": "UHB27949.1",
+   "n_orig_sequences": 1,
+   "project_id": "b108ae",
+   "n_models": 6,
+   "best_model_id": "06",
+   "best_gmqe": 0.6962065409302182,
+   "best_qsqe": null,
+   "best_template": "7web.1.G",
+   "best_template_identity": 99.76322174072266,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8upx.1.C",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0227",
+   "header": "UJV52682.1",
+   "n_orig_sequences": 1,
+   "project_id": "f42c52",
+   "n_models": 5,
+   "best_model_id": "05",
+   "best_gmqe": 0.69892802477909,
+   "best_qsqe": null,
+   "best_template": "7web.1.G",
+   "best_template_identity": 99.84202575683594,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0228",
+   "header": "UIR88777.1",
+   "n_orig_sequences": 22,
+   "project_id": "08ee88",
+   "n_models": 6,
+   "best_model_id": "06",
+   "best_gmqe": 0.6964652171739297,
+   "best_qsqe": null,
+   "best_template": "7web.1.G",
+   "best_template_identity": 99.84214782714844,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8upx.1.C",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0229",
+   "header": "WIG91607.1",
+   "n_orig_sequences": 1,
+   "project_id": "c82baf",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.7008929562166611,
+   "best_qsqe": 0.9360410563812805,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.69612121582031,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0230",
+   "header": "UKE94275.1",
+   "n_orig_sequences": 1,
+   "project_id": "77ea54",
+   "n_models": 4,
+   "best_model_id": "04",
+   "best_gmqe": 0.7173269365078706,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.59683990478516,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "7cn8.1.C",
+    "8epp.1.C",
+    "8z6s.1.G",
+    "9k75.1.C"
+   ]
+  },
+  {
+   "uid": "u0231",
+   "header": "UJI92883.1",
+   "n_orig_sequences": 1,
+   "project_id": "daffd5",
+   "n_models": 6,
+   "best_model_id": "05",
+   "best_gmqe": 0.6961769382754278,
+   "best_qsqe": null,
+   "best_template": "7wec.1.H",
+   "best_template_identity": 98.74015808105469,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6acd.1.C",
+    "7web.1.G",
+    "7wec.1.H",
+    "8ajl.1.C",
+    "8hxk.1.B",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0232",
+   "header": "UKO12666.1",
+   "n_orig_sequences": 1,
+   "project_id": "95d0b8",
+   "n_models": 5,
+   "best_model_id": "05",
+   "best_gmqe": 0.705260260052065,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.37085723876953,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8upx.1.C",
+    "8z6s.1.G",
+    "9k75.1.C"
+   ]
+  },
+  {
+   "uid": "u0233",
+   "header": "UQQ83171.1",
+   "n_orig_sequences": 1,
+   "project_id": "5c5fd3",
+   "n_models": 6,
+   "best_model_id": "04",
+   "best_gmqe": 0.705110731687757,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.35215759277344,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7wec.1.H",
+    "8hxk.1.B",
+    "8upx.1.C",
+    "8z6s.1.G",
+    "9k75.1.C"
+   ]
+  },
+  {
+   "uid": "u0234",
+   "header": "UIG19815.1",
+   "n_orig_sequences": 1,
+   "project_id": "a52aa6",
+   "n_models": 4,
+   "best_model_id": "02",
+   "best_gmqe": 0.6972197554168367,
+   "best_qsqe": 0.9441830563581809,
+   "best_template": "7cn8.1.C",
+   "best_template_identity": 89.48675537109375,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0235",
+   "header": "UOQ24892.1",
+   "n_orig_sequences": 1,
+   "project_id": "2feaa7",
+   "n_models": 5,
+   "best_model_id": "05",
+   "best_gmqe": 0.7061332823035202,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.44905090332031,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8upx.1.C",
+    "8z6s.1.G",
+    "8zy3.1.C"
+   ]
+  },
+  {
+   "uid": "u0236",
+   "header": "UQR13067.1",
+   "n_orig_sequences": 1,
+   "project_id": "ad25fe",
+   "n_models": 5,
+   "best_model_id": "05",
+   "best_gmqe": 0.7034576490703254,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.10298919677734,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8upx.1.C",
+    "8z6s.1.G",
+    "8zy3.1.C"
+   ]
+  },
+  {
+   "uid": "u0237",
+   "header": "UQR13533.1",
+   "n_orig_sequences": 1,
+   "project_id": "07fb62",
+   "n_models": 4,
+   "best_model_id": "04",
+   "best_gmqe": 0.7144180993914094,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.52281951904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8z6s.1.G",
+    "8zy3.1.C"
+   ]
+  },
+  {
+   "uid": "u0238",
+   "header": "UNZ49119.1",
+   "n_orig_sequences": 1,
+   "project_id": "95613a",
+   "n_models": 5,
+   "best_model_id": "05",
+   "best_gmqe": 0.7056464655753055,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.37085723876953,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8upx.1.C",
+    "8z6s.1.G",
+    "8zy3.1.C"
+   ]
+  },
+  {
+   "uid": "u0239",
+   "header": "UOV35205.1",
+   "n_orig_sequences": 1,
+   "project_id": "5b0e8e",
+   "n_models": 4,
+   "best_model_id": "04",
+   "best_gmqe": 0.7112502992593432,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.61028289794922,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8z6s.1.G",
+    "8zy3.1.C"
+   ]
+  },
+  {
+   "uid": "u0240",
+   "header": "UPG54568.1",
+   "n_orig_sequences": 1,
+   "project_id": "9cb629",
+   "n_models": 5,
+   "best_model_id": "05",
+   "best_gmqe": 0.7069744071149437,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.44905090332031,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8upx.1.C",
+    "8z6s.1.G",
+    "8zy3.1.C"
+   ]
+  },
+  {
+   "uid": "u0241",
+   "header": "UOL36810.1",
+   "n_orig_sequences": 1,
+   "project_id": "8fb66f",
+   "n_models": 5,
+   "best_model_id": "05",
+   "best_gmqe": 0.7055530950728162,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.5273666381836,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8upx.1.C",
+    "8z6s.1.G",
+    "8zy3.1.C"
+   ]
+  },
+  {
+   "uid": "u0242",
+   "header": "UOV33170.1",
+   "n_orig_sequences": 1,
+   "project_id": "d8f97a",
+   "n_models": 6,
+   "best_model_id": "04",
+   "best_gmqe": 0.7085314432939249,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.44905090332031,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7wec.1.H",
+    "8hxk.1.B",
+    "8upx.1.C",
+    "8z6s.1.G",
+    "9k75.1.C"
+   ]
+  },
+  {
+   "uid": "u0243",
+   "header": "UNS09220.1",
+   "n_orig_sequences": 2,
+   "project_id": "32d915",
+   "n_models": 5,
+   "best_model_id": "05",
+   "best_gmqe": 0.7084606652989809,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.61028289794922,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8upx.1.C",
+    "8z6s.1.G",
+    "8zy3.1.C"
+   ]
+  },
+  {
+   "uid": "u0244",
+   "header": "UHP26000.1",
+   "n_orig_sequences": 2,
+   "project_id": "7600e2",
+   "n_models": 4,
+   "best_model_id": "04",
+   "best_gmqe": 0.7091087224482593,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.86754608154297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8z6s.1.G",
+    "8zy3.1.C"
+   ]
+  },
+  {
+   "uid": "u0245",
+   "header": "UIB37163.1",
+   "n_orig_sequences": 1,
+   "project_id": "b83df9",
+   "n_models": 5,
+   "best_model_id": "05",
+   "best_gmqe": 0.7034515148341628,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.7847671508789,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8upx.1.C",
+    "8z6s.1.G",
+    "8zy3.1.C"
+   ]
+  },
+  {
+   "uid": "u0246",
+   "header": "UKQ20906.1",
+   "n_orig_sequences": 2,
+   "project_id": "39df21",
+   "n_models": 5,
+   "best_model_id": "05",
+   "best_gmqe": 0.7044919726438786,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.61920166015625,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8upx.1.C",
+    "8z6s.1.G",
+    "9k75.1.C"
+   ]
+  },
+  {
+   "uid": "u0247",
+   "header": "UJN49820.1",
+   "n_orig_sequences": 1,
+   "project_id": "bfb177",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.6922912025195835,
+   "best_qsqe": 0.9136816388039762,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.07539367675781,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0248",
+   "header": "UMX31061.1",
+   "n_orig_sequences": 1,
+   "project_id": "dd3757",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.6989207869277083,
+   "best_qsqe": 0.92260909227137,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.4896469116211,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0249",
+   "header": "UMX01185.1",
+   "n_orig_sequences": 1,
+   "project_id": "d9d4f7",
+   "n_models": 3,
+   "best_model_id": "03",
+   "best_gmqe": 0.7092472808598387,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 95.02074432373047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8z6s.1.G"
+   ]
+  },
+  {
+   "uid": "u0250",
+   "header": "UIG22580.1",
+   "n_orig_sequences": 1,
+   "project_id": "8d59f0",
+   "n_models": 4,
+   "best_model_id": "03",
+   "best_gmqe": 0.7036018338464374,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 95.01246643066406,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "8hxk.1.B",
+    "8z6s.1.G",
+    "9k6z.1.C",
+    "9ue7.1.D"
+   ]
+  },
+  {
+   "uid": "u0251",
+   "header": "WSO71569.1",
+   "n_orig_sequences": 8,
+   "project_id": "e222f8",
+   "n_models": 6,
+   "best_model_id": "06",
+   "best_gmqe": 0.6905133857456476,
+   "best_qsqe": null,
+   "best_template": "7web.1.G",
+   "best_template_identity": 99.60505676269531,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8upx.1.C",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0252",
+   "header": "WPY31440.1",
+   "n_orig_sequences": 1,
+   "project_id": "49d3c9",
+   "n_models": 4,
+   "best_model_id": "04",
+   "best_gmqe": 0.7081784290554131,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.85477447509766,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8z6s.1.G",
+    "9k75.1.C"
+   ]
+  },
+  {
+   "uid": "u0253",
+   "header": "UIO09459.1",
+   "n_orig_sequences": 1,
+   "project_id": "a4c420",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.6940579597007915,
+   "best_qsqe": 0.9160763981488403,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.60330200195312,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9ue7.1.D"
+   ]
+  },
+  {
+   "uid": "u0254",
+   "header": "UIX13916.1",
+   "n_orig_sequences": 1,
+   "project_id": "6e4ffe",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.6989223518593858,
+   "best_qsqe": 0.9240733588128264,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.62376403808594,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0255",
+   "header": "WVR52336.1",
+   "n_orig_sequences": 1,
+   "project_id": "dc34a9",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.6994318946892327,
+   "best_qsqe": 0.9191948699097686,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.43801879882812,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0256",
+   "header": "ULA93438.1",
+   "n_orig_sequences": 1,
+   "project_id": "297e47",
+   "n_models": 7,
+   "best_model_id": "06",
+   "best_gmqe": 0.6955254294162417,
+   "best_qsqe": null,
+   "best_template": "7wec.1.H",
+   "best_template_identity": 99.6850357055664,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz",
+    "07.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7web.1.G",
+    "7wec.1.H",
+    "8hxk.1.B",
+    "9cwr.1.C",
+    "9k75.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0257",
+   "header": "UHZ44996.1",
+   "n_orig_sequences": 1,
+   "project_id": "245629",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.6979115084795254,
+   "best_qsqe": 0.9194379806950242,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.76859283447266,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0258",
+   "header": "UKQ46864.1",
+   "n_orig_sequences": 1,
+   "project_id": "c47365",
+   "n_models": 4,
+   "best_model_id": "04",
+   "best_gmqe": 0.7091563474183078,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 95.11184692382812,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8z6s.1.G",
+    "8zy3.1.C"
+   ]
+  },
+  {
+   "uid": "u0259",
+   "header": "UJE85879.1",
+   "n_orig_sequences": 1,
+   "project_id": "a3a5bb",
+   "n_models": 6,
+   "best_model_id": "06",
+   "best_gmqe": 0.6956778887267413,
+   "best_qsqe": null,
+   "best_template": "7web.1.G",
+   "best_template_identity": 99.68404388427734,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8upx.1.C",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0260",
+   "header": "UHM65203.1",
+   "n_orig_sequences": 2,
+   "project_id": "835237",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.7008503642672725,
+   "best_qsqe": 0.922210229966547,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.76859283447266,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0261",
+   "header": "UTO34270.1",
+   "n_orig_sequences": 3,
+   "project_id": "93438b",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.7002205458972742,
+   "best_qsqe": 0.9231419483754745,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.54125213623047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0262",
+   "header": "WJF02480.1",
+   "n_orig_sequences": 1,
+   "project_id": "c1661d",
+   "n_models": 4,
+   "best_model_id": "04",
+   "best_gmqe": 0.7103046787937703,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.69319915771484,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8z6s.1.G",
+    "8zy3.1.C"
+   ]
+  },
+  {
+   "uid": "u0263",
+   "header": "UQH47851.1",
+   "n_orig_sequences": 1,
+   "project_id": "78028d",
+   "n_models": 4,
+   "best_model_id": "04",
+   "best_gmqe": 0.7058514792790463,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 95.02074432373047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8z6s.1.G",
+    "8zy3.1.C"
+   ]
+  },
+  {
+   "uid": "u0264",
+   "header": "UMW61700.1",
+   "n_orig_sequences": 1,
+   "project_id": "6a4284",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.6991910338835851,
+   "best_qsqe": 0.9118376432956209,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.54125213623047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0265",
+   "header": "UKH06220.1",
+   "n_orig_sequences": 2,
+   "project_id": "0b7253",
+   "n_models": 6,
+   "best_model_id": "06",
+   "best_gmqe": 0.6952009932869214,
+   "best_qsqe": null,
+   "best_template": "7web.1.G",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8upx.1.C",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0266",
+   "header": "ULT15793.1",
+   "n_orig_sequences": 1,
+   "project_id": "7276f5",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.6990749264679105,
+   "best_qsqe": 0.9174690342008557,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.62376403808594,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0267",
+   "header": "UNH76516.1",
+   "n_orig_sequences": 6,
+   "project_id": "dd9716",
+   "n_models": 3,
+   "best_model_id": "03",
+   "best_gmqe": 0.7124169396228306,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.69319915771484,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8z6s.1.G"
+   ]
+  },
+  {
+   "uid": "u0268",
+   "header": "WAV63765.1",
+   "n_orig_sequences": 2,
+   "project_id": "cf1cd7",
+   "n_models": 6,
+   "best_model_id": "06",
+   "best_gmqe": 0.6948062768956548,
+   "best_qsqe": null,
+   "best_template": "7web.1.G",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8upx.1.C",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0269",
+   "header": "UIO19736.1",
+   "n_orig_sequences": 2,
+   "project_id": "5f8f94",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.6990720010532858,
+   "best_qsqe": 0.9235396737662077,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.70626831054688,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0270",
+   "header": "UQH42314.1",
+   "n_orig_sequences": 1,
+   "project_id": "9ce645",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.700143258449392,
+   "best_qsqe": 0.923273412920023,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.45874786376953,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0271",
+   "header": "UIC30636.1",
+   "n_orig_sequences": 1,
+   "project_id": "5ae37f",
+   "n_models": 4,
+   "best_model_id": "04",
+   "best_gmqe": 0.7102671455810641,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.95033264160156,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8z6s.1.G",
+    "8zy3.1.C"
+   ]
+  },
+  {
+   "uid": "u0272",
+   "header": "ULB23438.1",
+   "n_orig_sequences": 1,
+   "project_id": "0df6fb",
+   "n_models": 6,
+   "best_model_id": "06",
+   "best_gmqe": 0.6928574100632675,
+   "best_qsqe": null,
+   "best_template": "7web.1.G",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8upx.1.C",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0273",
+   "header": "UOT18747.1",
+   "n_orig_sequences": 1,
+   "project_id": "2bfc84",
+   "n_models": 4,
+   "best_model_id": "04",
+   "best_gmqe": 0.7097990772037868,
+   "best_qsqe": null,
+   "best_template": "8z6s.1.G",
+   "best_template_identity": 94.86754608154297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "8z6s.1.G",
+    "8zy3.1.C"
+   ]
+  },
+  {
+   "uid": "u0274",
+   "header": "UKG95107.1",
+   "n_orig_sequences": 2,
+   "project_id": "3cc3c1",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.6994971324583154,
+   "best_qsqe": 0.922589419986719,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.62376403808594,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0275",
+   "header": "ULV33482.1",
+   "n_orig_sequences": 1,
+   "project_id": "ac3cec",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.6981752100712675,
+   "best_qsqe": 0.9184290518851846,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.4483871459961,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0276",
+   "header": "UMC38563.1",
+   "n_orig_sequences": 1,
+   "project_id": "572c43",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.6987836504092813,
+   "best_qsqe": 0.9237209408254893,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.54125213623047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0277",
+   "header": "UKN64269.1",
+   "n_orig_sequences": 1,
+   "project_id": "7dbe77",
+   "n_models": 6,
+   "best_model_id": "06",
+   "best_gmqe": 0.6937749861892227,
+   "best_qsqe": null,
+   "best_template": "7web.1.G",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8upx.1.C",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0278",
+   "header": "XKV23548.1",
+   "n_orig_sequences": 1,
+   "project_id": "b9d190",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.6991107641566355,
+   "best_qsqe": 0.9225316814127097,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.54125213623047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0279",
+   "header": "UNJ60792.1",
+   "n_orig_sequences": 1,
+   "project_id": "26dcfe",
+   "n_models": 6,
+   "best_model_id": "06",
+   "best_gmqe": 0.6938302623087507,
+   "best_qsqe": null,
+   "best_template": "7web.1.G",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8upx.1.C",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0280",
+   "header": "UNR71406.1",
+   "n_orig_sequences": 1,
+   "project_id": "f23c1b",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.6995703790651564,
+   "best_qsqe": 0.9227689719889488,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.62376403808594,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0281",
+   "header": "UXH95497.1",
+   "n_orig_sequences": 1,
+   "project_id": "1e8341",
+   "n_models": 6,
+   "best_model_id": "06",
+   "best_gmqe": 0.6956261269770871,
+   "best_qsqe": null,
+   "best_template": "7web.1.G",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8upx.1.C",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0282",
+   "header": "UNI08869.1",
+   "n_orig_sequences": 1,
+   "project_id": "0ff5d4",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.699301908224425,
+   "best_qsqe": 0.9227109614743797,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.54125213623047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0283",
+   "header": "UOA41061.1",
+   "n_orig_sequences": 1,
+   "project_id": "b0f034",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.6983640499766867,
+   "best_qsqe": 0.9235194437602311,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.54125213623047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0284",
+   "header": "UMF64782.1",
+   "n_orig_sequences": 1,
+   "project_id": "d1cfd3",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.6993377193716995,
+   "best_qsqe": 0.9231137589928503,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.54125213623047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0285",
+   "header": "ULC22019.1",
+   "n_orig_sequences": 3,
+   "project_id": "248db5",
+   "n_models": 6,
+   "best_model_id": "06",
+   "best_gmqe": 0.6938389708088222,
+   "best_qsqe": null,
+   "best_template": "7web.1.G",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8upx.1.C",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0286",
+   "header": "ULO79694.1",
+   "n_orig_sequences": 1,
+   "project_id": "5f61e8",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.6991056385771828,
+   "best_qsqe": 0.9174335232169729,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.54125213623047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0287",
+   "header": "UMF69468.1",
+   "n_orig_sequences": 1,
+   "project_id": "41649f",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.6992228687421062,
+   "best_qsqe": 0.9232622084056158,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.54125213623047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0288",
+   "header": "UJH06820.1",
+   "n_orig_sequences": 1,
+   "project_id": "368e66",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.6988826827508274,
+   "best_qsqe": 0.9230730538950932,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.62376403808594,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0289",
+   "header": "UQR46362.1",
+   "n_orig_sequences": 1,
+   "project_id": "dde563",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.6987953867795734,
+   "best_qsqe": 0.9210232937957071,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.61354064941406,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0290",
+   "header": "UOW18205.1",
+   "n_orig_sequences": 1,
+   "project_id": "6659f7",
+   "n_models": 6,
+   "best_model_id": "06",
+   "best_gmqe": 0.6946284453964168,
+   "best_qsqe": null,
+   "best_template": "7web.1.G",
+   "best_template_identity": 99.76377868652344,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8upx.1.C",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0291",
+   "header": "UPC06503.1",
+   "n_orig_sequences": 1,
+   "project_id": "8383ea",
+   "n_models": 6,
+   "best_model_id": "06",
+   "best_gmqe": 0.6925921210895127,
+   "best_qsqe": null,
+   "best_template": "7web.1.G",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8upx.1.C",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0292",
+   "header": "UIN76947.1",
+   "n_orig_sequences": 2,
+   "project_id": "03d8b5",
+   "n_models": 6,
+   "best_model_id": "06",
+   "best_gmqe": 0.6948352759654307,
+   "best_qsqe": null,
+   "best_template": "7web.1.G",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8upx.1.C",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0293",
+   "header": "UHT13626.1",
+   "n_orig_sequences": 2,
+   "project_id": "2cdc9f",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.6980725338128343,
+   "best_qsqe": 0.9206414516676636,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.69612121582031,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0294",
+   "header": "UJR48564.1",
+   "n_orig_sequences": 1,
+   "project_id": "1b4882",
+   "n_models": 6,
+   "best_model_id": "06",
+   "best_gmqe": 0.694367538686498,
+   "best_qsqe": null,
+   "best_template": "7web.1.G",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8upx.1.C",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0295",
+   "header": "UIS10015.1",
+   "n_orig_sequences": 1,
+   "project_id": "96dce4",
+   "n_models": 5,
+   "best_model_id": "02",
+   "best_gmqe": 0.6997781088373981,
+   "best_qsqe": 0.9219556151079865,
+   "best_template": "8zy3.1.C",
+   "best_template_identity": 87.69612121582031,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0296",
+   "header": "WFH65741.1",
+   "n_orig_sequences": 1,
+   "project_id": "fd09d6",
+   "n_models": 6,
+   "best_model_id": "06",
+   "best_gmqe": 0.6947146659940214,
+   "best_qsqe": null,
+   "best_template": "7web.1.G",
+   "best_template_identity": 99.84252166748047,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8upx.1.C",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0297",
+   "header": "UHV78612.1",
+   "n_orig_sequences": 178,
+   "project_id": "de0485",
+   "n_models": 6,
+   "best_model_id": "06",
+   "best_gmqe": 0.6952027928127238,
+   "best_qsqe": null,
+   "best_template": "7web.1.G",
+   "best_template_identity": 99.92125701904297,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8upx.1.C",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  },
+  {
+   "uid": "u0298",
+   "header": "WPY65301.1",
+   "n_orig_sequences": 2,
+   "project_id": "338b50",
+   "n_models": 6,
+   "best_model_id": "06",
+   "best_gmqe": 0.6957706809266532,
+   "best_qsqe": null,
+   "best_template": "7web.1.G",
+   "best_template_identity": 99.92119598388672,
+   "pdb_files": [
+    "01.pdb.gz",
+    "02.pdb.gz",
+    "03.pdb.gz",
+    "04.pdb.gz",
+    "05.pdb.gz",
+    "06.pdb.gz"
+   ],
+   "templates_used": [
+    "6zgf.1.C",
+    "7cn8.1.C",
+    "7web.1.G",
+    "8upx.1.C",
+    "8zy3.1.C",
+    "9kt3.1.A"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,17 @@
+{
+ "index": 1121,
+ "accession": "UNL13277.1",
+ "full_header": "UNL13277.1 |surface glycoprotein [Severe acute respiratory syndrome coronavirus 2]",
+ "uid": "u0297",
+ "md5": "9e0a06632136d1e6d4aad4c399bf7bf5",
+ "project_id": "de0485",
+ "n_models": 12,
+ "pdb_files": [
+  "01.pdb.gz",
+  "02.pdb.gz",
+  "03.pdb.gz",
+  "04.pdb.gz",
+  "05.pdb.gz",
+  "06.pdb.gz"
+ ]
+}

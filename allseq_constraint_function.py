@@ -3,7 +3,7 @@
 All-Sequence Constraint Function for Co-evolution
 ==================================================
 
-Builds the constraint function on ALL 1299 Omicron sequences.
+Builds the constraint function on ALL sequences at full length.
 Uses the Wuhan reference as baseline and tests prediction
 within the same dataset via leave-one-out cross-validation.
 """
@@ -50,9 +50,13 @@ def compute_entropy(pos_arrays, pos, n_seqs):
 
 
 def get_majority_ref(pos_arrays, pos, n_seqs):
-    return Counter(
+    cnt = Counter(
         int(a[pos]) for a in pos_arrays[:n_seqs] if pos < len(a) and 0 <= a[pos] < 20
-    ).most_common(1)[0][0]
+    )
+    if not cnt:
+        return 0
+    best = max(cnt.values())
+    return min(c for c, n in cnt.items() if n == best)
 
 
 def compute_frequency_kmap(pos_arrays, pos_i, pos_j, n_seqs, exclude_idx=None):
@@ -94,12 +98,12 @@ def compute_constraint_function(kmap_freq):
 
 def main():
     base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
-    fasta_file = base_dir / "Spike_protein.aln-fasta"
-    results_dir = base_dir / "allseq_constraint_results"
-    results_dir.mkdir(exist_ok=True)
+    fasta_file = Path(__import__("os").environ.get("COEVO_FASTA") or (base_dir / "Spike_protein.aln-fasta"))
+    results_dir = Path(__import__("os").environ.get("COEVO_RESULTS") or (base_dir / "allseq_constraint_results"))
+    results_dir.mkdir(parents=True, exist_ok=True)
 
     print("=" * 80)
-    print("All-Sequence Constraint Function (ALL 1299 Omicron sequences)")
+    print("All-Sequence Constraint Function (ALL sequences, full length)")
     print("=" * 80)
 
     # Load ALL sequences

@@ -1,320 +1,595 @@
 # Co-evolution Boolean Functions for SARS-CoV-2 Spike Protein
 
-## Master Boolean Function
-
-**Dataset:** 1,299 SARS-CoV-2 Spike protein sequences  
-**Encoding:** Base-20 (He 2012 order)  
-**Method:** Variable-position K-map with don't-care conditions → Quine-McCluskey minimization  
-**Variable positions:** 57 out of 80 analyzed  
-**Co-evolutionary pairs:** 1,161 (MI > 0.1)  
-**Total prime implicants:** 108  
-**Essential prime implicants:** 108 (all essential)  
-
----
-
-## Master Boolean Equation
-
-```
-f(pos_i, pos_j, aa_i, aa_j) = Rule_1 OR Rule_2 OR ... OR Rule_108
-```
-
-Each rule is an AND of residue conditions at two positions. The function returns **1 (co-evolutionary)** when ANY prime implicant matches.
+**Dataset:** 1299 sequences
+**Encoding:** Base-20 (He 2012 order)
+**Method:** Variable-position K-map with don't-care conditions
+**Quine-McCluskey minimization**
 
 ---
 
 ## Variables
 
-- `s3, s2, s1, s0` = binary representation of residue at position `pos_i` (0-19)
-- `t3, t2, t1, t0` = binary representation of residue at position `pos_j` (0-19)
-- `~s3` = NOT s3 (bit is 0)
-- `s3` = bit is 1
+| Variable | Meaning |
+|----------|---------|
+| s4, s3, s2, s1, s0 | Binary code for residue at position i (0-19, 5 bits) |
+| t4, t3, t2, t1, t0 | Binary code for residue at position j (0-19, 5 bits) |
+| ~s4 | NOT s4 (bit is 0) |
+| s4 | bit is 1 |
+| s4.s3.s2.s1.s0 | AND of bits |
 
 ---
 
-## Co-evolutionary Position Pairs
+## Position Pair (495, 498)
 
-| Rank | Pos i | Pos j | MI | Mutations | Ref i | Ref j |
-|------|-------|-------|-----|-----------|-------|-------|
-| 1 | 76 | 77 | 8.83 | 458 | D | N |
-| 2 | 74 | 79 | 8.82 | 459 | R | V |
-| 3 | 71 | 75 | 8.82 | 457 | G | F |
-| 4 | 72 | 75 | 8.82 | 457 | T | F |
-| 5 | 78 | 79 | 8.82 | 459 | P | V |
-| 6 | 71 | 79 | 8.82 | 459 | G | V |
-| 7 | 72 | 79 | 8.82 | 459 | T | V |
-| 8 | 73 | 79 | 8.82 | 459 | K | V |
-| 9 | 74 | 75 | 8.82 | 457 | R | F |
-| 10 | 73 | 75 | 8.81 | 457 | K | F |
-| 11 | 77 | 79 | 8.80 | 459 | N | V |
-| 12 | 69 | 79 | 8.78 | 459 | T | V |
-| 13 | 69 | 70 | 8.77 | 457 | T | N |
-| 14 | 68 | 79 | 8.75 | 459 | G | V |
-| 15 | 68 | 75 | 8.75 | 457 | G | F |
+| Property | Value |
+|----------|-------|
+| Mutual Information | 0.8710 |
+| Total mutations | 425 |
+| Reference pos 495 | R |
+| Reference pos 498 | G |
+| On-set cells | 2 |
+| Off-set cells | 397 |
+| Don't-care cells | 625 |
+| Prime implicants | 2 |
+| Essential PIs | 0 |
 
----
+### K-map (Compact View)
 
-## ALL 108 Inference Rules
-
-### Position Pair (68, 75) — MI = 8.75
-
-| Rule | Boolean Expression | Amino Acids | Type |
-|------|-------------------|-------------|------|
-| 1 | `~s3 & s2 & ~s1 & ~s0 & t3 & ~t2 & t0` | (M, V) | MUTATION |
-| 2 | `~s3 & s2 & ~s1 & ~s0 & t3 & ~t2 & ~t1 & t0` | (M, D) | MUTATION |
-| 3 | `s3 & s2 & s1 & ~s0 & ~t3 & t2 & t1 & t0` | (R, W) | MUTATION |
-| 4 | `s3 & s2 & s1 & ~s0 & t3 & t2 & t1 & ~t0` | (R, R) | MUTATION |
-| 5 | `~s3 & ~s2 & ~s1 & ~s0 & ~t3 & ~t2 & ~t1 & ~t0` | (A, A) | MUTATION |
-| 6 | `~s3 & ~s2 & ~s1 & s0 & ~t3 & ~t1 & t0` | (V, I) | MUTATION |
-| 7 | `~s3 & ~s2 & ~s1 & s0 & ~t3 & t2 & t1 & ~t0` | (V, Q) | MUTATION |
-| 8 | `s3 & ~s2 & ~s1 & ~s0 & ~t3 & t0` | (E, I) | MUTATION |
-
-**Interpretation:** When position 68 mutates to M, R, A, V, or E, position 75 must co-evolve to V, D, W, R, A, I, Q, or I respectively.
-
----
-
-### Position Pair (68, 79) — MI = 8.75
-
-| Rule | Boolean Expression | Amino Acids | Type |
-|------|-------------------|-------------|------|
-| 9 | `~s3 & s2 & ~s1 & ~s0 & ~t3 & ~t1 & t0` | (M, L) | MUTATION |
-| 10 | `s3 & s2 & s1 & ~s0 & t3 & t2 & ~t1 & ~t0` | (R, I) | MUTATION |
-| 11 | `s3 & s2 & s1 & ~s0 & t3 & t2 & t1 & ~t0` | (R, R) | MUTATION |
-| 12 | `s3 & s2 & s1 & s0 & ~t3 & t1 & t0` | (S, D) | MUTATION |
-| 13 | `~s3 & ~s2 & ~s1 & s0 & t3 & t2 & ~t0` | (L, S) | MUTATION |
-| 14 | `~s3 & ~s2 & ~s1 & s0 & t3 & ~t2 & t1 & t0` | (V, R) | MUTATION |
-| 15 | `~s3 & s2 & ~s1 & ~s0 & ~t3 & t2 & t1 & t0` | (M, N) | MUTATION |
-| 16 | `s3 & ~s2 & s1 & s0 & t3 & t2 & t1 & t0` | (W, H) | MUTATION |
-| 17 | `s3 & ~s2 & ~s1 & ~s0 & ~t3 & t0` | (E, I) | MUTATION |
-
----
-
-### Position Pair (69, 70) — MI = 8.77
-
-| Rule | Boolean Expression | Amino Acids | Type |
-|------|-------------------|-------------|------|
-| 18 | `~s3 & s2 & ~s1 & ~s0 & ~t3 & ~t2 & t1 & t0` | (M, N) | MUTATION |
-| 19 | `~s3 & s2 & ~s1 & s0 & ~t3 & t2 & t1 & t0` | (N, S) | MUTATION |
-| 20 | `s3 & s2 & s1 & ~s0 & ~t3 & t2 & t1 & t0` | (R, S) | MUTATION |
-| 21 | `~s3 & ~s2 & ~s1 & s0 & ~t3 & t2 & t1 & ~t0` | (I, L) | MUTATION |
-| 22 | `~s3 & s2 & ~s1 & ~s0 & t3 & ~t2 & t1 & t0` | (M, K) | MUTATION |
-| 23 | `s3 & ~s2 & s1 & s0 & t3 & ~t2 & t1 & t0` | (W, K) | MUTATION |
-| 24 | `s3 & ~s2 & ~s1 & ~s0 & t3 & t2 & ~t1 & t0` | (E, D) | MUTATION |
-| 25 | `s3 & ~s2 & ~s1 & ~s0 & t3 & ~t2 & t1 & t0` | (E, H) | MUTATION |
-
----
-
-### Position Pair (69, 79) — MI = 8.78
-
-| Rule | Boolean Expression | Amino Acids | Type |
-|------|-------------------|-------------|------|
-| 26 | `~s3 & s2 & ~s1 & ~s0 & t3 & ~t1 & t0` | (M, F) | MUTATION |
-| 27 | `~s3 & s2 & ~s1 & s0 & t3 & t2 & ~t0` | (N, W) | MUTATION |
-| 28 | `s3 & ~s2 & ~s1 & s0 & t3 & t2 & t1 & ~t0` | (K, R) | MUTATION |
-| 29 | `s3 & s2 & s1 & ~s0 & t3 & t2 & t1 & ~t0` | (R, R) | MUTATION |
-| 30 | `~s3 & ~s2 & ~s1 & ~s0 & ~t3 & t2 & t1 & t0` | (A, S) | MUTATION |
-| 31 | `~s3 & s2 & ~s1 & ~s0 & ~t3 & ~t2 & t0` | (M, A) | MUTATION |
-| 32 | `s3 & ~s2 & ~s1 & ~s0 & ~t3 & t2 & t1 & t0` | (E, I) | MUTATION |
-| 33 | `s3 & ~s2 & ~s1 & ~s0 & t3 & t1 & ~t0` | (E, R) | MUTATION |
-
----
-
-### Position Pair (71, 75) — MI = 8.82
-
-| Rule | Boolean Expression | Amino Acids | Type |
-|------|-------------------|-------------|------|
-| 34 | `~s3 & s2 & ~s1 & ~s0 & t3 & ~t2 & ~t1 & t0` | (M, D) | MUTATION |
-| 35 | `r3 & r2 & ~r1 & r0 & c3 & c2 & c1 & ~c0` | (Y, W) | MUTATION |
-| 36 | `s3 & s2 & s1 & ~s0 & t3 & ~t1 & t0` | (R, Q) | MUTATION |
-| 37 | `~s3 & ~s2 & ~s1 & ~s0 & ~t3 & ~t2 & t1 & t0` | (A, S) | MUTATION |
-| 38 | `~s3 & ~s2 & s1 & ~s0 & t3 & t2 & t1 & ~t0` | (L, Q) | MUTATION |
-| 39 | `r3 & r2 & ~r1 & r0 & t3 & t2 & ~t1 & t0` | (Y, K) | MUTATION |
-| 40 | `s3 & ~s2 & ~s1 & ~s0 & t3 & t2 & t1 & t0` | (E, H) | MUTATION |
-
----
-
-### Position Pair (71, 79) — MI = 8.82
-
-| Rule | Boolean Expression | Amino Acids | Type |
-|------|-------------------|-------------|------|
-| 41 | `r3 & r2 & ~r1 & r0 & ~t3 & ~t2 & t1 & t0` | (Y, N) | MUTATION |
-| 42 | `~s3 & s2 & ~s1 & ~s0 & ~t3 & ~t1 & t0` | (M, L) | MUTATION |
-| 43 | `s3 & s2 & s1 & ~s0 & t3 & t2 & t1 & ~t0` | (R, R) | MUTATION |
-| 44 | `~s3 & ~s2 & ~s1 & s0 & t3 & ~t2 & t1 & ~t0` | (I, Y) | MUTATION |
-| 45 | `~s3 & ~s2 & ~s1 & s0 & t3 & t2 & t1 & ~t0` | (I, K) | MUTATION |
-| 46 | `s3 & ~s2 & s1 & s0 & t3 & t2 & t1 & t0` | (W, H) | MUTATION |
-| 47 | `s3 & ~s2 & ~s1 & ~s0 & ~t3 & t2 & t1 & t0` | (E, F) | MUTATION |
-
----
-
-### Position Pair (72, 75) — MI = 8.82
-
-| Rule | Boolean Expression | Amino Acids | Type |
-|------|-------------------|-------------|------|
-| 48 | `~s3 & ~s2 & ~s1 & ~s0 & t3 & ~t2 & t1 & t0` | (A, K) | MUTATION |
-| 49 | `~s3 & s2 & ~s1 & ~s0 & ~t3 & t2 & t0` | (M, I) | MUTATION |
-| 50 | `s3 & ~s2 & s1 & s0 & ~t3 & t2 & t1 & t0` | (W, Y) | MUTATION |
-| 51 | `~s3 & s2 & ~s1 & s0 & ~t3 & t2 & t1 & t0` | (N, W) | MUTATION |
-| 52 | `~s3 & ~s2 & s1 & ~s0 & ~t3 & ~t2 & ~t1 & t0` | (L, V) | MUTATION |
-| 53 | `~s3 & ~s2 & ~s1 & s0 & t3 & ~t1 & ~t0` | (F, A) | MUTATION |
-| 54 | `s3 & ~s2 & ~s1 & ~s0 & t3 & ~t2 & t1 & t0` | (E, Q) | MUTATION |
-
----
-
-### Position Pair (72, 79) — MI = 8.82
-
-| Rule | Boolean Expression | Amino Acids | Type |
-|------|-------------------|-------------|------|
-| 55 | `~s3 & ~s2 & ~s1 & s0 & ~t3 & t2 & t0` | (V, S) | MUTATION |
-| 56 | `~s3 & s2 & ~s1 & ~s0 & t3 & ~t2 & ~t1 & t0` | (M, D) | MUTATION |
-| 57 | `~s3 & ~s2 & ~s1 & ~s0 & ~t3 & t2 & t1 & t0` | (A, Y) | MUTATION |
-| 58 | `~s3 & ~s2 & s1 & ~s0 & t3 & ~t2 & t1 & ~t0` | (L, Q) | MUTATION |
-| 59 | `~s3 & s2 & ~s1 & ~s0 & ~t3 & ~t2 & t0` | (M, A) | MUTATION |
-| 60 | `s3 & ~s2 & ~s1 & ~s0 & t3 & t1 & ~t0` | (E, R) | MUTATION |
-
----
-
-### Position Pair (73, 75) — MI = 8.81
-
-| Rule | Boolean Expression | Amino Acids | Type |
-|------|-------------------|-------------|------|
-| 61 | `~s3 & ~s2 & s1 & s0 & ~t3 & ~t2 & t0` | (L, I) | MUTATION |
-| 62 | `~s3 & ~s2 & s1 & s0 & ~t3 & t2 & t1 & ~t0` | (L, K) | MUTATION |
-| 63 | `r3 & r2 & ~r1 & r0 & ~t3 & t2 & t1 & ~t0` | (Y, S) | MUTATION |
-| 64 | `s3 & ~s2 & ~s1 & ~s0 & t3 & t2 & t1 & t0` | (H, Y) | MUTATION |
-| 65 | `s3 & ~s2 & ~s1 & s0 & t3 & t2 & ~t1 & ~t0` | (K, S) | MUTATION |
-| 66 | `s3 & s2 & s1 & ~s0 & ~t3 & t2 & t1 & t0` | (R, H) | MUTATION |
-| 67 | `~s3 & s2 & ~s1 & ~s0 & ~t3 & t2 & ~t1 & t0` | (M, R) | MUTATION |
-
----
-
-### Position Pair (73, 79) — MI = 8.82
-
-| Rule | Boolean Expression | Amino Acids | Type |
-|------|-------------------|-------------|------|
-| 68 | `~s3 & ~s2 & s1 & s0 & t3 & ~t2 & t1 & ~t0` | (L, Q) | MUTATION |
-| 69 | `s3 & s2 & s1 & ~s0 & t3 & ~t1 & t0` | (R, F) | MUTATION |
-| 70 | `s3 & ~s2 & s1 & s0 & ~t3 & t2 & t1 & t0` | (W, Y) | MUTATION |
-| 71 | `~s3 & s2 & ~s1 & s0 & ~t3 & t2 & ~t1 & t0` | (N, D) | MUTATION |
-| 72 | `~s3 & ~s2 & ~s1 & ~s0 & ~t3 & ~t2 & t1 & t0` | (A, M) | MUTATION |
-| 73 | `~s3 & ~s2 & ~s1 & s0 & ~t3 & ~t2 & t1 & ~t0` | (I, Q) | MUTATION |
-| 74 | `~s3 & ~s2 & ~s1 & s0 & t3 & t2 & ~t1 & ~t0` | (F, L) | MUTATION |
-
----
-
-### Position Pair (74, 75) — MI = 8.82
-
-| Rule | Boolean Expression | Amino Acids | Type |
-|------|-------------------|-------------|------|
-| 75 | `r3 & r2 & ~r1 & r0 & t3 & ~t2 & t1 & t0` | (Y, K) | MUTATION |
-| 76 | `r3 & r2 & ~r1 & r0 & t3 & t2 & t1 & ~t0` | (Y, N) | MUTATION |
-| 77 | `~s3 & s2 & ~s1 & s0 & ~t3 & t2 & t1 & t0` | (N, S) | MUTATION |
-| 78 | `s3 & s2 & s1 & ~s0 & t3 & t2 & t1 & ~t0` | (R, R) | MUTATION |
-| 79 | `~s3 & ~s2 & ~s1 & s0 & ~t3 & ~t1 & t0` | (I, L) | MUTATION |
-| 80 | `s3 & ~s2 & ~s1 & ~s0 & t3 & t2 & t1 & t0` | (E, H) | MUTATION |
-
----
-
-### Position Pair (74, 79) — MI = 8.82
-
-| Rule | Boolean Expression | Amino Acids | Type |
-|------|-------------------|-------------|------|
-| 81 | `r3 & r2 & ~r1 & r0 & t3 & t2 & t1 & t0` | (Y, Y) | MUTATION |
-| 82 | `s3 & ~s2 & ~s1 & ~s0 & t3 & t2 & t1 & t0` | (H, Y) | MUTATION |
-| 83 | `s3 & s2 & s1 & ~s0 & ~t3 & t2 & t0` | (R, I) | MUTATION |
-| 84 | `~s3 & ~s2 & ~s1 & s0 & t3 & t2 & t1 & t0` | (I, Y) | MUTATION |
-| 85 | `~s3 & ~s2 & ~s1 & s0 & t3 & ~t2 & t1 & ~t0` | (I, E) | MUTATION |
-| 86 | `r3 & r2 & ~r1 & r0 & ~t3 & ~t2 & t1 & t0` | (Y, N) | MUTATION |
-| 87 | `s3 & ~s2 & s1 & s0 & t3 & t2 & t1 & t0` | (W, V) | MUTATION |
-| 88 | `s3 & ~s2 & ~s1 & ~s0 & ~t3 & t2 & t1 & t0` | (E, F) | MUTATION |
-
----
-
-### Position Pair (76, 77) — MI = 8.83
-
-| Rule | Boolean Expression | Amino Acids | Type |
-|------|-------------------|-------------|------|
-| 89 | `~s3 & ~s2 & ~s1 & s0 & t3 & ~t2 & t0` | (V, Q) | MUTATION |
-| 90 | `r3 & r2 & ~r1 & r0 & t3 & ~t2 & t1 & t0` | (Y, K) | MUTATION |
-| 91 | `s3 & s2 & s1 & ~s0 & t3 & ~t1 & t0` | (R, F) | MUTATION |
-| 92 | `s3 & s2 & s1 & ~s0 & t3 & t2 & t1 & ~t0` | (R, R) | MUTATION |
-| 93 | `~s3 & ~s2 & ~s1 & s0 & ~t3 & t2 & t1 & t0` | (I, L) | MUTATION |
-| 94 | `r3 & r2 & ~r1 & r0 & t3 & t2 & t1 & ~t0` | (Y, N) | MUTATION |
-| 95 | `s3 & ~s2 & ~s1 & ~s0 & ~t3 & t2 & t1 & t0` | (E, W) | MUTATION |
-
----
-
-### Position Pair (77, 79) — MI = 8.80
-
-| Rule | Boolean Expression | Amino Acids | Type |
-|------|-------------------|-------------|------|
-| 96 | `~s3 & ~s2 & s1 & s0 & t3 & ~t2 & t1 & ~t0` | (L, K) | MUTATION |
-| 97 | `~s3 & s2 & ~s1 & ~s0 & t3 & t2 & t1 & ~t0` | (M, R) | MUTATION |
-| 98 | `~s3 & s2 & ~s1 & s0 & ~t3 & t2 & ~t1 & t0` | (N, W) | MUTATION |
-| 99 | `s3 & ~s2 & ~s1 & ~s0 & t3 & t2 & t1 & t0` | (H, Y) | MUTATION |
-| 100 | `s3 & ~s2 & ~s1 & s0 & ~t3 & t2 & t1 & ~t0` | (K, H) | MUTATION |
-| 101 | `~s3 & ~s2 & s1 & s0 & t3 & ~t2 & t0` | (L, I) | MUTATION |
-| 102 | `r3 & r2 & ~r1 & r0 & ~t3 & t2 & t1 & t0` | (Y, Q) | MUTATION |
-| 103 | `s3 & ~s2 & s1 & s0 & t3 & t2 & t1 & t0` | (W, V) | MUTATION |
-
----
-
-### Position Pair (78, 79) — MI = 8.82
-
-| Rule | Boolean Expression | Amino Acids | Type |
-|------|-------------------|-------------|------|
-| 104 | `~s3 & ~s2 & ~s1 & s0 & t3 & ~t2 & t0` | (V, Q) | MUTATION |
-| 105 | `r3 & r2 & ~r1 & r0 & t3 & ~t2 & t1 & t0` | (Y, K) | MUTATION |
-| 106 | `r3 & r2 & ~r1 & r0 & t3 & t2 & ~t1 & ~t0` | (Y, S) | MUTATION |
-| 107 | `s3 & s2 & s1 & ~s0 & t3 & t2 & t1 & ~t0` | (R, R) | MUTATION |
-| 108 | `r3 & r2 & ~r1 & r0 & ~t3 & t2 & t1 & t0` | (Y, E) | MUTATION |
-
----
-
-## Position Pair Summary
-
-| Position Pair | MI | Rules | Reference (i→j) |
-|---------------|-----|-------|------------------|
-| (68, 75) | 8.75 | 8 | G→F |
-| (68, 79) | 8.75 | 9 | G→V |
-| (69, 70) | 8.77 | 8 | T→N |
-| (69, 79) | 8.78 | 8 | T→V |
-| (71, 75) | 8.82 | 7 | G→F |
-| (71, 79) | 8.82 | 7 | G→V |
-| (72, 75) | 8.82 | 7 | T→F |
-| (72, 79) | 8.82 | 6 | T→V |
-| (73, 75) | 8.81 | 7 | K→F |
-| (73, 79) | 8.82 | 7 | K→V |
-| (74, 75) | 8.82 | 6 | R→F |
-| (74, 79) | 8.82 | 8 | R→V |
-| (76, 77) | 8.83 | 7 | D→N |
-| (77, 79) | 8.80 | 8 | N→V |
-| (78, 79) | 8.82 | 5 | P→V |
-
----
-
-## How to Use the Boolean Functions
-
-### For a new sequence:
-1. Extract residues at positions 68-79
-2. Compare to the reference (G, T, N, T, T, G, T, K, R, D, N, P, V)
-3. For each position pair, check if the (aa_i, aa_j) combination matches any rule
-4. If ANY rule matches → that position pair is co-evolutionary
-
-### Example:
 ```
-Sequence: ... G T N T G T K R D N P V ...
-                        ↑ ↑ ↑ ↑ ↑ ↑
-Reference:              G T N T G T K R D N P V
+Position pair (495, 498): Reference = (R, G)
 
-If position 74 mutates R→Y, check rules 75, 81-88.
-Rule 81: IF pos 74=Y AND pos 79=Y THEN co-evolutionary
-→ Position 79 must also mutate V→Y to satisfy co-evolution.
+Co-evolutionary residue pairs (on-set):
+  Q-G, R-S
+
+Don't-care positions (conserved): 625 cells
+Never-seen pairs (off-set): 397 cells
 ```
 
+### Boolean Function
+
+```
+f(pos_495, pos_498) = 1 if ANY of these residue pairs appear:
+
+    PI_1: pos_495=Q AND pos_498=G
+    PI_2: pos_495=R AND pos_498=S
+
+(* = essential prime implicant)
+```
+
+### Coupling Constants (J_ij)
+
+| Residue Pair | J_ij | Frequency | Type |
+|-------------|------|-----------|------|
+| Q-G | 0.2641 | 0.0956 | co-evolutionary |
+| R-S | 0.1005 | 0.2321 | co-evolutionary |
+| R-G | -0.0325 | 0.6723 | anti-correlated |
+
+### Inference Rules (Natural Language)
+
+Rule 1: IF position 495 = Q AND position 498 = G THEN co-evolutionary (MI = 0.871)
+Rule 2: IF position 495 = R AND position 498 = S THEN co-evolutionary (MI = 0.871)
+
 ---
 
-## Biological Context
+## Position Pair (448, 454)
 
-These co-evolutionary rules capture **compensatory mutations** in the SARS-CoV-2 Spike protein. Positions 68-79 are in the **N-terminal signal peptide region** (cleavage site), where mutations are tightly constrained because the protein must maintain its structure and function across variants.
+| Property | Value |
+|----------|-------|
+| Mutual Information | 0.8344 |
+| Total mutations | 393 |
+| Reference pos 448 | G |
+| Reference pos 454 | L |
+| On-set cells | 3 |
+| Off-set cells | 396 |
+| Don't-care cells | 625 |
+| Prime implicants | 3 |
+| Essential PIs | 0 |
 
-The high mutual information (MI > 8.7) indicates that mutations at these positions are **strongly coupled** — when one position mutates, the other must follow with a specific compensating mutation to maintain protein stability.
+### K-map (Compact View)
+
+```
+Position pair (448, 454): Reference = (G, L)
+
+Co-evolutionary residue pairs (on-set):
+  S-L, S-R, G-R
+
+Don't-care positions (conserved): 625 cells
+Never-seen pairs (off-set): 396 cells
+```
+
+### Boolean Function
+
+```
+f(pos_448, pos_454) = 1 if ANY of these residue pairs appear:
+
+    PI_1: pos_448=G AND pos_454=R
+    PI_2: pos_448=S AND pos_454=L
+    PI_3: pos_448=S AND pos_454=R
+
+(* = essential prime implicant)
+```
+
+### Coupling Constants (J_ij)
+
+| Residue Pair | J_ij | Frequency | Type |
+|-------------|------|-----------|------|
+| G-R | 0.2373 | 0.0849 | co-evolutionary |
+| S-L | 0.0860 | 0.2176 | co-evolutionary |
+| G-L | -0.0254 | 0.6968 | anti-correlated |
+
+### Inference Rules (Natural Language)
+
+Rule 3: IF position 448 = G AND position 454 = R THEN co-evolutionary (MI = 0.834)
+Rule 4: IF position 448 = S AND position 454 = L THEN co-evolutionary (MI = 0.834)
+Rule 5: IF position 448 = S AND position 454 = R THEN co-evolutionary (MI = 0.834)
+
+---
+
+## Position Pair (488, 498)
+
+| Property | Value |
+|----------|-------|
+| Mutual Information | 0.8219 |
+| Total mutations | 405 |
+| Reference pos 488 | F |
+| Reference pos 498 | G |
+| On-set cells | 3 |
+| Off-set cells | 396 |
+| Don't-care cells | 625 |
+| Prime implicants | 3 |
+| Essential PIs | 0 |
+
+### K-map (Compact View)
+
+```
+Position pair (488, 498): Reference = (F, G)
+
+Co-evolutionary residue pairs (on-set):
+  V-G, F-S, P-G
+
+Don't-care positions (conserved): 625 cells
+Never-seen pairs (off-set): 396 cells
+```
+
+### Boolean Function
+
+```
+f(pos_488, pos_498) = 1 if ANY of these residue pairs appear:
+
+    PI_1: pos_488=V AND pos_498=G
+    PI_2: pos_488=P AND pos_498=G
+    PI_3: pos_488=F AND pos_498=S
+
+(* = essential prime implicant)
+```
+
+### Coupling Constants (J_ij)
+
+| Residue Pair | J_ij | Frequency | Type |
+|-------------|------|-----------|------|
+| V-G | 0.2638 | 0.0786 | co-evolutionary |
+| F-S | 0.0835 | 0.2319 | co-evolutionary |
+| F-G | -0.0266 | 0.6880 | anti-correlated |
+
+### Inference Rules (Natural Language)
+
+Rule 6: IF position 488 = V AND position 498 = G THEN co-evolutionary (MI = 0.822)
+Rule 7: IF position 488 = P AND position 498 = G THEN co-evolutionary (MI = 0.822)
+Rule 8: IF position 488 = F AND position 498 = S THEN co-evolutionary (MI = 0.822)
+
+---
+
+## Position Pair (442, 454)
+
+| Property | Value |
+|----------|-------|
+| Mutual Information | 0.8110 |
+| Total mutations | 188 |
+| Reference pos 442 | K |
+| Reference pos 454 | L |
+| On-set cells | 3 |
+| Off-set cells | 396 |
+| Don't-care cells | 625 |
+| Prime implicants | 3 |
+| Essential PIs | 0 |
+
+### K-map (Compact View)
+
+```
+Position pair (442, 454): Reference = (K, L)
+
+Co-evolutionary residue pairs (on-set):
+  N-L, N-R, K-R
+
+Don't-care positions (conserved): 625 cells
+Never-seen pairs (off-set): 396 cells
+```
+
+### Boolean Function
+
+```
+f(pos_442, pos_454) = 1 if ANY of these residue pairs appear:
+
+    PI_1: pos_442=N AND pos_454=L
+    PI_2: pos_442=N AND pos_454=R
+    PI_3: pos_442=K AND pos_454=R
+
+(* = essential prime implicant)
+```
+
+### Coupling Constants (J_ij)
+
+| Residue Pair | J_ij | Frequency | Type |
+|-------------|------|-----------|------|
+| N-L | 0.0158 | 0.0602 | co-evolutionary |
+| K-R | 0.0115 | 0.0821 | co-evolutionary |
+| K-L | -0.0011 | 0.8530 | anti-correlated |
+
+### Inference Rules (Natural Language)
+
+Rule 9: IF position 442 = N AND position 454 = L THEN co-evolutionary (MI = 0.811)
+Rule 10: IF position 442 = N AND position 454 = R THEN co-evolutionary (MI = 0.811)
+Rule 11: IF position 442 = K AND position 454 = R THEN co-evolutionary (MI = 0.811)
+
+---
+
+## Position Pair (442, 448)
+
+| Property | Value |
+|----------|-------|
+| Mutual Information | 0.7284 |
+| Total mutations | 363 |
+| Reference pos 442 | K |
+| Reference pos 448 | G |
+| On-set cells | 3 |
+| Off-set cells | 396 |
+| Don't-care cells | 625 |
+| Prime implicants | 3 |
+| Essential PIs | 0 |
+
+### K-map (Compact View)
+
+```
+Position pair (442, 448): Reference = (K, G)
+
+Co-evolutionary residue pairs (on-set):
+  N-S, N-G, K-S
+
+Don't-care positions (conserved): 625 cells
+Never-seen pairs (off-set): 396 cells
+```
+
+### Boolean Function
+
+```
+f(pos_442, pos_448) = 1 if ANY of these residue pairs appear:
+
+    PI_1: pos_442=N AND pos_448=G
+    PI_2: pos_442=N AND pos_448=S
+    PI_3: pos_442=K AND pos_448=S
+
+(* = essential prime implicant)
+```
+
+### Coupling Constants (J_ij)
+
+| Residue Pair | J_ij | Frequency | Type |
+|-------------|------|-----------|------|
+| N-G | 0.2243 | 0.0632 | co-evolutionary |
+| K-S | 0.0599 | 0.2186 | co-evolutionary |
+| K-G | -0.0176 | 0.7166 | anti-correlated |
+
+### Inference Rules (Natural Language)
+
+Rule 12: IF position 442 = N AND position 448 = G THEN co-evolutionary (MI = 0.728)
+Rule 13: IF position 442 = N AND position 448 = S THEN co-evolutionary (MI = 0.728)
+Rule 14: IF position 442 = K AND position 448 = S THEN co-evolutionary (MI = 0.728)
+
+---
+
+## Position Pair (212, 215)
+
+| Property | Value |
+|----------|-------|
+| Mutual Information | 0.3977 |
+| Total mutations | 300 |
+| Reference pos 212 | V |
+| Reference pos 215 | G |
+| On-set cells | 4 |
+| Off-set cells | 396 |
+| Don't-care cells | 624 |
+| Prime implicants | 4 |
+| Essential PIs | 0 |
+
+### K-map (Compact View)
+
+```
+Position pair (212, 215): Reference = (V, G)
+
+Co-evolutionary residue pairs (on-set):
+  I-V, L-V, V-P, S-G
+
+Don't-care positions (conserved): 624 cells
+Never-seen pairs (off-set): 396 cells
+```
+
+### Boolean Function
+
+```
+f(pos_212, pos_215) = 1 if ANY of these residue pairs appear:
+
+    PI_1: pos_212=V AND pos_215=P
+    PI_2: pos_212=S AND pos_215=G
+    PI_3: pos_212=I AND pos_215=V
+    PI_4: pos_212=L AND pos_215=V
+
+(* = essential prime implicant)
+```
+
+### Coupling Constants (J_ij)
+
+| Residue Pair | J_ij | Frequency | Type |
+|-------------|------|-----------|------|
+| S-G | 5.0106 | 0.0067 | co-evolutionary |
+| I-V | 2.7593 | 0.0433 | co-evolutionary |
+| L-V | 2.7593 | 0.0200 | co-evolutionary |
+| V-P | 0.0726 | 0.9300 | co-evolutionary |
+
+### Inference Rules (Natural Language)
+
+Rule 15: IF position 212 = V AND position 215 = P THEN co-evolutionary (MI = 0.398)
+Rule 16: IF position 212 = S AND position 215 = G THEN co-evolutionary (MI = 0.398)
+Rule 17: IF position 212 = I AND position 215 = V THEN co-evolutionary (MI = 0.398)
+Rule 18: IF position 212 = L AND position 215 = V THEN co-evolutionary (MI = 0.398)
+
+---
+
+## Position Pair (215, 216)
+
+| Property | Value |
+|----------|-------|
+| Mutual Information | 0.3773 |
+| Total mutations | 301 |
+| Reference pos 215 | G |
+| Reference pos 216 | R |
+| On-set cells | 4 |
+| Off-set cells | 395 |
+| Don't-care cells | 625 |
+| Prime implicants | 4 |
+| Essential PIs | 0 |
+
+### K-map (Compact View)
+
+```
+Position pair (215, 216): Reference = (G, R)
+
+Co-evolutionary residue pairs (on-set):
+  V-R, E-R, P-E, P-K
+
+Don't-care positions (conserved): 625 cells
+Never-seen pairs (off-set): 395 cells
+```
+
+### Boolean Function
+
+```
+f(pos_215, pos_216) = 1 if ANY of these residue pairs appear:
+
+    PI_1: pos_215=E AND pos_216=R
+    PI_2: pos_215=V AND pos_216=R
+    PI_3: pos_215=P AND pos_216=K
+    PI_4: pos_215=P AND pos_216=E
+
+(* = essential prime implicant)
+```
+
+### Coupling Constants (J_ij)
+
+| Residue Pair | J_ij | Frequency | Type |
+|-------------|------|-----------|------|
+| P-E | 1.5218 | 0.2175 | co-evolutionary |
+| V-R | 0.2463 | 0.0164 | co-evolutionary |
+| G-R | 0.2463 | 0.7645 | co-evolutionary |
+
+### Inference Rules (Natural Language)
+
+Rule 19: IF position 215 = E AND position 216 = R THEN co-evolutionary (MI = 0.377)
+Rule 20: IF position 215 = V AND position 216 = R THEN co-evolutionary (MI = 0.377)
+Rule 21: IF position 215 = P AND position 216 = K THEN co-evolutionary (MI = 0.377)
+Rule 22: IF position 215 = P AND position 216 = E THEN co-evolutionary (MI = 0.377)
+
+---
+
+## Position Pair (212, 216)
+
+| Property | Value |
+|----------|-------|
+| Mutual Information | 0.3773 |
+| Total mutations | 301 |
+| Reference pos 212 | V |
+| Reference pos 216 | R |
+| On-set cells | 6 |
+| Off-set cells | 394 |
+| Don't-care cells | 624 |
+| Prime implicants | 6 |
+| Essential PIs | 1 |
+
+### K-map (Compact View)
+
+```
+Position pair (212, 216): Reference = (V, R)
+
+Co-evolutionary residue pairs (on-set):
+  I-R, L-R, V-E, V-K, S-R, G-R
+
+Don't-care positions (conserved): 624 cells
+Never-seen pairs (off-set): 394 cells
+```
+
+### Boolean Function
+
+```
+f(pos_212, pos_216) = 1 if ANY of these residue pairs appear:
+
+  * PI_1: pos_212=G AND pos_216=R
+    PI_2: pos_212=V AND pos_216=E
+    PI_3: pos_212=I AND pos_216=R
+    PI_4: pos_212=L AND pos_216=R
+    PI_5: pos_212=V AND pos_216=K
+    PI_6: pos_212=S AND pos_216=R
+
+(* = essential prime implicant)
+```
+
+### Coupling Constants (J_ij)
+
+| Residue Pair | J_ij | Frequency | Type |
+|-------------|------|-----------|------|
+| I-R | 2.6161 | 0.0432 | co-evolutionary |
+| L-R | 2.6161 | 0.0199 | co-evolutionary |
+| S-R | 2.6161 | 0.0066 | co-evolutionary |
+| V-E | 0.0759 | 0.9236 | co-evolutionary |
+
+### Inference Rules (Natural Language)
+
+**Rule 23:** IF position 212 = **G** AND position 216 = **R** THEN co-evolutionary (MI = 0.377)
+Rule 24: IF position 212 = V AND position 216 = E THEN co-evolutionary (MI = 0.377)
+Rule 25: IF position 212 = I AND position 216 = R THEN co-evolutionary (MI = 0.377)
+Rule 26: IF position 212 = L AND position 216 = R THEN co-evolutionary (MI = 0.377)
+Rule 27: IF position 212 = V AND position 216 = K THEN co-evolutionary (MI = 0.377)
+Rule 28: IF position 212 = S AND position 216 = R THEN co-evolutionary (MI = 0.377)
+
+---
+
+## Position Pair (210, 215)
+
+| Property | Value |
+|----------|-------|
+| Mutual Information | 0.2377 |
+| Total mutations | 282 |
+| Reference pos 210 | N |
+| Reference pos 215 | G |
+| On-set cells | 4 |
+| Off-set cells | 395 |
+| Don't-care cells | 625 |
+| Prime implicants | 4 |
+| Essential PIs | 1 |
+
+### K-map (Compact View)
+
+```
+Position pair (210, 215): Reference = (N, G)
+
+Co-evolutionary residue pairs (on-set):
+  I-P, N-V, N-E, K-G
+
+Don't-care positions (conserved): 625 cells
+Never-seen pairs (off-set): 395 cells
+```
+
+### Boolean Function
+
+```
+f(pos_210, pos_215) = 1 if ANY of these residue pairs appear:
+
+    PI_1: pos_210=I AND pos_215=P
+    PI_2: pos_210=N AND pos_215=E
+    PI_3: pos_210=N AND pos_215=V
+  * PI_4: pos_210=K AND pos_215=G
+
+(* = essential prime implicant)
+```
+
+### Coupling Constants (J_ij)
+
+| Residue Pair | J_ij | Frequency | Type |
+|-------------|------|-----------|------|
+| I-P | 1.5315 | 0.2162 | co-evolutionary |
+| N-V | 0.2446 | 0.0064 | co-evolutionary |
+| N-G | 0.2436 | 0.7758 | co-evolutionary |
+
+### Inference Rules (Natural Language)
+
+Rule 29: IF position 210 = I AND position 215 = P THEN co-evolutionary (MI = 0.238)
+Rule 30: IF position 210 = N AND position 215 = E THEN co-evolutionary (MI = 0.238)
+Rule 31: IF position 210 = N AND position 215 = V THEN co-evolutionary (MI = 0.238)
+**Rule 32:** IF position 210 = **K** AND position 215 = **G** THEN co-evolutionary (MI = 0.238)
+
+---
+
+## Position Pair (210, 212)
+
+| Property | Value |
+|----------|-------|
+| Mutual Information | 0.1769 |
+| Total mutations | 301 |
+| Reference pos 210 | N |
+| Reference pos 212 | V |
+| On-set cells | 4 |
+| Off-set cells | 396 |
+| Don't-care cells | 624 |
+| Prime implicants | 4 |
+| Essential PIs | 0 |
+
+### K-map (Compact View)
+
+```
+Position pair (210, 212): Reference = (N, V)
+
+Co-evolutionary residue pairs (on-set):
+  I-V, I-G, N-L, N-S
+
+Don't-care positions (conserved): 624 cells
+Never-seen pairs (off-set): 396 cells
+```
+
+### Boolean Function
+
+```
+f(pos_210, pos_212) = 1 if ANY of these residue pairs appear:
+
+    PI_1: pos_210=I AND pos_212=V
+    PI_2: pos_210=I AND pos_212=G
+    PI_3: pos_210=N AND pos_212=L
+    PI_4: pos_210=N AND pos_212=S
+
+(* = essential prime implicant)
+```
+
+### Coupling Constants (J_ij)
+
+| Residue Pair | J_ij | Frequency | Type |
+|-------------|------|-----------|------|
+| N-L | 3.6277 | 0.0199 | co-evolutionary |
+| N-S | 3.6277 | 0.0066 | co-evolutionary |
+| I-V | 0.0269 | 0.9701 | co-evolutionary |
+
+### Inference Rules (Natural Language)
+
+Rule 33: IF position 210 = I AND position 212 = V THEN co-evolutionary (MI = 0.177)
+Rule 34: IF position 210 = I AND position 212 = G THEN co-evolutionary (MI = 0.177)
+Rule 35: IF position 210 = N AND position 212 = L THEN co-evolutionary (MI = 0.177)
+Rule 36: IF position 210 = N AND position 212 = S THEN co-evolutionary (MI = 0.177)
+
+---
+
+## Summary
+
+| Metric | Value |
+|--------|-------|
+| Sequences | 1299 |
+| Variable positions | 21 |
+| Co-evolutionary pairs | 10 |
+| Total inference rules | 36 |
+| Position pairs with rules | 10 |
+
+## How to Apply
+
+1. Extract the residue pair at each co-evolving position pair from a new sequence
+2. For each position pair, check if the residue pair matches any rule below
+3. If YES: that position pair is co-evolutionary (consistent with the observed data)
+4. If position i mutates: find which residue at position j satisfies the co-evolutionary constraint
+
+**Example:** If position 212 mutates to G, check rules for position 212.
+Essential rule: IF pos 212 = G AND pos 216 = R THEN co-evolutionary.
+So position 216 must also show R to satisfy the co-evolutionary constraint.

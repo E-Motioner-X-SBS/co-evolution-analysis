@@ -6,14 +6,14 @@ There are THREE ways to look at co-evolution:
 
 ### 1. Positive: "What co-evolves?" (Observed pairs)
 ```
-IF pos 76 = V AND pos 77 = Q → CO-EVOLUTIONARY
-Meaning: When position 76 mutates to V, position 77 follows with Q
+IF pos 212 = G AND pos 216 = R → CO-EVOLUTIONARY   (essential prime implicant)
+Meaning: When position 212 mutates to G, position 216 follows with R
 ```
 
 ### 2. Negative: "What CANNOT co-exist?" (Forbidden pairs)
 ```
-IF pos 76 = V AND pos 77 = R → FORBIDDEN (destabilizing)
-Meaning: This combination DESTABILIZES the protein
+IF pos 210 = K AND pos 215 = R → FORBIDDEN (destabilizing)
+Meaning: This combination is never observed — it DESTABILIZES the protein
 ```
 
 ### 3. Predictive: "What governs the flipping?" (Constraint function)
@@ -45,10 +45,11 @@ f(aa_i, aa_j) = DC →  conserved (structural, not variable)
 For a position pair (i, j), define the **constraint function**:
 
 ```
-C(i, j, aa_i, aa_j) = -ln(P(aa_i, aa_j) / P(aa_i) * P(aa_j))
+C(i, j, aa_i, aa_j) = ln(P(aa_i, aa_j) / (P(aa_i) * P(aa_j)))
 ```
 
-This is the **negative log-likelihood ratio**:
+This is the **log-likelihood ratio** (sign convention verified against the
+DCA literature, Morcos et al 2011 PNAS; matches `coevolution_shared.constraint_function`):
 - If C > 0: pair is MORE common than expected (co-evolutionary)
 - If C < 0: pair is LESS common than expected (anti-correlated)
 - If C = 0: pair occurs at random frequency
@@ -123,7 +124,7 @@ Prime implicants = destabilization constraints
 ### Approach C: Continuous (Frequency-Based)
 ```
 K-map cell (aa_i, aa_j) = P(aa_i, aa_j) (continuous frequency)
-Constraint function: C(i,j,aa_i,aa_j) = -ln(P/P_expected)
+Constraint function: C(i,j,aa_i,aa_j) = ln(P/P_expected)
 Prediction: σ(C) = probability of co-evolution
 ```
 

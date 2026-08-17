@@ -40,12 +40,13 @@ def main():
     base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
 
     # Load data
-    with open(base_dir / "master_boolean" / "master_boolean_summary.json") as f:
+    res_base = Path(__import__("os").environ.get("COEVO_RESULTS") or base_dir)
+    with open(res_base / "master_boolean" / "master_boolean_summary.json") as f:
         summary = json.load(f)
 
     aa_list = list(AMINO_HE_2012)
     encoder = Base20AminoEncoder(version=1)
-    sequences = parse_fasta(base_dir / "Spike_protein.aln-fasta")
+    sequences = parse_fasta(__import__("os").environ.get("COEVO_FASTA") or (base_dir / "Spike_protein.aln-fasta"))
     n_all = len(sequences)
 
     # Build position arrays
@@ -60,9 +61,13 @@ def main():
         pos_arrays.append(arr)
 
     def get_majority(pos, n):
-        return Counter(
+        cnt = Counter(
             int(a[pos]) for a in pos_arrays[:n] if pos < len(a) and 0 <= a[pos] < 20
-        ).most_common(1)[0][0]
+        )
+        if not cnt:
+            return 0
+        best = max(cnt.values())
+        return min(c for c, n in cnt.items() if n == best)
 
     def compute_coupling(pos_i, pos_j, n):
         joint = np.zeros((20, 20), dtype=np.float64)
@@ -311,7 +316,7 @@ def main():
         md.append("**Example:** No essential inference rules found; see per-pair rule lists above.")
 
     # Write
-    output_path = base_dir / "kmap_boolean_coevolution" / "COEVOLUTION_KMAP_BOOLEAN.md"
+    output_path = res_base / "kmap_boolean_coevolution" / "COEVOLUTION_KMAP_BOOLEAN.md"
     with open(output_path, "w") as f:
         f.write("\n".join(md))
 

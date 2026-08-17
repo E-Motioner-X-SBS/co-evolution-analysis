@@ -36,9 +36,14 @@ def parse_fasta(filepath):
 
 def main():
     base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
-    fasta_file = base_dir / "Spike_protein.aln-fasta"
-    output_dir = base_dir / "mi_heatmap"
-    output_dir.mkdir(exist_ok=True)
+    fasta_file = Path(
+        __import__("os").environ.get("COEVO_FASTA")
+        or (base_dir / "Spike_protein.aln-fasta")
+    )
+    output_dir = Path(
+        __import__("os").environ.get("COEVO_RESULTS") or (base_dir / "mi_heatmap")
+    )
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     print("Loading ALL sequences...")
     sequences = parse_fasta(fasta_file)
@@ -69,7 +74,7 @@ def main():
         dense = cg.dense_to_gpu(pos_arrays_list)
         pairs = cg.all_pairs(max_pos)  # ALL pairs, full matrix (~813K)
         print(f"  GPU: {len(pairs)} pairs on {dense.device}")
-        mi_dict, _ = cg.mi_matrix_gpu(dense, pairs, min_total=10, chunk=32768)
+        mi_dict, _ = cg.mi_matrix_gpu(dense, pairs, min_total=10, chunk=4096)
         for (i, j), mi in mi_dict.items():
             mi_matrix[i, j] = mi
             mi_matrix[j, i] = mi
@@ -80,7 +85,7 @@ def main():
         def mi_vectorized(pos_arrays, pos_i, pos_j, n_seqs):
             codes_i = pos_arrays[:n_seqs, pos_i]
             codes_j = pos_arrays[:n_seqs, pos_j]
-            valid = (0 <= codes_i < 20) & (0 <= codes_j < 20)
+            valid = (codes_i >= 0) & (codes_i < 20) & (codes_j >= 0) & (codes_j < 20)
             codes_i = codes_i[valid]
             codes_j = codes_j[valid]
             if len(codes_i) < 10:
@@ -158,7 +163,7 @@ def main():
         ax.set_xlabel("Position j", fontsize=12)
         ax.set_ylabel("Position i", fontsize=12)
         ax.set_title(
-            f"Mutual Information Heatmap - SARS-CoV-2 Spike Protein\n({n_all} sequences, positions 0-{max_pos - 1})",
+            f"Mutual Information Heatmap - Target Protein\n({n_all} sequences, positions 0-{max_pos - 1})",
             fontsize=14,
         )
 
@@ -191,11 +196,16 @@ def main():
         plt.savefig(output_dir / "mi_heatmap.pdf", bbox_inches="tight")
         print(f"Heatmap saved to {output_dir / 'mi_heatmap.png'}")
 
-        # Also create a focused heatmap for the co-evolutionary region (positions 60-80)
-        fig2, ax2 = plt.subplots(figsize=(10, 8))
+        # Also create a focused heatmap for a co-evolutionary region.
+        # Adaptive: for short proteins (< 60 cols) zoom covers the whole protein.
         focus_start = 60
         focus_end = 80
+        if max_pos <= focus_start:
+            focus_start = 0
+            focus_end = min(20, max_pos)
         mi_focus = mi_matrix[focus_start:focus_end, focus_start:focus_end]
+        fh, fw = mi_focus.shape
+        fig2, ax2 = plt.subplots(figsize=(10, 8))
 
         im2 = ax2.imshow(mi_focus, cmap="hot", aspect="auto", vmin=0, vmax=10)
         cbar2 = plt.colorbar(im2, ax=ax2, shrink=0.8)
@@ -208,15 +218,15 @@ def main():
             fontsize=14,
         )
 
-        tick_pos = np.arange(0, focus_end - focus_start, 2)
+        tick_pos = np.arange(0, fh, 2)
         ax2.set_xticks(tick_pos)
         ax2.set_yticks(tick_pos)
         ax2.set_xticklabels([str(focus_start + x) for x in tick_pos], fontsize=9)
         ax2.set_yticklabels([str(focus_start + x) for x in tick_pos], fontsize=9)
 
         # Mark high-MI pairs in this region
-        for i in range(focus_end - focus_start):
-            for j in range(i + 1, focus_end - focus_start):
+        for i in range(fh):
+            for j in range(i + 1, fw):
                 if mi_focus[i, j] > 2.0:
                     ax2.plot(j, i, "w*", markersize=6)
                     ax2.plot(i, j, "w*", markersize=6)
@@ -255,43 +265,50 @@ def main():
     print(f"  Pairs with MI > 1.0: {summary['high_mi_pairs_count']}")
     print(f"\nFiles saved to: {output_dir}")
 
-
-
-
     # ============================================================
     # COMBINED MI + PERPLEXITY ANALYSIS (all experiments)
     # ============================================================
     print("\n=== Combined MI + Perplexity Analysis ===")
     try:
         from coevolution_shared import (
-            combined_pair_scores, compute_entropy_vectorized,
+            combined_pair_scores,
+            compute_entropy_vectorized,
             load_position_arrays as _lpa,
         )
+
         _pa, _na, _fl = _lpa(max_pos=None, aligned=True)
         _ent = compute_entropy_vectorized(_pa, _na, _fl)
         _var = [p for p in range(_fl) if _ent[p] > 0.3]
-        _pairs = [(i, j) for idx, i in enumerate(_var)
-                  for j in _var[idx + 1:] if j - i <= 30]
+        _pairs = [
+            (i, j) for idx, i in enumerate(_var) for j in _var[idx + 1 :] if j - i <= 30
+        ]
         _scored = combined_pair_scores(_pa, _pairs, _na, _ent)
         print(f"  Variable positions: {len(_var)}")
         print(f"  Pairs scored (MI + perplexity ratio): {len(_scored)}")
         print(f"  Top 5 combined (MI + ratio):")
         for _s in _scored[:5]:
-            print(f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
-                  f"ratio={_s['ratio']:.2f} combined={_s['combined']:.3f}")
-        _mi_top = sorted(_scored, key=lambda s: -s['mi'])[:5]
+            print(
+                f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
+                f"ratio={_s['ratio']:.2f} combined={_s['combined']:.3f}"
+            )
+        _mi_top = sorted(_scored, key=lambda s: -s["mi"])[:5]
         print(f"  Top 5 by MI alone:")
         for _s in _mi_top:
-            print(f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
-                  f"ratio={_s['ratio']:.2f}")
+            print(
+                f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
+                f"ratio={_s['ratio']:.2f}"
+            )
         # ranking agreement
-        _r_mi = {(_s['pos_i'], _s['pos_j']): idx
-                 for idx, _s in enumerate(sorted(_scored, key=lambda s: -s['mi']))}
-        _r_cb = {(_s['pos_i'], _s['pos_j']): idx
-                 for idx, _s in enumerate(_scored)}
+        _r_mi = {
+            (_s["pos_i"], _s["pos_j"]): idx
+            for idx, _s in enumerate(sorted(_scored, key=lambda s: -s["mi"]))
+        }
+        _r_cb = {(_s["pos_i"], _s["pos_j"]): idx for idx, _s in enumerate(_scored)}
         _same = sum(1 for k in _r_mi if _r_mi[k] == _r_cb[k])
-        print(f"  Ranking agreement (MI vs combined, top-5 same): "
-              f"{len([k for k in _r_mi if k in _r_cb and _r_mi[k] < 5 and _r_cb[k] < 5])}/5")
+        print(
+            f"  Ranking agreement (MI vs combined, top-5 same): "
+            f"{len([k for k in _r_mi if k in _r_cb and _r_mi[k] < 5 and _r_cb[k] < 5])}/5"
+        )
     except Exception as _e:
         print(f"  Combined analysis skipped: {_e}")
 

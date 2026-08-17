@@ -35,6 +35,8 @@ from nkmap.analysis.kmap_builder import (
 )
 from nkmap.encoding.n_ary_gray import n_ary_hamming
 
+from coevolution_shared import compute_mi_matrix_gpu
+
 
 # ============================================================
 # 1. FASTA Parser
@@ -357,53 +359,35 @@ def predict_coevolution_nary(freq_2d, encoder, sequences, n_seqs=100):
     """
     print("\n=== Predicting Co-evolution from N-ary K-map ===")
 
-    # Build clean sequences
+    # Build clean sequences — ALL non-empty sequences (user directive:
+    # no filtering; gaps handled by encoder, state 20).
     n = min(n_seqs, len(sequences))
     clean_seqs = []
     for i in range(n):
         _, seq = sequences[i]
-        # CORRECTED: aligned (gap = 20 handled by encoder), no stripping
-        if len(seq) > 100:
+        if len(seq) > 0:
             clean_seqs.append(seq)
 
     if len(clean_seqs) < 5:
         print("  Insufficient sequences")
         return {}
 
-    # Compute pairwise mutual information
+    # Compute pairwise mutual information — FULL length, ALL sequences
     min_len = min(len(s) for s in clean_seqs)
-    n_test = min(30, min_len)
-
+    n_test = min_len
     mi_matrix = np.zeros((n_test, n_test))
 
-    for i in range(n_test):
-        for j in range(i + 1, n_test):
-            joint = Counter()
-            marg_i = Counter()
-            marg_j = Counter()
-
-            for seq in clean_seqs:
-                if i < len(seq) and j < len(seq):
-                    aa_i, aa_j = seq[i], seq[j]
-                    if aa_i in encoder.encode and aa_j in encoder.encode:
-                        joint[(aa_i, aa_j)] += 1
-                        marg_i[aa_i] += 1
-                        marg_j[aa_j] += 1
-
-            total = sum(joint.values())
-            if total == 0:
-                continue
-
-            mi = 0
-            for (ai, aj), count in joint.items():
-                p_joint = count / total
-                p_i = marg_i[ai] / total
-                p_j = marg_j[aj] / total
-                if p_joint > 0 and p_i > 0 and p_j > 0:
-                    mi += p_joint * np.log2(p_joint / (p_i * p_j))
-
-            mi_matrix[i, j] = mi
-            mi_matrix[j, i] = mi
+    # MI over ALL position pairs (GPU with numpy fallback; shared helper)
+    pos_arrays = [
+        np.array([encoder.encode.get(aa, -1) for aa in s[:n_test]], dtype=np.int32)
+        for s in clean_seqs
+    ]
+    pairs = [(i, j) for i in range(n_test) for j in range(i + 1, n_test)]
+    print(
+        f"  Prediction MI over {len(pairs)} pairs x {len(clean_seqs)} sequences (full length {n_test})"
+    )
+    mi_matrix, n_mi = compute_mi_matrix_gpu(pos_arrays, pairs, n_test)
+    print(f"  Prediction MI computed for {n_mi} pairs")
 
     # Classify pairs as "on-set" (frequent dipeptide) vs "off-set"
     # Use the n-ary frequency as threshold
@@ -458,9 +442,15 @@ def predict_coevolution_nary(freq_2d, encoder, sequences, n_seqs=100):
 
 def main():
     base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
-    fasta_file = base_dir / "Spike_protein.aln-fasta"
-    results_dir = base_dir / "nary_kmap_results"
-    results_dir.mkdir(exist_ok=True)
+    fasta_file = Path(
+        __import__("os").environ.get("COEVO_FASTA")
+        or (base_dir / "Spike_protein.aln-fasta")
+    )
+    results_dir = Path(
+        __import__("os").environ.get("COEVO_RESULTS")
+        or (base_dir / "nary_kmap_results")
+    )
+    results_dir.mkdir(parents=True, exist_ok=True)
 
     print("=" * 70)
     print("N-ary K-map Analysis of SARS-CoV-2 Spike Protein Co-evolution")
@@ -473,7 +463,7 @@ def main():
 
     # 2. Build n-ary K-map (k=2)
     print("\n[2/6] Building base-20 n-ary K-map (k=2)...")
-    freq_1d, counts, encoder = build_nary_kmap(sequences, k=2, n_seqs=1299)
+    freq_1d, counts, encoder = build_nary_kmap(sequences, k=2, n_seqs=len(sequences))
     freq_2d = build_nary_kmap_2d(freq_1d, k=2, encoder=encoder)
 
     # 3. Boolean minimization
@@ -483,15 +473,19 @@ def main():
 
     # 4. Extract motifs
     print("\n[4/6] Extracting co-evolution motifs...")
-    motifs = extract_nary_motifs(qm_result, encoder, sequences, n_seqs=1299)
+    motifs = extract_nary_motifs(qm_result, encoder, sequences, n_seqs=len(sequences))
 
     # 5. Compute couplings
     print("\n[5/6] Computing coupling constants...")
-    coupling = compute_nary_couplings(freq_2d, sequences, encoder, n_seqs=1299)
+    coupling = compute_nary_couplings(
+        freq_2d, sequences, encoder, n_seqs=len(sequences)
+    )
 
     # 6. Predict co-evolution
     print("\n[6/6] Predicting co-evolution...")
-    prediction = predict_coevolution_nary(freq_2d, encoder, sequences, n_seqs=1299)
+    prediction = predict_coevolution_nary(
+        freq_2d, encoder, sequences, n_seqs=len(sequences)
+    )
 
     # Save results
     print("\n" + "=" * 70)
@@ -557,43 +551,50 @@ def main():
     print(f"  co-evolutionary motifs, and the coupling constants quantify the")
     print(f"  strength of co-evolution between residue pairs.")
 
-
-
-
     # ============================================================
     # COMBINED MI + PERPLEXITY ANALYSIS (all experiments)
     # ============================================================
     print("\n=== Combined MI + Perplexity Analysis ===")
     try:
         from coevolution_shared import (
-            combined_pair_scores, compute_entropy_vectorized,
+            combined_pair_scores,
+            compute_entropy_vectorized,
             load_position_arrays as _lpa,
         )
+
         _pa, _na, _fl = _lpa(max_pos=None, aligned=True)
         _ent = compute_entropy_vectorized(_pa, _na, _fl)
         _var = [p for p in range(_fl) if _ent[p] > 0.3]
-        _pairs = [(i, j) for idx, i in enumerate(_var)
-                  for j in _var[idx + 1:] if j - i <= 30]
+        _pairs = [
+            (i, j) for idx, i in enumerate(_var) for j in _var[idx + 1 :] if j - i <= 30
+        ]
         _scored = combined_pair_scores(_pa, _pairs, _na, _ent)
         print(f"  Variable positions: {len(_var)}")
         print(f"  Pairs scored (MI + perplexity ratio): {len(_scored)}")
         print(f"  Top 5 combined (MI + ratio):")
         for _s in _scored[:5]:
-            print(f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
-                  f"ratio={_s['ratio']:.2f} combined={_s['combined']:.3f}")
-        _mi_top = sorted(_scored, key=lambda s: -s['mi'])[:5]
+            print(
+                f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
+                f"ratio={_s['ratio']:.2f} combined={_s['combined']:.3f}"
+            )
+        _mi_top = sorted(_scored, key=lambda s: -s["mi"])[:5]
         print(f"  Top 5 by MI alone:")
         for _s in _mi_top:
-            print(f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
-                  f"ratio={_s['ratio']:.2f}")
+            print(
+                f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
+                f"ratio={_s['ratio']:.2f}"
+            )
         # ranking agreement
-        _r_mi = {(_s['pos_i'], _s['pos_j']): idx
-                 for idx, _s in enumerate(sorted(_scored, key=lambda s: -s['mi']))}
-        _r_cb = {(_s['pos_i'], _s['pos_j']): idx
-                 for idx, _s in enumerate(_scored)}
+        _r_mi = {
+            (_s["pos_i"], _s["pos_j"]): idx
+            for idx, _s in enumerate(sorted(_scored, key=lambda s: -s["mi"]))
+        }
+        _r_cb = {(_s["pos_i"], _s["pos_j"]): idx for idx, _s in enumerate(_scored)}
         _same = sum(1 for k in _r_mi if _r_mi[k] == _r_cb[k])
-        print(f"  Ranking agreement (MI vs combined, top-5 same): "
-              f"{len([k for k in _r_mi if k in _r_cb and _r_mi[k] < 5 and _r_cb[k] < 5])}/5")
+        print(
+            f"  Ranking agreement (MI vs combined, top-5 same): "
+            f"{len([k for k in _r_mi if k in _r_cb and _r_mi[k] < 5 and _r_cb[k] < 5])}/5"
+        )
     except Exception as _e:
         print(f"  Combined analysis skipped: {_e}")
 

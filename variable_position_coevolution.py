@@ -74,10 +74,17 @@ def compute_position_entropy(pos_arrays, pos, n_seqs):
 
 
 def get_majority_ref(pos_arrays, pos, n_seqs):
-    """Return the most common residue code at a position (int 0-19)."""
-    return Counter(
+    """Return the most common residue code at a position (int 0-19).
+
+    Ties broken by lowest code index (matches GPU kernel).
+    """
+    cnt = Counter(
         int(a[pos]) for a in pos_arrays[:n_seqs] if pos < len(a) and 0 <= a[pos] < 20
-    ).most_common(1)[0][0]
+    )
+    if not cnt:
+        return 0
+    best = max(cnt.values())
+    return min(c for c, n in cnt.items() if n == best)
 
 
 def find_variable_positions(pos_arrays, n_seqs, entropy_threshold=0.5, max_pos=None):
@@ -289,9 +296,15 @@ def minimize_with_dontcare(kmap_with_dc):
 
 def main():
     base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
-    fasta_file = base_dir / "Spike_protein.aln-fasta"
-    results_dir = base_dir / "variable_position_results"
-    results_dir.mkdir(exist_ok=True)
+    fasta_file = Path(
+        __import__("os").environ.get("COEVO_FASTA")
+        or (base_dir / "Spike_protein.aln-fasta")
+    )
+    results_dir = Path(
+        __import__("os").environ.get("COEVO_RESULTS")
+        or (base_dir / "variable_position_results")
+    )
+    results_dir.mkdir(parents=True, exist_ok=True)
 
     print("=" * 70)
     print("Variable-Position Co-evolution via K-map with Don't-Care")
@@ -383,7 +396,9 @@ def main():
                 mask.append(False)
 
             row_code = sum(values[j] * (2 ** (4 - j)) for j in range(5) if not mask[j])
-            col_code = sum(values[j + 5] * (2 ** (4 - j)) for j in range(5) if not mask[j + 5])
+            col_code = sum(
+                values[j + 5] * (2 ** (4 - j)) for j in range(5) if not mask[j + 5]
+            )
 
             row_aa = aa_list[row_code % 20] if row_code < 20 else "?"
             col_aa = aa_list[col_code % 20] if col_code < 20 else "?"
@@ -451,43 +466,50 @@ def main():
     print(f"  3. Extract prime implicants that capture co-evolutionary MOTIFS")
     print(f"     (not conservation patterns)")
 
-
-
-
     # ============================================================
     # COMBINED MI + PERPLEXITY ANALYSIS (all experiments)
     # ============================================================
     print("\n=== Combined MI + Perplexity Analysis ===")
     try:
         from coevolution_shared import (
-            combined_pair_scores, compute_entropy_vectorized,
+            combined_pair_scores,
+            compute_entropy_vectorized,
             load_position_arrays as _lpa,
         )
+
         _pa, _na, _fl = _lpa(max_pos=None, aligned=True)
         _ent = compute_entropy_vectorized(_pa, _na, _fl)
         _var = [p for p in range(_fl) if _ent[p] > 0.3]
-        _pairs = [(i, j) for idx, i in enumerate(_var)
-                  for j in _var[idx + 1:] if j - i <= 30]
+        _pairs = [
+            (i, j) for idx, i in enumerate(_var) for j in _var[idx + 1 :] if j - i <= 30
+        ]
         _scored = combined_pair_scores(_pa, _pairs, _na, _ent)
         print(f"  Variable positions: {len(_var)}")
         print(f"  Pairs scored (MI + perplexity ratio): {len(_scored)}")
         print(f"  Top 5 combined (MI + ratio):")
         for _s in _scored[:5]:
-            print(f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
-                  f"ratio={_s['ratio']:.2f} combined={_s['combined']:.3f}")
-        _mi_top = sorted(_scored, key=lambda s: -s['mi'])[:5]
+            print(
+                f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
+                f"ratio={_s['ratio']:.2f} combined={_s['combined']:.3f}"
+            )
+        _mi_top = sorted(_scored, key=lambda s: -s["mi"])[:5]
         print(f"  Top 5 by MI alone:")
         for _s in _mi_top:
-            print(f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
-                  f"ratio={_s['ratio']:.2f}")
+            print(
+                f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
+                f"ratio={_s['ratio']:.2f}"
+            )
         # ranking agreement
-        _r_mi = {(_s['pos_i'], _s['pos_j']): idx
-                 for idx, _s in enumerate(sorted(_scored, key=lambda s: -s['mi']))}
-        _r_cb = {(_s['pos_i'], _s['pos_j']): idx
-                 for idx, _s in enumerate(_scored)}
+        _r_mi = {
+            (_s["pos_i"], _s["pos_j"]): idx
+            for idx, _s in enumerate(sorted(_scored, key=lambda s: -s["mi"]))
+        }
+        _r_cb = {(_s["pos_i"], _s["pos_j"]): idx for idx, _s in enumerate(_scored)}
         _same = sum(1 for k in _r_mi if _r_mi[k] == _r_cb[k])
-        print(f"  Ranking agreement (MI vs combined, top-5 same): "
-              f"{len([k for k in _r_mi if k in _r_cb and _r_mi[k] < 5 and _r_cb[k] < 5])}/5")
+        print(
+            f"  Ranking agreement (MI vs combined, top-5 same): "
+            f"{len([k for k in _r_mi if k in _r_cb and _r_mi[k] < 5 and _r_cb[k] < 5])}/5"
+        )
     except Exception as _e:
         print(f"  Combined analysis skipped: {_e}")
 

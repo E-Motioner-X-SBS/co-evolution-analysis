@@ -50,9 +50,9 @@ def compute_entropy(pos_arrays, pos, n_seqs):
 
 def main():
     base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
-    fasta_file = base_dir / "Spike_protein.aln-fasta"
-    results_dir = base_dir / "full_length_results"
-    results_dir.mkdir(exist_ok=True)
+    fasta_file = Path(__import__("os").environ.get("COEVO_FASTA") or (base_dir / "Spike_protein.aln-fasta"))
+    results_dir = Path(__import__("os").environ.get("COEVO_RESULTS") or (base_dir / "full_length_results"))
+    results_dir.mkdir(parents=True, exist_ok=True)
 
     print("=" * 80)
     print("Full-Length Co-evolution Analysis (ALL 1,276 positions)")
@@ -134,7 +134,7 @@ def main():
             ]
             print(f"  Pairs within window 30: {len(pairs)}")
             mi_dict, _ = cg.mi_matrix_gpu(
-                dense, pairs, refs=refs, mutation_only=True, min_total=5, chunk=16384
+                dense, pairs, refs=refs, mutation_only=True, min_total=5, chunk=4096
             )
             # Map pair positions → matrix indices
             pos_to_idx = {p: i for i, p in enumerate(all_var)}
@@ -155,16 +155,18 @@ def main():
                 pos_j = all_var[idx_j]
                 if abs(pos_i - pos_j) > 30:
                     continue
-                ref_i = Counter(
+                _cnt_i = Counter(
                     int(a[pos_i])
                     for a in pos_arrays[:n_all]
                     if pos_i < len(a) and 0 <= a[pos_i] < 20
-                ).most_common(1)[0][0]
-                ref_j = Counter(
+                )
+                ref_i = min(c for c, n in _cnt_i.items() if n == max(_cnt_i.values()))
+                _cnt_j = Counter(
                     int(a[pos_j])
                     for a in pos_arrays[:n_all]
                     if pos_j < len(a) and 0 <= a[pos_j] < 20
-                ).most_common(1)[0][0]
+                )
+                ref_j = min(c for c, n in _cnt_j.items() if n == max(_cnt_j.values()))
 
                 joint, marg_i, marg_j = Counter(), Counter(), Counter()
                 for arr in pos_arrays[:n_all]:

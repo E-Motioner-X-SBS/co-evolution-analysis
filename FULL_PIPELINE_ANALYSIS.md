@@ -1,6 +1,6 @@
 # E-Motioner-X-SBS: Complete Co-Evolution Analysis Pipeline
 
-**Generated:** August 07, 2026 at 10:38
+**Generated:** August 17, 2026 at 15:45
 **Dataset:** SARS-CoV-2 Omicron Spike Protein — 1,299 sequences, 1276 positions
 **Compute:** NVIDIA A100 80GB + 24-core Xeon, Python 3.10
 **Author:** Shuvam Banerji Seal — IISER Kolkata
@@ -13,15 +13,15 @@ This document presents the complete computational pipeline for analyzing co-evol
 constraints in the SARS-CoV-2 Spike protein using Karnaugh map (K-map) Boolean minimization.
 **1,299** Omicron variant Spike sequences from GISAID were encoded using base-20
 (He 2012 ordering) amino acid representation. Position-pair mutual information identified
-**3** co-evolving position pairs in the N-terminal signal peptide region
-(positions 68-79). Quine-McCluskey Boolean minimization produced **3 essential
-prime implicants** — each representing an irreducible co-evolutionary constraint.
+**2** co-evolving position pairs with Boolean rules. Quine-McCluskey
+minimization produced **2 essential prime implicants** — each representing
+an irreducible co-evolutionary constraint.
 
 **Key results:** H1 Gray-code adjacency enrichment = **0.19×**; 
 max pairwise MI = **0.8067** at positions (373,378);
-21/80 positions are evolutionarily variable (H > 0.3).
+21/1276 positions are evolutionarily variable (H > 0.3).
 
-## 1. Formal Foundations — 236 Lean 4 Theorems
+## 1. Formal Foundations — 221 Lean 4 Theorems (106 + 115)
 
 The entire framework rests on formal proofs in Lean 4.29.0. All theorems use `native_decide`,
 are **sorry-free** and **axiom-free**, and compile via `lake build` in under 1 second.
@@ -63,9 +63,9 @@ in Python and reports discrepancies. Result: **103/103 pass**, zero discrepancie
 | **File** | `Spike_protein.aln-fasta` (1.8 MB) |
 | **Sequences** | 1,299 SARS-CoV-2 Omicron Spike proteins |
 | **Alignment length** | 1276 residues |
-| **Analysis region** | Positions 0-79 (N-terminal signal peptide) |
-| **Variable positions** | 21/80 (entropy > 0.3) |
-| **Conserved positions** | 59/80 |
+| **Analysis region** | Full length (1276 residues) |
+| **Variable positions** | 21/1276 (entropy > 0.3) |
+| **Conserved positions** | 1255/1276 |
 | **Co-evolving pairs (MI > 0.01)** | 73 |
 | **Co-evolving pairs (MI > 0.1)** | 17 |
 | **Encoding** | Base-20, He 2012 ordering |
@@ -146,13 +146,13 @@ Don't-care (-1) marks the reference pair (conserved).
 
 ### 3.6 Step 4: Quine-McCluskey Boolean Minimization
 
-The 20×20 = 400-cell K-map is flattened to a truth table with 8 binary variables
-(4 bits for row amino acid + 4 bits for column amino acid). The Quine-McCluskey
+The 32×32 = 1,024-cell padded K-map is flattened to a truth table with 10 binary variables
+(5 bits for row amino acid + 5 bits for column amino acid). The Quine-McCluskey
 algorithm finds the minimal set of prime implicants covering all on-set cells:
 
 $$f(\text{pos}_i, \text{pos}_j, \text{aa}_i, \text{aa}_j) = \bigvee_k \bigwedge_{m \in S_k} b_m$$
 
-where $b_m$ are the 8 binary variables and $S_k$ are the literal sets for each prime implicant.
+where $b_m$ are the 10 binary variables and $S_k$ are the literal sets for each prime implicant.
 
 ## 4. Entropy and Conservation Analysis
 
@@ -167,7 +167,7 @@ where $P(a_i)$ is the frequency of amino acid $a_i$ at position $p$.
 - $H \approx 0$: highly conserved (one amino acid dominates)
 - $H \approx 4.32$: maximally variable (uniform distribution over 20 AAs)
 
-### 4.2 Conservation Landscape (Positions 0-79)
+### 4.2 Conservation Landscape (full length)
 
 | Position | Consensus | Frequency | Entropy | Perplexity | Status |
 |----------|-----------|-----------|---------|------------|--------|
@@ -253,7 +253,7 @@ where $P(a_i)$ is the frequency of amino acid $a_i$ at position $p$.
 | 78 | F | 0.9992 | 0.0091 | 1.006 | Conserved |
 | 79 | D | 0.9985 | 0.0091 | 1.006 | Conserved |
 
-**Summary:** 21 variable positions (H > 0.3), 59 conserved.
+**Summary:** 21 variable positions (H > 0.3), 1255 conserved.
 
 ## 5. Mutual Information Analysis
 
@@ -338,52 +338,42 @@ def mutual_information(pos_arrays, pos_i, pos_j, n_seqs):
 | 49 | 488 | 498 | 0.0320 | F | G | 0.414 | 0.781 | 10 |
 | 50 | 479 | 495 | 0.0313 | N | R | 0.142 | 0.455 | 16 |
 
-## 6. Quine-McCluskey Boolean Minimization — All 108 Essential Prime Implicants
+## 6. Quine-McCluskey Boolean Minimization — 2 Essential Prime Implicants
 
-The Boolean minimization was performed on 3 position pairs (68-79),
-producing **3 essential prime implicants**. Each rule has the form:
+The Boolean minimization was performed on 2 position pairs,
+producing **2 essential prime implicants**. Each rule has the form:
 
-$$f(s_3, s_2, s_1, s_0, t_3, t_2, t_1, t_0) = \text{AND of literals}$$
+$$f(s_4, s_3, s_2, s_1, s_0, t_4, t_3, t_2, t_1, t_0) = \text{AND of literals}$$
 
 **Variables:**
-- $s_3 s_2 s_1 s_0$ = 4-bit binary encoding of residue at position $i$
-- $t_3 t_2 t_1 t_0$ = 4-bit binary encoding of residue at position $j$
+- $s_4 s_3 s_2 s_1 s_0$ = 5-bit Gray encoding of residue at position $i$
+- $t_4 t_3 t_2 t_1 t_0$ = 5-bit Gray encoding of residue at position $j$
 - $\bar{s}_k$ = NOT ($s_k = 0$), $s_k$ = ($s_k = 1$)
 
-### 6.1 Complete Inference Rules (3 rules across 3 position pairs)
+### 6.1 Complete Inference Rules (2 rules across 2 position pairs)
 
-### Position Pair (210, 212) — MI = 0.1769, Reference: N→V
+### Position Pair (210, 215) — MI = 0.7532, Reference: N→G
 
 | Rule | Boolean Expression | Amino Acids |
 |------|-------------------|-------------|
-| 1 | $$\bar{s3}  \cdot  s2  \cdot  \bar{s1}  \cdot  s0  \cdot  t3  \cdot  t1  \cdot  t0$$ | (N, S) |
+| 1 | $$s3  \cdot  s2  \cdot  \bar{s1}  \cdot  s0  \cdot  t4  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  t0$$ | (K, G) |
 
 **Interpretation:** When position 210 mutates to any of the listed residues,
-position 212 must co-evolve to the corresponding partner residue to maintain
-protein stability. The reference pair is (N, V).
-
-### Position Pair (212, 215) — MI = 0.3977, Reference: V→G
-
-| Rule | Boolean Expression | Amino Acids |
-|------|-------------------|-------------|
-| 2 | $$\bar{s3}  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  \bar{t1}  \cdot  \bar{t0}$$ | (V, P) |
-
-**Interpretation:** When position 212 mutates to any of the listed residues,
 position 215 must co-evolve to the corresponding partner residue to maintain
-protein stability. The reference pair is (V, G).
+protein stability. The reference pair is (N, G).
 
 ### Position Pair (212, 216) — MI = 0.3773, Reference: V→R
 
 | Rule | Boolean Expression | Amino Acids |
 |------|-------------------|-------------|
-| 3 | $$\bar{s3}  \cdot  s2  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t1  \cdot  t0$$ | (S, R) |
+| 2 | $$s4  \cdot  s1  \cdot  s0  \cdot  \bar{t4}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$ | (G, R) |
 
 **Interpretation:** When position 212 mutates to any of the listed residues,
 position 216 must co-evolve to the corresponding partner residue to maintain
 protein stability. The reference pair is (V, R).
 
 
-**Total inference rules:** 3
+**Total inference rules:** 2
 
 ## 7. Coupling Constants and Constraint Functions
 
@@ -499,7 +489,7 @@ For each consecutive pair of residues in each of the {n_all:,} sequences:
 
 ## 10. Complete Analysis Scripts Inventory
 
-The `datasets/co-evolution/` directory contains **19 Python scripts**
+The `datasets/co-evolution/` directory contains **23 Python scripts**
 and **1 shared module** (`coevolution_shared.py`).
 
 | # | Script | Lines | Purpose |
@@ -508,10 +498,10 @@ and **1 shared module** (`coevolution_shared.py`).
 | 2 | `run_kmap_analysis.py` | 908 | Master K-map pipeline: H1-H6 on binary 32×32 K-map, consensus K-map, co-evolution analysis |
 | 3 | `boolean_co-evolution.py` | 637 | Binary K-map Boolean minimization: 32×32 thresholded → Quine-McCluskey → essential prime implicants |
 | 4 | `nary_kmap_co-evolution.py` | 537 | Base-20 K-map analysis: 20×20 frequency map → Boolean → coupling constants |
-| 5 | `master_boolean.py` | 330 | Master Boolean function: 3 essential PIs across 10 pairs (full-length) |
+| 5 | `master_boolean.py` | 330 | Master Boolean function: 2 essential PIs across 10 pairs (full-length) |
 | 6 | `position_kmap_coevolution.py` | 481 | Position-pair K-maps with MI: builds per-position-pair 20×20 K-maps and minimizes |
 | 7 | `run_allseq_analysis.py` | 328 | Full position-based K-map analysis on ALL 1,299 sequences |
-| 8 | `kmap_boolean_coevolution.py` | 383 | K-map Boolean with full markdown output: 3 rules across 3 position pairs |
+| 8 | `kmap_boolean_coevolution.py` | 383 | K-map Boolean with full markdown output: 2 rules across 2 position pairs |
 | 9 | `generate_co-evolution_md.py` | 313 | Markdown generator from JSON results |
 | 10 | `generate_full_analysis_md.py` | 397 | Comprehensive report generator from all JSON outputs |
 | 11 | `create_mi_heatmap.py` | 247 | MI heatmap visualization (full + focus region), matplotlib |
@@ -522,9 +512,9 @@ and **1 shared module** (`coevolution_shared.py`).
 | 16 | `variable_position_coevolution.py` | 421 | Variable-position K-map with strategic don't-care conditions |
 | 17 | `perplexity_coevolution.py` | 217 | Perplexity-based co-evolution strength measurement |
 | 18 | `advanced_co-evolution_analysis.py` | 471 | Co-evolution network, Walsh-Hadamard spectrum, variant classification, clustering |
-| 19 | `full_length_analysis.py` | 206 | Full-length (all 1,276 positions) entropy and MI analysis |
+| 19 | `full_length_analysis.py` | 206 | Full-length entropy and MI analysis (all positions), |
 | 20 | `gpu_full_analysis.py` | 280 | GPU-accelerated analysis: numba parallel entropy/H1/mutations + shared-memory Pool for MI |
-| 21 | `run_all_bg.sh` | 107 | Master launcher: runs all 17 scripts concurrently |
+| 21 | `run_all_bg.sh` | 107 | Master launcher: runs all 23 scripts concurrently |
 
 ## 11. Flipped Boolean Analysis — Negative Selection
 
@@ -584,10 +574,10 @@ Rules learned from one variant do not generalize to others.
 | Position arrays built | 1,299 × 1276 = 1,657,524 integers |
 | Variable positions (H > 0.3) | 21 |
 | Co-evolving pairs (MI > 0.1) | 17 |
-| Boolean expressions (QM minimized) | 3 essential prime implicants |
-| Unique position pairs with rules | 3 |
-| Lean 4 theorems | 236 (106 + 115 + 15) |
-| Python scripts | 20 |
+| Boolean expressions (QM minimized) | 2 essential prime implicants |
+| Unique position pairs with rules | 2 |
+| Lean 4 theorems | 221 (106 + 115) |
+| Python scripts | 23 |
 | Total Python LOC | ~7,000 |
 | Shared module LOC | 340 |
 
@@ -596,8 +586,8 @@ Rules learned from one variant do not generalize to others.
 ### 14.1 For a New Spike Sequence
 
 ```python
-# 1. Extract residues at positions 68-79
-seq_region = seq[68:80]
+# 1. Extract residues at the co-evolving variable positions
+# (the 21 variable positions identified by entropy H > 0.3)
 
 # 2. For each co-evolving position pair, check the Boolean function
 for (pos_i, pos_j) in coevolving_pairs:
@@ -659,5 +649,5 @@ Top 3 by PP ratio: (212,215), (210,215), (378,407)
 Top 3 by combined: (378,407), (18,26), (66,94)
 
 ---
-*Generated August 07, 2026 at 10:38 by `generate_full_pipeline_doc.py`*
+*Generated August 17, 2026 at 15:45 by `generate_full_pipeline_doc.py`*
 *All values computed from 1,299 Omicron Spike sequences using shared `coevolution_shared` module*

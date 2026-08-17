@@ -56,9 +56,13 @@ def compute_entropy(pos_arrays, pos, n_seqs):
 
 
 def get_majority_ref(pos_arrays, pos, n_seqs):
-    return Counter(
+    cnt = Counter(
         int(a[pos]) for a in pos_arrays[:n_seqs] if pos < len(a) and 0 <= a[pos] < 20
-    ).most_common(1)[0][0]
+    )
+    if not cnt:
+        return 0
+    best = max(cnt.values())
+    return min(c for c, n in cnt.items() if n == best)
 
 
 def compute_frequency_kmap(pos_arrays, pos_i, pos_j, n_seqs):
@@ -104,9 +108,15 @@ def sigmoid(x):
 
 def main():
     base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
-    fasta_file = base_dir / "Spike_protein.aln-fasta"
-    results_dir = base_dir / "constraint_function_results"
-    results_dir.mkdir(exist_ok=True)
+    fasta_file = Path(
+        __import__("os").environ.get("COEVO_FASTA")
+        or (base_dir / "Spike_protein.aln-fasta")
+    )
+    results_dir = Path(
+        __import__("os").environ.get("COEVO_RESULTS")
+        or (base_dir / "constraint_function_results")
+    )
+    results_dir.mkdir(parents=True, exist_ok=True)
 
     print("=" * 80)
     print("Predictive Constraint Function for Co-evolution")
@@ -139,6 +149,7 @@ def main():
 
     # Find co-evolutionary pairs (GPU-accelerated via coevolution_shared)
     from coevolution_shared import find_coevolving_pairs_gpu
+
     co_evolving = find_coevolving_pairs_gpu(
         pos_arrays, variable_positions, n_all, max_gap=30, min_mi=0.1
     )
@@ -231,13 +242,19 @@ def main():
     correct = 0
     total = 0
 
+    # Proportional train/test split (~62/38, like the original 800/499 for
+    # 1299 sequences) — works for ANY dataset size, guarantees a non-empty
+    # test set.
+    n_train = max(1, int(0.62 * n_all))
+    print(f"  Train: {n_train} sequences, Test: {n_all - n_train} sequences")
+
     for pos_i, pos_j, mi, n_muts, ref_i, ref_j in co_evolving[:10]:
         # BUG FIX: ref_i, ref_j are already int codes (0-19) from get_majority_ref
         ref_i_code = int(ref_i)
         ref_j_code = int(ref_j)
-        # Build constraint function from first 800 sequences
+        # Build constraint function from the training sequences
         kmap_freq = np.zeros((20, 20), dtype=np.float64)
-        for arr in pos_arrays[:800]:
+        for arr in pos_arrays[:n_train]:
             if pos_i < len(arr) and pos_j < len(arr):
                 ci, cj = int(arr[pos_i]), int(arr[pos_j])
                 if 0 <= ci < 20 and 0 <= cj < 20:
@@ -248,8 +265,8 @@ def main():
 
         C = compute_constraint_function(kmap_freq)
 
-        # Test on sequences 800-1299
-        for arr in pos_arrays[800:]:
+        # Test on the remaining sequences
+        for arr in pos_arrays[n_train:]:
             if pos_i < len(arr) and pos_j < len(arr):
                 ci, cj = int(arr[pos_i]), int(arr[pos_j])
                 if 0 <= ci < 20 and 0 <= cj < 20:
@@ -283,43 +300,50 @@ def main():
     print(f"The constraint function C(aa_i, aa_j) = ln(P/P_expected)")
     print(f"predicts co-evolutionary pairs with {accuracy * 100:.1f}% accuracy.")
 
-
-
-
     # ============================================================
     # COMBINED MI + PERPLEXITY ANALYSIS (all experiments)
     # ============================================================
     print("\n=== Combined MI + Perplexity Analysis ===")
     try:
         from coevolution_shared import (
-            combined_pair_scores, compute_entropy_vectorized,
+            combined_pair_scores,
+            compute_entropy_vectorized,
             load_position_arrays as _lpa,
         )
+
         _pa, _na, _fl = _lpa(max_pos=None, aligned=True)
         _ent = compute_entropy_vectorized(_pa, _na, _fl)
         _var = [p for p in range(_fl) if _ent[p] > 0.3]
-        _pairs = [(i, j) for idx, i in enumerate(_var)
-                  for j in _var[idx + 1:] if j - i <= 30]
+        _pairs = [
+            (i, j) for idx, i in enumerate(_var) for j in _var[idx + 1 :] if j - i <= 30
+        ]
         _scored = combined_pair_scores(_pa, _pairs, _na, _ent)
         print(f"  Variable positions: {len(_var)}")
         print(f"  Pairs scored (MI + perplexity ratio): {len(_scored)}")
         print(f"  Top 5 combined (MI + ratio):")
         for _s in _scored[:5]:
-            print(f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
-                  f"ratio={_s['ratio']:.2f} combined={_s['combined']:.3f}")
-        _mi_top = sorted(_scored, key=lambda s: -s['mi'])[:5]
+            print(
+                f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
+                f"ratio={_s['ratio']:.2f} combined={_s['combined']:.3f}"
+            )
+        _mi_top = sorted(_scored, key=lambda s: -s["mi"])[:5]
         print(f"  Top 5 by MI alone:")
         for _s in _mi_top:
-            print(f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
-                  f"ratio={_s['ratio']:.2f}")
+            print(
+                f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
+                f"ratio={_s['ratio']:.2f}"
+            )
         # ranking agreement
-        _r_mi = {(_s['pos_i'], _s['pos_j']): idx
-                 for idx, _s in enumerate(sorted(_scored, key=lambda s: -s['mi']))}
-        _r_cb = {(_s['pos_i'], _s['pos_j']): idx
-                 for idx, _s in enumerate(_scored)}
+        _r_mi = {
+            (_s["pos_i"], _s["pos_j"]): idx
+            for idx, _s in enumerate(sorted(_scored, key=lambda s: -s["mi"]))
+        }
+        _r_cb = {(_s["pos_i"], _s["pos_j"]): idx for idx, _s in enumerate(_scored)}
         _same = sum(1 for k in _r_mi if _r_mi[k] == _r_cb[k])
-        print(f"  Ranking agreement (MI vs combined, top-5 same): "
-              f"{len([k for k in _r_mi if k in _r_cb and _r_mi[k] < 5 and _r_cb[k] < 5])}/5")
+        print(
+            f"  Ranking agreement (MI vs combined, top-5 same): "
+            f"{len([k for k in _r_mi if k in _r_cb and _r_mi[k] < 5 and _r_cb[k] < 5])}/5"
+        )
     except Exception as _e:
         print(f"  Combined analysis skipped: {_e}")
 

@@ -1,0 +1,14 @@
+{
+ "index": 108,
+ "accession": "WED31829.1",
+ "full_header": "WED31829.1 |surface glycoprotein [Severe acute respiratory syndrome coronavirus 2]",
+ "uid": "u0041",
+ "md5": "2b0e1b296e793d9c045bb13a20599ab5",
+ "project_id": "55f5a1",
+ "n_models": 6,
+ "pdb_files": [
+  "01.pdb.gz",
+  "02.pdb.gz",
+  "03.pdb.gz"
+ ]
+}

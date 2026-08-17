@@ -16,6 +16,7 @@ Analysis pipeline:
 """
 
 import os
+import re
 import sys
 import json
 import numpy as np
@@ -69,7 +70,10 @@ def parse_fasta(filepath):
 
 def extract_accession(header):
     """Extract accession number from FASTA header."""
-    return header.split()[0]
+    acc = header.split()[0]
+    # Sanitize for safe use in filenames (headers like 'DYR_ECOLI/1-159'
+    # or 'sp|P12345|NAME' would otherwise create bogus nested paths).
+    return re.sub(r"[^A-Za-z0-9._-]", "_", acc)
 
 
 def extract_description(header):
@@ -294,11 +298,7 @@ def analyze_h2_signature(sequences, n_seqs=100):
 
         # CORRECTED (FIX A1): count only canonical residues for composition
         canon = [aa for aa in seq if aa in _AA_TO_INDEX]
-        gc = (
-            (canon.count("G") + canon.count("C")) / len(canon)
-            if len(canon) > 0
-            else 0
-        )
+        gc = (canon.count("G") + canon.count("C")) / len(canon) if len(canon) > 0 else 0
         gc_contents.append(gc)
 
         # Shannon entropy of amino acid composition
@@ -367,55 +367,122 @@ def analyze_h3_structure(sequences, n_seqs=50):
         print("  Insufficient sequences for analysis")
         return {}
 
-    # Compute pairwise K-map distances
-    kmap_array = np.array(kmaps)
+    # Compute pairwise K-map distances — GPU norm-trick, CHUNKED STATS
+    # (never materializes the full n x n matrix; the upper-triangle
+    # sum/sumsq/min/max/argmin/argmax are accumulated per chunk).
+    kmap_array = np.array(kmaps, dtype=np.float32)
     n_kmaps = len(kmap_array)
 
-    # Euclidean distance matrix
-    from scipy.spatial.distance import pdist, squareform
-
-    dist_matrix = squareform(pdist(kmap_array, metric="euclidean"))
-
-    # Average distance
-    upper_tri = dist_matrix[np.triu_indices(n_kmaps, k=1)]
-    avg_dist = np.mean(upper_tri)
-    std_dist = np.std(upper_tri)
+    avg_dist = std_dist = min_dist = max_dist = 0.0
+    min_pair = max_pair = (None, None, 0.0)
+    try:
+        import torch
+        import coevolution_gpu as _cg
+        dev = _cg.get_device()
+        K = torch.from_numpy(kmap_array).to(dev)
+        sq = (K * K).sum(dim=1)  # [n] row squared norms
+        chunk = 2048
+        total = 0.0
+        sumsq = 0.0
+        cnt = 0
+        mn = float("inf")
+        mx = -1.0
+        mn_ij = None
+        mx_ij = None
+        for a in range(0, n_kmaps, chunk):
+            b = min(a + chunk, n_kmaps)
+            Drow = sq[a:b, None] + sq[None, :] - 2.0 * torch.mm(K[a:b], K.t())
+            Drow = torch.sqrt(torch.clamp(Drow, min=0.0))  # [chunk, n]
+            for r in range(b - a):
+                i = a + r
+                if i + 1 >= n_kmaps:
+                    continue
+                tri = Drow[r, i + 1 :]  # upper triangle of row i
+                if tri.numel() == 0:
+                    continue
+                tmin = float(tri.min())
+                tmax = float(tri.max())
+                if tmin < mn:
+                    mn = tmin
+                    j = int(tri.argmin()) + i + 1
+                    mn_ij = (i, j)
+                if tmax > mx:
+                    mx = tmax
+                    j = int(tri.argmax()) + i + 1
+                    mx_ij = (i, j)
+                srow = float(tri.sum())
+                total += srow
+                sumsq += float((tri * tri).sum())
+                cnt += int(tri.numel())
+            del Drow
+        if cnt > 0:
+            avg_dist = total / cnt
+            std_dist = (sumsq / cnt - avg_dist * avg_dist) ** 0.5
+        min_dist, max_dist = mn, mx
+        min_pair = (seq_ids[mn_ij[0]], seq_ids[mn_ij[1]], mn) if mn_ij else (None, None, 0.0)
+        max_pair = (seq_ids[mx_ij[0]], seq_ids[mx_ij[1]], mx) if mx_ij else (None, None, 0.0)
+        print(f"  H3 GPU distance stats over {cnt} pairs ({n_kmaps} sequences, chunked)")
+    except Exception as e:
+        print(f"  H3 GPU distance failed ({e}); CHUNKED CPU fallback (no n^2 matrix)")
+        sq_cpu = (kmap_array * kmap_array).sum(axis=1)
+        total = 0.0
+        sumsq = 0.0
+        cnt = 0
+        mn = float("inf")
+        mx = -1.0
+        mn_ij = None
+        mx_ij = None
+        chunk = 1024
+        for a in range(0, n_kmaps, chunk):
+            b = min(a + chunk, n_kmaps)
+            Drow = sq_cpu[a:b, None] + sq_cpu[None, :] - 2.0 * (kmap_array[a:b] @ kmap_array.T)
+            Drow = np.sqrt(np.maximum(Drow, 0.0))
+            for r in range(b - a):
+                i = a + r
+                if i + 1 >= n_kmaps:
+                    continue
+                tri = Drow[r, i + 1:]
+                if tri.size == 0:
+                    continue
+                tmin = float(tri.min())
+                tmax = float(tri.max())
+                if tmin < mn:
+                    mn = tmin
+                    mn_ij = (i, int(tri.argmin()) + i + 1)
+                if tmax > mx:
+                    mx = tmax
+                    mx_ij = (i, int(tri.argmax()) + i + 1)
+                total += float(tri.sum())
+                sumsq += float((tri * tri).sum())
+                cnt += int(tri.size)
+            del Drow
+        if cnt > 0:
+            avg_dist = total / cnt
+            std_dist = (sumsq / cnt - avg_dist * avg_dist) ** 0.5
+        min_dist, max_dist = mn, mx
+        min_pair = (seq_ids[mn_ij[0]], seq_ids[mn_ij[1]], mn) if mn_ij else (None, None, 0.0)
+        max_pair = (seq_ids[mx_ij[0]], seq_ids[mx_ij[1]], mx) if mx_ij else (None, None, 0.0)
 
     print(f"  Sequences analyzed: {n_kmaps}")
     print(f"  Average K-map distance: {avg_dist:.6f}")
     print(f"  Std K-map distance: {std_dist:.6f}")
-    print(f"  Min distance: {np.min(upper_tri):.6f}")
-    print(f"  Max distance: {np.max(upper_tri):.6f}")
-
-    # Find most similar and most different pairs
-    min_idx = np.unravel_index(
-        np.argmin(dist_matrix + np.eye(n_kmaps) * 1e10), dist_matrix.shape
-    )
-    max_idx = np.unravel_index(np.argmax(dist_matrix), dist_matrix.shape)
-
+    print(f"  Min distance: {min_dist:.6f}")
+    print(f"  Max distance: {max_dist:.6f}")
     print(
-        f"  Most similar pair: {seq_ids[min_idx[0]]} vs {seq_ids[min_idx[1]]} (dist={dist_matrix[min_idx]:.6f})"
+        f"  Most similar pair: {min_pair[0]} vs {min_pair[1]} (dist={min_pair[2]:.6f})"
     )
     print(
-        f"  Most different pair: {seq_ids[max_idx[0]]} vs {seq_ids[max_idx[1]]} (dist={dist_matrix[max_idx]:.6f})"
+        f"  Most different pair: {max_pair[0]} vs {max_pair[1]} (dist={max_pair[2]:.6f})"
     )
 
     return {
         "num_sequences": n_kmaps,
         "avg_distance": avg_dist,
         "std_distance": std_dist,
-        "min_distance": float(np.min(upper_tri)),
-        "max_distance": float(np.max(upper_tri)),
-        "most_similar": (
-            seq_ids[min_idx[0]],
-            seq_ids[min_idx[1]],
-            float(dist_matrix[min_idx]),
-        ),
-        "most_different": (
-            seq_ids[max_idx[0]],
-            seq_ids[max_idx[1]],
-            float(dist_matrix[max_idx]),
-        ),
+        "min_distance": min_dist,
+        "max_distance": max_dist,
+        "most_similar": min_pair,
+        "most_different": max_pair,
     }
 
 
@@ -453,7 +520,7 @@ def analyze_h5_contacts(sequences, n_seqs=100):
 
     # Hamming distance distribution
     ham_dist_counts = Counter()
-    n_pairs = min(10000, len(all_encoded) * (len(all_encoded) - 1) // 2)
+    n_pairs = min(100000, len(all_encoded) * (len(all_encoded) - 1) // 2)
 
     # Sample pairs for efficiency
     if len(all_encoded) > 100:
@@ -512,11 +579,13 @@ def analyze_coevolution(sequences, n_seqs=50):
 
     n = min(n_seqs, len(sequences))
 
-    # Extract clean sequences (no gaps)
+    # Extract clean sequences — relative filter (>= 50% of max length),
+    # so small proteins are not discarded.
+    max_len = max(len(seq) for _, seq in sequences[:n]) if n else 0
     clean_seqs = []
     for i in range(n):
         header, seq = sequences[i]
-        if len(seq) > 100:
+        if len(seq) > 0:  # ALL sequences (user directive)
             clean_seqs.append((extract_accession(header), seq))
 
     if len(clean_seqs) < 5:
@@ -555,7 +624,7 @@ def analyze_coevolution(sequences, n_seqs=50):
     )
 
     # Compute pairwise position correlations
-    n_positions = min(200, max_len)  # Limit computation
+    n_positions = max_len  # FULL length
     encoding_matrix = np.zeros((len(clean_seqs), n_positions), dtype=int)
     for i, (_, seq) in enumerate(clean_seqs):
         for j in range(n_positions):
@@ -747,9 +816,14 @@ def main():
 
     # Paths
     base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
-    fasta_file = base_dir / "Spike_protein.aln-fasta"
-    results_dir = base_dir / "kmap_results"
-    results_dir.mkdir(exist_ok=True)
+    fasta_file = Path(
+        __import__("os").environ.get("COEVO_FASTA")
+        or (base_dir / "Spike_protein.aln-fasta")
+    )
+    results_dir = Path(
+        __import__("os").environ.get("COEVO_RESULTS") or (base_dir / "kmap_results")
+    )
+    results_dir.mkdir(parents=True, exist_ok=True)
 
     print("=" * 70)
     print("K-map Analysis of SARS-CoV-2 Spike Protein Co-evolution")
@@ -778,31 +852,31 @@ def main():
     # 4. H1: Adjacency analysis
     print("\n[4/10] Running H1: Gray-code adjacency analysis...")
     # BUG FIX: was n_seqs=200 (only 200 of 1299 sequences). Now ALL sequences.
-    h1_results = analyze_h1_adjacency(sequences, n_seqs=1299)
+    h1_results = analyze_h1_adjacency(sequences, n_seqs=len(sequences))
 
     # 5. H2: Signature analysis
     print("\n[5/10] Running H2: K-map signature analysis...")
-    h2_results = analyze_h2_signature(sequences, n_seqs=1299)
+    h2_results = analyze_h2_signature(sequences, n_seqs=len(sequences))
 
     # 6. H3: Structural classification
     print("\n[6/10] Running H3: Structural classification...")
-    h3_results = analyze_h3_structure(sequences, n_seqs=1299)
+    h3_results = analyze_h3_structure(sequences, n_seqs=len(sequences))
 
     # 7. H5: Contact map invariants
     print("\n[7/10] Running H5: Contact map invariants...")
-    h5_results = analyze_h5_contacts(sequences, n_seqs=1299)
+    h5_results = analyze_h5_contacts(sequences, n_seqs=len(sequences))
 
     # 8. Co-evolution analysis
     print("\n[8/10] Running co-evolution analysis...")
-    coevo_results = analyze_coevolution(sequences, n_seqs=1299)
+    coevo_results = analyze_coevolution(sequences, n_seqs=len(sequences))
 
     # 9. Walsh-Hadamard analysis
     print("\n[9/10] Running Walsh-Hadamard transform analysis...")
-    walsh_results = analyze_walsh_hadamard(sequences, n_seqs=1299)
+    walsh_results = analyze_walsh_hadamard(sequences, n_seqs=len(sequences))
 
     # 10. Mutation analysis
     print("\n[10/10] Running mutation analysis...")
-    mutation_results = analyze_mutations(sequences, n_seqs=1299)
+    mutation_results = analyze_mutations(sequences, n_seqs=len(sequences))
 
     # ============================================================
     # Save Results
@@ -843,7 +917,7 @@ def main():
         json.dump(summary, f, indent=2, default=str)
 
     # Save consensus K-map
-    consensus_kmap = build_kmap_consensus(sequences, n_seqs=1299)
+    consensus_kmap = build_kmap_consensus(sequences, n_seqs=len(sequences))
     np.save(results_dir / "consensus_kmap.npy", consensus_kmap)
     np.savetxt(
         results_dir / "consensus_kmap.csv",
@@ -908,43 +982,50 @@ def main():
         f"  Mutations: Mean = {mutation_results.get('mean_mutations', 0):.1f} per sequence"
     )
 
-
-
-
     # ============================================================
     # COMBINED MI + PERPLEXITY ANALYSIS (all experiments)
     # ============================================================
     print("\n=== Combined MI + Perplexity Analysis ===")
     try:
         from coevolution_shared import (
-            combined_pair_scores, compute_entropy_vectorized,
+            combined_pair_scores,
+            compute_entropy_vectorized,
             load_position_arrays as _lpa,
         )
+
         _pa, _na, _fl = _lpa(max_pos=None, aligned=True)
         _ent = compute_entropy_vectorized(_pa, _na, _fl)
         _var = [p for p in range(_fl) if _ent[p] > 0.3]
-        _pairs = [(i, j) for idx, i in enumerate(_var)
-                  for j in _var[idx + 1:] if j - i <= 30]
+        _pairs = [
+            (i, j) for idx, i in enumerate(_var) for j in _var[idx + 1 :] if j - i <= 30
+        ]
         _scored = combined_pair_scores(_pa, _pairs, _na, _ent)
         print(f"  Variable positions: {len(_var)}")
         print(f"  Pairs scored (MI + perplexity ratio): {len(_scored)}")
         print(f"  Top 5 combined (MI + ratio):")
         for _s in _scored[:5]:
-            print(f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
-                  f"ratio={_s['ratio']:.2f} combined={_s['combined']:.3f}")
-        _mi_top = sorted(_scored, key=lambda s: -s['mi'])[:5]
+            print(
+                f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
+                f"ratio={_s['ratio']:.2f} combined={_s['combined']:.3f}"
+            )
+        _mi_top = sorted(_scored, key=lambda s: -s["mi"])[:5]
         print(f"  Top 5 by MI alone:")
         for _s in _mi_top:
-            print(f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
-                  f"ratio={_s['ratio']:.2f}")
+            print(
+                f"    ({_s['pos_i']},{_s['pos_j']}): MI={_s['mi']:.3f} "
+                f"ratio={_s['ratio']:.2f}"
+            )
         # ranking agreement
-        _r_mi = {(_s['pos_i'], _s['pos_j']): idx
-                 for idx, _s in enumerate(sorted(_scored, key=lambda s: -s['mi']))}
-        _r_cb = {(_s['pos_i'], _s['pos_j']): idx
-                 for idx, _s in enumerate(_scored)}
+        _r_mi = {
+            (_s["pos_i"], _s["pos_j"]): idx
+            for idx, _s in enumerate(sorted(_scored, key=lambda s: -s["mi"]))
+        }
+        _r_cb = {(_s["pos_i"], _s["pos_j"]): idx for idx, _s in enumerate(_scored)}
         _same = sum(1 for k in _r_mi if _r_mi[k] == _r_cb[k])
-        print(f"  Ranking agreement (MI vs combined, top-5 same): "
-              f"{len([k for k in _r_mi if k in _r_cb and _r_mi[k] < 5 and _r_cb[k] < 5])}/5")
+        print(
+            f"  Ranking agreement (MI vs combined, top-5 same): "
+            f"{len([k for k in _r_mi if k in _r_cb and _r_mi[k] < 5 and _r_cb[k] < 5])}/5"
+        )
     except Exception as _e:
         print(f"  Combined analysis skipped: {_e}")
 

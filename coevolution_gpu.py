@@ -30,7 +30,17 @@ def check_cuda() -> bool:
 
 
 def get_device() -> torch.device:
-    return torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    if torch.cuda.is_available():
+        # Cap per-process GPU memory so allocation FAILS FAST instead of
+        # blocking/deadlocking when the GPU is shared (e.g., another job
+        # holds most of the memory). Callers catch the OOM and fall back
+        # to CPU — correct results, no deadlock.
+        try:
+            torch.cuda.set_per_process_memory_fraction(0.1)
+        except Exception:
+            pass
+        return torch.device("cuda")
+    return torch.device("cpu")
 
 
 def dense_to_gpu(pos_arrays, device=None) -> torch.Tensor:
@@ -97,6 +107,13 @@ def mi_matrix_gpu(
     """
     device = dense.device
     n = dense.shape[0]
+    # ADAPTIVE chunk: bound the per-chunk flat tensor (int64, 8B) to ~512 MB
+    # so deep alignments (e.g., Pfam 486k seqs) never blow GPU memory,
+    # regardless of the caller's chunk hint.
+    budget = 512 * 1024 * 1024
+    max_chunk = max(256, budget // (n * 8))
+    if chunk > max_chunk:
+        chunk = max_chunk
     pairs = list(pairs)
     mi_dict: dict = {}
     cnt_dict: dict = {}

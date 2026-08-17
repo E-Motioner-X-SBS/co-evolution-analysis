@@ -1,0 +1,542 @@
+[
+ {
+  "target": "5ht1a",
+  "master_boolean": {
+   "variable_positions": 416,
+   "co_evolving_pairs": 6691,
+   "n_prime_implicants": 263,
+   "n_essential": 62,
+   "rules": [
+    {
+     "pos_i": 470,
+     "pos_j": 474,
+     "aa_i": "K",
+     "aa_j": "A",
+     "ref_i": "K",
+     "ref_j": "G",
+     "mi": 2.928727865219116
+    },
+    {
+     "pos_i": 470,
+     "pos_j": 474,
+     "aa_i": "R",
+     "aa_j": "G",
+     "ref_i": "K",
+     "ref_j": "G",
+     "mi": 2.928727865219116
+    },
+    {
+     "pos_i": 470,
+     "pos_j": 474,
+     "aa_i": "A",
+     "aa_j": "A",
+     "ref_i": "K",
+     "ref_j": "G",
+     "mi": 2.928727865219116
+    },
+    {
+     "pos_i": 546,
+     "pos_j": 558,
+     "aa_i": "A",
+     "aa_j": "H",
+     "ref_i": "A",
+     "ref_j": "S",
+     "mi": 2.849222183227539
+    },
+    {
+     "pos_i": 546,
+     "pos_j": 558,
+     "aa_i": "L",
+     "aa_j": "H",
+     "ref_i": "A",
+     "ref_j": "S",
+     "mi": 2.849222183227539
+    },
+    {
+     "pos_i": 546,
+     "pos_j": 558,
+     "aa_i": "A",
+     "aa_j": "F",
+     "ref_i": "A",
+     "ref_j": "S",
+     "mi": 2.849222183227539
+    },
+    {
+     "pos_i": 546,
+     "pos_j": 558,
+     "aa_i": "A",
+     "aa_j": "N",
+     "ref_i": "A",
+     "ref_j": "S",
+     "mi": 2.849222183227539
+    },
+    {
+     "pos_i": 546,
+     "pos_j": 558,
+     "aa_i": "E",
+     "aa_j": "Y",
+     "ref_i": "A",
+     "ref_j": "S",
+     "mi": 2.849222183227539
+    },
+    {
+     "pos_i": 546,
+     "pos_j": 558,
+     "aa_i": "V",
+     "aa_j": "Q",
+     "ref_i": "A",
+     "ref_j": "S",
+     "mi": 2.849222183227539
+    },
+    {
+     "pos_i": 546,
+     "pos_j": 558,
+     "aa_i": "G",
+     "aa_j": "L",
+     "ref_i": "A",
+     "ref_j": "S",
+     "mi": 2.849222183227539
+    }
+   ],
+   "top_pairs": [
+    {
+     "pos_i": 470,
+     "pos_j": 474,
+     "mi": 2.928727865219116,
+     "n": 29,
+     "ref_i": "K",
+     "ref_j": "G"
+    },
+    {
+     "pos_i": 546,
+     "pos_j": 558,
+     "mi": 2.849222183227539,
+     "n": 42,
+     "ref_i": "A",
+     "ref_j": "S"
+    },
+    {
+     "pos_i": 552,
+     "pos_j": 558,
+     "mi": 2.7843637466430664,
+     "n": 37,
+     "ref_i": "V",
+     "ref_j": "S"
+    },
+    {
+     "pos_i": 558,
+     "pos_j": 563,
+     "mi": 2.7628326416015625,
+     "n": 46,
+     "ref_i": "S",
+     "ref_j": "P"
+    },
+    {
+     "pos_i": 558,
+     "pos_j": 561,
+     "mi": 2.7429592609405518,
+     "n": 47,
+     "ref_i": "S",
+     "ref_j": "H"
+    }
+   ]
+  },
+  "boolean_equations": [
+   {
+    "aa_i": "K",
+    "aa_j": "A",
+    "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t4} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
+    "coverage": 4
+   },
+   {
+    "aa_i": "R",
+    "aa_j": "G",
+    "expr": "\\bar{s4} \\cdot s3 \\cdot s2 \\cdot s1 \\cdot \\bar{s0} \\cdot t4 \\cdot \\bar{t2} \\cdot t1 \\cdot t0",
+    "coverage": 2
+   },
+   {
+    "aa_i": "A",
+    "aa_j": "A",
+    "expr": "\\bar{s4} \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t4} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
+    "coverage": 1
+   },
+   {
+    "aa_i": "A",
+    "aa_j": "H",
+    "expr": "\\bar{s4} \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
+    "coverage": 4
+   },
+   {
+    "aa_i": "L",
+    "aa_j": "H",
+    "expr": "\\bar{s4} \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot t2 \\cdot \\bar{t1}",
+    "coverage": 4
+   },
+   {
+    "aa_i": "A",
+    "aa_j": "F",
+    "expr": "\\bar{s4} \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot t0",
+    "coverage": 2
+   },
+   {
+    "aa_i": "A",
+    "aa_j": "N",
+    "expr": "\\bar{s4} \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t4} \\cdot t3 \\cdot t1 \\cdot t0",
+    "coverage": 2
+   },
+   {
+    "aa_i": "E",
+    "aa_j": "Y",
+    "expr": "s3 \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t4} \\cdot \\bar{t3} \\cdot t2 \\cdot t1 \\cdot \\bar{t0}",
+    "coverage": 2
+   },
+   {
+    "aa_i": "V",
+    "aa_j": "Q",
+    "expr": "\\bar{s4} \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot s0 \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
+    "coverage": 2
+   },
+   {
+    "aa_i": "G",
+    "aa_j": "L",
+    "expr": "s4 \\cdot \\bar{s3} \\cdot s1 \\cdot s0 \\cdot \\bar{t4} \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
+    "coverage": 2
+   }
+  ],
+  "flipped": {
+   "n_forbidden": 5373,
+   "sample": [
+    {
+     "pos_i": 470,
+     "pos_j": 474,
+     "aa_i": "M",
+     "aa_j": "A",
+     "ref_i": "K",
+     "ref_j": "G",
+     "mi": 2.928727865219116,
+     "is_essential": true,
+     "type": "forbidden"
+    },
+    {
+     "pos_i": 470,
+     "pos_j": 474,
+     "aa_i": "M",
+     "aa_j": "A",
+     "ref_i": "K",
+     "ref_j": "G",
+     "mi": 2.928727865219116,
+     "is_essential": false,
+     "type": "forbidden"
+    },
+    {
+     "pos_i": 470,
+     "pos_j": 474,
+     "aa_i": "A",
+     "aa_j": "M",
+     "ref_i": "K",
+     "ref_j": "G",
+     "mi": 2.928727865219116,
+     "is_essential": false,
+     "type": "forbidden"
+    },
+    {
+     "pos_i": 470,
+     "pos_j": 474,
+     "aa_i": "A",
+     "aa_j": "M",
+     "ref_i": "K",
+     "ref_j": "G",
+     "mi": 2.928727865219116,
+     "is_essential": true,
+     "type": "forbidden"
+    },
+    {
+     "pos_i": 470,
+     "pos_j": 474,
+     "aa_i": "A",
+     "aa_j": "T",
+     "ref_i": "K",
+     "ref_j": "G",
+     "mi": 2.928727865219116,
+     "is_essential": true,
+     "type": "forbidden"
+    }
+   ]
+  },
+  "nary": {
+   "n_PI": 146,
+   "n_essential": 33
+  },
+  "perplexity": []
+ },
+ {
+  "target": "b2ar",
+  "master_boolean": {
+   "variable_positions": 422,
+   "co_evolving_pairs": 8004,
+   "n_prime_implicants": 228,
+   "n_essential": 43,
+   "rules": [
+    {
+     "pos_i": 505,
+     "pos_j": 525,
+     "aa_i": "T",
+     "aa_j": "M",
+     "ref_i": "S",
+     "ref_j": "F",
+     "mi": 3.1189236640930176
+    },
+    {
+     "pos_i": 505,
+     "pos_j": 525,
+     "aa_i": "K",
+     "aa_j": "E",
+     "ref_i": "S",
+     "ref_j": "F",
+     "mi": 3.1189236640930176
+    },
+    {
+     "pos_i": 505,
+     "pos_j": 525,
+     "aa_i": "Q",
+     "aa_j": "C",
+     "ref_i": "S",
+     "ref_j": "F",
+     "mi": 3.1189236640930176
+    },
+    {
+     "pos_i": 536,
+     "pos_j": 538,
+     "aa_i": "T",
+     "aa_j": "E",
+     "ref_i": "Q",
+     "ref_j": "E",
+     "mi": 3.093069076538086
+    },
+    {
+     "pos_i": 537,
+     "pos_j": 538,
+     "aa_i": "A",
+     "aa_j": "P",
+     "ref_i": "E",
+     "ref_j": "E",
+     "mi": 3.085055112838745
+    },
+    {
+     "pos_i": 537,
+     "pos_j": 538,
+     "aa_i": "P",
+     "aa_j": "Q",
+     "ref_i": "E",
+     "ref_j": "E",
+     "mi": 3.085055112838745
+    },
+    {
+     "pos_i": 537,
+     "pos_j": 538,
+     "aa_i": "T",
+     "aa_j": "P",
+     "ref_i": "E",
+     "ref_j": "E",
+     "mi": 3.085055112838745
+    },
+    {
+     "pos_i": 521,
+     "pos_j": 525,
+     "aa_i": "R",
+     "aa_j": "H",
+     "ref_i": "L",
+     "ref_j": "F",
+     "mi": 3.0646963119506836
+    },
+    {
+     "pos_i": 521,
+     "pos_j": 525,
+     "aa_i": "A",
+     "aa_j": "C",
+     "ref_i": "L",
+     "ref_j": "F",
+     "mi": 3.0646963119506836
+    },
+    {
+     "pos_i": 521,
+     "pos_j": 525,
+     "aa_i": "F",
+     "aa_j": "M",
+     "ref_i": "L",
+     "ref_j": "F",
+     "mi": 3.0646963119506836
+    }
+   ],
+   "top_pairs": [
+    {
+     "pos_i": 505,
+     "pos_j": 525,
+     "mi": 3.1189236640930176,
+     "n": 26,
+     "ref_i": "S",
+     "ref_j": "F"
+    },
+    {
+     "pos_i": 536,
+     "pos_j": 538,
+     "mi": 3.093069076538086,
+     "n": 14,
+     "ref_i": "Q",
+     "ref_j": "E"
+    },
+    {
+     "pos_i": 537,
+     "pos_j": 538,
+     "mi": 3.085055112838745,
+     "n": 13,
+     "ref_i": "E",
+     "ref_j": "E"
+    },
+    {
+     "pos_i": 521,
+     "pos_j": 525,
+     "mi": 3.0646963119506836,
+     "n": 26,
+     "ref_i": "L",
+     "ref_j": "F"
+    },
+    {
+     "pos_i": 521,
+     "pos_j": 536,
+     "mi": 3.0503017902374268,
+     "n": 19,
+     "ref_i": "L",
+     "ref_j": "Q"
+    }
+   ]
+  },
+  "boolean_equations": [
+   {
+    "aa_i": "T",
+    "aa_j": "M",
+    "expr": "s4 \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
+    "coverage": 2
+   },
+   {
+    "aa_i": "K",
+    "aa_j": "E",
+    "expr": "s3 \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t4} \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
+    "coverage": 2
+   },
+   {
+    "aa_i": "Q",
+    "aa_j": "C",
+    "expr": "\\bar{s4} \\cdot s3 \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot t4 \\cdot \\bar{t3} \\cdot \\bar{t1} \\cdot t0",
+    "coverage": 2
+   },
+   {
+    "aa_i": "T",
+    "aa_j": "E",
+    "expr": "s4 \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot \\bar{t4} \\cdot t3 \\cdot \\bar{t2} \\cdot \\bar{t1} \\cdot \\bar{t0}",
+    "coverage": 2
+   },
+   {
+    "aa_i": "A",
+    "aa_j": "P",
+    "expr": "\\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t4 \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
+    "coverage": 4
+   },
+   {
+    "aa_i": "P",
+    "aa_j": "Q",
+    "expr": "s4 \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot s1 \\cdot \\bar{s0} \\cdot t3 \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
+    "coverage": 2
+   },
+   {
+    "aa_i": "T",
+    "aa_j": "P",
+    "expr": "s4 \\cdot \\bar{s3} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t4 \\cdot \\bar{t3} \\cdot \\bar{t2} \\cdot t1 \\cdot \\bar{t0}",
+    "coverage": 2
+   },
+   {
+    "aa_i": "R",
+    "aa_j": "H",
+    "expr": "\\bar{s4} \\cdot s3 \\cdot s2 \\cdot s1 \\cdot t3 \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
+    "coverage": 4
+   },
+   {
+    "aa_i": "A",
+    "aa_j": "C",
+    "expr": "\\bar{s4} \\cdot \\bar{s3} \\cdot \\bar{s2} \\cdot \\bar{s1} \\cdot \\bar{s0} \\cdot t4 \\cdot \\bar{t3} \\cdot \\bar{t1} \\cdot t0",
+    "coverage": 2
+   },
+   {
+    "aa_i": "F",
+    "aa_j": "M",
+    "expr": "\\bar{s3} \\cdot s2 \\cdot \\bar{s1} \\cdot s0 \\cdot \\bar{t4} \\cdot \\bar{t3} \\cdot t2 \\cdot \\bar{t1} \\cdot \\bar{t0}",
+    "coverage": 2
+   }
+  ],
+  "flipped": {
+   "n_forbidden": 5084,
+   "sample": [
+    {
+     "pos_i": 505,
+     "pos_j": 525,
+     "aa_i": "A",
+     "aa_j": "A",
+     "ref_i": "S",
+     "ref_j": "F",
+     "mi": 3.1189236640930176,
+     "is_essential": true,
+     "type": "forbidden"
+    },
+    {
+     "pos_i": 505,
+     "pos_j": 525,
+     "aa_i": "A",
+     "aa_j": "A",
+     "ref_i": "S",
+     "ref_j": "F",
+     "mi": 3.1189236640930176,
+     "is_essential": false,
+     "type": "forbidden"
+    },
+    {
+     "pos_i": 505,
+     "pos_j": 525,
+     "aa_i": "A",
+     "aa_j": "A",
+     "ref_i": "S",
+     "ref_j": "F",
+     "mi": 3.1189236640930176,
+     "is_essential": false,
+     "type": "forbidden"
+    },
+    {
+     "pos_i": 505,
+     "pos_j": 525,
+     "aa_i": "A",
+     "aa_j": "I",
+     "ref_i": "S",
+     "ref_j": "F",
+     "mi": 3.1189236640930176,
+     "is_essential": false,
+     "type": "forbidden"
+    },
+    {
+     "pos_i": 505,
+     "pos_j": 525,
+     "aa_i": "A",
+     "aa_j": "I",
+     "ref_i": "S",
+     "ref_j": "F",
+     "mi": 3.1189236640930176,
+     "is_essential": false,
+     "type": "forbidden"
+    }
+   ]
+  },
+  "nary": {
+   "n_PI": 142,
+   "n_essential": 37
+  },
+  "perplexity": []
+ }
+]

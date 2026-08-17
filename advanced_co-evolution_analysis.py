@@ -101,9 +101,9 @@ def fwht(a):
 
 def main():
     base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
-    fasta_file = base_dir / "Spike_protein.aln-fasta"
-    results_dir = base_dir / "advanced_analysis_results"
-    results_dir.mkdir(exist_ok=True)
+    fasta_file = Path(__import__("os").environ.get("COEVO_FASTA") or (base_dir / "Spike_protein.aln-fasta"))
+    results_dir = Path(__import__("os").environ.get("COEVO_RESULTS") or (base_dir / "advanced_analysis_results"))
+    results_dir.mkdir(parents=True, exist_ok=True)
 
     print("=" * 80)
     print("Advanced Co-evolution Analysis")
@@ -383,8 +383,8 @@ def main():
     features = np.array(features)
 
     # Compute pairwise Hamming distances
-    print("  Computing pairwise distances...")
-    n_seq = min(200, n_all)  # Limit for efficiency (clustering is O(n²))
+    n_seq = min(2000, n_all)  # O(n²) clustering cap; LOGGED below
+    print(f"  Computing pairwise distances over {n_seq} of {n_all} sequences (O(n²) cap)")
     dist_matrix = np.zeros((n_seq, n_seq), dtype=np.float64)
 
     for i in range(n_seq):

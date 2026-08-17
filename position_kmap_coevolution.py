@@ -247,11 +247,14 @@ def predict_coevolution_from_position_kmaps(
 
     n = min(n_seqs, len(sequences))
 
-    # Build clean sequences (aligned; gap = 20 handled by encoder)
+    # Build clean sequences (aligned; gap = 20 handled by encoder).
+    # Relative filter: keep sequences >= 50% of max length (works for any
+    # protein size — the old absolute >100-aa cutoff discarded small domains).
+    max_len = max(len(seq) for _, seq in sequences[:n]) if n else 0
     clean_seqs = []
     for i in range(n):
         _, seq = sequences[i]
-        if len(seq) > 100:
+        if len(seq) > 0:  # ALL sequences (user directive)
             clean_seqs.append(seq)
 
     if len(clean_seqs) < 5:
@@ -337,9 +340,9 @@ def predict_coevolution_from_position_kmaps(
 
 def main():
     base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
-    fasta_file = base_dir / "Spike_protein.aln-fasta"
-    results_dir = base_dir / "position_kmap_results"
-    results_dir.mkdir(exist_ok=True)
+    fasta_file = Path(__import__("os").environ.get("COEVO_FASTA") or (base_dir / "Spike_protein.aln-fasta"))
+    results_dir = Path(__import__("os").environ.get("COEVO_RESULTS") or (base_dir / "position_kmap_results"))
+    results_dir.mkdir(parents=True, exist_ok=True)
 
     print("=" * 70)
     print("Position-Based K-map Co-evolution Analysis")
@@ -355,12 +358,12 @@ def main():
     # Build position frequency vectors — FULL LENGTH
     print("\n[2/5] Building position frequency vectors...")
     pos_freq, pos_counts, max_pos, window = build_position_kmaps(
-        sequences, encoder, max_positions=None, n_seqs=1299
+        sequences, encoder, max_positions=None, n_seqs=len(sequences)
     )
 
     # Find co-evolving positions
     print("\n[3/5] Finding co-evolving position pairs (FULL length, GPU)...")
-    n_seqs = min(1299, len(sequences))
+    n_seqs = len(sequences)  # ALL sequences
 
     # Compute MI for all nearby position pairs — GPU accelerated
     try:
@@ -374,7 +377,7 @@ def main():
             pos_arrays.append(arr)
         dense = cg.dense_to_gpu(pos_arrays)
         pairs = cg.all_pairs(dense.shape[1], max_gap=window)
-        mi_dict, _ = cg.mi_matrix_gpu(dense, pairs, min_total=10, chunk=16384)
+        mi_dict, _ = cg.mi_matrix_gpu(dense, pairs, min_total=10, chunk=4096)
         mi_results = [(i, j, mi) for (i, j), mi in mi_dict.items() if mi > 0.005]
         print(f"  GPU MI computed for {len(mi_dict)} pairs")
     except Exception as e:
@@ -444,7 +447,7 @@ def main():
     # Predict co-evolution
     print("\n[5/5] Predicting co-evolution...")
     prediction = predict_coevolution_from_position_kmaps(
-        None, sequences, encoder, max_pos, n_seqs=100
+        None, sequences, encoder, max_pos, n_seqs=len(sequences)
     )
 
     # Save results

@@ -1,9 +1,9 @@
 # Co-evolution Analysis of SARS-CoV-2 Spike Protein
 ## Complete Pipeline — ALL 1,299 Omicron Sequences
 
-**Generated:** August 07, 2026
+**Generated:** August 17, 2026
 **Data:** 1,299 SARS-CoV-2 Omicron Spike protein sequences from `Spike_protein.aln-fasta`
-**Compute:** NVIDIA A100 80GB + 24-core Xeon, 4.6s total
+**Compute:** NVIDIA A100 80GB + 24-core Xeon, 11.0s total
 **Scripts:** 18 Python analysis scripts, all run with ALL 1,299 sequences
 
 ---
@@ -42,6 +42,7 @@ python3 nary_kmap_co-evolution.py
 python3 perplexity_coevolution.py
 python3 position_kmap_coevolution.py
 python3 predictive_constraint_function.py
+python3 prime_implicants.py
 python3 run_allseq_analysis.py
 python3 run_kmap_analysis.py
 python3 variable_position_coevolution.py
@@ -139,7 +140,7 @@ He 2012 ordering: `AILVMFYWEDQNHKRSTCPG` (0-19). Direct mapping — no binary in
 
 ## 7. Position-Level Co-evolution
 
-**21** variable positions in 0-79, **10** co-evolving pairs, **3** inference rules across **3** position pairs.
+**21** variable positions (full length), **10** co-evolving pairs, **2** inference rules across **2** position pairs.
 
 ### Top Co-evolving Position Pairs
 
@@ -155,7 +156,7 @@ He 2012 ordering: `AILVMFYWEDQNHKRSTCPG` (0-19). Direct mapping — no binary in
 
 **Critical finding:** ALL coupling constants C < 0 — the protein is under strong **purifying selection**.
 
-### Top Coupling Constants (GPU-computed, positions 0-79)
+### Top Coupling Constants (GPU-computed, full length)
 
 | Pair | MI | avg\|J\| | Ref | Strongest Anti | J |
 |------|-----|--------|-----|---------------|-----|
@@ -174,7 +175,7 @@ He 2012 ordering: `AILVMFYWEDQNHKRSTCPG` (0-19). Direct mapping — no binary in
 |--------|-------|
 | Nodes | 21 |
 | Edges | 8 |
-| **Hub** | Position 210 (degree 2) |
+| **Hub** | Position n/a (degree 0) |
 | Components | 1 giant component |
 
 ## 10. Full-Length Analysis (All 1,276 Positions)
@@ -184,7 +185,7 @@ He 2012 ordering: `AILVMFYWEDQNHKRSTCPG` (0-19). Direct mapping — no binary in
 | Variable positions | 21 (1.6%) |
 | Conserved | 1,255 |
 | High-MI pairs (full length) | 5 |
-| Compute time | 4.6s (A100 + 24-core) |
+| Compute time | 11.0s (A100 + 24-core) |
 
 ### Top 10 Most Variable Positions
 
@@ -267,14 +268,14 @@ Co-evolution ratio = PP(j) / PP(j|i). Ratio > 1 means position i constrains j.
 | N-ary K-map | On-set / PIs / EPIs | 93 / 150 / 34 |
 | | Strong couplings | 337 |
 | Position | Co-evolving pairs | 10 |
-| | Inference rules | 3 |
+| | Inference rules | 2 |
 | Network | Nodes / Edges | 21 / 8 |
-| | Hub | Position 210 (degree 2) |
+| | Hub | Position n/a (degree 0) |
 | Mutations | Mean / Max | 11.1 / 38 |
 | Perplexity | Max ratio | n/a (no pairs with PP>3) |
 | Variants | Unique signatures | 24 |
 | Couplings | All C < 0 | Purifying selection |
-| Compute | Time | 4.6s (A100) |
+| Compute | Time | 11.0s (A100) |
 
 ## 16. Script Index (All 18 Scripts)
 
@@ -305,7 +306,7 @@ Co-evolution ratio = PP(j) / PP(j|i). Ratio > 1 means position i constrains j.
 2. **50.7% sequence-level prediction**: Boolean function achieves best predictive result, doubles with more data
 3. **Co-evolution is near-deterministic**: n/a (no pairs with PP>3)
 4. **Purifying selection dominates**: ALL coupling constants C < 0
-5. **Protein is a single network**: 21 nodes, 8 edges, position 210 as hub
+5. **Protein is a single network**: 21 nodes, 8 edges, position n/a as hub
 6. **Lineage-specific co-evolution**: Global LOO-CV 9.24% — rules don't generalize across variants
 7. **1255 conserved positions**: Universal vaccine targets
 8. **21/1276 positions variable**: Nearly entire protein under evolutionary constraint
@@ -366,4 +367,4 @@ Top 5 by combined score:
 | 5 | 212 | 215 | 0.398 | 1.84 | 0.750 |
 
 ---
-*Generated August 07, 2026 by `generate_full_analysis_md.py` — ALL values computed by Python analysis scripts, not hand-written.*
+*Generated August 17, 2026 by `generate_full_analysis_md.py` — ALL values computed by Python analysis scripts, not hand-written.*

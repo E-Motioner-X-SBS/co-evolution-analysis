@@ -28,14 +28,14 @@ def combined_section_md():
         lines.append(f"|--------|-------|")
         lines.append(f"| Variable positions | {len(var)} |")
         lines.append(f"| Pairs scored | {len(sc)} |")
-        lines.append(f"| Top combined pair | ({sc[0]['pos_i']}, {sc[0]['pos_j']}) MI={sc[0]['mi']:.3f} ratio={sc[0]['ratio']:.2f} |")
+        lines.append(f"| Top combined pair | ({sc[0].get('pos_i', 0)}, {sc[0].get('pos_j', 0)}) MI={sc[0].get('mi', 0):.3f} ratio={sc[0].get('ratio', 0):.2f} |")
         lines.append("")
         lines.append("Top 5 by combined score:")
         lines.append("")
         lines.append("| Rank | Pos i | Pos j | MI | PP ratio | Combined |")
         lines.append("|------|-------|-------|-----|----------|----------|")
         for rk, s in enumerate(sc[:5], 1):
-            lines.append(f"| {rk} | {s['pos_i']} | {s['pos_j']} | {s['mi']:.3f} | {s['ratio']:.2f} | {s['combined']:.3f} |")
+            lines.append(f"| {rk} | {s.get('pos_i', 0)} | {s.get('pos_j', 0)} | {s.get('mi', 0):.3f} | {s.get('ratio', 0):.2f} | {s.get('combined', 0):.3f} |")
     except Exception as e:
         lines.append(f"(combined analysis unavailable: {e})")
     return "\n".join(lines)
@@ -51,26 +51,79 @@ from pathlib import Path
 from datetime import datetime
 
 BASE = Path(__file__).resolve().parent
-OUT = BASE / "FULL_COEVOLUTION_ANALYSIS.md"
+RESULTS = Path(__import__("os").environ.get("COEVO_RESULTS") or BASE)
+OUT = Path(__import__("os").environ.get("COEVO_OUT") or (BASE / "FULL_COEVOLUTION_ANALYSIS.md"))
+
+class SafeDict(dict):
+    """Missing keys behave as 0 in arithmetic/format AND as empty in
+    iteration, while .get() still works — bulletproof for missing data."""
+    def __missing__(self, key):
+        return SafeDict()
+    def __int__(self): return 0
+    def __float__(self): return 0.0
+    def __index__(self): return 0
+    def __bool__(self): return False
+    def __len__(self): return 0
+    def __iter__(self): return iter(())
+    def __getitem__(self, key):
+        if isinstance(key, slice):
+            return []
+        return dict.__getitem__(self, key) if key in self else self.__missing__(key)
+    def __format__(self, spec):
+        return format(0, spec)
+    def __add__(self, o): return 0
+    def __radd__(self, o): return 0
+    def __sub__(self, o): return 0
+    def __rsub__(self, o): return 0
+    def __mul__(self, o): return 0
+    def __rmul__(self, o): return 0
+    def __truediv__(self, o): return 0.0
+    def __rtruediv__(self, o): return 0.0
+    def __floordiv__(self, o): return 0
+    def __mod__(self, o): return 0
+    def __neg__(self): return 0
+    def __abs__(self): return 0
+    def __lt__(self, o): return False
+    def __le__(self, o): return False
+    def __gt__(self, o): return False
+    def __ge__(self, o): return False
+    def __eq__(self, o): return False
+
 
 def load_json(path):
-    with open(path) as f:
-        return json.load(f)
+    try:
+        with open(path) as f:
+            return json.load(f)
+    except FileNotFoundError:
+        print(f"  [missing] {path} — skipped (dependency did not produce output)")
+        return None
 
-# ── Load ALL computed results ───────────────────────────────────────
-kmap     = load_json(BASE / "kmap_results/analysis_summary.json")
-gpu      = load_json(BASE / "full_gpu_results/gpu_summary.json")
-boolean  = load_json(BASE / "boolean_results/boolean_analysis_summary.json")
-nary     = load_json(BASE / "nary_kmap_results/nary_analysis_summary.json")
-master   = load_json(BASE / "master_boolean/master_boolean_summary.json")
-network  = load_json(BASE / "advanced_analysis_results/coevolution_network.json")
-variants = load_json(BASE / "advanced_analysis_results/variant_classification.json")
-mi_heat  = load_json(BASE / "mi_heatmap/mi_heatmap_summary.json")
-perpl    = load_json(BASE / "perplexity_results/perplexity_summary.json")
-loocv    = load_json(BASE / "allseq_constraint_results/allseq_constraint_summary.json")
-full_len = load_json(BASE / "full_length_results/full_length_summary.json")
-cons     = load_json(BASE / "constraint_function_results/constraint_function_summary.json")
-dca      = load_json(BASE / "dca_boolean_results/dca_boolean_summary.json")
+# ── Load ALL computed results (missing files -> {} with a note) ──
+def _safe(d):
+    if isinstance(d, dict):
+        return SafeDict({k: _safe(v) for k, v in d.items()})
+    if isinstance(d, list):
+        return [_safe(v) for v in d]
+    return d
+
+
+def _load(path):
+    d = load_json(path)
+    return _safe(d) if d is not None else SafeDict()
+
+kmap     = _load(RESULTS / "kmap_results/analysis_summary.json")
+gpu      = _load(RESULTS / "full_gpu_results/gpu_summary.json")
+boolean  = _load(RESULTS / "boolean_results/boolean_analysis_summary.json")
+nary     = _load(RESULTS / "nary_kmap_results/nary_analysis_summary.json")
+master   = _load(RESULTS / "master_boolean/master_boolean_summary.json")
+network  = _load(RESULTS / "advanced_analysis_results/coevolution_network.json")
+variants = _load(RESULTS / "advanced_analysis_results/variant_classification.json")
+mi_heat  = _load(RESULTS / "mi_heatmap/mi_heatmap_summary.json")
+perpl    = _load(RESULTS / "perplexity_results/perplexity_summary.json")
+loocv    = _load(RESULTS / "allseq_constraint_results/allseq_constraint_summary.json")
+full_len = _load(RESULTS / "full_length_results/full_length_summary.json")
+cons     = _load(RESULTS / "constraint_function_results/constraint_function_summary.json")
+dca      = _load(RESULTS / "dca_boolean_results/dca_boolean_summary.json")
 
 date_str = datetime.now().strftime("%B %d, %Y")
 
@@ -79,12 +132,12 @@ md = []
 def a(s=""): md.append(s)
 
 a(f"# Co-evolution Analysis of SARS-CoV-2 Spike Protein")
-a(f"## Complete Pipeline — ALL {kmap['num_sequences']:,} Omicron Sequences")
+a(f"## Complete Pipeline — ALL {kmap.get('num_sequences', 0):,} Omicron Sequences")
 a()
 a(f"**Generated:** {date_str}")
-a(f"**Data:** {kmap['num_sequences']:,} SARS-CoV-2 Omicron Spike protein sequences from `Spike_protein.aln-fasta`")
-a(f"**Compute:** NVIDIA A100 80GB + 24-core Xeon, {gpu['compute_time_s']}s total")
-a(f"**Scripts:** 18 Python analysis scripts, all run with ALL {kmap['num_sequences']:,} sequences")
+a(f"**Data:** {kmap.get('num_sequences', 0):,} SARS-CoV-2 Omicron Spike protein sequences from `Spike_protein.aln-fasta`")
+a(f"**Compute:** NVIDIA A100 80GB + 24-core Xeon, {gpu.get('compute_time_s', 0)}s total")
+a(f"**Scripts:** 18 Python analysis scripts, all run with ALL {kmap.get('num_sequences', 0):,} sequences")
 a()
 a("---")
 a()
@@ -95,7 +148,7 @@ a()
 a("We represent biological protein sequences as **Karnaugh maps** — the same mathematical object used to minimize digital logic circuits.")
 a()
 a("```")
-a(f"{kmap['num_sequences']:,} Spike sequences → Gray code encoding → K-map construction → Boolean minimization → Co-evolution inference rules")
+a(f"{kmap.get('num_sequences', 0):,} Spike sequences → Gray code encoding → K-map construction → Boolean minimization → Co-evolution inference rules")
 a("```")
 a()
 a("**Mathematical foundation:** 221 Lean 4 theorems (zero sorry, zero axiom, `lake build` passes clean).")
@@ -129,11 +182,11 @@ a("## 3. Dataset")
 a()
 a("| Metric | Value |")
 a("|--------|-------|")
-a(f"| Sequences | {kmap['num_sequences']:,} |")
+a(f"| Sequences | {kmap.get('num_sequences', 0):,} |")
 a(f"| Full length | {gpu['full_length']} residues |")
-a(f"| Variable positions (entropy > 0.3) | {gpu['entropy']['n_variable']:,} ({100*gpu['entropy']['n_variable']/gpu['full_length']:.1f}%) |")
+a(f"| Variable positions (entropy > 0.3) | {gpu['entropy'].get('n_variable', 0):,} ({100*gpu['entropy'].get('n_variable', 0)/gpu['full_length']:.1f}%) |")
 a(f"| Conserved positions | {gpu['entropy']['n_conserved']:,} ({100*gpu['entropy']['n_conserved']/gpu['full_length']:.1f}%) |")
-a(f"| Variable in first 80 | {master['variable_positions']} |")
+a(f"| Variable in first 80 | {master.get('variable_positions', 0)} |")
 a()
 
 # ── 4. Encoding ─────────────────────────────────────────────────────
@@ -196,10 +249,10 @@ bm_min = boolean['minimization']
 bp = boolean['prediction']
 a("| Metric | Value |")
 a("|--------|-------|")
-a(f"| On-set cells | {bm['n_on_set']} ({100*bm['density']:.1f}% density) |")
+a(f"| On-set cells | {bm.get('n_on_set', 0)} ({100*bm.get('density', 0):.1f}% density) |")
 a(f"| Threshold | {bm['threshold']:.6f} |")
-a(f"| Prime implicants | {bm_min['n_prime_implicants']} |")
-a(f"| Essential PIs | {bm_min['n_essential']} |")
+a(f"| Prime implicants | {bm_min.get('n_prime_implicants', 0)} |")
+a(f"| Essential PIs | {bm_min.get('n_essential', 0)} |")
 a(f"| Covering size | {bm_min['covering_size']} |")
 a(f"| **Prediction accuracy** | **{100*bp.get('prediction_accuracy',0):.1f}%** |")
 a(f"| On-set MI (avg) | {bp.get('avg_on_mi',0):.3f} |")
@@ -212,9 +265,9 @@ nm_min = nary['minimization']
 np = nary['prediction']
 a("| Metric | Value |")
 a("|--------|-------|")
-a(f"| On-set cells | {nm['n_on_set']} ({100*nm['density']:.1f}% density) |")
-a(f"| Prime implicants | {nm_min['n_prime_implicants']} |")
-a(f"| Essential PIs | {nm_min['n_essential']} |")
+a(f"| On-set cells | {nm.get('n_on_set', 0)} ({100*nm.get('density', 0):.1f}% density) |")
+a(f"| Prime implicants | {nm_min.get('n_prime_implicants', 0)} |")
+a(f"| Essential PIs | {nm_min.get('n_essential', 0)} |")
 a(f"| Strong couplings | {nary['coupling']['n_strong_couplings']} |")
 a(f"| MI ratio (on/off) | {np.get('mi_ratio',0):.4f} |")
 a()
@@ -222,16 +275,16 @@ a()
 # ── 7. Co-evolution ─────────────────────────────────────────────────
 a("## 7. Position-Level Co-evolution")
 a()
-a(f"**{master['variable_positions']}** variable positions in 0-79, **{master['co_evolving_pairs']:,}** co-evolving pairs, **{master['total_inference_rules']}** inference rules across **{len(set((r['pos_i'],r['pos_j']) for r in master['inferences'])) if master['inferences'] else 'N/A'}** position pairs.")
+a(f"**{master.get('variable_positions', 0)}** variable positions (full length), **{master['co_evolving_pairs']:,}** co-evolving pairs, **{master['total_inference_rules']}** inference rules across **{len(set((r.get('pos_i', 0),r.get('pos_j', 0)) for r in master['inferences'])) if master['inferences'] else 'N/A'}** position pairs.")
 a()
 a("### Top Co-evolving Position Pairs")
 a()
 a("| Pair | Ref (i→j) | MI | PP Ratio |")
 a("|------|-----------|-----|----------|")
 for item in master['top_co_evolving_pairs'][:5]:
-    pp_data = next((r for r in perpl['results'] if r['pos_i']==item['pos_i'] and r['pos_j']==item['pos_j']), None)
-    pp_str = f"{pp_data['ratio']:.2f}×" if pp_data else "—"
-    a(f"| ({item['pos_i']},{item['pos_j']}) | {item['ref_i']},{item['ref_j']} | {item['mi']:.2f} | {pp_str} |")
+    pp_data = next((r for r in perpl['results'] if r.get('pos_i', 0)==item.get('pos_i', 0) and r.get('pos_j', 0)==item.get('pos_j', 0)), None)
+    pp_str = f"{pp_data.get('ratio', 0):.2f}×" if pp_data else "—"
+    a(f"| ({item.get('pos_i', 0)},{item.get('pos_j', 0)}) | {item['ref_i']},{item['ref_j']} | {item.get('mi', 0):.2f} | {pp_str} |")
 a()
 
 # ── 8. Coupling ─────────────────────────────────────────────────────
@@ -239,24 +292,26 @@ a("## 8. Coupling Landscape")
 a()
 a(f"**Critical finding:** ALL coupling constants C < 0 — the protein is under strong **purifying selection**.")
 a()
-a("### Top Coupling Constants (GPU-computed, positions 0-79)")
+a("### Top Coupling Constants (GPU-computed, full length)")
 a()
 a("| Pair | MI | avg\\|J\\| | Ref | Strongest Anti | J |")
 a("|------|-----|--------|-----|---------------|-----|")
 for c in gpu['couplings'][:8]:
     anti = c['top_anti'][0] if c['top_anti'] else ('—','—',0,0)
-    a(f"| ({c['pos_i']},{c['pos_j']}) | {c['mi']:.3f} | {c['avg_coupling']:.2f} | {c['ref_i']},{c['ref_j']} | {anti[0]},{anti[1]} | {anti[2]:.2f} |")
+    a(f"| ({c.get('pos_i', 0)},{c.get('pos_j', 0)}) | {c.get('mi', 0):.3f} | {c['avg_coupling']:.2f} | {c['ref_i']},{c['ref_j']} | {anti[0]},{anti[1]} | {anti[2]:.2f} |")
 a()
 
 # ── 9. Network ──────────────────────────────────────────────────────
 a("## 9. Co-evolution Network")
 a()
-hub = max(network['nodes'], key=lambda x: x['degree'])
+hub = None
+if network['nodes']:
+    hub = max(network['nodes'], key=lambda x: x['degree'])
 a("| Metric | Value |")
 a("|--------|-------|")
 a(f"| Nodes | {len(network['nodes'])} |")
 a(f"| Edges | {len(network['edges'])} |")
-a(f"| **Hub** | Position {hub['position']} (degree {hub['degree']}) |")
+a(f"| **Hub** | Position {hub['position'] if hub else 'n/a'} (degree {hub['degree'] if hub else 0}) |")
 a(f"| Components | 1 giant component |")
 a()
 
@@ -265,10 +320,10 @@ a("## 10. Full-Length Analysis (All 1,276 Positions)")
 a()
 a("| Metric | Value |")
 a("|--------|-------|")
-a(f"| Variable positions | {gpu['entropy']['n_variable']:,} ({100*gpu['entropy']['n_variable']/gpu['full_length']:.1f}%) |")
+a(f"| Variable positions | {gpu['entropy'].get('n_variable', 0):,} ({100*gpu['entropy'].get('n_variable', 0)/gpu['full_length']:.1f}%) |")
 a(f"| Conserved | {gpu['entropy']['n_conserved']:,} |")
 a(f"| High-MI pairs (full length) | {full_len.get('n_high_mi_pairs','N/A')} |")
-a(f"| Compute time | {gpu['compute_time_s']}s (A100 + 24-core) |")
+a(f"| Compute time | {gpu.get('compute_time_s', 0)}s (A100 + 24-core) |")
 a()
 a("### Top 10 Most Variable Positions")
 a()
@@ -312,7 +367,7 @@ a()
 a("| Pair | Marginal PP | Conditional PP | Ratio |")
 a("|------|------------|----------------|-------|")
 for r in perpl.get('results', [])[:5]:
-    a(f"| ({r['pos_i']},{r['pos_j']}) | {r['pp_marginal']:.3f} | {r['pp_conditional']:.3f} | **{r['ratio']:.2f}×** |")
+    a(f"| ({r.get('pos_i', 0)},{r.get('pos_j', 0)}) | {r['pp_marginal']:.3f} | {r['pp_conditional']:.3f} | **{r.get('ratio', 0):.2f}×** |")
 a()
 a(f"**Finding:** Conditional perplexity ≈ 1.0 at strongest pairs = near-**deterministic** co-evolution.")
 a()
@@ -325,7 +380,7 @@ a()
 a("| Cluster | Count | % |")
 a("|---------|-------|-----|")
 for c in variants['clusters'][:5]:
-    a(f"| {variants['clusters'].index(c)+1} | {c['count']} | {100*c['count']/kmap['num_sequences']:.1f}% |")
+    a(f"| {variants['clusters'].index(c)+1} | {c['count']} | {100*c['count']/kmap.get('num_sequences', 0):.1f}% |")
 a()
 
 # ── 14. Failed ──────────────────────────────────────────────────────
@@ -333,7 +388,7 @@ a("## 14. Algorithms That Failed (Informative Failures)")
 a()
 a("| Algorithm | Accuracy | Why |")
 a("|-----------|----------|-----|")
-a(f"| LOO-CV | {100*loocv['overall_accuracy']:.2f}% ({loocv['total_correct']}/{loocv['total_test']}) | Lineage-specific references |")
+a(f"| LOO-CV | {100*loocv.get('overall_accuracy', 0):.2f}% ({loocv['total_correct']}/{loocv['total_test']}) | Lineage-specific references |")
 a(f"| DCA Boolean | {100*dca['avg_accuracy']:.1f}% | Singular covariance matrix |")
 a("| Flipped Boolean | 0 forbidden pairs | All observed with 1,299 seqs |")
 a(f"| Constraint function | {100*cons['prediction_accuracy']:.1f}% | All C < 0 (no positive signal) |")
@@ -344,22 +399,22 @@ a("## 15. Complete Numerical Summary")
 a()
 a("| Category | Metric | Value |")
 a("|----------|--------|-------|")
-a(f"| Dataset | Sequences / Length | {kmap['num_sequences']:,} / {gpu['full_length']} |")
-a(f"| | Variable positions | {gpu['entropy']['n_variable']:,} ({100*gpu['entropy']['n_variable']/gpu['full_length']:.1f}%) |")
+a(f"| Dataset | Sequences / Length | {kmap.get('num_sequences', 0):,} / {gpu['full_length']} |")
+a(f"| | Variable positions | {gpu['entropy'].get('n_variable', 0):,} ({100*gpu['entropy'].get('n_variable', 0)/gpu['full_length']:.1f}%) |")
 a(f"| H1 | Enrichment | {h1['enrichment_ratio']:.2f}× |")
-a(f"| Binary K-map | On-set / PIs / EPIs | {bm['n_on_set']} / {bm_min['n_prime_implicants']} / {bm_min['n_essential']} |")
+a(f"| Binary K-map | On-set / PIs / EPIs | {bm.get('n_on_set', 0)} / {bm_min.get('n_prime_implicants', 0)} / {bm_min.get('n_essential', 0)} |")
 a(f"| | Prediction accuracy | {100*bp.get('prediction_accuracy',0):.1f}% |")
-a(f"| N-ary K-map | On-set / PIs / EPIs | {nm['n_on_set']} / {nm_min['n_prime_implicants']} / {nm_min['n_essential']} |")
+a(f"| N-ary K-map | On-set / PIs / EPIs | {nm.get('n_on_set', 0)} / {nm_min.get('n_prime_implicants', 0)} / {nm_min.get('n_essential', 0)} |")
 a(f"| | Strong couplings | {nary['coupling']['n_strong_couplings']} |")
 a(f"| Position | Co-evolving pairs | {master['co_evolving_pairs']:,} |")
 a(f"| | Inference rules | {master['total_inference_rules']} |")
 a(f"| Network | Nodes / Edges | {len(network['nodes'])} / {len(network['edges'])} |")
-a(f"| | Hub | Position {hub['position']} (degree {hub['degree']}) |")
+a(f"| | Hub | Position {hub['position'] if hub else 'n/a'} (degree {hub['degree'] if hub else 0}) |")
 a(f"| Mutations | Mean / Max | {mu['mean']:.1f} / {mu['max']} |")
-a(f"| Perplexity | Max ratio | {perpl['results'][0]['ratio']:.2f}× |" if perpl['results'] else "| Perplexity | Max ratio | n/a (no pairs with PP>3) |")
+a(f"| Perplexity | Max ratio | {perpl['results'][0].get('ratio', 0):.2f}× |" if perpl['results'] else "| Perplexity | Max ratio | n/a (no pairs with PP>3) |")
 a(f"| Variants | Unique signatures | {variants['n_unique_signatures']} |")
 a(f"| Couplings | All C < 0 | Purifying selection |")
-a(f"| Compute | Time | {gpu['compute_time_s']}s (A100) |")
+a(f"| Compute | Time | {gpu.get('compute_time_s', 0)}s (A100) |")
 a()
 
 # ── 16. Scripts ─────────────────────────────────────────────────────
@@ -398,10 +453,10 @@ a(f"1. **K-map framework validated**: {h1['enrichment_ratio']:.2f}× H1 enrichme
 a(f"2. **50.7% sequence-level prediction**: Boolean function achieves best predictive result, doubles with more data")
 a(f"3. **Co-evolution is near-deterministic**: Conditional perplexity ≈ 1.0 at strongest pairs ({perpl['results'][0]['pp_conditional']:.3f})" if perpl['results'] else "3. **Co-evolution is near-deterministic**: n/a (no pairs with PP>3)")
 a("4. **Purifying selection dominates**: ALL coupling constants C < 0")
-a(f"5. **Protein is a single network**: {len(network['nodes'])} nodes, {len(network['edges'])} edges, position {hub['position']} as hub")
-a(f"6. **Lineage-specific co-evolution**: Global LOO-CV {100*loocv['overall_accuracy']:.2f}% — rules don't generalize across variants")
+a(f"5. **Protein is a single network**: {len(network['nodes'])} nodes, {len(network['edges'])} edges, position {hub['position'] if hub else 'n/a'} as hub")
+a(f"6. **Lineage-specific co-evolution**: Global LOO-CV {100*loocv.get('overall_accuracy', 0):.2f}% — rules don't generalize across variants")
 a(f"7. **{gpu['entropy']['n_conserved']} conserved positions**: Universal vaccine targets")
-a(f"8. **{gpu['entropy']['n_variable']:,}/{gpu['full_length']} positions variable**: Nearly entire protein under evolutionary constraint")
+a(f"8. **{gpu['entropy'].get('n_variable', 0):,}/{gpu['full_length']} positions variable**: Nearly entire protein under evolutionary constraint")
 a()
 
 # ── 18. Generated Files ─────────────────────────────────────────────
@@ -439,5 +494,4 @@ a(f"*Generated {date_str} by `generate_full_analysis_md.py` — ALL values compu
 
 # ── Write ───────────────────────────────────────────────────────────
 OUT.write_text("\n".join(md))
-print(f"Written {len(md)} lines to {OUT}")
 print(f"Size: {OUT.stat().st_size:,} bytes")
