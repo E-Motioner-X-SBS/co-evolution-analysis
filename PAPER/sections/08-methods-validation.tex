@@ -1,0 +1,32 @@
+% ── §9 Methods: Validation Framework ──
+\section{Validation Framework}
+\label{sec:methods-validation}
+
+\subsection{Statistical Methods}
+All enrichment tests use exact one-sided binomial tests (scipy
+\texttt{binomtest}) against matched-separation random controls constructed by
+drawing 2{,}000 random residue pairs per model from the same protein's
+candidate universe, stratified to preserve the separation-bin distribution of
+the tested pair set.  Spearman rank correlations are computed using scipy
+\texttt{spearmanr}.  Multiple-comparison awareness is maintained through
+median (rather than mean) reporting for skewed precision distributions and
+through explicit Bonferroni-corrected significance thresholds where noted.
+
+\subsection{Determinism}
+Every experiment uses fixed random seeds (protein folds: seed~42; bootstrap
+resampling: seeded \texttt{default\_rng}; background construction: per-model
+seeds).  Re-running any stage produces byte-identical output files, verified
+by MD5 checksums across at least two independent invocations for each of the
+seven major result categories.
+
+\subsection{Code Quality}
+All production scripts pass pyflakes with zero warnings.  The adversarial
+unit test suite comprises 26 test functions covering encoding helpers,
+alignment loading (including ragged and empty inputs), PDB parsing (including
+alternate-location indicators and inconsistent residue naming), native-contact
+geometry, identity-mapping verification, mutual-information equivalence with
+the shared module, truth-table labeling, Quine--McCluskey soundness and
+completeness on real data, implicant-decoder predicate equivalence over
+randomised inputs, metric correctness (precision@k, MCC, AUC vs.\ brute-force
+concordance), cross-validation fold determinism, and adversarial empty-input
+handling.

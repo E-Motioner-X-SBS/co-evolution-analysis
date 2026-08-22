@@ -1,0 +1,63 @@
+% ── §17 Discussion ──
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Summary of Contributions}
+This work establishes that the analytical chain from biological sequences
+through Gray-code encoding, Karnaugh-map construction, Quine--McCluskey
+minimisation, and prime-implicant extraction can be made machine-provable in
+Lean~4, and that the resulting Boolean circuits carry genuine structural
+information when applied to protein multiple sequence alignments.  The key
+findings are: (1) universal contact circuits transfer across proteins at
+$5.1\times$ random enrichment; (2) Gray-code adjacency is enriched among
+native contacts with $z = 2.51$ specificity for the particular encoding;
+(3) the Karnaugh-map cell-rate prior improves global DCA ranking and, when
+fused via rank aggregation, exceeds both individual methods; (4) flipped
+(forbidden-combination) circuits transfer with 98.3\% specificity; and (5)
+conserved column pairs are enriched for contacts by $3.2\times$, confirming
+that the conserved structural core carries information through constraint
+rather than through covariation.
+
+\subsection{Comparison with Literature}
+Our mfDCA implementation achieves prec@L/5 = 0.169 on PSICOV150, consistent
+with published mean-field benchmarks of approximately 0.15--0.20 on this
+dataset.  The substantial gap to PSICOV's sparse inverse covariance method
+(0.727) reflects the fundamental difference between simple matrix inversion
+and $\ell_1$-regularised estimation, not an implementation error.  Our ranksum
+fusion (0.204) demonstrates that the K-map prior contributes orthogonal
+information to any continuous scoring method, though it does not close this
+methodological gap.
+
+The finding that Gray adjacency is enriched among native contacts ($1.178\times$,
+$p < 10^{-77}$) resolves an ambiguity from earlier underpowered analysis on a
+single protein family.  The permutation control ($z = 2.51$ against random
+code assignments) confirms that the specific He/Gray structure carries genuine
+signal beyond what generic physicochemical clustering would produce.
+
+\subsection{Limitations}
+Several limitations constrain the scope of our conclusions.  First, consensus
+residue features collapse within-column variation into a single code per
+position, discarding frequency information that richer encodings might
+exploit.  Second, separation bins are globally defined without per-protein
+length normalisation.  Third, the reconstruction assessment is limited to six
+proteins by the computational cost of exact Quine--McCluskey on large padded
+maps.  Fourth, the cross-dataset generalisation experiment on EVmutation was
+inconclusive due to A2M format parsing complexity, leaving open the question
+of whether findings replicate beyond PSICOV150.
+
+\subsection{Future Directions}
+Three directions emerge naturally from this work.  First, applying the complete
+circuit framework to CASP free-modelling targets with published contact maps
+would test whether the rank-fusion improvement holds on harder targets.
+Second, replacing binary conservation flags with continuous entropy bins as
+additional Karnaugh-map dimensions could capture finer-grained structural
+information about the buried core.  Third, integrating circuit-derived rules
+as input features to deep learning models (rather than using them standalone)
+might combine the interpretability of Boolean logic with the representational
+power of neural networks.
+
+\subsection{Data and Code Availability}
+All source code, formal proofs, result files, and documentation are available
+at \url{https://github.com/E-Motioner-X-SBS/co-evolution-analysis}.  The Lean~4
+formalisation is available at \url{https://github.com/E-Motioner-X-SBS/lean_proofs}.
+The PSICOV150 dataset is available from \url{https://bioinfadmin.cs.ucl.ac.uk/downloads/PSICOV/}.

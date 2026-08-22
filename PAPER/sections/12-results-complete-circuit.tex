@@ -1,0 +1,48 @@
+% ── §13 Results: The Complete Circuit ──
+\section{Results: The Complete Circuit}
+\label{sec:results-complete-circuit}
+
+\subsection{Design}
+The complete circuit combines three information channels into a single
+two-sided classifier over a shared feature space of physicochemical groups,
+separation bins, and conservation-pair types (10 bits, 1024 cells).  Two
+ternary tables are labeled from identical pooled counts: the \emph{positive}
+table marks cells whose contact rate significantly exceeds the base rate, while
+the \emph{flipped} table marks cells whose rate is significantly below it.
+A pair receives a definitive CONTACT call if its cell is ON in the positive
+table and a definitive FORBIDDEN call if its cell is ON in the flipped table;
+all other pairs are abstained.
+
+\subsection{Positive Channel}
+The positive circuit achieves precision $0.092$ ($2.6\times$ base rate) at
+recall $0.203$, confirming that group-level features carry genuine contact
+signal even without residue-identity resolution.
+
+\subsection{Flipped Channel: Cross-Protein Transfer of Negative Selection}
+The flipped circuit's specificity---the fraction of FORBIDDEN calls that are
+correctly non-contacts---is \textbf{98.3\%} on held-out proteins.  Critically,
+the observed contact rate within forbidden-called cells on test proteins
+($1.7\%$) matches the training-set prediction of at most half the base rate
+(1.75\%), almost exactly, demonstrating that negative-selection rules generalise across
+proteins with high fidelity.
+
+\subsection{Conservation Channel}
+Pairs in which both columns are fully conserved (entropy $< 0.001$) show a
+contact rate of $11.4\%$, representing a $3.2\times$ enrichment over the
+overall base rate.  However, this enrichment is restricted to the subset of
+16 proteins that contain $\geq 50$ such fully-conserved column pairs; most
+PSICOV domains lack sufficient absolute conservation to populate this channel.
+
+A finer analysis using continuous minimum-pair entropy reveals a non-monotone
+gradient: absolutely invariant positions (entropy $< 0.001$) are actually
+\emph{depleted} of contacts ($0.69\times$), while near-conserved positions
+(entropy $0.001$--$0.05$) are enriched ($1.35\times$).  This correction
+indicates that structural-core membership requires residues to be constrained
+but not absolutely frozen; catalytic or functional constraints can lock a
+position without placing it in a contact-rich environment.
+
+\subsection{Combined Performance}
+Over definitive calls only (22\% of all candidate pairs), the combined
+classifier achieves MCC = $+0.169$.  The remaining 78\% of pairs are correctly
+abstained from, reflecting the genuine uncertainty of the feature space at
+current granularity.

@@ -1,0 +1,83 @@
+% ── §1 Introduction ──
+\section{Introduction}
+\label{sec:intro}
+
+The prediction of residue--residue contacts from multiple sequence alignments
+(MSAs) has emerged as one of the most consequential applications of
+evolutionary sequence analysis, underpinning modern protein structure
+prediction pipelines~\cite{jumper2021} and enabling the determination of
+protein folds from covariation signal alone~\cite{weigt2009}.  The dominant
+paradigm, Direct Coupling Analysis (DCA), models the joint probability
+distribution of amino-acid sequences through a Potts Hamiltonian whose
+coupling parameters are inferred by inverting a covariance matrix computed
+from deep alignments~\cite{morcos2011}.  While methods based on sparse inverse
+covariance estimation~\cite{jones2012}, pseudo-likelihood maximisation~\cite{ekeberg2013},
+and related formulations have achieved remarkable precision at the top-$L/5$
+long-range contact level, the mathematical objects that these methods produce---%
+a dense matrix of coupling constants indexed by residue pairs and amino-acid
+identities---remain largely opaque to formal analysis.  In particular, no prior
+work has established machine-checkable proofs that the encoding layer through
+which biological sequences enter the statistical machinery preserves the
+structural properties that the downstream inference requires.
+
+This paper addresses that gap by constructing a formally verified bridge
+between digital-logic design theory and protein coevolution analysis.  Our
+central observation is that the Karnaugh map, a rectangular grid representation
+of Boolean functions introduced by Karnaugh in 1953~\cite{karnaugh1953},
+provides a natural embedding of aligned biological sequences when combined
+with reflected binary Gray-code ordering of the amino-acid alphabet.  Under
+this embedding, adjacent cells on the map correspond to pairs of residues that
+differ in exactly one bit position of their Gray codes, which in turn
+correspond to physicochemically similar amino acids under an appropriate
+ordering of the twenty standard residues~\cite{he2012}.  The Quine--McCluskey
+algorithm~\cite{quine1952,mccluskey1956} then extracts minimal sum-of-products
+(SOP) expressions from thresholded frequency maps, producing sets of prime
+implicants that we interpret as coevolutionary rules of the form ``if residue
+$a$ appears at position $i$ and residue $b$ at position $j$, then positions
+$i$ and $j$ are coevolutionarily constrained.''
+
+The contribution of this work is threefold.  First, we formalise the entire
+analytical chain in the Lean~4 theorem prover~\cite{lean4}, establishing
+118 machine-checked theorems that cover Gray-code bijectivity and adjacency,
+$k$-mer indexing injectivity, amino-acid encoding properties, contact-map
+symmetry and irreflexivity, and implicant-cover soundness and completeness.
+Second, we apply the verified pipeline to 150 protein domains from the PSICOV
+benchmark~\cite{jones2012}, comprising over 1.6~million labelled residue-pair
+observations against native experimental structures, and demonstrate that the
+resulting Boolean circuits transfer across proteins: a universal contact
+circuit trained on approximately one hundred proteins predicts native contacts
+on held-out proteins at a mean top-$L/5$ precision of $0.179$, corresponding
+to $5.1\times$ enrichment over random expectation.  Third, we show that the
+Karnaugh-map cell-rate prior, when fused with mean-field DCA scores via simple
+rank aggregation, yields a hybrid predictor that exceeds both individual
+methods ($0.204$ vs.\ $0.169$ for DCA alone and $0.124$ for the circuit alone;
+$p < 10^{-4}$ by Wilcoxon signed-rank test), providing the first demonstration
+that Boolean-minimisation-derived features carry orthogonal structural
+information not present in continuous coupling scores.
+
+We further report honest negative results.  An attention-style ``tension''
+mechanism, which normalises each position's mutual-information profile by its
+strongest entropic partner, does not improve contact prediction beyond what
+consensus identity features already provide.  Iterative direct information
+computed from our mean-field implementation remains unreliable on families
+with many fully conserved columns due to pseudo-inverse conditioning, and we
+therefore adopt the APC-corrected Frobenius norm as the primary DCA score.
+Finally, we assess reconstruction readiness against literature thresholds and
+find that current circuit-level signal, while significantly above random
+expectation, falls far short of the precision required for template-free
+folding; the circuits are best understood as a compressed annotation layer
+that identifies specific coevolutionary constraints rather than a replacement
+for continuous physics-based scoring.
+
+The paper is organised as follows.  Section~\ref{sec:theory-gray} introduces
+the Gray-code encoding framework for nucleotide and amino-acid alphabets.
+Section~\ref{sec:theory-kmap-qm} describes Karnaugh-map construction and
+Quine--McCluskey minimisation with don't-care conditions.
+Section~\ref{sec:theory-info} reviews the information-theoretic measures used
+throughout.  Section~\ref{sec:theory-dca} summarises Direct Coupling Analysis.
+Section~\ref{sec:theory-lean} presents the Lean~4 formal verification.
+Sections~\ref{sec:methods-data}--\ref{sec:methods-validation} describe the
+dataset, pipeline architecture, and validation framework.
+Sections~\ref{sec:results-transfer}--\ref{sec:results-negative} present all
+positive and negative results.  Section~\ref{sec:discussion} discusses findings
+in context, and Section~\ref{sec:conclusion} concludes.

@@ -1,0 +1,26 @@
+% ── §12 Results: Contact Map Compressibility ──
+\section{Results: Contact Maps as Boolean Functions}
+\label{sec:results-compressibility}
+
+\subsection{Motivation}
+If native contact maps possess Karnaugh-map-expressible regularity beyond what
+density and separation structure alone can explain, then exact
+Quine--McCluskey minimisation of real contact matrices should yield fewer
+prime implicants than minimisation of matched random controls.
+
+\subsection{Method}
+For six PSICOV proteins with $L \leq 62$ (the scale at which exact QM on a
+padded $64 \times 64$ grid remains tractable), we minimise the ternary truth
+table defined by the native contact matrix (ON = contact, OFF = candidate
+non-contact, DC = all other cells including near-diagonal and padding border).
+Controls shuffle contact labels within separation bins, preserving both density
+and separation structure.
+
+\subsection{Result}
+All six proteins show lower compression ratios (#prime implicants / #contact
+cells) for real maps than for their shuffled counterparts.  The mean
+compression ratio is 2.31 for real maps versus 2.74 for shuffled controls,
+with a Wilcoxon signed-rank test $p$-value of 0.031 ($6/6$ consistent
+direction).  This demonstrates that protein geometry carries K-map-expressible
+structure that is not explained by contact density or separation distribution
+alone.

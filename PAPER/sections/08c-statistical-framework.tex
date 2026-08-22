@@ -1,0 +1,68 @@
+% ── §9b: Detailed Statistical Framework ──
+\section{Detailed Statistical Framework}
+\label{sec:statistical-framework}
+
+\subsection{Hypothesis Testing for Contact Enrichment}
+
+For each candidate pair $(i,j)$, we observe a binary outcome: the pair is
+either a native contact ($Y = 1$) or not ($Y = 0$).  Under the null
+hypothesis that our scoring method ranks pairs randomly, the number of
+contacts among the top-$K$ predictions follows a hypergeometric distribution.
+When $K \ll N_{\mathrm{cand}}$, this is well-approximated by a binomial:
+\begin{equation}
+	X \sim \mathrm{Binomial}(K, \pi_0), \qquad
+	\pi_0 = \frac{N_c}{N_{\mathrm{cand}}},
+\end{equation}
+where $\pi_0$ is the base contact rate.  We reject the null at significance
+level $\alpha$ when $P(X \geq x_{\mathrm{obs}} \mid K, \pi_0) < \alpha$
+(one-sided test for enrichment).
+
+For the Gray-adjacency test (PATH~E), the same binomial framework applies
+with $\pi_0$ replaced by the background rate of Gray-adjacent pairs among
+non-contacting residue pairs, matched within each protein and separation bin
+to control for compositional and phylogenetic confounding.
+
+\subsection{Permutation Tests for Encoding Specificity}
+
+To assess whether the He/Gray encoding specifically (rather than any encoding
+of amino acids into 20 slots) produces Gray-adjacency enrichment, we perform
+a label-permutation test.  For each of $R = 30$ permutations $\sigma$, we
+reassign codewords according to $\sigma: \{0,\ldots,19\} \to \{0,\ldots,19\}$
+and recompute all pairwise Gray-Hamming distances under the permuted codes.
+The permutation $p$-value is
+\begin{equation}
+	p_\mathrm{perm} =
+	\frac{1 + |\{r : E_r \geq E_\mathrm{obs}\}|}{1 + R},
+\end{equation}
+where $E_\mathrm{obs}$ is the observed enrichment and $E_r$ is the enrichment
+under permutation $r$.  The resulting $z$-score quantifies how many standard
+deviations the true encoding exceeds the random-encoding distribution.
+
+\subsection{Bootstrap Confidence Intervals}
+
+Protein-level bootstrap resampling provides confidence intervals that account
+for between-protein heterogeneity.  For $B$ bootstrap replicates, we draw
+proteins with replacement from the set of $P$ targets and recompute the
+statistic of interest on each bootstrap sample.  The 2.5th and 97.5th
+percentiles of the bootstrap distribution give a 95\% confidence interval.
+This procedure is used for the Gray-adjacency enrichment (PATH~E) with $B =
+	2000$.
+
+\subsection{Wilcoxon Signed-Rank Test for Paired Comparisons}
+
+When comparing two methods evaluated on the same set of test proteins, we use
+the Wilcoxon signed-rank test on the paired differences.  This non-parametric
+test does not assume normality and is appropriate for precision values that
+may be skewed toward zero for methods with sparse top-$K$ hits.  The null
+hypothesis is that the median difference between paired observations is zero;
+the alternative is that it differs (two-sided) or exceeds/falls below zero
+(one-sided).
+
+\subsection{Multiple Comparisons}
+
+When testing multiple hypotheses simultaneously, we apply Bonferroni
+correction to control the family-wise error rate.  For $m$ tests, the
+per-test significance threshold becomes $\alpha / m$.  In practice, the
+strongest findings in this work have $p$-values many orders of magnitude below
+any corrected threshold, while weaker effects are explicitly flagged as not
+surviving correction.

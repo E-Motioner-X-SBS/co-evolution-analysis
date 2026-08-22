@@ -1,0 +1,72 @@
+% ── §6 Formal Verification in Lean 4 ──
+\section{Formal Verification in Lean 4}
+\label{sec:theory-lean}
+
+\subsection{Motivation}
+The encoding layer through which biological sequences enter the statistical
+machinery of coevolution analysis involves several non-obvious design choices:
+the assignment of integer codes to amino acids, the construction of Gray-code
+transformations, the definition of Hamming distances on encoded values, and
+the semantics of implicant matching on Karnaugh-map cells.  Errors in any of
+these choices propagate silently through the pipeline and can produce
+plausible-looking but incorrect results.  To address this, we formalise all
+load-bearing definitions and properties in the Lean~4 theorem
+prover~\cite{lean4}, establishing machine-checkable proofs that the
+implementation satisfies its specification.
+
+\subsection{Verification Architecture}
+Our formalisation comprises 118 theorems distributed across five modules in
+two repositories: \texttt{lean\_proofs/} (106 theorems covering Gray-code
+fundamentals, $k$-mer indexing, amino-acid encodings, contact-map topology,
+and encoding equivalence) and \texttt{ContactCircuits.lean} (12 theorems
+covering separation-bin monotonicity, level-1 cell-index boundedness and
+injectivity, implicant-cover completeness and soundness, and padding safety).
+All proofs are constructed without \texttt{sorry} and rely only on the
+standard axioms \texttt{propext}, \texttt{Quot.sound}, and (where
+\texttt{native\_decide} is used) the trusted-evaluation axiom inherent to
+bounded-domain computation.
+
+\subsection{Key Theorems}
+
+\subsubsection{Gray-Code Properties}
+The following theorems establish the foundational properties of the reflected
+binary Gray code over fixed-width domains:
+\begin{itemize}[nosep]
+	\item \texttt{cc\_gray\_consecutive\_adj}: consecutive integers differ by
+	      exactly one bit under Gray transformation.
+	\item \texttt{cc\_hd\_symm}: the Gray-Hamming distance is symmetric.
+	\item \texttt{cc\_he\_dist1\_ordered\_eq\_80}: exactly 80 ordered pairs of
+	      He-coded residues lie at Gray distance~1.
+	\item \texttt{cc\_he\_dist\_counts}: the full ordered distribution at
+	      distances 0--5 equals $[20, 80, 132, 112, 48, 8]$.
+\end{itemize}
+
+\subsubsection{Implicant Semantics}
+The following theorems formalise the semantics of Quine--McCluskey output,
+matching the runtime assertions made by every circuit-extraction script:
+\begin{itemize}[nosep]
+	\item \texttt{cc\_cover\_complete}: every on-set cell is matched by some
+	      prime implicant.
+	\item \texttt{cc\_off\_avoiding}: no prime implicant matches any off-set
+	      cell.
+\end{itemize}
+
+\subsubsection{Padding Safety}
+The 32$\times$32 padding of a 20$\times$20 map introduces don't-care border
+cells whose codes exceed the canonical residue range.  The following theorems
+guarantee that these border cells cannot leak into decoded rules:
+\begin{itemize}[nosep]
+	\item \texttt{cc\_fixed\_match\_unique}: a fully-fixed 10-bit implicant
+	      matches exactly one cell, namely its own packed index.
+	\item \texttt{cc\_padding\_safety}: an implicant decoding to canonical
+	      residues ($< 20$ on both axes) fires only inside the $20\times20$
+	      block.
+\end{itemize}
+
+\subsection{Axiom Audit}
+We verify the axiom dependency graph for all 12 theorems in the
+\texttt{ContactCircuits} module using Lean's \texttt{\#print axioms} command.
+Every theorem depends only on \texttt{propext}, \texttt{Quot.sound}, and
+(where applicable) the native-decide evaluation axiom; no theorem depends on
+\texttt{sorryAx}.  This matches the trust profile of the existing 106 theorems
+in the companion repository.

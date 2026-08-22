@@ -1,0 +1,159 @@
+% !TEX program = pdflatex
+% Nature Communications–style manuscript
+% Machine-Provable Diagnosis of Biological Sequence Information via
+% Karnaugh Map Boolean Minimisation: From Lean 4 Formal Verification to
+% Cross-Protein Coevolutionary Contact Prediction
+\documentclass[11pt,a4paper,]{article}
+
+%── Geometry ──
+\usepackage[a4paper,top=25mm,bottom=25mm,left=30mm,right=30mm]{geometry}
+
+%── Encoding & Fonts ──
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\microtypesetup{patch=none}
+
+%── Mathematics ──
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+
+%── Graphics ──
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+\usetikzlibrary{shapes.gates.logic.US}
+
+%── Tables ──
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{longtable}
+
+%── Algorithms ──
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+
+%── Bibliography ──
+\usepackage[numbers,sort&compress]{natbib}
+
+%── Hyperref ──
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=green!40!black,urlcolor=blue!70!black]{hyperref}
+\usepackage{cleveref}
+
+%── Miscellaneous ──
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{siunitx}
+\usepackage{fancyhdr}
+
+%── Theorem environments ──
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{remark}{Remark}[section]
+
+%── Custom commands ──
+\newcommand{\ket}[1]{\left|#1\right\rangle}
+\newcommand{\MI}{\mathrm{MI}}
+\newcommand{\DI}{\mathrm{DI}}
+\newcommand{\Hcal}{\mathcal{H}}
+\newcommand{\Pcal}{\mathcal{P}}
+\newcommand{\Qcal}{\mathcal{Q}}
+
+%── Header/footer ──
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textit{Karnaugh Map Boolean Minimisation for Protein Coevolution}}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+%── Document ──
+\begin{document}
+
+\title{Machine-Provable Diagnosis of Biological Sequence Information via Karnaugh Map Boolean Minimisation: From Lean 4 Formal Verification to Cross-Protein Coevolutionary Contact Prediction}
+
+\author{
+	Shuvam Banerji Seal\\
+	\small Department of Physical Sciences,\\
+	\small Indian Institute of Science Education and Research Kolkata,\\
+	\small Mohanpur 741246, West Bengal, India\\
+	\small Correspondence: shuvambs@gmail.com
+}
+\date{}
+
+\maketitle
+
+\begin{abstract}
+	\noindent
+	The representation of biological sequences as Karnaugh maps through Gray-code
+	encoding establishes a bridge between the digital-logic design formalism of
+	switching theory and the statistical mechanics of protein coevolution.  In this
+	work we demonstrate that the entire analytical chain---from amino-acid integer
+	encoding through Gray-code transformation to Karnaugh-map construction,
+	Quine--McCluskey minimisation, and prime-implicant extraction---can be made
+	machine-provable in the Lean~4 theorem prover, and that the resulting Boolean
+	circuits carry genuine structural information when applied to multiple sequence
+	alignments of protein families.  We formalise 118 theorems covering Gray-code
+	properties, $k$-mer indexing, amino-acid encodings, contact-map topology, and
+	implicant-cover semantics; we then apply the verified pipeline to 150 protein
+	domains from the PSICOV benchmark comprising over 1.6~million labelled residue-pair
+	observations against native experimental structures.  Our results show that
+	Quine--McCluskey-minimised contact circuits transfer across proteins at a mean
+	top-$L/5$ precision of $0.179$ ($5.1\times$ random enrichment), that Gray-code
+	adjacency is enriched among native-contact pairs ($1.178\times$, $p =
+		1.1\times10^{-77}$), and that a rank-fusion hybrid combining mean-field DCA
+	scores with the Karnaugh-map cell-rate prior achieves $0.204$ top-$L/5$
+	precision, exceeding both individual methods ($p < 10^{-4}$).  We additionally
+	demonstrate that flipped (forbidden-combination) circuits transfer across
+	proteins with 98.3\% specificity and that conserved column pairs are enriched
+	for native contacts by $3.2\times$.  All software, data, and formal proofs are
+	publicly available.
+\end{abstract}
+
+\input{sections/00-introduction}
+\input{sections/01-theory-gray}
+\input{sections/02-theory-kmap-qm}
+\input{sections/03-theory-information}
+\input{sections/04-theory-dca}
+\input{sections/05-theory-lean}
+\input{sections/06-methods-data}
+\input{sections/06b-methods-metrics}
+\input{sections/06c-methods-conservation}
+\input{sections/07-methods-pipeline}
+\input{sections/07b-methods-software}
+\input{sections/07c-worked-example}
+\input{sections/07d-methods-dl-comparison}
+\input{sections/07e-biological-interpretation}
+\input{sections/07f-verification-reproducibility}
+\input{sections/07g-method-comparison}
+\input{sections/08-methods-validation}
+\input{sections/08b-binary-spaces}
+\input{sections/09-results-transfer}
+\input{sections/R1-spike-results}
+\input{sections/R2-circuit-diagrams}
+\input{sections/10-results-gray}
+\input{sections/11-results-coupling}
+\input{sections/12-results-complete-circuit}
+\input{sections/13-results-fusion}
+\input{sections/R3-cross-dataset}
+\input{sections/R4-audit-report}
+\input{sections/14-results-reconstruction}
+\input{sections/15-results-negative}
+\input{sections/R5-all-results}
+\input{sections/R5-reviewer-response}
+\input{sections/16-discussion}
+\input{sections/17-conclusion}
+
+\bibliographystyle{unsrtnat}
+\bibliography{bib/references}
+
+\appendix
+\input{sections/A1-appendix-tables}
+\input{sections/A2-appendix-algorithms}
+
+\end{document}

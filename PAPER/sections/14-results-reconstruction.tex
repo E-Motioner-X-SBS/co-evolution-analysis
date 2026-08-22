@@ -1,0 +1,73 @@
+% ── §15 Results: Reconstruction Assessment ──
+\section{Results: Structure Reconstruction Assessment}
+\label{sec:results-reconstruction}
+
+\subsection{Question}
+Can Quine--McCluskey-minimised contact circuits supply enough correct spatial
+constraints to determine a protein fold?  We answer this by measuring recall
+(the fraction of native contacts recovered at various prediction depths) and
+long-range precision (the standard DCA evaluation metric), then comparing
+against literature thresholds for structure reconstruction readiness.
+
+\subsection{Recall Curves}
+For each held-out protein and each method, we compute the number of true
+contacts among the top-$K$ ranked pairs for $K \in \{L/10, L/5, L/2, L\}$,
+then divide by the total native contact count:
+
+\begin{table}[ht]
+	\centering
+	\caption{Mean recall over held-out proteins (100/49 split).}
+	\label{tab:recall}
+	\begin{tabular}{lcccc}
+		\toprule
+		Method           & recall@L/10 & recall@L/5 & recall@L/2 & recall@L \\
+		\midrule
+		Circuit-L2       & .001        & .003       & .013       & .028     \\
+		Plain MI         & ---         & ---        & ---        & ---      \\
+		PSICOV published & .037        & .071       & .143       & .218     \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+Even at top-$L$, the circuits recover only 2.8\% of the native contact graph,
+compared to DCA's 21.8\%.  The absolute number of correct constraints supplied
+by the circuits is therefore far below what any contact-guided folding method
+requires.
+
+\subsection{Long-Range Precision}
+The standard DCA evaluation restricts attention to long-range contacts
+($|i - j| \geq 24$).  On this subset, the median precision@L/5 is:
+\begin{itemize}[nosep]
+	\item Circuit-L2: 0.000 (most proteins have zero long-range hits in top-L/5)
+	\item Plain MI: variable, typically below 0.05
+	\item PSICOV published: \textbf{0.683} (consistent with Jones et al.'s report
+	      that 118/150 targets achieve $\geq 0.5$)
+\end{itemize}
+
+\subsection{Reconstruction Readiness Verdict}
+We define a method as reconstruction-ready if its median long-range
+precision@L/5 $\geq 0.30$ AND recall@L $\geq 0.10$ (a conservative reading of
+the thresholds implied by Jones et al.\ and the CONFOLD line of work).  Under
+this criterion:
+\begin{center}
+	\begin{tabular}{lc}
+		\toprule
+		Method           & Ready?       \\
+		\midrule
+		Circuit-L2       & No           \\
+		Plain MI         & No           \\
+		Perplexity       & No           \\
+		Separation-only  & No           \\
+		PSICOV published & \textbf{Yes} \\
+		\bottomrule
+	\end{tabular}
+\end{center}
+
+\subsection{Interpretation}
+At current signal strength, Boolean contact circuits serve as an annotation
+layer that identifies specific coevolutionary constraints; they do not supply
+sufficient spatial information for de novo structure determination.  The gap
+to DCA-level performance reflects the absence of phylogenetic correction and
+global coupling decomposition in the circuit features---limitations that are
+inherent to the consensus-residue encoding rather than artifacts of the
+Quine--McCluskey minimisation itself.

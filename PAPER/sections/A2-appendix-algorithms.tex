@@ -1,0 +1,38 @@
+% ── Appendix B: Algorithm Pseudocode ──
+\section{Algorithm Pseudocode}
+\label{app:algorithms}
+
+\begin{algorithm}[ht]
+	\caption{Universal Contact Circuit Training}
+	\label{alg:universal-circuit}
+	\KwIn{Training proteins $\mathcal{T}$, threshold multiplier $T$, minimum count $n_{\min}$}
+	\KwOut{Trained circuit $\mathcal{C}$}
+	Initialise counters $\mathrm{pos} \gets \mathbf{0}^{G}$, $\mathrm{tot} \gets \mathbf{0}^{G}$\;
+	\ForEach{protein $p \in \mathcal{T}$}{
+	\ForEach{candidate pair $(i,j)$ with $j - i \geq 6$}{
+	$g_i \gets \mathrm{group}(\mathrm{consensus}_p(i))$\;
+		$g_j \gets \mathrm{group}(\mathrm{consensus}_p(j))$\;
+		$s \gets \mathrm{sep\_bin}(j - i)$\;
+		$c \gets (g_i \cdot 8 + g_j) \cdot 4 + s$\;
+		$\mathrm{tot}[c] \mathrel{+}= 1$\;
+		\If{$(i, j) \in \mathrm{contacts}(p)$}{$\mathrm{pos}[c] \mathrel{+}= 1$\;}
+		}
+		}
+	$b \gets \sum \mathrm{pos} / \sum \mathrm{tot}$\;
+		\ForEach{cell $c = 0, \ldots, G-1$}{
+			\eIf{$\mathrm{tot}[c] < n_{\min}$}{$\tau[c] \gets \textsc{DontCare}$;}{
+				\eIf{$\mathrm{pos}[c] / \mathrm{tot}[c] \geq T \cdot b$}{$\tau[c] \gets 1$}{$\tau[c] \gets 0$\;}
+			}
+		}
+	$\mathcal{C} \gets \textsc{QuineMcCluskey}(\tau)$\;
+\end{algorithm}
+
+\begin{algorithm}[ht]
+	\caption{Rank-Fusion Scoring}
+	\label{alg:rank-fusion}
+	\KwIn{DCA scores $\mathbf{s}_{\mathrm{DCA}}$, K-map prior scores $\mathbf{s}_{\mathrm{prior}}$}
+	\KwOut{Fused ranking score $\mathbf{s}_{\mathrm{fused}}$}
+	$r_{\mathrm{DCA}} \gets \mathrm{argsort\_rank}(\mathbf{s}_{\mathrm{DCA}}) / (n - 1)$\;
+	$r_{\mathrm{prior}} \gets \mathrm{argsort\_rank}(\mathbf{s}_{\mathrm{prior}}) / (n - 1)$\;
+	$\mathbf{s}_{\mathrm{fused}} \gets r_{\mathrm{DCA}} + r_{\mathrm{prior}}$\;
+\end{algorithm}

@@ -1,0 +1,63 @@
+% ── §5 Direct Coupling Analysis ──
+\section{Direct Coupling Analysis}
+\label{sec:theory-dca}
+
+\subsection{The Potts Model}
+Direct Coupling Analysis (DCA) models the probability distribution of amino-acid
+sequences through a pairwise Potts Hamiltonian~\cite{weigt2009,morcos2011}:
+\begin{equation}
+	P(a_1, \ldots, a_L) \propto
+	\exp\!\left\{
+	\sum_{i<j} e_{ij}(a_i, a_j) + \sum_i h_i(a_i)
+	\right\},
+	\label{eq:potts}
+\end{equation}
+where $e_{ij}(a,b)$ denotes the coupling between residues $a$ and $b$ at
+positions $i$ and $j$, and $h_i(a)$ is a single-site bias field.  The central
+computational challenge is the inverse problem: given an MSA, estimate the
+couplings $e_{ij}$ that reproduce the observed single-site and pairwise
+frequencies.
+
+\subsection{Mean-Field Approximation}
+In the mean-field (MF) approximation~\cite{morcos2011}, the couplings are
+obtained by inverting the connected-correlation (covariance) matrix:
+\begin{equation}
+	e_{ij}(a,b) \approx -\bigl(C^{-1}\bigr)_{(i,a),(j,b)},
+	\label{eq:mf-coupling}
+\end{equation}
+where $C$ has dimension $(q{-}1)L \times (q{-}1)L$ with $q = 21$ states
+(20 canonical amino acids plus one gap state), and the gap state is removed as
+a gauge-fixing condition to eliminate the rank deficiency arising from the
+normalisation constraint $\sum_a P_i(a) = 1$.  The covariance entries are
+computed from pseudocount-regularised frequencies:
+\begin{align}
+	f_i(a)      & = (1-\lambda)\,\tilde{f}_i(a) + \lambda / q,        \\
+	f_{ij}(a,b) & = (1-\lambda)\,\tilde{f}_{ij}(a,b) + \lambda / q^2,
+	\label{eq:pseudocount}
+\end{align}
+with reweighting factor $\theta = 0.2$ and pseudocount $\lambda = 0.5$, where
+$\tilde{f}$ denotes the sequence-reweighted frequency obtained by assigning
+each sequence a weight equal to the inverse of its cluster size at 80\%
+identity threshold.
+
+\subsection{Scoring Functions}
+From the coupling matrix $e_{ij}$, two scoring functions are commonly derived.
+The \emph{Frobenius norm} score measures the total magnitude of the coupling
+block for each pair:
+\begin{equation}
+	F_{ij} = \sqrt{\sum_{a=1}^{q}\sum_{b=1}^{q} e_{ij}(a,b)^2}.
+	\label{eq:frobenius}
+\end{equation}
+The \emph{direct information} $\DI_{ij}$ measures the mutual information
+carried by the direct (rather than indirect) contribution to the pair
+distribution, computed via a mean-field fixed-point iteration on the transfer
+matrix $W_{ij}(a,b) = \exp(e_{ij}(a,b))$~\cite{morcos2011}.  Both scores are
+typically APC-corrected before ranking~\cite{dunn2008}.
+
+\subsection{Sparse Inverse Covariance Estimation}
+PSICOV~\cite{jones2012} replaces the simple matrix inversion of MF-DCA with
+$\ell_1$-regularised sparse inverse covariance estimation (graphical LASSO),
+which promotes sparsity in the precision matrix and thereby better separates
+direct from indirect correlations.  On the PSICOV150 benchmark, PSICOV achieves
+a mean top-$L/5$ long-range precision of approximately 0.73, substantially
+above mean-field DCA (~0.15--0.20).

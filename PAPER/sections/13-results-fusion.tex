@@ -1,0 +1,71 @@
+% ── §14 Results: Rank Fusion ──
+\section{Results: Rank Fusion of DCA and Karnaugh-Map Prior}
+\label{sec:results-fusion}
+
+\subsection{Hypothesis}
+The Karnaugh-map cell-rate prior improves global ranking (AUC $0.658$) while
+degrading top-$K$ sharpness relative to raw DCA (AUC $0.583$).  We hypothesise
+that fusing the two signals via simple rank aggregation captures both
+properties: DCA provides continuous physics, while the K-map prior denoises
+phylogenetic and entropic bias.
+
+\subsection{Fusion Rules}
+Five label-free fusion rules are evaluated on held-out proteins under the same
+five-fold protein-level cross-validation as PATH~B.  Each rule combines the
+APC-corrected Frobenius-norm DCA score with the Level-H cell-rate score:
+
+\begin{enumerate}[nosep]
+	\item \textbf{ranksum}: $\mathrm{rank}(\mathrm{DCA}) + \mathrm{rank}(\mathrm{prior})$
+	\item \textbf{zsum}: $z(\mathrm{DCA}) + z(\mathrm{prior})$
+	\item \textbf{product}: $z(\mathrm{DCA}) \times \mathrm{prior}$
+	\item \textbf{geometric}: $\sqrt{\mathrm{rank}(\mathrm{DCA}) \times \mathrm{rank}(\mathrm{prior})}$
+	\item \textbf{DCA-gated}: $\mathrm{DCA}$ shifted by signed prior magnitude
+	      depending on whether the prior is above or below its median.
+\end{enumerate}
+
+\subsection{Result}
+\begin{table}[ht]
+	\centering
+	\caption{Rank-fusion results: mean precision@L/5 and AUC over five folds.}
+	\label{tab:fusion}
+	\begin{tabular}{lcc}
+		\toprule
+		Method              & prec@L/5 (mean $\pm$ sd)   & AUC              \\
+		\midrule
+		rawDCA alone        & $0.169 \pm 0.125$          & $0.583$          \\
+		circH (K-map prior) & $0.124 \pm 0.088$          & $\mathbf{0.658}$ \\
+		\midrule
+		\textbf{ranksum}    & $\mathbf{0.204 \pm 0.104}$ & $0.638$          \\
+		geometric mean      & $0.203 \pm 0.103$          & $0.634$          \\
+		product             & $0.199 \pm 0.108$          & $0.592$          \\
+		zsum                & $0.172 \pm 0.095$          & $0.641$          \\
+		DCA-gated           & $0.172 \pm 0.101$          & $0.635$          \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+The rank-sum fusion achieves a mean top-$L/5$ precision of $0.204$,
+exceeding rawDCA ($p < 10^{-4}$, Wilcoxon signed-rank test on paired
+per-protein values) and circH ($p < 10^{-4}$).  The geometric-mean fusion
+performs comparably ($0.203$), while z-score sum and DCA-gated variants show
+smaller improvements that do not reach significance against rawDCA.
+
+\subsection{Mechanistic Decomposition}
+To understand where the improvement originates, we decompose the fused
+top-$L/5$ predictions into three categories: shared hits (found by both DCA
+and the fusion), rescued contacts (found by the fusion but missed by DCA), and
+lost contacts (found by DCA but missed by the fusion).  Across all held-out
+proteins, the fusion rescues 264 contacts while losing 185, for a net gain of
++79 correct pairs.  Critically, \emph{every rescued pair has an above-median
+	K-map prior}, confirming that the prior selectively amplifies pairs whose
+consensus-residue identity pattern is consistent with contact formation.
+No rescued pair has below-median DCA, indicating that the fusion does not
+promote weak-signal pairs but rather sharpens the ranking of pairs already
+moderately scored by physics.
+
+\subsection{Three-Way Fusion}
+Adding plain MI as a third signal to the two-way fusion (DCA + prior) does not
+improve performance: rank-3-way = $0.201$ vs.\ rank-2-way = $0.204$
+($p = 0.607$, Wilcoxon).  MI is redundant when both DCA and the K-map prior
+are present, confirming that the prior subsumes the information content of
+uncorrected mutual information at the consensus level.

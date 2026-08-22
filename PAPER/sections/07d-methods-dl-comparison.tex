@@ -1,0 +1,33 @@
+% ── §7d Methods: Comparison with Deep Learning Approaches ──
+\section{Relationship to Deep Learning Approaches}
+\label{sec:methods-dl}
+
+The success of AlphaFold2~\cite{jumper2021} in protein structure prediction
+has largely superseded standalone contact prediction as a practical tool.
+However, we argue that the Karnaugh-map framework addresses a complementary
+need that end-to-end deep learning does not: interpretability and formal
+verifiability of the encoding layer.
+
+AlphaFold2 processes MSAs through attention-based neural networks whose
+internal representations are not decomposable into human-readable rules.  In
+contrast, our Quine--McCluskey-minimised circuits produce sum-of-products
+expressions such as ``contact if group$_i \in \{\text{hydrophobic},
+	\text{aromatic}\}$ AND group$_j \in \{\text{hydrophobic}, \text{aromatic}\}$
+AND separation $\in [6, 21)$'' that can be directly inspected, validated
+against biophysical knowledge, and formally verified.
+
+Furthermore, the formal verification layer (118 Lean~4 theorems) provides a
+guarantee that no implementation bug corrupts the encoding, a property that no
+neural network can offer.  While the absolute precision of our circuits
+(0.179) is far below AlphaFold2's near-perfect predictions, the two approaches
+address different questions: AlphaFold2 answers ``what is the structure?''
+while our framework answers ``which specific residue-pair combinations are
+coevolutionarily constrained, and can we prove that our method for detecting
+them is correct?''
+
+A promising future direction is to use circuit-derived features as input to
+neural architectures, combining the interpretability of Boolean logic with
+the representational power of deep learning.  The rank-fusion result
+(Section~\ref{sec:results-fusion}) already demonstrates that K-map features
+carry information orthogonal to continuous coupling scores; incorporating them
+into a learned model might yield further improvements.

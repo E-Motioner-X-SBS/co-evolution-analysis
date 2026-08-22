@@ -1,0 +1,78 @@
+% ── §6b Methods: Evaluation Metrics ──
+\section{Evaluation Metrics}
+\label{sec:methods-metrics}
+
+Proper evaluation of contact prediction methods requires careful attention to
+the metrics used, the candidate universe over which they are computed, and the
+baseline against which improvement is measured.  We describe each of these
+elements here.
+
+\subsection{Precision at Depth \texorpdfstring{$K$}{K}}
+For a ranked list of candidate pairs and a set of native contacts, precision
+at depth $K$ is defined as
+\begin{equation}
+	\mathrm{prec}@K = \frac{|\{\text{top-}K \text{ ranked pairs}\} \cap
+		\{\text{native contacts}\}|}{K}.
+	\label{eq:precision}
+\end{equation}
+We report precision at depths $K = L/10$, $L/5$, $L/2$, and $L$, where $L$ is
+the protein length.  These depths follow the convention established by the
+CASP contact prediction assessments~\cite{ezkurdia2009}.
+
+\subsection{Recall}
+Recall at depth $K$ measures the fraction of all native contacts recovered
+within the top-$K$ predictions:
+\begin{equation}
+	\mathrm{recall}@K =
+	\frac{|\{\text{top-}K\} \cap \{\text{contacts}\}|}{|\{\text{native contacts}\}|}.
+	\label{eq:recall}
+\end{equation}
+Recall is bounded above by $\min(1, K / N_c)$ where $N_c$ is the total number
+of native contacts; when $N_c > K$, perfect ranking still cannot achieve unit
+recall.
+
+\subsection{Area Under the ROC Curve}
+The area under the receiver operating characteristic curve (AUC) provides a
+threshold-free measure of ranking quality.  We compute AUC via the
+Mann--Whitney $U$ statistic with mid-rank tie handling:
+\begin{equation}
+	\mathrm{AUC} = \frac{U}{n_+ \cdot n_-}, \quad
+	U = R_+ - \frac{n_+(n_+ + 1)}{2},
+	\label{eq:auc}
+\end{equation}
+where $R_+$ is the sum of ranks assigned to positive (contact) pairs, and
+$n_+, n_-$ are the counts of positive and negative pairs respectively.  This
+implementation handles tied scores correctly through average-rank assignment.
+
+\subsection{Matthews Correlation Coefficient}
+For binary classification at a fixed threshold, the Matthews Correlation
+Coefficient (MCC) provides a balanced measure that accounts for all four
+outcomes:
+\begin{equation}
+	\mathrm{MCC} =
+	\frac{t_p \cdot t_n - f_p \cdot f_n}
+	{\sqrt{(t_p{+}f_p)(t_p{+}f_n)(t_n{+}f_n)(t_n{+}f_p)}},
+	\label{eq:mcc}
+\end{equation}
+which equals zero when either denominator factor vanishes.  MCC ranges from
+$-1$ (perfect anti-classification) through 0 (random) to $+1$ (perfect).
+
+\subsection{Enrichment Factor}
+The enrichment factor expresses precision relative to the random-expectation
+precision (the base rate):
+\begin{equation}
+	\mathrm{EF}@K = \frac{\mathrm{prec}@K}{N_c / N_{\mathrm{cand}}},
+	\label{eq:enrichment}
+\end{equation}
+where $N_{\mathrm{cand}}$ is the total number of candidate pairs.  An
+enrichment of $1\times$ means the method performs no better than random
+ranking; values above $1\times$ indicate genuine signal.
+
+\subsection{Baseline Clarification}
+A common source of confusion in contact-prediction literature concerns the
+meaning of ``random chance.''  Because contacts constitute only $\sim$3\% of
+all candidate residue pairs, a method that ranks candidates randomly achieves
+a precision equal to this base rate, not 50\%.  The value 0.5 would apply only
+to a balanced binary classification problem where half the instances are
+positive.  All enrichment factors reported in this work are computed relative
+to the empirical base rate of each test set.

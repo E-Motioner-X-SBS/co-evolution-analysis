@@ -1,0 +1,146 @@
+% ── §R1: Omicron Spike Protein — Primary Analysis ──
+\section{Detailed Results: SARS-CoV-2 Omicron Spike Analysis}
+\label{sec:results-spike}
+
+Before presenting cross-protein transfer results on the PSICOV150 benchmark,
+we present the complete analysis of our primary target: the SARS-CoV-2
+Omicron variant Spike protein.  This serves both as a biological case study
+and as a demonstration of the full pipeline applied to a single, deeply
+characterised protein family.
+
+\subsection{Dataset Characteristics}
+\begin{table}[ht]
+	\centering
+	\caption{Omicron Spike dataset properties.}
+	\label{tab:spike-data}
+	\begin{tabular}{lr}
+		\toprule
+		Property                                 & Value                                          \\
+		\midrule
+		Sequences                                & 1{,}299                                        \\
+		Alignment width                          & 1{,}276 columns                                \\
+		Unique sequences                         & 299 (587 identical copies of dominant variant) \\
+		Variable positions ($H > 0.3$)           & 21 of 1{,}276                                  \\
+		Co-evolving pairs (mut.-only MI $> 0.1$) & 10                                             \\
+		Forbidden rules (flipped QM)             & 490                                            \\
+		Conserved positions                      & 1{,}255                                        \\
+		Mean mutations per sequence              & 11.1                                           \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+The extreme conservation of the Spike protein (98.4\% of positions invariant)
+reflects the structural constraints imposed by its trimeric assembly and
+receptor-binding function.  Only 21 positions carry appreciable evolutionary
+variability, concentrated in the N-terminal domain (NTD) and receptor-binding
+domain (RBD) that are targets of antibody-mediated immune pressure.
+
+\subsection{The Ten Co-Evolving Position Pairs}
+\begin{table}[ht]
+	\centering
+	\caption{All ten co-evolving position pairs ranked by mutation-only mutual information.}
+	\label{tab:spike-pairs}
+	\begin{tabular}{clcccc}
+		\toprule
+		Rank & Pair       & Full MI & Mut.-only MI   & Sep. & Reference \\
+		\midrule
+		1    & (495, 498) & 0.039   & \textbf{0.871} & 3    & R--G      \\
+		2    & (448, 454) & 0.027   & 0.834          & 6    & G--L      \\
+		3    & (488, 498) & 0.032   & 0.822          & 10   & F--G      \\
+		4    & (442, 454) & 0.000   & 0.811          & 12   & K--L      \\
+		5    & (442, 448) & 0.016   & 0.728          & 6    & K--G      \\
+		6    & (212, 215) & 0.398   & 0.398          & 3    & V--G      \\
+		7    & (215, 216) & 0.757   & 0.377          & 1    & G--R      \\
+		8    & (212, 216) & 0.377   & 0.377          & 4    & V--R      \\
+		9    & (210, 215) & 0.753   & 0.238          & 5    & N--G      \\
+		10   & (210, 212) & 0.177   & 0.177          & 2    & N--V      \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+A critical observation is that the top five pairs by mutation-only MI (the
+442--498 cluster) have very low full MI (0.000--0.039), indicating that their
+covariation is driven by mutations away from the reference rather than by the
+reference itself.  This is the signature of lineage-specific covariation:
+different viral variants carry different combinations at these positions,
+producing strong mutation correlation without necessarily implying physical
+contact.
+
+\subsection{Prime Implicants and Essential Rules}
+Quine--McCluskey minimisation over ten co-evolving pairs produces 36 distinct
+prime implicants, of which exactly 2 are essential (the minimal irredundant
+core):
+\begin{align}
+	 & \textbf{Rule E1:} \quad \text{pos}212 = \text{G} \;\wedge\; \text{pos}216 = \text{R}, \\
+	 & \textbf{Rule E2:} \quad \text{pos}210 = \text{K} \;\wedge\; \text{pos}215 = \text{G}.
+\end{align}
+Each essential rule fires in only one of 1{,}299 sequences, reflecting the
+rarity of the specific double-mutant combination.  The remaining 34 non-essential
+implicants cover the broader coevolutionary landscape at each pair.
+
+\subsection{Flipped Circuit: Forbidden Combinations}
+Applying Quine--McCluskey to the flipped maps (ON = never observed, OFF =
+observed, DC = reference) produces 490 forbidden rules across 117 unique
+residue-pair identities.  These represent negative-selection constraints:
+combinations that are never sampled across 1{,}299 sequences despite adequate
+sampling depth at both positions.
+
+Three-dimensional validation reveals that forbidden pairs at the NTD
+positions (210, 215) and (212, 215) sit at contact-compatible distances
+(enrichment $2.57\times$ and $2.71\times$ respectively), consistent with
+steric incompatibility driving their absence.  Forbidden pairs in the
+442--498 cluster show no such enrichment, supporting their interpretation as
+lineage-covariation artefacts rather than structural constraints.
+
+\subsection{Structural Validation Against 299 Homology Models}
+We mapped each alignment column to the corresponding residue in the best-GMQE
+SWISS-MODEL structure (identity mapping verified for all 299 unique
+sequences).  Among the ten co-evolving pairs:
+
+\begin{table}[ht]
+	\centering
+	\caption{3D validation of co-evolving pairs against SWISS-MODEL structures.}
+	\label{tab:spike-3d}
+	\begin{tabular}{lcccl}
+		\toprule
+		Pair       & Contact frac. & Enrichment   & Median \AA{} & Region         \\
+		\midrule
+		(407, 410) & 88.6\%        & 6.97$\times$ & 6.7          & RBD            \\
+		(212, 215) & 35.4\%        & 2.78$\times$ & 8.5          & NTD            \\
+		(210, 215) & 29.3\%        & 2.30$\times$ & 11.0         & NTD            \\
+		(500, 503) & ---           & 11.3$\times$ & 5.3          & RBD            \\
+		(503, 507) & ---           & 11.3$\times$ & 5.0          & RBD            \\
+		(454, 495) & ---           & 5.97$\times$ & 8.0          & RBD (DCA-only) \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+Seven pairs achieve enrichment $\geq 2\times$ with $p < 10^{-6}$, confirming
+that the Karnaugh-map framework detects genuine structural signal.  However,
+the strongest full-MI pair (373, 378; MI $= 0.807$) shows zero enrichment,
+demonstrating that high covariation does not necessarily imply physical
+proximity when the underlying cause is shared phylogenetic history rather
+than structural constraint.
+
+\subsection{Perplexity Ratio as a Structural Predictor}
+Among all sequence-derived metrics evaluated on the Spike, the perplexity
+ratio achieves the highest Spearman correlation with native-contact fraction:
+\begin{equation}
+	\rho(\text{ratio}, \text{contact}) = 0.670, \quad p = 0.006.
+\end{equation}
+Near-deterministic pairs (ratio $> 1.5$) are enriched for contacts at
+$1.80\times$, while low-ratio pairs show no enrichment.  This suggests that
+perplexity ratio captures a property of coevolution---near-determinism of the
+amino-acid relationship---that raw MI does not distinguish from noisy
+covariation.
+
+\subsection{Conserved Core Analysis}
+Of the 1{,}276 alignment columns, 1{,}255 are conserved ($H < 0.3$).  These
+columns encode the structural core of the Spike protein, including the fusion
+peptide, heptad repeats, and transmembrane domain.  While they generate no
+coevolutionary signal (their entropy is too low for meaningful MI), they
+carry structural information through their absolute constraint: any mutation
+at these positions is likely deleterious and rapidly purged.  Our complete
+circuit incorporates this information through the conservation-type feature
+dimension, which enriches cons/cons column pairs for native contacts by
+$3.2\times$.

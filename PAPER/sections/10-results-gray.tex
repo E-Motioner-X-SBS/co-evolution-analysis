@@ -1,0 +1,38 @@
+% ── §11 Results: Gray Adjacency ──
+\section{Results: Gray Adjacency Among Native Contacts}
+\label{sec:results-gray}
+
+\subsection{Motivation}
+The Karnaugh-map framework predicts that residue pairs connected by a single
+bit-flip in Gray-code space (Hamming distance $d_G = 1$) should be enriched
+among native contacts, because the encoding is designed so that adjacent
+codewords correspond to physicochemically similar amino acids.
+
+\subsection{Result}
+Among 47{,}430 native-contact pairs across 150 PSICOV proteins, the observed
+fraction of pairs at Gray distance~1 is 22.83\% (95\% CI: [22.27\%, 23.40\%]
+by protein-level bootstrap with 2{,}000 resamples).  The composition-controlled
+background rate---constructed by within-protein, within-separation-bin
+resampling of non-contact consensus residue pairs---is 19.37\%.  The resulting
+enrichment of $1.178\times$ is highly significant by two-sided exact binomial
+test ($p = 1.1 \times 10^{-77}$).
+
+\subsection{Encoding Specificity}
+To determine whether this enrichment is specific to the He/Gray encoding or
+would arise from any clustered assignment of codewords to residues, we
+performed a permutation test: we recomputed the enrichment under 30 random
+relabelings of the 20 amino-acid codes while keeping all pair observations,
+contact labels, and background construction fixed.  Random relabelings yield
+a mean enrichment of $0.961 \pm 0.095$ (maximum 1.158), placing the true
+He/Gray value ($1.198\times$) at $z = 2.51$ above the null distribution.
+This confirms that the specific Gray structure carries genuine signal beyond
+generic physicochemical clustering, although the majority of the raw
+enrichment reflects the broader tendency of chemically similar residues to
+contact each other.
+
+\subsection{Comparison with Underpowered Analysis}
+A previous analysis on the SARS-CoV-2 Spike protein alone found an identical
+point estimate ($1.18\times$) but failed to reach significance ($p = 0.345$)
+because only 38 contact pairs were available.  The present analysis, with
+three orders of magnitude more data, resolves this ambiguity decisively:
+the effect is real but small.

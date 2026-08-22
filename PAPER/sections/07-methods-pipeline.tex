@@ -1,0 +1,60 @@
+% ── §8 Methods: Pipeline Architecture ──
+\section{Pipeline Architecture}
+\label{sec:methods-pipeline}
+
+\subsection{Feature Extraction}
+For each protein target, we compute a dense integer matrix $\mathbf{X} \in
+	\{0, \ldots, 20\}^{N \times L}$ from the MSA, where $N$ is the number of
+sequences, $L$ is the alignment width, and entry $x_{n,c}$ encodes the amino
+acid at column $c$ of sequence $n$ using the He~2012 code (values 0--19), with
+gap and ambiguous characters mapped to state~20.  From this matrix we derive:
+
+\begin{enumerate}[nosep]
+	\item Per-column consensus residues (majority non-gap code, lowest-code
+	      tie-breaking, consistent between CPU and GPU implementations).
+	\item Per-column Shannon entropy vector.
+	\item Candidate pair universe: all pairs $(i, j)$ with $i < j$,
+	      $j - i \geq 6$, and both columns having a valid consensus (non-gap).
+	\item Pair features: physicochemical group codes ($g_i, g_j \in \{0,\ldots,7\}$),
+	      separation bin ($s \in \{0,1,2,3\}$ for edges [6,11), [11,21),
+	      [21,31), $[31,\infty)$), consensus residue codes, Gray-Hamming
+	      distance, mutual information, and perplexity ratio.
+\end{enumerate}
+
+\subsection{Karnaugh Map Construction}
+Two levels of Karnaugh-map circuits are constructed from pooled counts over
+training proteins:
+\begin{description}[nosep]
+	\item[Level-1 (256 cells):] group$_i$[3] $\times$ group$_j$[3] $\times$
+		separation-bin[2], yielding a coarse circuit over physicochemical
+		classes.
+	\item[Level-2 (4$\times$1024 cells):] consensus-residue$_i$[5] $\times$
+		consensus-residue$_j$[5] padded to $32\times32$, one map per
+		separation bin, yielding a fine-grained circuit over specific residue
+		identities.
+\end{description}
+Cell labeling uses a documented ternary rule: ON if contact rate $\geq T
+	\times$ base rate and $n \geq n_{\min}$; don't-care if $n < n_{\min}$;
+OFF otherwise, with defaults $T = 2$ and $n_{\min} = 30$.  Sensitivity is
+verified by sweeping $T \in \{1.5, 2, 3\}$ and $n_{\min} \in \{10, 30, 60\}$.
+
+\subsection{Quine--McCluskey Minimisation}
+Each labeled truth table is minimised using a popcount-grouped
+Quine--McCluskey implementation with full don't-care support.  Every trained
+circuit is asserted sound (no implicant matches any OFF cell) and complete
+(every ON cell is covered) before evaluation.
+
+\subsection{Cross-Protein Evaluation}
+Protein-level cross-validation prevents homolog leakage: folds are stratified
+by length quintile with seeded shuffling, and all model parameters (cell rates,
+truth-table labels) are derived exclusively from training proteins.  Ranked
+evaluation reports precision@L/5, precision@L/2, precision@L, and area under
+the ROC curve (AUC) computed via the Mann--Whitney $U$ statistic with mid-rank
+tie handling.
+
+\subsection{GPU Acceleration}
+Mutual information matrices are computed on an NVIDIA A100 GPU using torch
+CUDA kernels with adaptive chunking that bounds the flat int64 buffer to
+512~MB, enabling processing of alignments up to 486k sequences without out-of-memory
+failures.  The full MI matrix (813k pairs $\times$ 1299 sequences) evaluates
+in 1.6 seconds, approximately 800$\times$ faster than single-core CPU.

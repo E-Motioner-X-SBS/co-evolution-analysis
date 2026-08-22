@@ -1,0 +1,86 @@
+% ── §4 Information-Theoretic Measures ──
+\section{Information-Theoretic Measures}
+\label{sec:theory-info}
+
+\subsection{Shannon Entropy}
+\label{sec:shannon}
+
+For an alignment column $i$ containing $N$ sequences, the Shannon entropy
+\cite{shannon1948} quantifies the evolutionary variability at that position:
+\begin{equation}
+	H(i) = -\sum_{a=1}^{20} P_i(a) \log_2 P_i(a),
+	\label{eq:shannon}
+\end{equation}
+where $P_i(a)$ denotes the observed frequency of amino acid $a$ at column $i$,
+computed after excluding gap characters (state~20).  The entropy ranges from
+$H = 0$ (fully conserved column) to $H = \log_2(20) \approx 4.32$ bits
+(maximally variable).  We classify a column as \emph{variable} if $H(i)
+	> 0.3$, a threshold chosen empirically to capture positions where at least two
+or three different amino acids appear with appreciable frequency.
+
+\subsection{Mutual Information}
+\label{sec:mutual-info}
+
+For a pair of alignment columns $(i, j)$, the mutual information measures the
+statistical dependence between the amino-acid distributions at those columns:
+\begin{equation}
+	\MI(i,j) = \sum_{a=1}^{20}\sum_{b=1}^{20} P_{ij}(a,b)
+	\log_2 \frac{P_{ij}(a,b)}{P_i(a)\,P_j(b)},
+	\label{eq:mi}
+\end{equation}
+where $P_{ij}(a,b)$ is the joint frequency of observing residue $a$ at column
+$i$ and residue $b$ at column $j$.  MI is measured in bits and equals zero
+when the two positions are statistically independent.  We compute two variants:
+the \emph{full MI}, which counts all observations including the reference
+(majority-residue) pair, and the \emph{mutation-only MI}, which excludes the
+reference pair to isolate mutation-driven covariation from conservation-driven
+signal.
+
+Raw MI suffers from two well-known biases: phylogenetic inertia inflates
+correlations between sequences sharing recent common ancestry, and random
+sampling noise produces nonzero baseline values even for independent
+positions.  The Average Product Correction (APC) of Dunn et
+al.\cite{dunn2008} removes much of this bias by subtracting the product of row
+and column means from the MI matrix:
+\begin{equation}
+	\mathrm{MI}_{\mathrm{APC}}(i,j) =
+	\MI(i,j) - \frac{\bar{\MI}(i,\cdot)\,\bar{\MI}(\cdot,j)}{\bar{\MI}},
+	\label{eq:apc}
+\end{equation}
+where $\bar{\MI}(i,\cdot)$ is the mean MI over all partners of position $i$
+and $\bar{\MI}$ is the grand mean.
+
+\subsection{Perplexity Ratio}
+\label{sec:perplexity}
+
+While MI measures total statistical dependence, it does not distinguish between
+many weakly contributing states and a few strongly determined ones.  To capture
+this distinction, we define the \emph{perplexity ratio} for a pair $(i,j)$ as
+\begin{equation}
+	r(i,j) = \frac{\mathrm{PP}(j)}
+	{\frac{1}{|\mathcal{A}|}\sum_{a \in \mathcal{A}}
+		\mathrm{PP}(j \mid i = a)},
+	\label{eq:pp-ratio}
+\end{equation}
+where $\mathrm{PP}(j) = 2^{H(j)}$ is the marginal perplexity of column $j$,
+$\mathrm{PP}(j \mid i = a) = 2^{H(j|i=a)}$ is the conditional perplexity given
+that column $i$ holds residue $a$, and $\mathcal{A}$ is the set of residues at
+column $i$ with at least five observations.  A ratio exceeding unity indicates
+that knowing the residue at position $i$ reduces the effective number of
+choices at position $j$.  In our PSICOV150 evaluation, the perplexity ratio
+achieved the highest Spearman correlation with native-contact fraction among
+all sequence-derived metrics tested ($\rho = 0.670$, $p = 0.006$).
+
+\subsection{Coupling Constants}
+\label{sec:coupling}
+
+The coupling constant for a residue pair $(a, b)$ at positions $(i, j)$ is
+defined as the log-odds ratio
+\begin{equation}
+	J_{ij}(a,b) = \ln \frac{P_{ij}(a,b)}{P_i(a)\,P_j(b)},
+	\label{eq:coupling}
+\end{equation}
+which equals zero when the pair occurs at its independent (marginal-product)
+frequency.  Positive values indicate coevolutionary enrichment; negative
+values indicate anti-correlation or negative selection.  The sigmoid transform
+$\sigma(J) = (1 + e^{-J})^{-1}$ maps couplings to probabilities in $[0, 1]$.

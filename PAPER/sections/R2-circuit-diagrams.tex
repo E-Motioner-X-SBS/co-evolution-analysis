@@ -1,0 +1,101 @@
+% ── §R2: Boolean Circuit Diagrams (TikZ) ──
+\section{Boolean Circuit Representations}
+\label{sec:circuit-diagrams}
+
+\subsection{Level-1 Universal Contact Circuit}
+
+The trained Level-1 circuit encodes contact propensity as a sum of prime
+implicants over physicochemical group identities and separation bins.
+Figure~\ref{fig:circuit-l1} depicts the essential implicants as a two-level
+AND--OR network using standard rectangular gate notation.
+
+\begin{figure}[ht]
+	\centering
+	\begin{tikzpicture}[
+		box/.style={draw, thick, minimum width=18mm, minimum height=10mm,
+				inner sep=2pt, font=\small\bfseries, fill=blue!10},
+		orbox/.style={draw, very thick, minimum width=14mm, minimum height=24mm,
+				inner sep=2pt, font=\small\bfseries, fill=orange!15},
+		outbox/.style={draw, very thick, minimum width=20mm, minimum height=8mm,
+				inner sep=2pt, font=\small\bfseries, fill=green!15},
+		input/.style={font=\scriptsize, anchor=east, align=right},
+		wire/.style={-{Stealth[length=5pt]}, thick},
+		scale=0.9, transform shape]
+
+		% ── AND gates as rectangles ──
+		\node[box] (and1) at (0,3) {AND};
+		\node[font=\tiny, anchor=south] at (and1.north) {hydrophobic $\times$ aromatic};
+
+		\node[box] (and2) at (0,1) {AND};
+		\node[font=\tiny, anchor=south] at (and2.north) {aromatic $\times$ any};
+
+		\node[box] (and3) at (0,-1) {AND};
+		\node[font=\tiny, anchor=south] at (and3.north) {sulfur $\times$ hyd/aro};
+
+		% ── OR gate ──
+		\node[orbox] (or1) at (4,1) {OR};
+
+		% ── Output ──
+		\node[outbox] (out) at (7.5,1) {CONTACT};
+
+		% ── Input labels ──
+		\node[input, anchor=east] at (-2.5,3.3) {$g_i \in \{$hyd,aro$\}$};
+		\node[input, anchor=east] at (-2.5,2.8) {$g_j \in \{$hyd,aro$\}$};
+		\node[input, anchor=east] at (-2.5,2.3) {$s \in [6,21)$};
+			\draw[wire] (-2.4,3.0) -- (and1.west);
+
+			\node[input, anchor=east] at (-2.5,1.3) {$g_i = $ arom};
+			\node[input, anchor=east] at (-2.5,0.8) {$s \in [6,11)$};
+		\draw[wire] (-2.4,1.0) -- (and2.west);
+
+		\node[input, anchor=east] at (-2.5,-0.7) {$g_i = $ sulfur};
+		\node[input, anchor=east] at (-2.5,-1.2) {$g_j \in \{$hyd,aro$\}$};
+		\draw[wire] (-2.4,-1.0) -- (and3.west);
+
+		% ── Wires from ANDs to OR ──
+		\draw[wire] (and1.east) -- (or1.west);
+		\draw[wire] (and2.east) -- (or1.west);
+		\draw[wire] (and3.east) -- (or1.west);
+
+		% ── Wire from OR to output ──
+		\draw[wire] (or1.east) -- (out.west);
+
+	\end{tikzpicture}
+	\caption{
+		\textbf{Simplified Level-1 universal contact circuit.}  Each AND block
+		corresponds to one essential prime implicant discovered by Quine--McCluskey
+		minimisation; the OR block combines them into the final sum-of-products
+		output.  Only the three highest-scoring essential rules are shown for clarity;
+		the complete circuit contains 20--22 essential implicants per fold.  Input
+		labels denote physicochemical group memberships ($g$) and separation bins
+		($s$).  Adapted from the trained model on PSICOV150 (holdout split).
+	}
+	\label{fig:circuit-l1}
+\end{figure}
+
+\subsection{Interpretation of Essential Rules}
+
+The three implicants shown in Figure~\ref{fig:circuit-l1} correspond to
+well-characterised structural interactions:
+\begin{enumerate}[nosep]
+	\item \textbf{AND$_1$} (hydrophobic/aromatic $\times$ hydrophobic/aromatic,
+	      separation 6--21): hydrophobic-core packing between bulky side chains.
+	      This rule fires on 53 on-set cells across the training set and is
+	      essential in all five cross-validation folds.
+	\item \textbf{AND$_2$} (aromatic $\times$ any group, separation 6--11):
+	      $\pi$-stacking or edge-to-face aromatic contacts in structured regions,
+	      reflecting the propensity of phenylalanine, tyrosine, and tryptophan
+	      to form specific geometric arrangements.
+	\item \textbf{AND$_3$} (sulfur $\times$ hydrophobic/aromatic, separation
+	      6--11): cysteine-mediated thiol contacts and methionine sulfur--$\pi$
+	      interactions, consistent with the known role of sulfur-containing
+	      residues in stabilising local structural motifs.
+\end{enumerate}
+
+At Level-2 resolution, the circuit specifies concrete residue-pair vocabularies
+such as $\{M,F\} \times \{M,F,Y,W\}$ (methionine--phenylalanine packing),
+$\{I,V\} \times \{I,V,F,W\}$ (branched-chain aliphatic clustering), and
+$\{I,F,C\} \times \{F,W\}$ (aromatic--sulfur contacts), all at separation
+bin~0 (residues 6--10 apart).  These are precisely the residue combinations
+that dominate the buried cores of globular proteins, rediscovered here by
+Boolean minimisation without any biophysical prior knowledge.

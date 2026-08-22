@@ -287,6 +287,7 @@ Notes:
 | 6 | `trimer_interface.py` | Any inter-protomer contacts? | **ZERO** |
 | 7 | `consistency_cross_script.py` | Does cross-script agreement imply structure? | **NO** — 5-source pairs non-structural |
 | 8 | `perplexity_3d_analysis.py` | Is the perplexity ratio structural? | **ρ=0.67, p=0.006 — strongest metric** |
+> **CORRECTION (Aug 22, 2026):** this figure is a misattribution. Jones et al. 2012 Table 1 gives PSICOV top-L/5 ≈ **0.73** (sep>6) / ≈0.68 (>23); our re-measurement of the shipped con files = 0.727 / 0.640 (see 3D_Structure_Analysis/11 §9-S1). The 0.44 value corresponds to top-L / MIp-B&vN rows.
 | 9 | `validate_contacts.py` | PSICOV 150 natives: enrichment + precision? | 2.49× mean enrichment; precision 0.066 vs published 0.44 |
 
 ### 5.4 The interpretations (where the findings live)
@@ -390,7 +391,7 @@ byte-compare-verified re-runs; coverage audit 0 flags on 3,732 runs.
 | Trimer interface? | Zero inter-chain contacts | trimer_interface |
 | Consistency ⇒ structure? | NO | consistency_cross_script |
 | Perplexity? | ρ=0.67, p=0.006 — best single metric | perplexity_3d_analysis |
-| vs published DCA? | enrichment 2.49× (PSICOV 150); precision 0.066 vs 0.44 | validate_contacts |
+| vs published DCA? | enrichment 2.49× (PSICOV 150); precision 0.066 vs 0.44 [CORRECTED: PSICOV L/5 is 0.73, not 0.44 — see 11_Kmap doc §9] | validate_contacts |
 | Data quality | GPU/CPU identical to 1e-7; coverage 0 flags; byte-compare identical | check_gpu_cpu, verify_coverage |
 
 ---
@@ -410,6 +411,44 @@ byte-compare-verified re-runs; coverage audit 0 flags on 3,732 runs.
 | uv install fails (permission on /store/uv) | use `$PY -m pip install` |
 | Report generator KeyError on missing data | fixed with SafeDict; regenerate |
 | Coverage audit flags "SEQS n<total" | check it's a train/test or subset line (parser handles totals) |
+
+---
+
+## 9.5 K-map ↔ 3D-Structure Encoding Campaign (Aug 22, 2026 — NEW)
+
+Literature-ground-truth verification that the Gray→K-map→QM chain encodes 3D
+structure. Full write-up:
+`My_Own_Interpretation_Across_New_Datasets/3D_Structure_Analysis/11_Kmap_Structure_Encoding.md`.
+
+| Asset | Path |
+|---|---|
+| Library (contact K-maps, native-PDB labels, PSICOV-con parsing) | `scripts/kmap_structure.py` |
+| Stage runner: cache → cv → sweep → gray → mapqm | `scripts/run_contact_campaign.py` |
+| Adversarial tests (26) | `scripts/tests/test_kmap_structure.py` |
+| Results | `results/kmap_structure/*.json` + `features/*.npz` (150) |
+| Lean proofs (12 theorems, axiom-audited) | `../lean_proofs/proofs/is_kmap_possible/ContactCircuits.lean` |
+
+Key numbers: circuit transfer prec@L/5 **0.179** holdout (MI 0.097, base 0.034,
+PSICOV-pub 0.727); Gray enrichment **1.178×, p=1.1e-77** (n=47,430; permutation
+control z=2.51); map-compression 6/6 p=0.031; determinism md5-stable ×5.
+
+**CORRECTION carried here:** the older "published PSICOV L/5 = 0.44" figure in
+
+### Aug 22 extension — tension, coupling-in-K-map, reconstruction, complete circuit
+
+| Result | Numbers |
+|---|---|
+| Tension mechanism (G): no lift | circ-G 0.154 < circ-L2 0.165; hubs anti-correlated |
+| mfDCA-in-K-map (H): no lift from DI bins | circH 0.124 < L1 0.134 < L2 0.165 |
+| Our mfDCA matches published benchmarks | 0.169 ≈ literature 0.15–0.20 |
+| **Rank-fusion: K-map prior + DCA** | **0.204 prec@L/5, p≈0 vs both parents** |
+| Reconstruction verdict (I) | circuits NOT ready (recall@L 2.8%); DCA IS (21.8%) |
+| Complete circuit (K): flipped transfers | specificity 98.3%; cons/cons 3.2× enriched |
+| Gray adjacency at scale | 1.178×, p=1e-77; permutation z=2.51 |
+
+New scripts: `path_{g,h,i,k,l}_*.py`; new results: `results/kmap_structure/path_{g,h,i,k,l}*.json`.
+§4/§5.3 above is a misattribution (paper Table-1 L/5 ≈ 0.73; we reproduce
+0.727). See 11_Kmap doc §9-S1 for the web-verified reconciliation.
 
 ---
 

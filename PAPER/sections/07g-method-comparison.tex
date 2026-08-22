@@ -1,0 +1,67 @@
+% ── §7g Methods: Comprehensive Method Comparison ──
+\section{Comprehensive Method Comparison}
+\label{sec:methods-comparison}
+
+\subsection{Methods Evaluated}
+We evaluate seven distinct methods for contact prediction on the PSICOV150
+benchmark, spanning three methodological families:
+
+\begin{enumerate}[nosep]
+	\item \textbf{Karnaugh-map circuits}: Level-1 (group-level) and Level-2
+	      (identity-level) Quine--McCluskey-minimised circuits with cell-rate
+	      scoring.
+	\item \textbf{Continuous statistics}: plain mutual information,
+	      APC-corrected mutual information (MIp), perplexity ratio, and
+	      APC-corrected Frobenius-norm DCA from our mean-field implementation.
+	\item \textbf{Literature baseline}: published contact predictions from the
+	      PSICOV method (sparse inverse covariance estimation), downloaded
+	      directly from the benchmark supplementary data.
+\end{enumerate}
+
+\subsection{Results Across Separation Bands}
+Contact prediction performance varies substantially across separation bands.
+We report precision@L/5 stratified by CASP convention bands:
+
+\begin{table}[ht]
+	\centering
+	\caption{Precision@L/5 stratified by CASP separation band (mean over held-out proteins).}
+	\label{tab:bands}
+	\begin{tabular}{lccc}
+		\toprule
+		Method           & Short ($6$--$11$) & Medium ($12$--$23$) & Long ($\geq 24$) \\
+		\midrule
+		Circuit-L2       & .179              & .134                & .137             \\
+		Circuit-L1       & .135              & .110                & .116             \\
+		Plain MI         & .115              & .081                & .077             \\
+		Perplexity ratio & .052              & .036                & .031             \\
+		Separation-only  & .033              & .052                & .051             \\
+		PSICOV published & .409              & .478                & .637             \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+The circuit maintains its advantage over MI in every band, though the margin
+narrows at long range.  The PSICOV baseline shows the opposite trend,
+achieving its highest precision at long range where covariation methods are
+typically evaluated; this reflects the sparse inverse covariance estimator's
+ability to remove indirect correlations that are most prevalent at short to
+medium range.
+
+\subsection{Computational Cost}
+All experiments were performed on a shared server with an NVIDIA A100 GPU
+(80~GB HBM2e) and 24-core Intel Xeon CPU.  The per-protein wall-clock times
+are:
+
+\begin{center}
+	\begin{tabular}{lr}
+		\toprule
+		Operation                             & Time           \\
+		\midrule
+		Feature extraction (per protein)      & $< 1$~s        \\
+		MI matrix, full length (GPU)          & $0.1$~s        \\
+		mfDCA covariance inversion (CPU)      & $5$--$60$~s    \\
+		QM minimisation (1024 cells)          & $<$ 1~s        \\
+		Full PATH-B evaluation (150 proteins) & $\approx$ 21~s \\
+		\bottomrule
+	\end{tabular}
+\end{center}

@@ -1,0 +1,120 @@
+% ── §8: Binary Sequence Spaces and Their Topological Structure ──
+\section{Binary Sequence Spaces and Their Topological Structure}
+\label{sec:binary-spaces}
+
+A central theoretical contribution of this work is the recognition that the
+Gray-code encoding of biological alphabets induces a metric structure on
+sequence space that is simultaneously compatible with the Karnaugh-map grid
+and reflective of biophysical similarity.  We develop this idea formally.
+
+\subsection{The Encoded Sequence Space}
+
+Let $\Sigma = \{a_0, \ldots, a_{19}\}$ denote the canonical amino-acid
+alphabet, and let $\phi : \Sigma \to \{0, \ldots, 19\}$ assign each residue
+its He~2012 integer code.  The reflected binary Gray transformation $g(n) =
+	n \oplus (n \gg 1)$ maps these codes into $\{0, \ldots, 31\} \subset \{0,1\}^5$,
+embedding the alphabet into the five-dimensional hypercube $Q_5$ whose
+vertices are the 32 five-bit vectors.  Twenty of these vertices are occupied;
+the remaining twelve constitute the don't-care region that gives the
+Quine--McCluskey algorithm its freedom to form larger implicants.
+
+For two residues $a, b \in \Sigma$, define their \emph{encoding distance} as
+\begin{equation}
+	d_\Sigma(a, b) = d_H\!\bigl(g(\phi(a)),\, g(\phi(b))\bigr),
+	\label{eq:encoding-distance}
+\end{equation}
+where $d_H$ is the Hamming metric on $\{0,1\}^5$.  This function satisfies
+the metric axioms (non-negativity, symmetry, triangle inequality) because it
+is the pullback of a metric under an injective map.  It defines a graph
+structure on $\Sigma$ in which two residues are adjacent iff $d_\Sigma(a,b)
+	= 1$; this adjacency graph is a subgraph of $Q_5$ with exactly 40 edges
+(ordered count: 80), as verified by exhaustive enumeration in
+Lean~4~(Theorem~\texttt{cc\_he\_dist1\_ordered\_eq\_80}).
+
+\subsection{Contact Enrichment in the Adjacency Graph}
+
+The central structural hypothesis of our framework is that pairs of residues
+connected by an edge in the encoding-adjacency graph are enriched among
+native contacts relative to what would be expected from their marginal
+frequencies alone.  This hypothesis was confirmed on the PSICOV150 benchmark
+with overwhelming statistical significance ($p < 10^{-77}$,
+Section~\ref{sec:results-gray}) and further validated by a permutation test
+showing that the specific He/Gray assignment outperforms random code
+assignments ($z = 2.51$).
+
+We can understand this enrichment through the lens of \emph{information
+	geometry}.  The mutual information $\MI(i,j)$ between positions $i$ and $j$
+measures how much knowing the residue at one position reduces uncertainty
+about the other.  When both positions are buried in the protein core, their
+residues are drawn from a restricted alphabet dominated by hydrophobic
+members of the same physicochemical group.  Under the He/Gray encoding,
+members of the same group occupy nearby codewords (within-group mean distance
+$\leq 2$ bits), so contacting pairs of core residues tend to have small
+$d_\Sigma$, producing the observed enrichment.
+
+\subsection{Karnaugh Maps as Quotient Structures}
+
+A Karnaugh map of dimension $(w_1, w_2)$ over encoded alphabets $\Sigma_1$
+and $\Sigma_2$ is the Cartesian product $Q_{w_1} \times Q_{w_2}$ arranged as
+a $2^{w_1} \times 2^{w_2}$ grid with Gray-code row and column ordering.  For
+protein-pair analysis, $w_1 = w_2 = 5$, giving a $32 \times 32$ grid with
+1024 cells.  The ternary labeling (On/Off/Don't-care) partitions these cells
+into three disjoint sets whose semantics are fixed by the data:
+\begin{align}
+	\mathrm{ON}(i,j)  & = \{(a,b) : f_{ij}(a,b) > 0 \wedge (a,b) \neq
+	(\pi_i, \pi_j)\},                                                 \\
+	\mathrm{OFF}(i,j) & = \{(a,b) : f_{ij}(a,b) = 0 \wedge (a,b) \neq
+	(\pi_i, \pi_j)\},                                                 \\
+	\mathrm{DC}(i,j)  & = \{(a,b) : (a,b) = (\pi_i, \pi_j)\}
+	\cup \{a \geq 20\} \cup \{b \geq 20\},
+\end{align}
+where $f_{ij}(a,b)$ is the joint frequency and $(\pi_i, \pi_j)$ is the
+reference pair.
+
+Quine--McCluskey minimisation operates on this partition by finding the
+coarsest sum-of-products expression whose implicants cover all ON cells while
+avoiding all OFF cells.  Don't-care cells serve as free variables that may be
+included in or excluded from any implicant without affecting correctness.
+The result is a set of prime implicants, each representing a maximal
+hypercube of the Karnaugh map that lies entirely within the ON $\cup$ DC
+region---a geometric object that corresponds to a conjunction of amino-acid
+identity constraints at the two positions.
+
+\subsection{Homotopical Interpretation}
+
+The hypercube $Q_w$ has a well-known topological interpretation as the
+$categorical product$ of $w$ copies of the unit interval $[0,1]$, making it a
+contractible space with trivial homotopy groups in all dimensions $\geq 1$.
+When we restrict to the twenty occupied vertices corresponding to canonical
+amino acids, we obtain a subcomplex whose topology encodes the
+physicochemical organisation of the genetic code.  Specifically, the
+within-group adjacency structure creates connected components (one per
+physicochemical class), and the between-group adjacencies create bridges
+between these components that reflect shared biochemical properties.
+
+From this perspective, a coevolutionary signal appears as a concentration of
+interaction energy along particular edges and faces of this subcomplex.
+Positions that coevolve tend to involve residues whose codewords lie on the
+same face of the hypercube (small $d_\Sigma$), because such pairs share
+physicochemical properties that allow simultaneous substitution without
+disrupting the fold.  The Quine--McCluskey minimiser detects precisely these
+concentrated regions by finding maximal subcubes within which all observed
+combinations are ON.
+
+\subsection{Connection to Constraint-Based Protein Design}
+
+The SOP expressions produced by QM minimisation have a direct interpretation
+as \emph{design constraints}.  Each prime implicant specifies a conjunction
+of conditions (amino-acid identities at two positions, plus a separation
+range) that is sufficient for contact formation.  A complete set of such
+implicants defines a Boolean circuit whose ON output characterises the
+allowed sequence space for a given fold.
+
+In inverse protein folding, one seeks sequences compatible with a target
+structure.  Our framework provides a natural bridge: the circuit's ON region
+is exactly the subset of sequence space consistent with the observed
+coevolutionary constraints, and sequences outside this region are predicted
+to be incompatible.  While current precision does not suffice for de novo
+folding (Section~\ref{sec:results-reconstruction}), the constraint
+satisfaction perspective suggests a route to improvement through integration
+with energy-based methods that operate on the same discrete representation.

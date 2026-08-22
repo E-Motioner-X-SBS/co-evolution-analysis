@@ -1,0 +1,41 @@
+% ── §12 Results: Coupling Inside the K-map ──
+\section{Results: Coupling Inside the Karnaugh Map}
+\label{sec:results-coupling}
+
+\subsection{Motivation}
+Mean-field DCA captures global coupling structure through covariance inversion,
+information absent from consensus-residue features alone.  We test whether
+discretising DCA scores into Karnaugh-map input dimensions improves circuit
+precision beyond what identity or group features provide.
+
+\subsection{Method}
+We compute APC-corrected Frobenius-norm DCA scores for each candidate pair on
+each protein using our own mean-field implementation (validated against
+published benchmarks).  Scores are discretised into quartile bins and added as
+a two-bit feature dimension alongside physicochemical groups and separation
+bins, yielding a 1024-cell Level-H circuit.  Five-fold protein-level CV is used
+identically to PATH~B.
+
+\subsection{Result}
+The coupling-augmented circuit (circH) achieves a mean precision@L/5 of
+$0.124$, which does not exceed the group-only circuit ($0.134$) or the
+identity-level circuit ($0.165$).  Raw DCA ranking achieves $0.169$.
+Quartile-binned DI is therefore redundant with consensus identity features at
+this granularity; the information content of the coupling signal overlaps with
+what identity cells already encode.
+
+Notably, the circH AUC ($0.658$) exceeds the rawDCA AUC ($0.583$), indicating
+that cell-rate smoothing improves global ranking while degrading top-$K$
+sharpness.  This motivates the rank-fusion experiment of
+Section~\ref{sec:results-fusion}.
+
+\subsection{Implementation Validation}
+Our mean-field DCA implementation was validated against native contacts after
+correcting three bugs discovered during development: (1) a transpose-and-reshape
+operation that scrambled the block-matrix layout of the covariance matrix,
+producing max$|C - C^{\mathsf{T}}| = 0.25$ instead of zero; (2) incorrect axis
+selection for the Frobenius norm in the $[i,j,a,b]$ tensor layout; and (3) an
+incorrect broadcast axis in the direct-information fixed-point iteration that
+paired single-site frequencies with the wrong position index.  After
+correction, our mfDCA achieves prec@L/5 = 0.169 on PSICOV150, consistent with
+published mean-field benchmarks of approximately 0.15--0.20 on this dataset.

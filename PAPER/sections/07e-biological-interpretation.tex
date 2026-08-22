@@ -1,0 +1,52 @@
+% ── §7e Methods: Biological Interpretation of Learned Rules ──
+\section{Biological Interpretation of Learned Rules}
+\label{sec:methods-biological}
+
+\subsection{Hydrophobic Core Packing}
+The dominant rules discovered by the Level-1 universal circuit involve pairs
+of hydrophobic or aromatic residues at short separations.  Specifically,
+essential prime implicants include the conjunction
+$\text{hydrophobic} \times \text{aromatic}$ at separation bins $[6, 11)$ and
+$[11, 21)$, corresponding to aliphatic--aromatic packing interactions that
+stabilise protein cores.  At the finer Level-2 resolution, specific residue
+vocabularies emerge: $\{M, F\} \times \{M, F, Y, W\}$ and
+$\{I, V\} \times \{I, V, F, W\}$ are among the highest-ranked ON cells.
+These correspond precisely to the Met--Phe, Ile--Val, and Ile--Phe contacts
+that dominate the buried cores of globular proteins.
+
+\subsection{Salt Bridges and Electrostatic Interactions}
+The circuit also discovers acidic--basic residue pairings at short range,
+consistent with salt-bridge formation between glutamate/aspartate and
+lysine/arginine side chains.  These rules appear primarily at separation bins
+$[6, 11)$ and $[11, 21)$, matching the expected geometric range for
+side-chain electrostatic interactions.
+
+\subsection{Sulfur-Mediated Contacts}
+Cysteine (the sole sulfur-group residue) appears in several high-tension
+rules paired with hydrophobic and aromatic partners.  While disulfide bonds
+require oxidative conditions and are therefore context-dependent, the
+enrichment of cysteine-containing rules suggests that thiol-mediated contacts
+contribute to the structural signal captured by the Karnaugh-map framework.
+
+\subsection{Conservation and Structural Constraint}
+The complete circuit's conservation dimension reveals a clear hierarchy:
+pairs in which both columns are near-conserved (entropy between 0.001 and
+0.05) show the strongest contact enrichment ($1.35\times$), while absolutely
+conserved positions (entropy $\approx 0$) show depletion ($0.69\times$).
+This non-monotonicity is biologically interpretable: absolutely invariant
+positions are frequently catalytic residues or post-translational modification
+sites whose conservation reflects functional constraint rather than structural
+packing.  Near-conserved positions, by contrast, are sufficiently constrained
+to maintain structural integrity while retaining enough variability to
+generate detectable covariation signal.
+
+\subsection{Connection to Protein Design}
+The fact that Quine--McCluskey-minimised circuits discover known structural
+principles from sequence data alone has implications for protein engineering.
+If the learned SOP expressions capture genuine design rules---for example,
+that a hydrophobic residue at position $i$ requires a hydrophobic or aromatic
+partner at position $j$ within a certain sequence separation---then these
+rules could serve as design constraints in inverse protein folding algorithms.
+The Boolean form of these constraints makes them directly implementable as
+logic circuits or constraint-satisfaction problems, offering a novel route
+from coevolutionary analysis to automated protein design.

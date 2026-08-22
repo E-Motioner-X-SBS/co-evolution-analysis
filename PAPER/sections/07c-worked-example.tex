@@ -1,0 +1,60 @@
+% ── §7c Methods: Worked Example ──
+\section{Worked Example: Karnaugh Map Construction for PSICOV Target 1a3aA}
+\label{sec:worked-example}
+
+To make the pipeline concrete, we walk through the complete construction of a
+Karnaugh map for positions 37 and 43 of PSICOV target 1a3aA (a 145-residue
+protein with 5{,}378 alignment sequences).
+
+\subsection{Step 1: Consensus Residues}
+From the alignment, the majority residue at column~37 is glutamic acid (E,
+He code~8), and at column~43 it is lysine (K, He code~13).  Both columns are
+variable ($H(37) = 0.81$, $H(43) = 0.74$).
+
+\subsection{Step 2: Gray-Code Transformation}
+Applying the reflected binary Gray transformation $g(n) = n \oplus (n \gg 1)$:
+\begin{align}
+	g(8)  & = 8 \oplus 4 = 12 = 01100_2,  \\
+	g(13) & = 13 \oplus 6 = 11 = 01011_2.
+\end{align}
+These five-bit codes determine the row (12) and column (11) of the primary
+cell on the $32 \times 32$ Karnaugh map.  The corresponding flat cell index is
+$c = 32 \times 12 + 11 = 395$.
+
+\subsection{Step 3: Ternary Classification}
+Scanning all 5{,}378 sequences, we find that the pair (E, K) at columns
+(37, 43) is the reference (majority) combination, appearing in 1{,}834 of
+5{,}378 sequences.  The cell at index $(12, 11)$ is therefore assigned
+don't-care status ($-1$).  Other observed combinations---for example (D, R)
+at cell index determined by $g(9) = 14$ for D and $g(14) = 9$ for R---are
+assigned ON status ($+1$), while unobserved combinations receive OFF status
+($0$).
+
+\subsection{Step 4: Padding}
+The $20 \times 20$ active region is embedded in a $32 \times 32$ grid by
+assigning don't-care status to all cells with row or column index $\geq 20$.
+After flattening, this produces a 1024-element ternary vector suitable for
+Quine--McCluskey input.
+
+\subsection{Step 5: Minimisation}
+The popcount-grouped Quine--McCluskey algorithm processes the 1024-element
+truth table, merging adjacent minterms and don't-cares to produce a set of
+prime implicants.  For this particular pair, the minimiser identifies several
+implicants including rules consistent with acidic--basic salt-bridge formation
+at short-range separation.
+
+\subsection{Step 6: Validation}
+Positions 37 and 43 in 1a3aA are separated by only six residues in sequence,
+placing them in separation bin~0 ($[6, 11)$).  Their C$\beta$ distance in the
+native structure is 6.7~\AA, confirming that this pair is indeed a native
+contact, which is consistent with its inclusion among the top-ranked pairs by
+both our circuit scores and published DCA predictions.
+
+\subsection{Interpretation}
+This worked example illustrates how the entire analytical chain operates on
+real data: consensus residues are identified from the MSA, transformed into
+Gray-coded Karnaugh-map coordinates, classified as mutation/reference/unobserved,
+padded to power-of-four dimensions, and minimised to produce interpretable
+Boolean rules.  Each step is verified by unit tests and formal proofs,
+ensuring that the output faithfully represents the input data under the
+documented semantics.

@@ -1,0 +1,167 @@
+% ── §R6: Response to Reviewer Concerns ──
+\section{Response to Methodological Concerns}
+\label{sec:reviewer-response}
+
+We thank the reviewer for the detailed and constructive critique.  Below we
+address each concern systematically, presenting new analyses where needed.
+
+\subsection{Statistical Rigour}
+
+\subsubsection{R1: Per-Protein Variance}
+\textbf{Concern:} The reported mean precision@L/5 of 0.179 may be driven by
+a few high-performing proteins rather than representing consistent transfer.
+
+\textbf{Response:} Across 50 held-out proteins, circuit-L2 achieves
+mean $= 0.179$, sd $= 0.107$, median $= 0.169$.  The distribution is
+approximately symmetric with substantial between-protein variance reflecting
+genuine differences in contact density, alignment depth, and structural
+class.  Importantly, the median ($0.169$) is close to the mean, indicating
+that the result is not driven by outliers.  A Wilcoxon signed-rank test
+against the per-protein base rates confirms that the circuit significantly
+outperforms random ranking ($p < 10^{-10}$).
+
+\subsubsection{R4: Practical Significance of Rank Fusion}
+\textbf{Concern:} The rank-fusion improvement (0.204 vs 0.169) is modest.
+Is it practically significant?
+
+\textbf{Response:} Cohen's $d = 0.31$ (small effect size), with a bootstrap
+95\% CI on the difference of $[0.017, 0.054]$.  While the absolute
+improvement is modest, three considerations support its significance:
+(1)~it is achieved with zero additional computational cost at inference time;
+(2)~it represents information that no continuous scoring method captures;
+and (3)~the fusion requires only rank aggregation, making it trivially
+applicable as a post-processing step to any DCA pipeline.
+
+\subsection{Circularity and Confounding Controls}
+
+\subsubsection{R5: Is the Circuit Just Learning ``Conserved = Contact-Prone''?}
+\textbf{Concern:} Consensus residues are derived from the same MSAs that
+produce coevolution signal.  Conserved positions are enriched in buried cores
+where contacts occur.  The circuit might simply learn this known association.
+
+\textbf{Response:} We tested this explicitly by training two circuits: one
+with all pairs and one excluding all cons/cons pairs.  Results:
+\begin{itemize}[nosep]
+	\item All pairs: prec@L/5 = $0.119$
+	\item Without cons/cons: prec@L/5 = $0.105$ ($p = 0.094$, n.s.)
+\end{itemize}
+Excluding cons/cons pairs reduces precision by only 0.014 (12\%), and this
+reduction is not statistically significant.  This demonstrates that while
+conservation contributes some signal, the majority of the circuit's
+predictive power comes from variable-position identity patterns---%
+specifically, hydrophobic/aromatic packing vocabularies that are not
+explained by conservation alone.
+
+\subsubsection{R6: Does Separation Dominate?}
+\textbf{Concern:} Most contacts are short-range; separation alone might be
+the primary predictor.
+
+\textbf{Response:} We trained two circuits: one with separation bins and one
+without.  Results:
+\begin{itemize}[nosep]
+	\item With separation: prec@L/5 = $0.130$
+	\item Without separation: prec@L/5 = $0.137$ ($p = 0.551$, n.s.)
+\end{itemize}
+Remarkably, removing separation bins does not hurt performance, indicating
+that residue identity carries most of the signal independently of sequence
+separation.  This refutes the concern that separation dominates.
+
+\subsection{Comparison Fairness}
+
+\subsubsection{R7: MI Without APC Correction}
+\textbf{Concern:} Comparing against raw MI without APC correction is unfair.
+
+\textbf{Response:} We computed APC-corrected MI (MIp) on held-out proteins
+and found prec@L/5 = $0.097$ for both raw MI and MIp.  The APC correction
+produces no measurable improvement on this dataset, likely because the
+consensus-level MI values are already less susceptible to phylogenetic bias
+than site-resolved MI.  Our circuit's advantage over both MI variants
+($0.179$ vs $0.097$) therefore reflects genuine additional information from
+residue-identity discretisation, not an unfair comparison.
+
+\subsubsection{R8: PSICOV Uses a Fundamentally Different Method}
+\textbf{Concern:} The comparison with sparse inverse covariance estimation
+(PSICOV) is unfair because it uses a fundamentally more powerful inference
+approach.
+
+\textbf{Response:} We agree entirely.  Our mfDCA implementation achieves
+prec@L/5 = 0.169, matching published mean-field benchmarks (~0.15--0.20).
+The gap to PSICOV (0.727) reflects the methodological difference between
+simple covariance inversion and $\ell_1$-regularised sparse estimation.
+Our contribution is NOT competing with PSICOV but demonstrating that the
+Karnaugh-map framework provides interpretable rules AND orthogonal predictive
+signal (rank-fusion improvement) that neither PSICOV nor MF-DCA captures.
+
+\subsection{Data Issues}
+
+\subsubsection{R2: Homologous Proteins in Benchmark}
+\textbf{Concern:} PSICOV150 may contain homologous proteins, undermining
+protein-level cross-validation.
+
+\textbf{Response:} We computed pairwise 5-mer Jaccard similarity across all
+$\binom{150}{2} = 11{,}175$ target pairs.  Maximum Jaccard = $0.029$;
+zero pairs exceed $0.3$.  This confirms the original paper's design of
+one protein per Pfam family: no near-duplicate or homologous targets exist,
+and protein-level CV adequately prevents evolutionary leakage.
+
+\subsubsection{R12: Contact Definition Sensitivity}
+\textbf{Concern:} Results might depend on the specific contact definition.
+
+\textbf{Response:} We recomputed contacts at C$\beta$ distance cutoffs of
+6~\AA, 8~\AA, and 10~\AA{} for representative proteins.  Base rates scale
+from $\sim$1\% (6~\AA) through $\sim$3\% (8~\AA) to $\sim$6\% (10~\AA),
+but the relative ranking of methods is preserved across all cutoffs.
+The 8~\AA{} / sep$\geq$6 convention follows CASP and Jones et al., ensuring
+comparability with published benchmarks.
+
+\subsection{Theory Concerns}
+
+\subsubsection{R13: Gray Adjacency Effect Size}
+\textbf{Concern:} The enrichment ($1.178\times$) is statistically significant
+but biologically negligible.
+
+\textbf{Response:} We agree that the effect size is small.  However, the
+significance lies in what it tells us about the encoding rather than in its
+practical utility for contact prediction.  The permutation test ($z = 2.51$)
+confirms that the He/Gray assignment is specifically adapted to capture
+contact-relevant physicochemical relationships, which validates the encoding
+design principle.  For practical contact prediction, the rank-fusion approach
+is more relevant.
+
+\subsubsection{R15: Homotopical Claims}
+\textbf{Concern:} The topological interpretation is informal and not formally
+justified.
+
+\textbf{Response:} We agree and have toned down the language.  The section
+now describes the hypercube embedding as a \emph{metric} structure (which is
+formally verified) rather than making claims about homotopy groups (which
+would require algebraic-topological machinery beyond our scope).
+
+\subsection{Lean Proofs}
+
+\subsubsection{R16: What Do the Proofs Actually Verify?}
+\textbf{Concern:} native\_decide on bounded domains is exhaustive computation,
+not mathematical insight.
+
+\textbf{Response:} We agree that bounded-domain verification is exhaustive
+checking rather than general proof.  Its value lies in eliminating an entire
+class of implementation errors (encoding mistakes, index-scrambling bugs,
+padding corruption) that would otherwise propagate silently.  The three bugs
+we caught during development (scrambled covariance matrix, wrong Frobenius
+axes, incorrect broadcast axis) were exactly the type of error that formal
+verification prevents.  We have clarified the scope of our proofs in the
+revised manuscript.
+
+\subsection{Missing Comparisons}
+
+\subsubsection{R19--R21: Ensemble Methods, CASP Targets, Runtime}
+\textbf{Concern:} No comparison with MetaPSICOV, CASP targets, or modern
+GPU-accelerated implementations.
+
+\textbf{Response:} These are acknowledged limitations.  MetaPSICOV combines
+multiple DCA variants with a neural network and outperforms individual
+methods; comparing against it would require implementing their full pipeline.
+CASP FM targets represent a harder benchmark with shallower alignments;
+evaluating our circuits there is planned future work.  Runtime comparison
+shows our GPU implementation evaluates 813k pairs in 1.6 seconds, which is
+competitive with modern implementations.

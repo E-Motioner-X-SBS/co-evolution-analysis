@@ -1,0 +1,80 @@
+% ── Diagram Generation Prompts ──
+% This file contains prompts for generating figures programmatically.
+% Each prompt describes the desired figure content, layout, and labels.
+% Figures should be generated as PDF/PNG files and placed in figures/.
+
+\section{Figure Generation Prompts}
+\label{app:prompts}
+
+The following figure placeholders require programmatic generation.
+Each entry specifies the target filename, content description,
+data source, and suggested tool.
+
+\subsection*{Fig.~1: Pipeline Architecture Overview}
+\textbf{File:} \texttt{figures/pipeline\_overview.pdf}\\
+\textbf{Prompt:} Create a horizontal flowchart showing the complete analysis pipeline:
+FASTA alignment $\to$ He-2012 encoding ($\times$20) $\to$ Gray-code transform $\to$
+position arrays $\to$ Shannon entropy $\to$ variable positions ($H > 0.3$) $\to$
+candidate pairs (sep $\geq 6$) $\to$ mutual information / perplexity / DCA $\to$
+Karnaugh map construction (32$\times$32 padded) $\to$ Quine--McCluskey
+minimisation $\to$ prime implicants $\to$ contact circuits $\to$ rank fusion
+with DCA scores $\to$ evaluation against native contacts.
+Color-code stages: blue for encoding, green for statistics, orange for
+Boolean minimisation, red for evaluation.
+
+\subsection*{Fig.~2: Karnaugh Map Example}
+\textbf{File:} \texttt{figures/kmap\_example.pdf}\\
+\textbf{Prompt:} Draw a 32$\times$32 grid showing a ternary Karnaugh map for
+a representative position pair from PSICOV protein 1a3aA.  Rows and columns
+labeled by single-letter amino acid codes at their Gray-code positions.
+Cells colored: green = ON (observed mutation), white = OFF (never observed),
+gray = DC (don't-care).  Highlight essential prime implicants with bold
+rectangles.  Include a legend and the corresponding SOP expression below.
+
+\subsection*{Fig.~3: Cross-Protein Transfer Precision}
+\textbf{File:} \texttt{figures/transfer\_precision.pdf}\\
+\textbf{Data source:} \texttt{results/kmap\_structure/holdout\_split.json}\\
+\textbf{Prompt:} Grouped bar chart showing mean prec@L/5 for each method
+(circuit-L2, circuit-L1, plain MI, perplexity, sep-only, base rate,
+PSICOV-published) on held-out proteins.  Error bars = SD across proteins.
+Horizontal dashed line at base rate (0.035).  Y-axis: precision; X-axis:
+method names.
+
+\subsection*{Fig.~4: Conservation Gradient}
+\textbf{File:} \texttt{figures/conservation\_gradient.pdf}\\
+\textbf{Data source:} computed from feature caches\\
+\textbf{Prompt:} Line/scatter plot of native-contact rate (Y-axis) vs.\
+mean column entropy quintile bin (X-axis, Q1=most conserved to Q5=most
+variable).  Overlay the non-monotone sub-bin analysis showing the dip at
+fully-conserved positions.  Include Spearman rho annotation.
+
+\subsection*{Fig.~5: Rank-Fusion Improvement}
+\textbf{File:} \texttt{figures/rank\_fusion.pdf}\\
+\textbf{Data source:} \texttt{results/kmap\_structure/path\_l\_rank\_fusion.json}\\
+\textbf{Prompt:} Paired scatter plot of rawDCA prec@L/5 (X-axis) vs.\
+ranksum prec@L/5 (Y-axis), one point per test protein.  Diagonal line =
+no improvement.  Points above diagonal show improvement.  Color by protein
+length.  Inset: bar chart comparing mean values.
+
+\subsection*{Fig.~6: Gray Adjacency Enrichment}
+\textbf{File:} \texttt{figures/gray\_enrichment.pdf}\\
+\textbf{Data source:} \texttt{results/kmap\_structure/path\_e\_gray\_adjacency.json}\\
+\textbf{Prompt:} Overlaid histogram of Gray-Hamming distance distributions:
+observed (contacts) vs.\ background (non-contacts).  Annotate the d=1 bar
+with enrichment ratio and p-value.  Include permutation-test null distribution
+as violin inset.
+
+\subsection*{Fig.~7: Complete Circuit Two-Sided Decision Space}
+\textbf{File:} \texttt{figures/complete\_circuit.pdf}\\
+\textbf{Prompt:} 2D decision-space diagram showing positive-circuit cells
+(green = promotes contact), flipped-circuit cells (red = forbids contact),
+and abstention region (white).  Axes: group$_i$ vs.\ group$_j$ for each
+separation bin.  Annotate specific rules discovered (salt bridges, H-bonds).
+
+\subsection*{Fig.~8: Reconstruction Recall Curves}
+\textbf{File:} \texttt{figures/recall\_curves.pdf}\\
+\textbf{Data source:} \texttt{results/kmap\_structure/path\_i\_reconstruction.json}\\
+\textbf{Prompt:} Recall (fraction of native contacts found) vs.\ prediction
+depth K/L for each method (circuit-L2, MI, PSICOV-pub).  Log-scale X-axis.
+Horizontal line at recall = 0.10 (reconstruction-readiness threshold).
+Include literature threshold annotations from Jones 2012.

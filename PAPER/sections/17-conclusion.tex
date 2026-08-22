@@ -1,0 +1,32 @@
+% ── §18 Conclusion ──
+\section{Conclusion}
+\label{sec:conclusion}
+
+We have demonstrated that the formal chain from biological sequences through
+Gray-code encoding, Karnaugh-map construction, Quine--McCluskey minimisation,
+and prime-implicant extraction can be made machine-provable in Lean~4, and
+that the resulting Boolean circuits carry genuine structural information when
+applied to protein multiple sequence alignments.  The central achievement is
+not that these circuits match state-of-the-art contact predictors in absolute
+precision---they do not, and we report this gap honestly.  Rather, it is that
+the Karnaugh-map cell-rate prior carries orthogonal structural information
+demonstrable by rank-fusion with continuous DCA scores, and that every step of
+the encoding pipeline is verified by machine-checked proofs rather than by
+empirical observation alone.
+
+The framework's principal value lies in three areas.  First, it provides a
+formally verified foundation upon which future coevolution analyses can build,
+eliminating an entire class of encoding errors.  Second, it produces
+interpretable sum-of-products rules that biologists can inspect, validate
+against known structural principles (such as hydrophobic-core packing and
+salt-bridge formation), and potentially use as design constraints in protein
+engineering.  Third, its cross-protein transfer capability demonstrates that
+the learned rules capture general principles of protein architecture rather
+than family-specific idiosyncrasies.
+
+The path from here to full structure reconstruction remains long.  It requires
+closing the precision gap between Boolean circuit features and continuous
+coupling scores, incorporating phylogenetic correction into the discrete
+framework without sacrificing interpretability, and scaling exact minimisation
+to larger feature spaces.  We believe the formal verification infrastructure
+established here provides the correct foundation for that journey.

@@ -1,0 +1,55 @@
+% ── §7f Methods: Formal Verification and Reproducibility ──
+\section{Formal Verification as a Reproducibility Guarantee}
+\label{sec:methods-reproducibility}
+
+\subsection{The Reproducibility Crisis in Computational Biology}
+Computational biology faces well-documented challenges with reproducibility:
+results may depend on undocumented parameter choices, unstated preprocessing
+steps, or subtle implementation details that are lost when code is transferred
+between researchers.  In the specific context of contact prediction, a change
+as simple as switching from C$\beta$ to C$\alpha$ distance, or from separation
+$\geq 6$ to $\geq 12$, can alter reported precision by several percentage
+points.
+
+Our approach addresses this by formalising all load-bearing definitions in
+Lean~4, where they are checked by the type system and kernel rather than by
+human review.  When we state that ``the Gray-code transformation maps
+consecutive integers to adjacent codewords,'' this is not an empirical claim
+subject to interpretation but a machine-checked theorem whose proof is
+verified by the Lean kernel.
+
+\subsection{Scope of Formal Guarantees}
+It is important to note what our formal verification does and does not prove.
+We prove that the encoding layer correctly implements its specification:
+that Gray codes are bijective on their domain, that adjacent integers map to
+adjacent codewords, that implicant covers are sound and complete, and that
+padding does not corrupt decoded rules.  We do \emph{not} prove that these
+specifications are optimal for contact prediction; optimality is an empirical
+question that must be settled by experiment.
+
+This distinction mirrors the relationship between compiler correctness proofs
+and program performance: a verified compiler guarantees that the output
+faithfully implements the source code, but says nothing about whether the
+source code is efficient.  Similarly, our verified encoding guarantees that
+the pipeline faithfully implements its design, while the design's effectiveness
+is established empirically.
+
+\subsection{Verification Infrastructure}
+The verification infrastructure consists of two Lean~4 packages.  The first,
+\texttt{is\_kmap\_possible}, contains 106 theorems across five modules
+covering Gray-code fundamentals (bijectivity, adjacency, involution),
+$k$-mer indexing (injectivity and boundedness for $k = 1$ through $4$),
+amino-acid encodings (injectivity, within-group distance bounds, charge-group
+adjacency), contact-map completeness (symmetry, irreflexivity, Boolean
+minimisation semantics), and encoding equivalence (BLOSUM bound, distance
+distribution invariance).  The second, \texttt{ContactCircuits}, contains
+12 theorems covering the specific assertions made by the circuit-extraction
+pipeline: cover completeness, cover soundness, padding safety, separation-bin
+monotonicity, and cell-index injectivity.
+
+All proofs use only \texttt{Init} (the Lean standard library) and bounded-domain
+tactics (\texttt{decide}, \texttt{native\_decide}).  No theorem depends on
+\texttt{sorry} or on axioms beyond the standard logical framework.  The axiom
+audit performed via \texttt{\#print axioms} confirms that every theorem
+depends at most on \texttt{propext}, \texttt{Quot.sound}, and the
+\texttt{native\_decide} evaluation axiom.

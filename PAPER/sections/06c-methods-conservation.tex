@@ -1,0 +1,60 @@
+% ── §7b Methods: Conservation Analysis ──
+\section{Conservation Analysis}
+\label{sec:methods-conservation}
+
+\subsection{Column-Level Conservation}
+For each alignment column $c$, we compute the Shannon entropy $H(c)$ as
+described in Section~\ref{sec:theory-info}.  A column is classified as
+\emph{conserved} if $H(c) < 0.3$ bits, following the convention used
+throughout our pipeline.  This threshold captures positions where a single
+amino acid accounts for more than approximately 90\% of observations.
+
+\subsection{Pair-Level Conservation Types}
+Each candidate pair $(i, j)$ is assigned one of four conservation types based
+on the binary conservation status of its two constituent columns:
+
+\begin{center}
+	\begin{tabular}{clc}
+		\toprule
+		Type      & Description                                   & Encoding \\
+		\midrule
+		var/var   & both columns variable                         & 00       \\
+		var/cons  & position $i$ variable, position $j$ conserved & 01       \\
+		cons/var  & position $i$ conserved, position $j$ variable & 10       \\
+		cons/cons & both columns conserved                        & 11       \\
+		\bottomrule
+	\end{tabular}
+\end{center}
+
+These two bits serve as additional feature dimensions in the complete circuit,
+expanding the feature space from 8 to 10 bits (1024 cells).
+
+\subsection{Soft Conservation Gradient}
+Rather than using only the binary threshold, we also analyse contact rates as
+a continuous function of the minimum column entropy within each pair:
+$\min(H(i), H(j))$.  This analysis reveals a non-monotone relationship:
+fully conserved pairs (entropy $\approx 0$) show \emph{below-random} contact
+rates ($0.69\times$), while near-conserved pairs (entropy $0.001$--$0.05$)
+show above-random enrichment ($1.35\times$).  The most variable quintile shows
+the lowest enrichment ($0.70\times$).  The overall Spearman correlation between
+column entropy and contact status is negative ($\rho = -0.053$, $p \approx 0$),
+confirming that conservation carries structural information.
+
+The non-monotonicity at the extreme conserved end likely reflects the presence
+of catalytic or functional residues (such as active-site serines or
+disulfide-forming cysteines) that are absolutely conserved for functional
+rather than structural reasons and may project away from the structural core.
+
+\subsection{Cross-Protein Transfer of Negative Selection}
+A key prediction of our framework is that cells marked as FORBIDDEN by the
+flipped Karnaugh map---combinations never observed across training
+proteins---should remain rare on held-out proteins if the underlying
+selection pressure is universal rather than family-specific.  We test this by
+measuring the contact rate within forbidden-called cells on test proteins and
+comparing it to the training-set prediction.
+
+Across five folds of protein-level cross-validation, the observed contact rate
+within forbidden-called cells on test proteins averages $1.7\%$, matching the
+training-set upper bound of $1.75\%$ (= base$/2$) almost exactly.  This
+represents a specificity of $98.3\%$ and demonstrates that negative-selection
+rules generalise across protein families with high fidelity.

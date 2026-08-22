@@ -1,0 +1,103 @@
+% ── §3 Karnaugh Maps and Quine–McCluskey Minimisation ──
+\section{Karnaugh Maps and Quine--McCluskey Minimisation}
+\label{sec:theory-kmap-qm}
+
+\subsection{Karnaugh Maps for Residue-Pair Statistics}
+\label{sec:kmap-construction}
+
+For a pair of alignment columns $(i, j)$ with $i < j$, we define a ternary
+Karnaugh map $K_{ij}$ as a $32 \times 32$ grid whose rows and columns are
+indexed by the five-bit Gray codes of the consensus residues at positions $i$
+and $j$, respectively.  Each cell $(a, b) \in \{0,\ldots,31\}^2$ of the map
+takes one of three values:
+\begin{equation}
+	K_{ij}(a, b) =
+	\begin{cases}
+		+1 & \text{if the residue pair } (a, b) \text{ is an observed mutation}, \\
+		-1 & \text{if } (a, b) \text{ is the reference (majority) pair},         \\
+		0  & \text{if } (a, b) \text{ has never been observed}.
+	\end{cases}
+	\label{eq:kmap-def}
+\end{equation}
+Rows and columns with indices $20$--$31$ correspond to unused Gray codewords
+and are assigned don't-care status ($-1$), which permits the
+Quine--McCluskey algorithm to form larger implicants by merging on-set cells
+through these padding regions.  This padding step constitutes the second
+critical correction applied to our pipeline; without it, a $20 \times 20$
+map fed to a minimiser expecting $4^k = 2^{10} = 1024$ cells would silently
+wrap indices $256$--$399$ onto indices $0$--$143$, corrupting minterm labels
+and producing phantom rules.
+
+\subsection{Ternary Truth Tables}
+\label{sec:truth-tables}
+
+For computational purposes, each Karnaugh map is flattened into a one-dimensional
+truth table $\tau : \{0, \ldots, 1023\} \to \{-1, 0, 1\}$ where the cell index
+$c$ encodes both residue identities in MSB-first bit order:
+\begin{equation}
+	c = 32 \cdot r + s, \qquad r = g(\mathrm{code}(a_i)), \quad s = g(\mathrm{code}(a_j)),
+	\label{eq:cell-index}
+\end{equation}
+and the bit at position $b$ ($b = 0, \ldots, 9$) of cell $c$ is extracted as
+$(c \gg (9 - b)) \mathbin{\&} 1$.  An \emph{implicant} over $w$ variables is a
+pair $(\mathrm{values}, \mathrm{mask}) \in \{0,1\}^w \times \{0,1\}^w$ where a
+mask bit equal to~1 marks the corresponding variable position as don't-care.
+An implicant \emph{matches} a cell $c$ when every constrained (mask = 0)
+position agrees with the corresponding bit of $c$:
+\begin{equation}
+	\mathrm{matches}(v, m, c) \iff
+	\bigl((v \oplus c) \mathbin{\&} (\sim m)\bigr) = 0,
+	\label{eq:implicant-match}
+\end{equation}
+where $\sim m$ denotes the bitwise complement of $m$ within the $w$-bit field.
+
+\subsection{Quine--McCluskey Algorithm}
+\label{sec:qm-algorithm}
+
+The Quine--McCluskey algorithm~\cite{quine1952,mccluskey1956} finds all prime
+implicants of a Boolean function by exhaustive pairwise merging of minterms
+that differ in exactly one bit position.  Our implementation extends the
+classical formulation to handle ternary truth tables by including don't-care
+cells in the initial minterm set alongside on-set cells, thereby allowing
+prime implicants to cover don't-care regions without requiring them to do so.
+The merge phase groups minterms by popcount of their fixed bits and restricts
+comparisons to adjacent popcount groups, reducing the worst-case complexity
+from $O(m^2)$ to $O(m \cdot |\text{groups}|)$ for $m$ minterms.
+
+After all merges are exhausted, the surviving implicants that cannot be merged
+further are the \emph{prime implicants}.  Among these, a prime implicant is
+\emph{essential} if it covers at least one on-set cell that no other prime
+implicant covers.  A minimum cover is then constructed greedily from the
+essential prime implicants plus additional non-essential primes selected to
+cover any remaining uncovered on-set cells.  Two properties of this procedure
+are machine-verified in Lean~4:
+
+\begin{theorem}[Cover Completeness]
+	\label{thm:cover-complete}
+	Every on-set cell of a labeled Karnaugh map is matched by at least one prime
+	implicant in the Quine--McCluskey output.
+\end{theorem}
+
+\begin{theorem}[Cover Soundness]
+	\label{thm:cover-sound}
+	No prime implicant matches any off-set cell of a labeled Karnaugh map.
+\end{theorem}
+
+Together, these two properties guarantee that the SOP expression produced by
+the minimiser neither omits nor overapproximates the coevolutionary signal,
+provided the input truth table correctly distinguishes observed mutations
+from unobserved combinations and from reference-pair don't-cares.
+
+\subsection{Flipped Maps and Negative Selection}
+\label{sec:flipped-maps}
+
+In addition to the positive (mutation-detecting) map described above, we
+construct a \emph{flipped} map for each candidate pair by assigning on-set
+status to cells that have never been observed across all sequences in the
+alignment, off-set status to cells that have been observed, and don't-care
+status to reference pairs.  Prime implicants of the flipped map encode
+\emph{forbidden} residue-pair combinations---pairs whose joint absence across
+all sequenced homologues suggests destabilising interactions or steric
+incompatibility.  Together, the positive and flipped maps partition the
+candidate space into three disjoint regions: coevolutionary constraints,
+negative-selection boundaries, and uninformative gaps.

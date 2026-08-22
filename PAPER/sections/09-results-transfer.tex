@@ -1,0 +1,65 @@
+% ── §10 Results: Cross-Protein Transfer ──
+\section{Results: Cross-Protein Contact Circuit Transfer}
+\label{sec:results-transfer}
+
+\subsection{Experimental Design}
+We evaluate whether Quine--McCluskey-minimised contact circuits, trained on
+one set of proteins, predict native contacts on entirely held-out proteins.
+Two circuit levels are tested: Level-1 (group-level features, 256 cells) and
+Level-2 (identity-level features, $4 \times 1024$ cells across separation
+bins).  Five-fold protein-level cross-validation with length-stratified fold
+assignment (seed~42) ensures that no protein appears in both training and test
+sets simultaneously.
+
+\subsection{Headline Result}
+\begin{table}[ht]
+	\centering
+	\caption{Cross-protein transfer: mean precision@L/5 over five folds and fixed holdout split.}
+	\label{tab:transfer}
+	\begin{tabular}{lccccc|c}
+		\toprule
+		Method      & Fold 0 & Fold 1 & Fold 2 & Fold 3 & Fold 4 & Holdout       \\
+		\midrule
+		Circuit-L2  & .170   & .148   & .179   & .173   & .157   & \textbf{.179} \\
+		Circuit-L1  & .109   & .113   & .176   & .141   & .130   & .142          \\
+		Plain MI    & .059   & .096   & .084   & .100   & .121   & .097          \\
+		Perplexity  & .035   & .031   & .025   & .030   & .035   & .028          \\
+		Sep-only    & .034   & .031   & .023   & .024   & .019   & .033          \\
+		Base rate   & .035   & .033   & .037   & .036   & .036   & .035          \\
+		\midrule
+		PSICOV pub. & .698   & .692   & .746   & .761   & .737   & .723          \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+The identity-level circuit (Level-2) transfers at a mean top-$L/5$ precision
+of $0.179$ on held-out proteins, corresponding to $5.1\times$ enrichment over
+the random expectation of $0.035$.  This represents a $1.9\times$ improvement
+over plain mutual information computed per-protein ($0.097$) and a
+$15\times$ improvement over the separation-only ablation ($0.033$),
+demonstrating that the lift is carried by the residue-identity information
+encoded in the Karnaugh map rather than by separation geometry alone.
+
+\subsection{Binary Classification Performance}
+At the circuit-membership threshold (cell rate $\geq 2\times$ base rate,
+$n \geq 30$), the Level-2 binary classifier achieves MCC $\approx 0.095$ with
+enrichment of $2.5$--$2.8\times$ across all folds.  While modest in absolute
+terms, this confirms that cells labeled as ON during training are genuinely
+enriched for contacts on unseen proteins.
+
+\subsection{Sensitivity Analysis}
+The ranked precision@L/5 is invariant at $0.179$ across all nine combinations
+of labeling thresholds ($T \in \{1.5, 2, 3\} \times n_{\min} \in \{10, 30,
+	60\}$), because ranked scores derive from empirical cell rates that are
+insensitive to threshold choices.  Binary MCC varies coherently from 0.055 to
+0.097 as thresholds are varied.
+
+\subsection{Learned Rules}
+The minimised circuits produce biophysically interpretable sum-of-products
+expressions.  Level-1 essential implicants include
+$\text{hydrophobic} \times \text{aromatic}$ and
+$\text{sulfur} \times \text{hydrophobic}$ at short separations, consistent
+with hydrophobic-core packing and cysteine-mediated contacts.  Level-2 rules
+specify concrete packing vocabularies such as
+$\{M,F,Y,W\} \times \{M,F,Y,W\}$ and $\{I,V\} \times \{I,V,F,W\}$,
+rediscovering aliphatic/aromatic core packing without any biophysical prior.

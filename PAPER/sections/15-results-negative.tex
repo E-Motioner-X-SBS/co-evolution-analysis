@@ -1,0 +1,48 @@
+% ── §16 Results: Negative Results and Limitations ──
+\section{Results: Negative Results and Honest Limitations}
+\label{sec:results-negative}
+
+Negative results are reported here with the same rigour as positive findings,
+because they constrain the theory and direct future effort.
+
+\subsection{Tension Mechanism Does Not Improve Contact Prediction}
+An attention-style ``tension'' score, defined as each position's mutual
+information toward a partner normalised by its strongest coupling anywhere in
+the protein, does not improve circuit precision.  A tension-augmented
+4096-cell circuit achieves prec@L/5 = $0.154$, below the non-tension Level-2
+circuit ($0.165$).  Furthermore, positions that serve as top-tension targets
+for many partners are \emph{anti-correlated} with structural hubs (median
+Spearman $\rho = -0.06$), indicating that entropic attention concentrates on
+variable surface clusters rather than buried structural cores.
+
+\subsection{Coupling Bins Do Not Improve Group-Level Circuits}
+Adding mfDCA DI quartile bins as a feature dimension alongside physicochemical
+groups and separation bins yields no improvement: circH prec@L/5 = $0.124$
+vs.\ group-only $0.134$.  Quartile binning destroys the continuous ranking
+fidelity that makes DCA effective, while consensus identity cells already
+absorb most of what DI contributes at this granularity.
+
+\subsection{Gray Adjacency Is Real but Weak}
+The $1.178\times$ enrichment of Gray-adjacent pairs among native contacts is
+highly significant ($p < 10^{-77}$) but small in magnitude.  A permutation
+test over random code assignments shows that the specific He/Gray encoding
+outperforms random encodings ($z = 2.51$), but the majority of the raw
+enrichment reflects generic chemistry clustering that any grouped encoding
+would capture.
+
+\subsection{Iterative DI Is Unreliable on Conserved-Rich Families}
+Our mean-field implementation of iterative direct information produces
+anti-predictive rankings (AUC $\approx 0.41$) on PSICOV proteins with many
+fully conserved columns, due to pseudo-inverse conditioning of the covariance
+matrix when variance approaches zero for locked positions.  We adopt the
+APC-corrected Frobenius norm as primary DCA score; this choice is validated
+against native contacts and matches published mean-field benchmarks.
+
+\subsection{Cross-Dataset Generalisation Requires Format-Specific Parsing}
+A pilot evaluation on three EVmutation proteins produced inconclusive results
+because correct parsing of the A2M alignment format requires handling
+insert-state columns (lowercase characters) that do not map to PDB residue
+numbers.  Structures were successfully fetched from RCSB and MI AUCs were
+positive for two of three targets, but precision@L/5 could not be meaningfully
+evaluated without proper reference-frame mapping.  Full evaluation is deferred
+to future work.
