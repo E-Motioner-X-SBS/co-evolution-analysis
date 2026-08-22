@@ -1,0 +1,53 @@
+% ═══════════════════════════════════════════════════════════
+% §1 Introduction
+% ═══════════════════════════════════════════════════════════
+\section{Introduction}
+\label{sec:intro}
+
+Residue--residue contact prediction from multiple sequence alignments has
+transformed protein structure determination~\cite{weigt2009,morcos2011,
+	jones2012,kamisetty2013}.  The dominant paradigm, Direct Coupling Analysis
+(DCA), models the joint distribution of amino-acid sequences through a Potts
+Hamiltonian whose coupling parameters are estimated by inverting a covariance
+matrix computed from deep alignments~\cite{morcos2011}.  Sparse inverse
+covariance estimation, as implemented in PSICOV~\cite{jones2012}, achieves a
+mean top-$L/5$ precision of approximately 0.73 on standard benchmarks.
+Pseudo-likelihood maximisation~\cite{ekeberg2013} and related methods further
+improve upon mean-field approximations.  More recently, end-to-end deep
+learning approaches such as AlphaFold2~\cite{jumper2021} have largely
+superseded standalone contact prediction by integrating coevolutionary signal
+with structural priors inside attention-based neural architectures.
+
+Despite this success, the encoding layer through which biological sequences
+enter the statistical machinery remains opaque.  No prior work has
+established machine-checkable proofs that the transformation from amino-acid
+alphabet to the numerical representation used for inference preserves the
+structural properties that downstream analysis requires.  This gap is not
+merely academic: subtle encoding errors can silently corrupt results while
+producing plausible-looking output.
+
+Here we address this gap by constructing a formally verified bridge between
+digital-logic design theory and protein coevolution analysis.  Our central
+observation is that the Karnaugh map~\cite{karnaugh1953}, when combined with
+reflected binary Gray-code ordering of amino acids~\cite{gray1953}, provides
+a natural embedding of aligned sequences into a grid structure where adjacent
+cells correspond to physicochemically similar residue pairs.  The
+Quine--McCluskey algorithm~\cite{quine1952,mccluskey1956} then extracts
+minimal sum-of-products expressions from thresholded frequency maps,
+producing prime implicants that we interpret as coevolutionary constraints.
+
+We formalise 118 theorems in Lean~4 covering Gray-code bijectivity, $k$-mer
+indexing injectivity, amino-acid encoding properties, contact-map topology,
+implicant-cover soundness, and padding safety.  We apply the verified pipeline
+to 150 protein domains from the PSICOV benchmark comprising over 1.6 million
+labelled observations against native experimental structures.  Our results
+demonstrate that Boolean circuits transfer across proteins, that their
+cell-rate prior improves DCA ranking when fused via rank aggregation, and
+that negative-selection (forbidden-combination) circuits generalise with high
+specificity.  We also report negative results honestly: an attention-style
+tension mechanism does not improve prediction, iterative direct information
+is unreliable on conserved-rich families, and current circuit precision falls
+far short of the level required for template-free structure reconstruction.
+
+All software, formal proofs, result files, and documentation are publicly
+available (\texttt{github.com/E-Motioner-X-SBS/co-evolution-analysis}).

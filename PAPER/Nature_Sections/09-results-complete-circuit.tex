@@ -1,0 +1,29 @@
+% ═══ Results: Complete Circuit (Positive + Flipped + Conservation) ═══
+\section{The Complete Circuit Combines Positive, Flipped, and Conservation Channels}
+\label{sec:res-complete}
+
+We constructed a two-sided classifier over a shared feature space of
+physicochemical groups, separation bins, and conservation-pair types
+(10 bits, 1024 cells).  Two ternary tables were labelled from identical pooled
+counts: the positive table marks cells whose contact rate significantly exceeds
+the base rate, while the flipped table marks cells whose rate is significantly
+below it.  A pair receives a definitive CONTACT call if its cell is ON in the
+positive table and a definitive FORBIDDEN call if its cell is ON in the
+flipped table; all other pairs are abstained.
+
+On held-out proteins, the positive channel achieved precision 0.092
+($2.6\times$ base) at recall 0.203.  The flipped channel achieved specificity
+of \textbf{98.3\%}: forbidden-called cells showed exactly the predicted
+$\leq$1.75\% contact rate on unseen proteins, confirming that negative-selection
+rules generalise across protein families.  Combined definitive-call MCC was
+$+0.169$ at 22\% coverage.
+
+Pairs in which both alignment columns are fully conserved (entropy $< 0.001$)
+showed a contact rate of 11.4\%, representing a $3.2\times$ enrichment.
+However, a finer analysis using continuous minimum-pair entropy revealed that
+absolutely invariant positions are depleted of contacts ($0.69\times$), while
+near-conserved positions (entropy $0.001$--$0.05$) are enriched ($1.35\times$).
+This non-monotonicity indicates that structural-core membership requires
+residues to be constrained but not absolutely frozen; catalytic or functional
+constraints can lock a position without placing it in a contact-rich
+environment.

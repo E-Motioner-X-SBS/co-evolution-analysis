@@ -1,0 +1,17 @@
+% ═══ Methods: Statistical Framework ═══
+\section{Statistical Framework}
+\label{sec:methods-eval}
+
+Enrichment tests use exact one-sided binomial tests against
+matched-separation random controls (2{,}000 draws per model, fixed seeds).
+Spearman rank correlations assess monotone relationships.  Protein-level
+bootstrap resampling (2{,}000 replicates) provides confidence intervals.
+Wilcoxon signed-rank tests evaluate paired method comparisons without normality
+assumptions.  Permutation tests over random code assignments quantify encoding
+specificity.  Multiple-comparison awareness is maintained through median
+reporting for skewed distributions and explicit Bonferroni-corrected thresholds
+where noted.
+
+All stochastic elements use fixed random seeds.  Re-running any stage produces
+byte-identical output files, verified by MD5 checksums across multiple
+independent invocations for each result category.

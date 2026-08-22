@@ -1,0 +1,18 @@
+% ═══ Methods: Circuit Training and Evaluation ═══
+\section{Circuit Training and Evaluation}
+\label{sec:methods-circuit}
+
+Each labelled truth table is minimised using a popcount-grouped
+Quine--McCluskey implementation with full don't-care support.  Every trained
+circuit is asserted sound (no implicant matches any OFF cell) and complete
+(every ON cell is covered) before evaluation.
+
+Cross-protein evaluation uses protein-level cross-validation with folds
+stratified by length quintile (seed~42).  All model parameters derive
+exclusively from training proteins.  Ranked metrics include precision@L/5,
+precision@L/2, precision@L, and AUC via Mann--Whitney $U$ with mid-rank tie
+handling.
+
+For the rank-fusion experiment, five rules are evaluated: rank sum,
+$z$-score sum, product, geometric mean, and DCA-gated variant.  Paired
+Wilcoxon signed-rank tests assess significance of improvements.

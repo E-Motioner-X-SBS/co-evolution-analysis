@@ -1,0 +1,11 @@
+\section{Formal Verification in Lean 4}
+\label{sec:theory-lean}
+
+All load-bearing definitions are formalised in Lean~4~\cite{lean4} across two
+packages totalling 118 theorems.  Key results include: Gray-code consecutive
+adjacency, Hamming-distance symmetry, He-code pair counts at each distance,
+separation-bin monotonicity, cell-index injectivity, implicant-cover
+completeness and soundness, fully-fixed implicant uniqueness on the padded
+grid, and padding safety.  Every theorem depends only on \texttt{propext},
+\texttt{Quot.sound}, \texttt{Classical.choice}, and the
+\texttt{native\_decide} evaluation axiom; none depends on \texttt{sorryAx}.

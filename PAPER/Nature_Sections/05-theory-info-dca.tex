@@ -1,0 +1,20 @@
+\section{Information-Theoretic Measures and Direct Coupling Analysis}
+\label{sec:theory-info-dca}
+
+\subsection{Information-theoretic measures}
+Shannon entropy per column quantifies evolutionary variability after excluding
+gap characters.  Mutual information between columns $(i,j)$ measures
+statistical dependence:
+$\MI(i,j) = \sum_{a,b} P_{ij}(a,b) \log_2[P_{ij}(a,b)/(P_i(a)P_j(b))]$.
+The Average Product Correction removes phylogenetic bias:
+$\MIp = \MI - \bar{\MI}(i,\cdot)\bar{\MI}(\cdot,j)/\bar{\MI}$~\cite{dunn2008}.
+Perplexity ratio $r(i,j) = \mathrm{PP}(j)/\overline{\mathrm{PP}(j|i)}$
+captures near-determinism of the residue relationship.
+
+\subsection{Mean-field DCA}
+Direct Coupling Analysis models sequences through a Potts Hamiltonian whose
+couplings are estimated by covariance inversion~\cite{weigt2009,morcos2011}.
+Sequence reweighting at $\theta=0.2$ and pseudocount $\lambda=0.5$ regularise
+the estimates.  The Frobenius norm of each coupling block provides a pair
+score; APC correction removes phylogenetic bias.  Alignments deeper than
+12{,}000 sequences are uniformly subsampled.

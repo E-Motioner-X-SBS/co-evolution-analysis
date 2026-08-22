@@ -1,0 +1,43 @@
+% ═══ Discussion ═══
+\section{Discussion}
+\label{sec:discussion}
+
+We have demonstrated that the analytical chain from biological sequences
+through Gray-code encoding, Karnaugh-map construction, Quine--McCluskey
+minimisation, and prime-implicant extraction can be made machine-provable in
+Lean~4, and that the resulting Boolean circuits carry genuine structural
+information when applied to protein multiple sequence alignments.
+
+The principal finding is that the Karnaugh-map cell-rate prior carries
+orthogonal structural information demonstrable by rank-fusion with continuous
+DCA scores.  The fused predictor achieves prec@L/5 = 0.204, exceeding both
+the circuit alone (0.124) and DCA alone (0.169) at $p < 10^{-4}$.  This is
+the first evidence that Boolean-minimisation features improve continuous
+coevolutionary contact prediction.
+
+The biological interpretation of learned circuit rules confirms known
+structural principles.  Level-1 essential implicants encode hydrophobic-core
+packing, aromatic stacking, and sulfur-mediated contacts in directly readable
+sum-of-products form.  At Level-2 resolution, specific residue-pair
+vocabularies correspond to aliphatic/aromatic packing interactions that
+dominate the buried cores of globular proteins.
+
+Several limitations constrain the scope of our conclusions.  Consensus-residue
+features collapse within-column frequency variation into a single code,
+discarding information that richer encodings might exploit.  Separation bins
+use globally defined boundaries without per-protein length normalisation.
+Cross-dataset generalisation was inconclusive on EVmutation due to A2M format
+parsing complexity, leaving open the question of whether findings replicate
+beyond PSICOV150.  The iterative direct-information computation from our
+mean-field implementation remains unreliable on families with many fully
+conserved columns; we adopted APC-corrected Frobenius norm as the primary DCA
+score for this reason.
+
+Three extensions follow naturally.  Replacing binary conservation flags with
+continuous entropy bins as additional Karnaugh-map dimensions could capture
+finer-grained structural information about the buried core.  Integrating
+circuit-derived rules as input features to deep learning architectures would
+combine the interpretability of Boolean logic with the representational power
+of attention-based models.  Applying the complete pipeline to CASP
+free-modelling targets would test whether the observed transfer generalises
+to harder benchmarks with shallower alignments.

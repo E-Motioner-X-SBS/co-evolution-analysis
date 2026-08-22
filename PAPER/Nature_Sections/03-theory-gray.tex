@@ -1,0 +1,20 @@
+\section{Gray-Code Encoding of Biological Alphabets}
+\label{sec:theory-gray}
+
+A reflected binary Gray code assigns to each non-negative integer $n$ the
+value $g(n) = n \oplus (n \gg 1)$~\cite{gray1953}.  Consecutive integers map
+to codewords differing in exactly one bit.  For nucleotides we adopt the
+standard two-bit encoding A=0, C=1, G=3, T/U=2; transitions correspond to
+single bit-flips under Gray transformation.
+
+For amino acids, each residue receives its He~2012 integer
+code~\cite{he2012}: A=0 through G=19, ordered into seven physicochemical
+groups (aliphatic AILVM, aromatic FYW, sulfur MC, structure PG, polar STNQ,
+negative DE, positive HKR).  The five-bit Gray image $g(\mathrm{code}(a))$
+places each residue on the hypercube $Q_5$.  Among the $\binom{20}{2}=190$
+unordered pairs, exactly 80 ordered pairs lie at Gray distance~1 (verified in
+Lean~4 as \texttt{cc\_he\_dist1\_ordered\_eq\_80}).
+
+Alignment gaps are mapped to state~20 and excluded from all statistical
+calculations but retained in position arrays so that column identity is
+preserved across all sequences.

@@ -1,0 +1,21 @@
+% ═══ Results: Cross-Protein Transfer ═══
+\section{Universal Contact Circuits Transfer Across Proteins}
+\label{sec:res-transfer}
+
+We trained Quine--McCluskey-minimised Boolean circuits on consensus-residue
+identities and separation distances from approximately 100 PSICOV150 proteins,
+then evaluated on 50 entirely held-out proteins (maximum pairwise 5-mer
+Jaccard index 0.029 across all $\binom{150}{2}$ pairs).  The identity-level
+circuit achieved a mean top-$L/5$ precision of \textbf{0.179} ($5.1\times$
+enrichment over base rate 0.035), a $1.9\times$ improvement over plain MI
+(0.097), and a $15\times$ improvement over separation-only features (0.033).
+Binary classification at circuit membership achieved MCC $\approx$ 0.095 with
+enrichment of $2.5$--$2.8\times$.  Ranked precision was invariant across all
+nine labelling-threshold combinations tested.
+
+The minimised circuits produced interpretable rules.  Level-1 essential prime
+implicants included hydrophobic$\times$aromatic packing at separations 6--21
+and sulfur-mediated contacts at separations 6--11.  Level-2 vocabularies
+included $\{M,F\}\times\{M,F,Y,W\}$ and $\{I,V\}\times\{I,V,F,W\}$,
+corresponding to known aliphatic/aromatic core interactions rediscovered
+without biophysical prior knowledge.

@@ -1,0 +1,38 @@
+% ═══ Results: Reconstruction Assessment and Negative Results ═══
+\section{Reconstruction Assessment and Negative Results}
+\label{sec:res-reconstruction-negative}
+
+\subsection{Reconstruction is not achievable at current signal strength}
+We assessed whether the circuits supply sufficient correct spatial constraints
+for template-free structure determination by measuring recall (fraction of
+native contacts recovered) and long-range precision.  Circuit recall@L = 0.028
+versus published DCA's 0.218; median long-range precision@L/5 is 0.000 for
+circuits versus 0.683 for PSICOV predictions.  Against the threshold of
+median LR prec@L/5 $\geq 0.30$ and recall@L $\geq 0.10$ derived from
+Jones et al.\ and the CONFOLD literature, the circuits do not meet the
+criterion while published DCA does.
+
+\subsection{Tension mechanism does not improve prediction}
+An attention-style tension score, normalising each position's mutual
+information by its strongest partner, did not improve circuit precision
+(tension-augmented 0.154 vs.\ non-tension 0.165).  High-tension positions were
+anti-correlated with structural hubs (median $\rho = -0.06$), indicating that
+entropic attention concentrates on variable surface clusters rather than
+buried cores.
+
+\subsection{Iterative DI is unreliable on conserved-rich families}
+Our mean-field implementation of iterative direct information produced
+anti-predictive rankings (AUC $\approx 0.41$) on families with many fully
+conserved columns, due to pseudo-inverse conditioning when variance approaches
+zero for locked positions.  APC-corrected Frobenius norm was adopted as the
+primary DCA score instead; this choice was validated against native contacts
+and matches published mean-field benchmarks.
+
+\subsection{Cross-dataset pilot}
+A pilot evaluation on three EVmutation proteins produced inconclusive results
+because correct parsing of the A2M alignment format requires handling
+insert-state columns that do not map linearly to PDB residue numbers.
+Structures were successfully fetched from RCSB and MI AUCs were positive for
+two of three targets, but precision could not be meaningfully evaluated
+without proper reference-frame mapping.  Full evaluation is deferred to
+future work.

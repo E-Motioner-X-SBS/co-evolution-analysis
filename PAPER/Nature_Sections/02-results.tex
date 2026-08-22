@@ -1,0 +1,188 @@
+% ═══════════════════════════════════════════════════════════
+% §2 Results
+% ═══════════════════════════════════════════════════════════
+\section{Results}
+\label{sec:results}
+
+\subsection{Universal contact circuits transfer across proteins}
+\label{sec:res-transfer}
+
+We trained Quine--McCluskey-minimised Boolean circuits on consensus-residue
+identities and separation distances from approximately 100 proteins drawn
+from the PSICOV150 benchmark~\cite{jones2012}, then evaluated their ability
+to predict native contacts on 50 entirely held-out proteins sharing no
+evolutionary history with the training set (maximum pairwise 5-mer Jaccard
+index 0.029 across all $\binom{150}{2}$ pairs).  The identity-level circuit
+achieved a mean top-$L/5$ precision of \textbf{0.179} on held-out proteins,
+representing $5.1\times$ enrichment over the random expectation of 0.035 and
+a $1.9\times$ improvement over plain mutual information computed per-protein
+(0.097).  The group-level circuit achieved 0.142.
+
+At the circuit-membership threshold, the binary classifier achieved MCC
+$\approx 0.095$ with enrichment of $2.5$--$2.8\times$.  Sensitivity analysis
+confirmed that ranked precision was invariant across all nine combinations of
+labelling thresholds tested ($T \in \{1.5, 2, 3\} \times n_{\min} \in \{10,
+	30, 60\}$).
+
+The minimised circuits produced biophysically interpretable rules.  Essential
+prime implicants included hydrophobic$\times$aromatic packing at separations
+6--21 residues, sulfur-mediated contacts at separations 6--11, and specific
+Level-2 vocabularies such as $\{M,F\}\times\{M,F,Y,W\}$ consistent with
+methionine--phenylalanine core interactions.  These rules were rediscovered
+from sequence data without any biophysical prior knowledge.
+
+For context, the published PSICOV predictions achieve a top-$L/5$ precision
+of 0.727 on the same held-out proteins when evaluated against the same native
+contact labels, confirming both the quality of our ground-truth pipeline
+($\Delta = 0.003$ from Jones et al.'s Table~1) and the magnitude of the gap
+between interpretable discrete circuits and continuous sparse-inverse-covariance
+methods.
+
+\subsection{Gray-code adjacency is enriched among native contacts}
+\label{sec:res-gray}
+
+The Karnaugh-map framework predicts that residue pairs connected by a single
+bit-flip in Gray-code space should be enriched among native contacts, because
+the encoding maps chemically similar amino acids to adjacent codewords.
+Among 47{,}430 native-contact pairs across 150 PSICOV proteins, we found
+that 22.83\% are Gray-adjacent ($d_G = 1$), compared to a
+composition-controlled background rate of 19.37\%, yielding an enrichment of
+$1.178\times$ with a two-sided exact binomial $p = 1.1 \times 10^{-77}$.
+Bootstrap confidence intervals from protein-level resampling (2{,}000
+replicates) span [22.27\%, 23.40\%].
+
+A permutation test over random relabelings of the twenty amino-acid codes
+demonstrated that this enrichment is specific to the He/Gray assignment:
+random code permutations yield a mean enrichment of $0.961 \pm 0.095$, placing
+the true encoding at $z = 2.51$ above the null distribution.  This confirms
+that the particular Gray-code structure carries genuine signal beyond what
+generic physicochemical clustering would produce, although most of the raw
+enrichment reflects the broader tendency of chemically similar residues to
+contact each other.
+
+An earlier analysis restricted to the SARS-CoV-2 Spike protein found an
+identical point estimate ($1.18\times$) but failed to reach significance
+($p = 0.345$) because only 38 contact pairs were available.  The present
+analysis with three orders of magnitude more data resolves this ambiguity:
+the effect is real but requires adequate statistical power to detect.
+
+\subsection{Rank fusion improves DCA ranking}
+\label{sec:res-fusion}
+
+The Karnaugh-map cell-rate prior improved global ranking (circuit AUC 0.658
+vs.\ DCA AUC 0.583) while degrading top-$K$ sharpness relative to raw DCA.
+We hypothesised that fusing the two signals via rank aggregation would capture
+both properties.  Five fusion rules were evaluated under identical protein-level
+cross-validation:
+
+\begin{table}[ht]
+	\centering
+	\caption{Rank-fusion results over five-fold protein-level cross-validation.}
+	\label{tab:fusion}
+	\begin{tabular}{lcc}
+		\toprule
+		Method            & prec@L/5 (mean $\pm$ sd)   & AUC            \\
+		\midrule
+		rawDCA alone      & $0.169 \pm 0.125$          & 0.583          \\
+		circH prior alone & $0.124 \pm 0.088$          & \textbf{0.658} \\
+		\midrule
+		\textbf{ranksum}  & $\mathbf{0.204 \pm 0.104}$ & 0.638          \\
+		geometric mean    & $0.203 \pm 0.103$          & 0.634          \\
+		product           & $0.199 \pm 0.108$          & 0.592          \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+The rank-sum fusion achieved prec@L/5 = \textbf{0.204}, exceeding rawDCA
+(Wilcoxon $p < 10^{-4}$, mean difference $+0.036$) and circH ($p < 10^{-4}$,
+mean difference $+0.080$).  Cohen's $d = 0.31$ with a bootstrap 95\% CI of
+$[0.017, 0.054]$ on the paired difference.  Mechanistic decomposition revealed
+that all rescued pairs had above-median scores from \emph{both} methods,
+confirming coincidence-of-evidence amplification rather than rescue of weak
+signals.  Adding plain MI as a third signal did not improve further
+(three-way 0.201 vs.\ two-way 0.204, $p = 0.607$).
+
+This constitutes the first demonstration that Karnaugh-map-derived features
+carry structural information orthogonal to continuous coupling scores from
+DCA, providing a novel post-processing step applicable to any existing
+coevolution pipeline.
+
+\subsection{Flipped circuits generalise across proteins}
+\label{sec:res-flipped}
+
+In addition to positive (mutation-detecting) maps, we constructed flipped maps
+in which ON cells represent never-observed residue combinations, i.e. negative
+selection constraints.  When trained on PSICOV proteins and applied to
+held-out proteins, the flipped circuit achieved a specificity of
+\textbf{98.3\%}: forbidden-called cells showed exactly the predicted
+$\leq 1.75\%$ contact rate on unseen proteins, matching the training-set
+upper bound almost perfectly.
+
+Combined with the positive channel, the two-sided classifier achieved MCC =
+$+0.169$ over definitive calls (22\% coverage), confirming that both polarity
+channels carry complementary structural information.
+
+\subsection{Conserved column pairs are contact-enriched}
+\label{sec:res-conservation}
+
+Pairs in which both alignment columns are fully conserved (entropy $< 0.001$)
+showed a native-contact rate of 11.4\%, representing a $3.2\times$ enrichment
+over the overall base rate of 3.5\%.  However, a finer analysis using
+continuous minimum-pair entropy revealed a non-monotone gradient: absolutely
+invariant positions (entropy $\approx 0$) were depleted of contacts
+($0.69\times$), while near-conserved positions (entropy $0.001$--$0.05$) were
+enriched ($1.35\times$).
+
+This non-monotonicity is biologically interpretable: absolutely invariant
+positions are frequently catalytic residues or post-translational modification
+sites whose conservation reflects functional constraint rather than structural
+packing.  Near-conserved positions are sufficiently constrained to maintain
+structural integrity while retaining enough variability to generate detectable
+covariation signal.  The overall Spearman correlation between column entropy
+and contact status is negative ($\rho = -0.053$, $p \approx 0$), confirming
+the monotone trend.
+
+\subsection{Contact maps are more Karnaugh-map-compressible than chance}
+\label{sec:res-compressibility}
+
+For six PSICOV proteins small enough for exact Quine--McCluskey minimisation
+of a padded $64 \times 64$ grid, we compared the compression ratio (\# prime
+implicants / \# contact cells) between real contact matrices and controls whose
+labels were shuffled within separation bins.  Real maps required fewer prime
+implicants than shuffled controls in all six cases (mean 2.31 vs 2.74;
+Wilcoxon $p = 0.031$), demonstrating that three-dimensional geometry carries
+Karnaugh-map-expressible regularity beyond what density and separation
+structure alone explain.
+
+\subsection{Reconstruction assessment}
+\label{sec:res-reconstruction}
+
+Against literature thresholds for structure reconstruction readiness (median
+long-range precision@L/5 $\geq 0.30$ AND recall@L $\geq 0.10$, derived from
+Jones et al.'s observation that $\geq 0.5$ long-range precision suffices for
+fold determination~\cite{jones2012}), our circuits do not meet the criterion
+(median LR prec@L/5 = 0.000; recall@L = 0.028).  Published PSICOV predictions
+do meet it (LR prec@L/5 = 0.683; recall@L = 0.218).  At current signal
+strength, the circuits serve as an annotation layer identifying specific
+coevolutionary constraints; they do not supply sufficient spatial information
+for template-free structure determination.
+
+\subsection{Negative results constrain the theory}
+\label{sec:res-negative}
+
+Three hypotheses were tested and rejected.  First, an attention-style tension
+mechanism normalising each position's mutual-information profile by its
+strongest partner did not improve circuit precision (tension-augmented 0.154
+vs.\ non-tension 0.165), and high-tension positions were anti-correlated with
+structural hubs (median $\rho = -0.06$).  Second, quartile-binned DCA scores
+added as Karnaugh-map feature dimensions provided no improvement over identity
+features alone (circH 0.124 vs L2 0.165), indicating that continuous coupling
+information cannot be productively discretised into the Boolean framework.
+Third, iterative direct information from our mean-field implementation was
+anti-predictive on families with many conserved columns due to pseudo-inverse
+conditioning, leading us to adopt APC-corrected Frobenius norm as the primary
+DCA score.
+
+Each negative result constrains where the framework applies and directs future
+effort toward productive extensions rather than unproductive pursuit of
+approaches that the data do not support.

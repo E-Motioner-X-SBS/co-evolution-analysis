@@ -1,0 +1,22 @@
+% ═══ Methods: Encoding and Feature Extraction ═══
+\section{Encoding and Feature Extraction}
+\label{sec:methods-encoding}
+
+Each MSA is converted to a dense integer matrix using the He~2012 amino-acid
+code (values 0--19), with gaps mapped to state~20.  Consensus residues are
+computed as the majority non-gap code per column with lowest-code tie-breaking.
+Candidate pairs include all $(i,j)$ with $j-i \geq 6$ and both columns having
+valid consensus codes.
+
+Pair features comprise: physicochemical group codes ($g_i, g_j \in \{0,\ldots,7\}$),
+separation bins ($s \in \{0,1,2,3\}$ for $[6,11)$, $[11,21)$, $[21,31)$,
+$[31,\infty)$), consensus residue codes, Gray-Hamming distance, mutual
+information, and perplexity ratio.
+
+Two circuit levels are constructed from pooled counts over training proteins:
+Level-1 (256 cells) over group$_i \times$ group$_j \times$ separation-bin;
+Level-2 (4$\times$1024 cells) over residue-identity pairs padded to
+$32\times32$, one map per separation bin.  Cell labelling uses the ternary
+rule: ON if contact rate $\geq T \times$ base rate and $n \geq n_{\min}$;
+don't-care if $n < n_{\min}$; OFF otherwise, with defaults $T=2$,
+$n_{\min}=30$.

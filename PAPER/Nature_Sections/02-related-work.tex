@@ -1,0 +1,48 @@
+% ═══ Related Work ═══
+\section{Related Work}
+\label{sec:related}
+
+\subsection{Coevolutionary contact prediction}
+The inference of residue--residue contacts from multiple sequence alignments
+(MSAs) has evolved through several generations of methodology.  Early
+approaches based on mutual information~\cite{dunn2008} suffered from
+phylogenetic and entropic biases that produced high false-positive rates.
+Direct Coupling Analysis (DCA) addressed this by modelling the joint sequence
+distribution through a Potts Hamiltonian whose coupling parameters capture
+direct (rather than transitive) correlations~\cite{weigt2009}.  The mean-field
+approximation of Morcos et al.\cite{morcos2011} made DCA computationally
+tractable for large alignments by replacing the full partition function with a
+covariance-based estimate.  Sparse inverse covariance estimation, as
+implemented in PSICOV~\cite{jones2012}, further improved precision by
+promoting sparsity in the precision matrix through $\ell_1$ regularisation.
+Pseudo-likelihood maximisation~\cite{ekeberg2013} and fast belief propagation
+implementations such as CCMpred~\cite{seemayer2014} subsequently refined the
+inference procedure.  GREMLIN~\cite{kamisetty2013} combined DCA with
+protein-structure priors.  EVmutation~\cite{hopf2017} extended the framework
+to predict mutation effects on fitness rather than contacts alone.
+
+More recently, end-to-end deep learning approaches such as
+AlphaFold2~\cite{jumper2021} have integrated coevolutionary signal with
+structural priors inside attention-based architectures, achieving near-experimental
+accuracy for many targets.  However, these models produce dense internal
+representations that resist decomposition into interpretable components.
+
+\subsection{Formal methods in computational biology}
+The application of interactive theorem provers to computational biology
+remains limited.  Existing formalisations focus on algorithm correctness for
+phylogenetic inference~\cite{lean4}, genome assembly graph properties, and
+sequence alignment dynamic programming recurrences.  No prior work has
+established machine-checked proofs that the encoding layer connecting amino-acid
+alphabets to numerical representations preserves the structural properties
+required for coevolutionary analysis.
+
+\subsection{Karnaugh maps beyond digital logic}
+Karnaugh maps were introduced as a graphical method for minimising Boolean
+functions~\cite{karnaugh1953}.  Their application outside digital circuit
+design has been explored in synthetic biology, where Boolean gates model gene
+regulatory networks~\cite{marchisio2011}, and in the analysis of genetic code
+symmetries~\cite{petoukhov2025}.  Our work extends this tradition by using
+Karnaugh maps not merely as a visual representation but as an analytical
+engine: the Quine--McCluskey minimiser extracts testable coevolutionary rules
+from thresholded frequency data, and the resulting circuits are validated
+against native protein structures.

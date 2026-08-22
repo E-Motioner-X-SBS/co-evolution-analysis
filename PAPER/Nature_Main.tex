@@ -1,0 +1,91 @@
+% !TEX program = pdflatex
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[a4paper,top=25mm,bottom=25mm,left=30mm,right=30mm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\microtypesetup{patch=none}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{caption}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=green!40!black]{hyperref}
+\usepackage[ruled,vlined]{algorithm2e}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}{Definition}[section]
+
+\newcommand{\MI}{\mathrm{MI}}
+\newcommand{\MIp}{\mathrm{MIp}}
+
+\pagestyle{plain}
+
+\begin{document}
+
+\title{Machine-Provable Karnaugh Map Encoding of Protein Sequences:\\
+	Boolean Circuit Extraction and Cross-Protein Coevolutionary\\
+	Contact Prediction}
+
+\author{Shuvam Banerji Seal\\
+	\small Indian Institute of Science Education and Research Kolkata, Mohanpur 741246, India}
+
+\date{}
+
+\maketitle
+
+\begin{abstract}
+	The representation of protein sequences as Karnaugh maps through Gray-code
+	encoding establishes a formal bridge between switching theory and the
+	statistical mechanics of coevolution.  We present a computational framework in
+	which the entire analytical chain---from amino-acid encoding through
+	Karnaugh-map construction, Quine--McCluskey minimisation, and prime-implicant
+	extraction to cross-protein contact prediction---is formalised in the Lean~4
+	theorem prover and validated against native experimental structures from the
+	PSICOV150 benchmark.  Our universal contact circuits, trained on consensus
+	residue identities from approximately one hundred proteins, transfer to
+	held-out proteins at a mean top-$L/5$ precision of 0.179 ($5.1\times$ random
+	enrichment).  Fusing circuit-derived scores with continuous DCA rankings via
+	rank aggregation yields a hybrid predictor that exceeds both individual
+	methods ($p < 10^{-4}$), demonstrating for the first time that
+	Boolean-minimisation features carry structural information orthogonal to
+	standard covariation analysis.  Flipped (forbidden-combination) circuits
+	generalise across proteins with 98.3\% specificity.  Gray-code adjacency is
+	enriched among native contacts ($1.178\times$, $p < 10^{-77}$), and conserved
+	column pairs are contact-enriched by $3.2\times$.  All software, formal
+	proofs, and result files are publicly available.
+\end{abstract}
+
+% ── Main text ──
+\input{Nature_Sections/01-intro}
+\input{Nature_Sections/02-related-work}
+\input{Nature_Sections/03-theory-gray}
+\input{Nature_Sections/04-theory-kmap-qm}
+\input{Nature_Sections/05-theory-info-dca}
+\input{Nature_Sections/06-theory-lean}
+\input{Nature_Sections/07-results-transfer}
+\input{Nature_Sections/08-results-gray-fusion}
+\input{Nature_Sections/09-results-complete-circuit}
+\input{Nature_Sections/10-results-reconstruction-negative}
+\input{Nature_Sections/11-discussion}
+% ── Methods ──
+\input{Nature_Sections/12-methods-data}
+\input{Nature_Sections/13-methods-encoding}
+\input{Nature_Sections/14-methods-circuit}
+\input{Nature_Sections/15-methods-eval}
+% ── References ──
+\bibliographystyle{unsrtnat}
+\bibliography{bib/references}
+
+\end{document}

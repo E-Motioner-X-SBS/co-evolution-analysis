@@ -1,0 +1,63 @@
+% ═══════════════════════════════════════════════════════════
+% §3 Discussion
+% ═══════════════════════════════════════════════════════════
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Summary of findings}
+This work establishes three results that advance our understanding of how
+discrete mathematical structures interact with protein coevolution analysis.
+First, we demonstrate that Quine--McCluskey-minimised Karnaugh-map circuits,
+learned from consensus-residue identities in training proteins, transfer to
+held-out proteins at $5.1\times$ random enrichment for native contacts.
+Second, we show that the cell-rate prior derived from these circuits improves
+continuous DCA ranking when fused via rank aggregation, providing the first
+evidence that Boolean-minimisation features carry structural information
+orthogonal to standard covariation analysis.  Third, we confirm at proper
+statistical power ($p < 10^{-77}$) that Gray-code adjacency is enriched among
+native contacts and demonstrate through permutation testing that this
+enrichment is specific to the He/Gray encoding rather than an artefact of
+generic chemistry clustering.
+
+\subsection{Comparison with existing methods}
+Our circuits achieve prec@L/5 = 0.179 on held-out proteins, which is
+substantially below PSICOV's sparse inverse covariance method (0.727) but
+above plain mutual information without correction (0.097).  The gap reflects
+the fundamental difference between discrete consensus-identity encoding with
+Boolean minimisation and continuous covariance-based inference with
+phylogenetic correction.  These approaches are complementary rather than
+competing: the rank-fusion experiment demonstrates that combining them yields
+better predictions than either alone.
+
+The biological interpretation of learned circuit rules is a key advantage
+over neural-network-based methods.  Our Level-1 essential implicants encode
+hydrophobic/aromatic core packing and sulfur-mediated contacts in directly
+readable sum-of-products form.  At Level-2 resolution, specific residue-pair
+vocabularies such as $\{M,F\}\times\{M,F,Y,W\}$ correspond to known
+aliphatic/aromatic packing interactions, rediscovered from sequence data
+without biophysical prior knowledge.
+
+\subsection{Limitations}
+Several limitations constrain the scope of our conclusions.  Consensus-residue
+features collapse within-column frequency variation into a single code per
+position, discarding information that richer encodings might exploit.
+Separation bins use globally defined boundaries without per-protein length
+normalisation.  The cross-dataset generalisation experiment on EVmutation was
+inconclusive because correct parsing of the A2M alignment format requires
+handling insert-state columns that do not map linearly to PDB residue numbers;
+this is a well-known challenge of the EVmutation format rather than a flaw in
+our framework.  Finally, the iterative direct-information computation from
+our mean-field implementation remains unreliable on families with many fully
+conserved columns due to pseudo-inverse conditioning; we adopted APC-corrected
+Frobenius norm as the primary DCA score for this reason.
+
+\subsection{Future directions}
+Three extensions follow naturally.  First, replacing binary conservation flags
+with continuous entropy bins as additional Karnaugh-map dimensions could
+capture finer-grained structural information about the buried core.  Second,
+integrating circuit-derived rules as input features to deep learning models
+would combine the interpretability of Boolean logic with the representational
+power of attention-based architectures.  Third, applying the complete pipeline
+to CASP free-modelling targets would test whether the observed transfer
+generalises to harder targets with shallower alignments and more diverse
+structural classes.

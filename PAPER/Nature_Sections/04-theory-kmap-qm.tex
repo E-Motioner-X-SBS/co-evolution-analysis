@@ -1,0 +1,18 @@
+\section{Karnaugh Maps and Quine--McCluskey Minimisation}
+\label{sec:theory-kmap-qm}
+
+For a pair of alignment columns $(i,j)$, a ternary Karnaugh map $K_{ij}$
+assigns each cell of a $32\times32$ grid one of three values based on joint
+residue frequencies: ON for observed mutations, OFF for never-observed pairs,
+and don't-care for reference pairs and padding rows/columns 20--31.
+
+The Quine--McCluskey algorithm~\cite{quine1952,mccluskey1956} finds all prime
+implicants by iterative pairwise merging of minterms differing in one bit,
+with don't-care cells included alongside on-set cells.  Essential prime
+implicants cover on-set cells matched by no other implicant; greedy selection
+completes the cover.  Two properties are machine-verified: every ON cell is
+covered (\texttt{cc\_cover\_complete}) and no implicant matches any OFF cell
+(\texttt{cc\_off\_avoiding}).
+
+Flipped maps assign ON status to never-observed combinations, producing
+forbidden-combination rules that encode negative-selection constraints.
