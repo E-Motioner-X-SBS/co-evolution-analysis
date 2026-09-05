@@ -1,0 +1,87 @@
+% ═══ Methods: Contact-State Logic ═══
+\section{Methods: Boolean Logic over Contact States}
+\label{sec:methods-contact-logic}
+
+\subsection{Simulations and contact states}
+Structure-based models~\cite{clementi2000sbm} were generated with
+SMOG~2~\cite{noel2016smog2} as C$\alpha$-only topologies and integrated with
+OpenSMOG~\cite{oliveira2021opensmog} on OpenMM~\cite{eastman2017openmm}, using a
+Langevin middle integrator at reduced temperature $T = 0.99994$, time step
+$0.0005$, collision rate $1.0$ and cutoff $1.1$~nm.  The production set
+comprises 1{,}359 protein trajectories of $5\times10^{5}$ steps saved every
+5000, of which the 500 lexicographically first with parseable topologies were
+analysed and 480 yielded rules.
+
+A native contact $(i,j)$ from the SMOG shadow map is \emph{formed} in a frame
+when the C$\alpha$--C$\alpha$ distance is below $1.2$ times its distance in the
+SBM reference structure; $Q$ is the fraction of native contacts formed, and
+contacts whose formed-fraction lies outside $[0.05, 0.95]$ over the trajectory
+are treated as constant and excluded as targets or predictors.
+
+For the dense re-sampling of Section~\ref{sec:cl-dense}, ten proteins were
+re-simulated with identical parameters for $2\times10^{6}$ steps saved every
+250.  These 50--300 atom systems are small enough that OpenMM's CPU platform at
+one thread ($\approx 12.7$k steps/s) outruns CUDA ($\approx 9$k), where
+kernel-launch overhead dominates; the batch therefore ran one single-threaded
+process per protein.  Six further candidates were dropped because their
+topology directories lacked the OpenSMOG XML file.
+
+\subsection{Rule construction}
+Inputs to each circuit are the states of $n_{\mathrm{pred}} = 3$ selected
+contacts followed by two bits of the quantile-binned $Q$, giving $2^5 = 32$
+cells.  Predictors are the top-$n_{\mathrm{pred}}$ contacts by conditional
+mutual information $I(c; x \mid Q\text{-bin})$, computed on the training frames
+only and recomputed inside every fold.  Conditional rather than plain mutual
+information is essential: plain MI ranks candidates by how strongly each tracks
+the folding coordinate, which is the confounder being controlled.
+
+Each cell is labelled by majority vote over its training frames---ON when the
+target is formed in more than half, OFF otherwise---and cells holding fewer
+than four frames become don't-cares, the standard treatment of unvisited states
+in Boolean network inference and what allows the minimiser to generalise rather
+than memorise.  The ternary table is minimised by exact Quine--McCluskey on the
+sparse term set, and every returned cover is runtime-verified sound (no cube
+covers an off-cell) and complete (every on-cell is covered) by cube
+enumeration.
+
+\subsection{Evaluation and controls}
+Cross-validation uses five contiguous frame blocks rather than random splits:
+where any temporal correlation survives the save interval, a random split would
+place adjacent frames on both sides and inflate held-out accuracy.  Three
+predictors are scored on the same held-out frames---the circuit, a $Q$-only
+baseline built by the identical procedure from the $Q$ bits alone, and the
+training-majority class---and the reported effect is always
+$\mathrm{acc}_{\mathrm{rule}} - \mathrm{acc}_{Q\text{-only}}$.
+
+The $Q$-stratified null resamples every contact column within $Q$ strata.  This
+preserves exactly each contact's marginal frequency inside each $Q$ bin, hence
+its entire dependence on the folding coordinate, while destroying which frames
+pair which contacts.  A gain that survives this null is not explicable by the
+global mode.
+
+For the locality analysis, predictors are compared against contacts drawn at
+random from the same protein's varying set, so that protein length and contact
+density cancel; adjacency is $L_1 \leq 2$ on the contact map, where
+$L_1 = |i-k| + |j-l|$ for contacts stored as sorted residue pairs.
+
+Temporal scope is measured rather than assumed: the lag-1 autocorrelation of
+$Q$ and of each varying contact is reported per protein, and the lagged
+analysis of Section~\ref{sec:cl-kinetic} is applied only to the densely sampled
+trajectories, where it exceeds $0.5$.
+
+\subsection{Reproducibility}
+Seeds are fixed throughout (base 20260905, offset per protein by index; folds
+contiguous), and stage re-runs reproduce identical JSON.  The
+Quine--McCluskey engine is shared with the sequence-circuit analysis and
+carries 22 correctness gates, including agreement with an independent dense
+implementation when no don't-cares are present and an independent audit of
+implicant-hood and primality at 8, 10 and 12 variables.
+
+We note one consequence of that audit for the wider pipeline.  The dense
+reference minimiser retains only don't-cares at Hamming distance 1 from a real
+on-minterm, a documented performance choice; where don't-cares cluster it
+therefore under-merges, returning 187 cubes against 522 exact prime implicants
+on a 10-variable test table, with every extra cube it reports strictly
+contained in a true prime.  Rules obtained from it remain sound, but
+prime-implicant counts and ``essential'' designations computed with it are
+approximations rather than exact Quine--McCluskey quantities.

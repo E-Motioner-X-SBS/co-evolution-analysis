@@ -22,6 +22,36 @@ sum-of-products form.  At Level-2 resolution, specific residue-pair
 vocabularies correspond to aliphatic/aromatic packing interactions that
 dominate the buried cores of globular proteins.
 
+Two results reframe what the rest of the paper reports.  The ceiling theorem
+(Section~\ref{sec:res-ceiling}) converts an empirical shortfall into a bound:
+because a circuit is a function of its feature cell, its expected precision is
+capped by that cell's purity, and on consensus residue identity with separation
+the cap is $0.193$ against the $0.179$ we achieve.  The circuit is therefore at
+$93\%$ of what its inputs permit, and the $3.7\times$ distance to published DCA
+is a property of the features rather than of the minimisation.  This settles a
+question the earlier sections could only pose: no better minimiser, threshold,
+don't-care policy or Boolean representation can close it, and effort is better
+spent on the inputs.  It also explains why coarsening residues into eight
+physicochemical groups \emph{lowers} the ceiling---merging cells can only
+discard information---so chemical classes should be understood as buying
+readability, not accuracy.
+
+The second is a change of substrate rather than of method.  Boolean
+minimisation is productive elsewhere in biology where the object is a logical
+relation among variables observed across many states~\cite{kocevar2024sailor};
+a static residue string is not such an object, whereas a structure-based-model
+trajectory is.  Applied to conformational state
+(Section~\ref{sec:res-contact-logic}), the same exact minimiser finds coupling
+beyond the folding coordinate in 463 of 480 proteins, and---the substantive
+point---the rules it learns are \emph{spatially local}: selected predictors are
+$12.5\times$ enriched for contact-map adjacency in 478 of 480 proteins, with
+more than a quarter sharing a residue with their target.  Conditional mutual
+information, with the global folding mode controlled out, recovers
+$\beta$-ladder registers and local packing units without being told that
+secondary structure exists.  Under dense re-sampling this becomes a kinetic
+statement: three neighbouring contacts predict a target contact's state a
+thousand integration steps ahead, in every protein tested.
+
 Several limitations constrain the scope of our conclusions.  Consensus-residue
 features collapse within-column frequency variation into a single code,
 discarding information that richer encodings might exploit.  Separation bins
@@ -31,9 +61,20 @@ parsing complexity, leaving open the question of whether findings replicate
 beyond PSICOV150.  The iterative direct-information computation from our
 mean-field implementation remains unreliable on families with many fully
 conserved columns; we adopted APC-corrected Frobenius norm as the primary DCA
-score for this reason.
+score for this reason.  In the contact-state analysis the mean gain over the
+$Q$-only baseline is negative at the production trajectory length, a
+variance limit we diagnose by varying the predictor count and confirm by
+re-simulation; the ten proteins re-simulated were chosen to be small and
+strongly fluctuating, so their absolute levels are optimistic relative to the
+480-protein population even though the paired comparisons are not.  Finally,
+prime-implicant counts reported from the dense reference minimiser are lower
+bounds rather than exact Quine--McCluskey quantities, for the reason given in
+Section~\ref{sec:methods-contact-logic}.
 
-Three extensions follow naturally.  Replacing binary conservation flags with
+Four extensions follow naturally.  Extending the dense re-sampling from ten
+favourably chosen proteins to a representative sample of the 480 would
+establish whether the sign flip holds at the population level, and would make
+the kinetic analysis available at scale rather than as a demonstration.  Replacing binary conservation flags with
 continuous entropy bins as additional Karnaugh-map dimensions could capture
 finer-grained structural information about the buried core.  Integrating
 circuit-derived rules as input features to deep learning architectures would

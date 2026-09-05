@@ -1,0 +1,196 @@
+% ═══ Results: Boolean Logic over Conformational State ═══
+\section{Boolean Logic over Conformational State}
+\label{sec:res-contact-logic}
+
+The results so far apply Boolean minimisation to \emph{sequence}: an alignment
+column pair becomes a Karnaugh map, and its prime implicants describe which
+residue combinations coevolution permits.  Section~\ref{sec:res-ceiling} shows
+that this substrate is close to exhausted for contact prediction.  Here we
+change the substrate rather than the method.
+
+The motivation is that Boolean minimisation is productive elsewhere in biology
+precisely where the object is a \emph{logical relation among variables observed
+across many states}---gene-regulatory inference being the established case, in
+which binarised expression time series yield logic rules via
+Quine--McCluskey~\cite{kocevar2024sailor}.  A static residue string is not such
+an object.  A structure-based model (SBM) trajectory~\cite{clementi2000sbm}
+is: every native contact is either formed or broken in every frame, so the
+trajectory is a binary state matrix and one may ask whether a contact's state
+is a Boolean function of a few other contacts' states.
+
+\subsection{Controlling the folding coordinate}
+\label{sec:cl-control}
+
+Every pair of native contacts is correlated for a trivial reason: when the
+protein is folded most contacts are formed, when unfolded most are broken.  Any
+naive coupling statistic measures this global mode and nothing else.  Three
+devices control for it, all applied throughout.
+
+First, $Q$, the fraction of native contacts formed, is quantile-binned into two
+bits and supplied to the circuit as an \emph{explicit input}, so that a rule
+reads ``at this folding level, contact $c$ is formed iff \dots'' rather than
+``contact $c$ is formed when the protein is folded''.  Second, every rule is
+scored against a \emph{$Q$-only baseline} built by the identical procedure from
+the $Q$ bits alone; the reported quantity is always the gain over that
+baseline, so a rule that merely restates the global mode scores zero.  Third, a
+\emph{$Q$-stratified null} resamples contact columns within $Q$ strata,
+preserving each contact's dependence on the folding coordinate and its marginal
+frequency while destroying any specific contact-to-contact coupling.
+
+Predictors are ranked by \emph{conditional} mutual information
+$I(c; x \mid Q\text{-bin})$; plain mutual information would rank candidates by
+how strongly each tracks the confounder.  Predictor selection is repeated
+inside every cross-validation fold, so the \emph{choice} of predictors is held
+out and not only the fitted rule.  Folds are contiguous frame blocks rather
+than random splits.
+
+\subsection{Coupling beyond the folding coordinate is present}
+
+Across 480 proteins and 18{,}714 extracted rules, every circuit
+runtime-verified sound and complete, the mean gain over the $Q$-only baseline
+is $-0.0054$ while the $Q$-stratified null gives $-0.0248$.  The real
+configuration exceeds its own null in \textbf{463 of 480 proteins}
+(Wilcoxon $p = 4.3\times10^{-78}$).
+
+The sign deserves comment.  On held-out frames the contact-based circuit is
+marginally \emph{worse} than the two-bit $Q$ model, yet decisively better than
+its own null.  Varying the predictor count identifies the cause
+(Table~\ref{tab:cl-predcount}): the absolute gain degrades monotonically as the
+truth table grows, while the real-minus-null difference stays flat at
+$\approx +0.024$ and equally significant at every size.  That is a
+variance-limited estimator, not absent signal---with 100 frames there are
+$\approx 2.5$ frames per cell at three predictors.
+
+\begin{table}[htbp]
+\centering
+\caption{Predictor count against estimator variance (60 proteins, 25 targets
+each).  Absolute gain falls with table size; the real-minus-null difference
+does not.}
+\label{tab:cl-predcount}
+\begin{tabular}{rrrrrl}
+\toprule
+Predictors & Cells & Gain vs.\ $Q$-only & Null gain & Real $-$ null & Real $>$ null \\
+\midrule
+1 & 8  & $+0.0033$ & $-0.0195$ & $+0.0228$ & 52/55 ($p = 2.8\times10^{-10}$) \\
+2 & 16 & $-0.0002$ & $-0.0259$ & $+0.0257$ & 50/55 ($p = 6.0\times10^{-10}$) \\
+3 & 32 & $-0.0023$ & $-0.0260$ & $+0.0237$ & 51/55 ($p = 3.5\times10^{-10}$) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{The learned rules are spatially local}
+\label{sec:cl-local}
+
+The substantive finding is what the rules connect.  For each rule we compare
+the contact-map $L_1$ distance $|i-k| + |j-l|$ between the target contact and
+its selected predictors against predictors drawn at random from the
+\emph{same protein's} varying contacts, so that protein size and contact
+density cancel.
+
+\begin{table}[htbp]
+\centering
+\caption{Selected predictors versus matched-random predictors, 480 proteins.
+Adjacency is $L_1 \leq 2$ on the contact map.}
+\label{tab:cl-locality}
+\begin{tabular}{lrr}
+\toprule
+ & Observed & Matched random \\
+\midrule
+Fraction of predictors adjacent      & \textbf{0.2127} & 0.0170 \\
+Enrichment                           & \multicolumn{2}{c}{\textbf{12.5$\times$}} \\
+Proteins with observed $>$ random    & \multicolumn{2}{c}{\textbf{478 / 480}} \\
+Wilcoxon                             & \multicolumn{2}{c}{$p = 3.3\times10^{-80}$} \\
+Median contact-map distance          & \textbf{61.5} & 107.5 \\
+Predictors sharing a residue         & \multicolumn{2}{c}{\textbf{27.2\%}} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Conditional mutual information, with the global folding mode controlled out,
+selects the \emph{neighbouring cells of the contact map}: adjacent rungs of the
+same $\beta$-ladder, successive turns packed against the same partner.  More
+than a quarter of selected predictors share a residue with their target.  This
+is local cooperativity---the foldon picture~\cite{maity2005foldons}---recovered
+from a discrete-logic direction without secondary structure being supplied.
+Individual rules can be strong even where the population mean gain is not:
+
+\begin{quote}\small
+\texttt{1zjy}\quad contact $(1,28)$: accuracy $0.900$ vs.\ $Q$-only $0.480$, MCC $0.80$;\\
+\phantom{\texttt{1zjy}}\quad predictors $(1,29), (2,28), (2,29)$, contact-map $L_1 = 1, 1, 2$.
+
+\texttt{1kms}\quad contact $(2,129)$: accuracy $0.790$ vs.\ $0.380$, MCC $0.62$;\\
+\phantom{\texttt{1kms}}\quad rule $c(2,129) = c(2,127) \wedge c(1,129)$, $L_1 = 2, 1$.
+\end{quote}
+
+\subsection{Longer trajectories confirm the variance diagnosis}
+\label{sec:cl-dense}
+
+The diagnosis in Table~\ref{tab:cl-predcount} makes a testable prediction:
+more statistically independent configurations should flip the absolute gain
+positive.  We re-simulated ten proteins for four times longer with twenty times
+denser output ($2\times10^{6}$ steps saved every 250, against $5\times10^{5}$
+every 5000) and repeated the identical analysis in three arms
+(Table~\ref{tab:cl-dense}).
+
+\begin{table}[htbp]
+\centering
+\caption{Three arms on the same ten proteins.  The middle arm decimates the
+long run back to the \emph{original} 5000-step spacing, so its time resolution
+is unchanged and only the number of independent configurations differs.}
+\label{tab:cl-dense}
+\begin{tabular}{lrrrrr}
+\toprule
+Condition & Frames & Spacing & Gain vs.\ $Q$-only & Null & Fraction $>0$ \\
+\midrule
+Original     & 100   & 5000 & $+0.0164$ & $-0.0549$ & 0.90 \\
+Long-sparse  & 400   & 5000 & $\mathbf{+0.0628}$ & $-0.0299$ & \textbf{1.00} \\
+Long-dense   & 8000  & 250  & $\mathbf{+0.0842}$ & $-0.0022$ & \textbf{1.00} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Long-sparse is the informative arm: identical time resolution to the original,
+four times the independent configurations, and the gain rises $3.8\times$ and
+becomes positive in every protein ($+0.0464$, 10/10, $p = 0.00195$).  The
+constraint was sampling, not method.  These ten proteins were selected as small
+and strongly fluctuating, so their absolute levels are optimistic relative to
+the 480-protein population; the paired comparisons are unaffected.
+
+\subsection{Dense sampling licenses a kinetic reading}
+\label{sec:cl-kinetic}
+
+In the original trajectories the lag-1 autocorrelation of contact state
+averages $0.009$ ($Q$: $0.130$): the 5000-step save interval exceeds the
+correlation time, the frames are near-independent equilibrium samples, and no
+$t \rightarrow t+1$ statement is licensed.  We measured this per protein rather
+than assuming it, and made no kinetic claim on that data.
+
+At 250-step spacing the contact lag-1 autocorrelation rises to $0.539$.  A
+lagged analysis---predicting the target $k$ frames \emph{ahead} of the inputs,
+with predictor selection lagged identically---therefore becomes meaningful
+(Table~\ref{tab:cl-lag}).
+
+\begin{table}[htbp]
+\centering
+\caption{Predicting a contact ahead of its inputs, ten densely sampled
+proteins.}
+\label{tab:cl-lag}
+\begin{tabular}{rlrrl}
+\toprule
+Lag & Horizon & Gain vs.\ $Q$-only & Null & Real $>$ null \\
+\midrule
+0 & same frame  & $+0.0842$ & $-0.0022$ & 10/10 ($p = 1.95\times10^{-3}$) \\
+1 & 250 steps   & $+0.0593$ & $-0.0023$ & 10/10 ($p = 1.95\times10^{-3}$) \\
+2 & 500 steps   & $+0.0431$ & $-0.0024$ & 10/10 ($p = 1.95\times10^{-3}$) \\
+4 & 1000 steps  & $+0.0288$ & $-0.0021$ & 10/10 ($p = 1.95\times10^{-3}$) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Predictive power decays roughly exponentially, with a relaxation of
+$\approx 900$ steps, but remains positive in every protein a thousand
+integration steps ahead.  The state of three neighbouring contacts now carries
+information about a target contact's future state beyond what the folding level
+supplies---a statement about mechanism rather than only about the equilibrium
+ensemble, and the first such statement this framework has been entitled to
+make.

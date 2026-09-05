@@ -63,7 +63,18 @@
 	standard covariation analysis.  Flipped (forbidden-combination) circuits
 	generalise across proteins with 98.3\% specificity.  Gray-code adjacency is
 	enriched among native contacts ($1.178\times$, $p < 10^{-77}$), and conserved
-	column pairs are contact-enriched by $3.2\times$.  All software, formal
+	column pairs are contact-enriched by $3.2\times$.  We further prove an
+	information ceiling: any predictor that is a function of a residue-level
+	feature map is bounded by that map's cell purity, which on consensus residue
+	identity and separation is prec@$L/5 = 0.193$---so the trained circuit already
+	attains $93\%$ of what its inputs permit, and the gap to direct-coupling
+	analysis is informational rather than algorithmic.  Redirecting the same
+	minimisation from sequence to \emph{conformational state} escapes that bound:
+	across 480 structure-based-model trajectories the extracted rules link
+	contacts that are $12.5\times$ enriched for contact-map adjacency
+	($p < 10^{-79}$), recovering local folding cooperativity, and under dense
+	re-sampling they predict a contact's state a thousand integration steps ahead
+	in every protein tested.  All software, formal
 	proofs, and result files are publicly available.
 \end{abstract}
 
@@ -77,13 +88,16 @@
 \input{Nature_Sections/07-results-transfer}
 \input{Nature_Sections/08-results-gray-fusion}
 \input{Nature_Sections/09-results-complete-circuit}
+\input{Nature_Sections/09b-results-ceiling}
 \input{Nature_Sections/10-results-reconstruction-negative}
+\input{Nature_Sections/16-results-contact-logic}
 \input{Nature_Sections/11-discussion}
 % ── Methods ──
 \input{Nature_Sections/12-methods-data}
 \input{Nature_Sections/13-methods-encoding}
 \input{Nature_Sections/14-methods-circuit}
 \input{Nature_Sections/15-methods-eval}
+\input{Nature_Sections/16-methods-contact-logic}
 % ── References ──
 \bibliographystyle{unsrtnat}
 \bibliography{bib/references}

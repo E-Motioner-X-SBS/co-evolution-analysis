@@ -1,0 +1,124 @@
+% ═══ Results: The Information Ceiling of a Feature Class ═══
+\section{The Information Ceiling of a Feature Class}
+\label{sec:res-ceiling}
+
+Section~\ref{sec:res-transfer} reports that the universal circuit transfers to
+held-out proteins at prec@$L/5 = 0.179$ against published DCA's $0.723$, and
+Section~\ref{sec:res-reconstruction-negative} that this is insufficient for
+template-free reconstruction.  Both are empirical statements about one method.
+This section replaces them with a bound that holds for \emph{every} method
+built on the same features, and thereby identifies where the shortfall lives.
+
+The bound rests on an observation that is trivial and decisive: a circuit whose
+inputs are a feature vector is a function of that feature vector, and therefore
+cannot distinguish two candidate pairs that share it.
+
+\begin{definition}[Cell predictor]
+\label{def:cellpredictor}
+Let $P$ be the candidate residue pairs of a protein, $y : P \to \{0,1\}$ the
+native-contact labels, and $\varphi : P \to \mathcal{C}$ a feature map into a
+finite set of \emph{cells}.  A \emph{cell predictor} is any
+$\rho : \mathcal{C} \to \mathbb{R}$, inducing the score $\rho \circ \varphi$.
+Pairs sharing a cell receive equal scores; their relative order is fixed by a
+tie-break which carries no information about $y$ and is therefore modelled as
+uniformly random.
+\end{definition}
+
+Every circuit in this paper is a cell predictor: a sum-of-products over
+$\varphi$ is a $\{0,1\}$-valued function of the cell, and the smoothed
+cell-rate scoring used in practice is a real-valued one.  The class of cell
+predictors is strictly larger than the class of circuits, so a bound over it
+binds the circuits a fortiori.
+
+\begin{theorem}[Ceiling]
+\label{thm:ceiling}
+Write $n_c = |\varphi^{-1}(c)|$ and $r_c$ for the empirical contact rate in
+cell $c$.  For any cell predictor $\rho$ and any $k$,
+\[
+\mathbb{E}\bigl[\operatorname{prec@}k(\rho \circ \varphi)\bigr]
+\;\leq\; \frac{1}{k}\max\Bigl\{ \textstyle\sum_{c} t_c\, r_c \;:\;
+0 \le t_c \le n_c,\ \sum_c t_c = k \Bigr\},
+\]
+the expectation taken over the tie-break, with the maximum attained by filling
+cells in decreasing order of $r_c$.
+\end{theorem}
+
+\begin{proof}
+Fix $\rho$.  Its induced ranking visits cells in decreasing $\rho$-order; write
+$t_c$ for the number of pairs drawn from cell $c$ among the top $k$, so
+$0 \le t_c \le n_c$ and $\sum_c t_c = k$.  Within a cell the tie-break is
+uniform, so the $t_c$ selected pairs form a uniformly random $t_c$-subset of
+$\varphi^{-1}(c)$ and the expected number of contacts drawn from $c$ is
+$t_c r_c$ by linearity of expectation; hence
+$\mathbb{E}[\operatorname{prec@}k] = k^{-1}\sum_c t_c r_c$.  Varying $\rho$
+varies only the cell order, hence only the allocation $(t_c)$, which ranges
+over prefix-filling allocations; relaxing to all allocations satisfying the
+stated constraints can only increase the maximum.  That relaxation is a
+fractional knapsack with unit weights, whose optimum sorts cells by $r_c$
+descending---and this optimum is itself prefix-filling, so the relaxation is
+tight.
+\end{proof}
+
+\begin{corollary}
+\label{cor:nomethod}
+No choice of minimisation algorithm, labelling threshold, don't-care policy,
+cover-selection rule, or Boolean representation can raise the expected
+precision of a predictor above the bound of Theorem~\ref{thm:ceiling} for its
+feature map.  Improvement requires refining $\varphi$.
+\end{corollary}
+
+\begin{proof}
+Each listed choice determines which cell predictor $\rho$ is obtained; none
+changes $\varphi$.  The bound is uniform over $\rho$.
+\end{proof}
+
+Table~\ref{tab:ceiling} evaluates the bound on all 150 PSICOV targets at
+$k = L/5$, with cells scored by their own pooled empirical contact rate---the
+feature class handed the test labels.
+
+\begin{table}[htbp]
+\centering
+\caption{Achievable prec@$L/5$ per feature map, 150 PSICOV targets.
+Consensus residue codes; separation bins $[6,11)$, $[11,21)$, $[21,31)$,
+$[31,\infty)$; mutual-information quartile computed per protein.}
+\label{tab:ceiling}
+\begin{tabular}{lrr}
+\toprule
+Feature map $\varphi$ & Cells & Achievable \\
+\midrule
+residue$_i$, residue$_j$, separation, MI quartile & 6390 & 0.2412 \\
+residue$_i$, residue$_j$, separation              & 1600 & \textbf{0.1933} \\
+physicochemical group$_i$, group$_j$, separation  & 256  & 0.1418 \\
+residue$_i$, residue$_j$                          & 400  & 0.1383 \\
+Gray Hamming distance, separation                 & 24   & 0.0789 \\
+separation only                                   & 4    & 0.0598 \\
+\midrule
+\multicolumn{3}{l}{\emph{Measured on the same benchmark:}} \\
+Trained circuit, held out (Sec.~\ref{sec:res-transfer}) & & 0.179 \\
+Plain mutual information                                & & 0.097 \\
+Published DCA~\cite{jones2012}                          & & 0.723 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Three readings follow.  \textbf{The machinery is saturated}: the trained
+circuit reaches $0.179$ against an achievable $0.1933$, or $93\%$ of its
+feature class's ceiling, so by Corollary~\ref{cor:nomethod} the total remaining
+headroom from every possible improvement in Boolean method is at most about
+$8\%$ relative.  \textbf{The shortfall is informational}: the ceiling itself
+sits $3.7\times$ below published DCA, and no Boolean construction on these
+features can close that gap.  \textbf{Coarsening chemistry costs information}:
+the eight-group physicochemical partition has a \emph{lower} ceiling than raw
+residue identity, as it must, since merging cells can only reduce the bound.
+Chemical classes buy interpretability, not accuracy.
+
+This reframes Section~\ref{sec:res-reconstruction-negative}.  The failure to
+meet the reconstruction criterion is not a deficiency of our minimiser or our
+labelling; it is a property of consensus residue identity as an input.  Since
+the bound depends only on the partition, the only lever is a finer partition
+separating contacting from non-contacting pairs \emph{within} existing cells.
+Adding a single crudely binned column statistic already lifts the ceiling from
+$0.1933$ to $0.2412$, whereas richer residue vocabularies lift nothing---which
+is the formal counterpart of the rank-fusion result of
+Section~\ref{sec:res-gray-fusion}, where combining the circuit with continuous
+DCA outperforms either alone.
