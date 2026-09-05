@@ -59,6 +59,7 @@ Paper (SWISS-MODEL server & pipeline):
 | MSA format | one gapped sequence per line, no headers; filename = PDB id (e.g., `1ctfA.aln`) |
 | PDB format | Modeller-"repaired" native structures; **blank chain column** (single-chain); our parser handles it |
 | Benchmark number | published mean top-L/5 long-range precision **0.44** (PSICOV); metaPSICOV 0.54 |
+> **CORRECTION (Aug 22, 2026):** this figure is a misattribution. Jones et al. 2012 Table 1 gives PSICOV top-L/5 ≈ **0.73** (sep>6) / ≈0.68 (>23); our re-measurement of the shipped con files = 0.727 / 0.640 (see 3D_Structure_Analysis/11 §9-S1). The 0.44 value corresponds to top-L / MIp-B&vN rows.
 
 ## 3. Pfam full alignments (PF00072/00595/00071)
 

@@ -1,5 +1,7 @@
 # 00 — Understanding: Multi-Dataset Validation of the K-map / Co-evolution Pipeline
 
+> **CORRECTION (Aug 22, 2026):** the 'PSICOV published L/5 = 0.44' quoted below is a misattribution; the paper's PSICOV L/5 ≈ 0.73 (we reproduce 0.727). See 11_Kmap_Structure_Encoding.md §9-S1.
+
 ## The task (user's words, restated)
 1. Download ALL 6 validation datasets COMPLETELY (no segments): PSICOV150, Pfam (PF00072/PDZ/Ras), EVmutation20, unit-test sets, DeepMSA CASP12/13, GPCRdb.
 2. Run the FULL co-evolution analysis (all 23 Python scripts from the co-evolution-analysis repo) on each dataset, in an INDEPENDENT new repository (NOT datasets/), with `data/` (per-dataset folders) and `results/` (per-dataset per-script outputs).

@@ -101,3 +101,20 @@ PDB parser updated: strict/tolerant dual mode for inconsistent residue names
 3. Rank-fusion optimisation (learned fusion weights vs simple ranksum)
 4. Apply K-map prior to AlphaFold MSA features
 5. Investigate GPCR-specific transfer advantage
+
+---
+## NATURE PAPER + CROSS-DATASET (Aug 22, final)
+- Nature_Main.tex: 9 pages, 0 errors, 0 warnings. Concise Nature-style format.
+  Sections: Intro → Related Work → Theory (Gray/K-map+QM/Info+DCA/Lean) →
+  Results (Transfer/Gray+Fusion/Complete Circuit/Reconstruction+Negatives) →
+  Discussion → Methods (Data/Encoding/Circuit/Eval) → References
+- PATH J cross-dataset: PSICOV-trained circuits tested on GPCRdb + unit tests.
+  Circuit transfers to GPCRs (5ht1a circH prec 0.027 = 15.7× base, AUC 0.698)
+  but not small globular proteins (DHFR, 1whzA: AUC ≈ 0.5).
+- Reviewer response experiments M1-M7 completed:
+  M2 conservation control: signal persists without cons/cons pairs
+  M3 separation ablation: identity carries signal independently of sep
+  M4 MIp = raw MI at consensus level
+  M6 no homologous pairs in PSICOV150 (max Jaccard 0.029)
+  M7 rank-fusion Cohen's d = 0.31 (small but significant)
+- Both Overleaf and GitHub updated with all files.

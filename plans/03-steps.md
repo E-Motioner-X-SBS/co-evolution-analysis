@@ -1,5 +1,7 @@
 # 03 — Steps: The Rigid, Looping Execution Plan
 
+> **CORRECTION (Aug 22, 2026):** the 'PSICOV published L/5 = 0.44' quoted below is a misattribution; the paper's PSICOV L/5 ≈ 0.73 (we reproduce 0.727). See 11_Kmap_Structure_Encoding.md §9-S1.
+
 Master to-do lives in the session tool (todowrite); this file is the ground truth of WHAT and HOW.
 Phases are executed in order; the VERIFICATION LOOP (Phase 8) may send us back to any phase.
 

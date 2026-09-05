@@ -1,5 +1,7 @@
 # 01 — Research: Validation Dataset Sources (all URLs verified live, Aug 8 2026)
 
+> **CORRECTION (Aug 22, 2026):** the 'PSICOV published L/5 = 0.44' quoted below is a misattribution; the paper's PSICOV L/5 ≈ 0.73 (we reproduce 0.727). See 11_Kmap_Structure_Encoding.md §9-S1.
+
 Two independent research agents + my own spot-checks (curl HEAD/partial + full fetch of small files).
 
 | # | Dataset | Paper | Verified URL(s) | Format | Depth | Length | Structures | Benchmark ground truth |

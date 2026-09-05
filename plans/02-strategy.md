@@ -1,5 +1,7 @@
 # 02 — Strategy: Multi-Dataset Validation inside co-evolution-analysis
 
+> **CORRECTION (Aug 22, 2026):** the 'PSICOV published L/5 = 0.44' quoted below is a misattribution; the paper's PSICOV L/5 ≈ 0.73 (we reproduce 0.727). See 11_Kmap_Structure_Encoding.md §9-S1.
+
 ## User decision (binding)
 Everything lives INSIDE `/store/shuvam/E-motioner-X-SBS/co-evolution-analysis/`:
 - `data/<dataset>/` — downloads + converted FASTA + metadata + structures
