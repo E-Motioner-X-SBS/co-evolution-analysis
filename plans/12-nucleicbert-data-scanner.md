@@ -66,3 +66,21 @@ User provided https://github.com/KIT-MBS/NucleicBERT. Tasks:
 - `scripts/build_rna_database.py` — catalog builder
 - `scripts/corpus_tools.py` — split/sample/stats utilities
 - `scripts/eldors_to_parquet.py` — training-ready ETL (verified 2.5k seq/s, T→U)
+
+## Addendum (RNA-DB-2)
+
+| Item | Result |
+|---|---|
+| elDORS exact counts | 1,323,715,880 seqs total (all 20 chunks), matches 1.32B advertised |
+| 2M-seq census | alphabet A/T/G/C/N only; len 10-4096 (median 730, mean 1026) |
+| Starter pack | data/parquet/eldors_starter: 10M seqs, 40 shards, 2.02GB |
+| RNA3DB extraction | 15,441 CIF chain structures (23GB) in rna3db_extracted/ |
+| gRNAde RNASolo raw | 14,369 PDB structure files (HF chaitjo/gRNAde_datasets) |
+| pdb_seqres | all PDB seqres FASTA (66.9MB) for sequence<->structure joins |
+| VERIFICATION.md | complete audit trail in data/rna_training_db/ |
+| Resilient downloads | scripts/resilient_dl.sh watchdogs for RNAcentral + SpliceBERT |
+
+### Model-design data guidance (from census)
+- Tokenizer: 5 symbols suffice for elDORS (ACGTN); T->U mapping at load time
+- Context: 4096 covers everything; 2048 covers median+mean; NucleicBERT's 1024 truncates ~40-50%
+- Length outliers: 0.03% below 20nt; recommend min-length filter >= 16 or 20

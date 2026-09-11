@@ -337,6 +337,27 @@ SOURCES = [
         "2026-09",
         "parquet/**/*.parquet",
     ),
+    (
+        "gRNAde_RNASolo",
+        "structure",
+        "tertiary",
+        "RNASolo raw structures snapshot (14,369 PDB files) + processed metadata CSV "
+        "(Rfam labels, equivalence classes, clusters, RMSDs)",
+        "https://huggingface.co/datasets/chaitjo/gRNAde_datasets",
+        "see repo",
+        "2023-11",
+        "benchmarks/structure/grnade/*",
+    ),
+    (
+        "PDB_seqres",
+        "structure",
+        "annotation",
+        "All PDB seqres sequences (FASTA) for sequence<->structure joins",
+        "https://files.rcsb.org/pub/pdb/derived_data/",
+        "PDB terms",
+        "weekly",
+        "structure_aux_pdb_seqres.txt.gz",
+    ),
 ]
 
 SPLITS = [

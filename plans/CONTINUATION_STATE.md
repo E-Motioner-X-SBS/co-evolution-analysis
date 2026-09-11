@@ -150,3 +150,32 @@ PDB parser updated: strict/tolerant dual mode for inconsistent residue names
 - Merge count_results/*.txt into catalog when DONE file appears; rebuild catalog
 - Consider running full parquet ETL (8 parallel) if disk/time allowed
 - Commit all new files to git (data dir may need .gitignore review: do NOT commit 182GB!)
+
+---
+## RNA-DB-2 SESSION UPDATE (Sep 11, 2026 — later)
+
+### What changed since RNA-DB-1
+| Item | Status |
+|---|---|
+| elDORS exact counts | ✅ DONE: 1,323,715,880 sequences (all 20 chunks counted, matches 1.32B) |
+| 2M-sequence census | ✅ 5-symbol alphabet (A27.98/T26.81/G22.80/C22.10/N0.31), len 10-4096, median 730 |
+| Starter parquet pack | ✅ 10M seqs, 40 shards, 2.02GB (chunks 001-008, 1.25M each) |
+| RNA3DB mmcifs | ✅ extracted 15,441 CIF chain structures (23GB) |
+| Catalog | ✅ rebuilt: 33,096 files / 218.9GB / exact counts merged |
+| VERIFICATION.md | ✅ audit trail written |
+| Git | ✅ commits e2952f7 + 57595fe pushed to main |
+| RNAcentral | 🔄 4.1/10.9GB (EBI, ~0.5MB/s, resumable via curl -C -) |
+| SpliceBERT | 🔄 3.2/8.6GB (Zenodo, slow, resumable) |
+| gRNAde RNASolo raw | 🔄 downloading (HF fast) |
+
+### Next session priorities
+1. Verify RNAcentral + SpliceBERT completed (check .done markers / file sizes)
+2. If incomplete, resume: `curl -C -` against EBI/Zenodo URLs in the acquisition scripts
+3. Rebuild catalog after downloads complete (build_rna_database.py is idempotent)
+4. Optional: full-corpus parquet conversion (~528GB, ~5300 shards; disk check required)
+5. Optional: download MARS ncRNA subset for NucleicBERT-parity experiments
+6. Next phase: model design (tokenizer from census, context length from length dist)
+
+### Disk budget
+- Free: ~660GB at last check; full parquet conversion would use ~528GB (tight)
+- elDORS raw (1.2TB) / MARS (1.57TB) do NOT fit — do not attempt without expansion
