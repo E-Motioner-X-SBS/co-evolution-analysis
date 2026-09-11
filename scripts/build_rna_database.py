@@ -335,7 +335,7 @@ SOURCES = [
         "local",
         "n/a",
         "2026-09",
-        "parquet/eldors_v1_demo/*.parquet",
+        "parquet/**/*.parquet",
     ),
 ]
 
