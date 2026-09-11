@@ -179,3 +179,14 @@ PDB parser updated: strict/tolerant dual mode for inconsistent residue names
 ### Disk budget
 - Free: ~660GB at last check; full parquet conversion would use ~528GB (tight)
 - elDORS raw (1.2TB) / MARS (1.57TB) do NOT fit — do not attempt without expansion
+
+### RNA-DB-2 FINAL STATE (Sep 11, 2026 evening)
+- Git: commits e2952f7, 57595fe, 7e3be13 on main (pushed)
+- Catalog: 47,469 files / 245.7GB / 25 sources; loader API verified
+- COMPLETE: elDORS 1.324B seqs, gRNAde 14,369 PDBs, RNA3DB 15,441 CIFs,
+  all benchmarks, Rfam 15.1, BGSU nrlist+motifs, PDB seqres, starter pack (10M parquet)
+- IN FLIGHT (watchdogs, auto-resume until byte-complete):
+  - RNAcentral 4.80/10.9GB (EBI) → log: data/rnacentral/*.dl.log
+  - SpliceBERT 3.83/8.64GB (Zenodo) → log: data/benchmarks/splicing/splicebert/*.dl.log
+  - On completion: `.done` markers appear; then rerun build_rna_database.py
+- Next session: verify .done markers; rebuild catalog; commit; begin model design
