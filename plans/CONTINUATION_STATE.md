@@ -118,3 +118,35 @@ PDB parser updated: strict/tolerant dual mode for inconsistent residue names
   M6 no homologous pairs in PSICOV150 (max Jaccard 0.029)
   M7 rank-fusion Cohen's d = 0.31 (small but significant)
 - Both Overleaf and GitHub updated with all files.
+
+---
+## RNA TRAINING DATABASE CAMPAIGN (Sep 9-11, 2026)
+### Session Summary
+| Field | Value |
+|-------|-------|
+| Session # | RNA-DB-1 |
+| Phase | IMPLEMENT (acquisition + catalog) |
+| What I did | Scanned NucleicBERT (KIT-MBS) repo + paper + supp for all training sources; dispatched 3 parallel research agents (structure DBs, sequence DBs, benchmarks); verified MARS/elDORS; downloaded elDORS_v1 (182.4GB, SHA-verified), Rfam 15.1, BGSU nrlist 4.56, RNA3DB, CASP15/16, RNAGym, NABench, Spliceator, G3PO, RNA-Puzzles, secondary-structure suite; built catalog.sqlite + loader API + split convention + ETL |
+| What worked | elDORS S3 anonymous HTTPS (20 chunks parallel, 5 streams, all SHA256 OK); huggingface_hub direct file fetch; RCSB mmCIF per-ID; BGSU CSV cutoffs; motif atlas via GET |
+| What failed | Ops bug: bash `cd X && (A) & (B)` precedence sent files to wrong dir (fixed by mv); Zenodo+EBI slow (~0.4-0.5MB/s); RNA3DB asset HEAD hangs (use GET -L) |
+| Errors remaining | RNAcentral download in progress (1.83/10.9GB); SpliceBERT in progress (1.32/8.6GB); elDORS exact counts running (8 workers) |
+| Next priorities | 1) finish RNAcentral + SpliceBERT; 2) merge elDORS counts into catalog; 3) optional full parquet conversion; 4) species/kingdom stratified subsets; 5) connect to model design (tokenizer, context length) |
+| Blockers | none (downloads are time-bound, not blocked) |
+| Audit status | NOT_STARTED |
+
+### File Manifest (new)
+| File | Status |
+|------|--------|
+| data_inventory/00-MASTER-INVENTORY.md | current |
+| plans/12-nucleicbert-data-scanner.md | current (acquisition log appended) |
+| data/rna_training_db/{catalog.sqlite,MANIFEST.json,README.md,rna_db.py} | current |
+| data/rna_training_db/splits/pretrain_split.json | current |
+| data/rna_training_db/samples/eldors_001_first5000.fasta | current |
+| scripts/{acquire_benchmarks,build_rna_database,corpus_tools,eldors_to_parquet}.py | current |
+| data/elDORS_v1/ (20 chunks + manifest + counts) | 182.36GB verified |
+
+### Continuation Prompt Hints
+- Check RNAcentral + SpliceBERT download completion; if slow, consider alternatives
+- Merge count_results/*.txt into catalog when DONE file appears; rebuild catalog
+- Consider running full parquet ETL (8 parallel) if disk/time allowed
+- Commit all new files to git (data dir may need .gitignore review: do NOT commit 182GB!)

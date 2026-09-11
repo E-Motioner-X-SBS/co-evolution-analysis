@@ -49,19 +49,15 @@ Thumbs.db
 !.env.example
 
 # Derived validation artifacts (reproducible via scripts/) — not tracked
-/data/
+/data/*
+# ... except the small queryable catalog + docs for the RNA training database
+!/data/rna_training_db/
 /results/
 
 # PAPER build artifacts and backups
 PAPER/**/*.bak
-PAPER/**/*.bak0
-PAPER/**/*.bak1
-PAPER/**/*.bak2
-PAPER/**/*.bak10
-PAPER/**/*.bak11
-PAPER/**/*.bak12
-PAPER/**/*.bak13
-PAPER/**/*.bak14
+PAPER/**/*.bak[0-9]
+PAPER/**/*.bak[0-9][0-9]
 PAPER/overleaf_pull/
 PAPER/main.aux
 PAPER/main.bbl
@@ -69,3 +65,8 @@ PAPER/main.blg
 PAPER/main.log
 PAPER/main.out
 PAPER/main.toc
+PAPER/Nature_Main.aux
+PAPER/Nature_Main.bbl
+PAPER/Nature_Main.blg
+PAPER/Nature_Main.log
+PAPER/Nature_Main.out
