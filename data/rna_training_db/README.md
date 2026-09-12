@@ -149,3 +149,23 @@ When using these resources, cite the primary sources:
 - RNAGym: Marks & Das labs 2025; NABench 2025
 - Spliceator: Scalzitti et al. 2021; SpliceBERT: Chen et al. 2024;
   G3PO: Scalzitti et al. 2020
+
+## 3D structural data summary
+
+| Level | Count |
+|---|---|
+| Chain-level structures (union) | 27,452 |
+| **Unique sequences with 3D data** | **6,661** |
+| PDB entries covered | 6,846 |
+| Non-redundant BGSU classes (all / ≤4Å / ≤2.5Å / ≤2Å) | 5,161 / 3,953 / 1,410 / 604 |
+| RNA3DB documented ML split (train/test) | 1,539 / 660 chains |
+| gRNAde ML clusters | 4,223 |
+
+Quality tiers (RNA3DB filtered set of 15,441 chains): see
+`3d_data_statistics.json`. For contact-map training the practical window is
+length 32-1024 nt with a resolution filter: ~2,370 (length only) to ~2,884
+(≤4Å) unique sequences; the strict tier (≤2.5Å) is 673.
+
+**Comparison**: NucleicBERT trained its 3D tasks on ~875 structures total
+(408 NucleoSeeker + 467 BGSU-filtered). Our collection provides ~6,661 unique
+sequences (7.6x) and 27,452 chains (31x).
