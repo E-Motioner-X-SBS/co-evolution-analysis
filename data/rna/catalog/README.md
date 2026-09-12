@@ -18,32 +18,23 @@ resources acquired for the future RNA foundation model. Built 2026-09/10.
 ## Directory layout
 
 ```
-data/
-├── elDORS_v1/            20 x ~9GB clustered sequence chunks (182.4GB total)
-│   ├── elDORS_v1_0XX.fasta.gz
-│   ├── elDORS_v1_manifest.sha256    SHA256 for all chunks
-│   └── seq_counts.txt               per-chunk sequence counts
-├── rnacentral/           rnacentral_active.fasta.gz (10.9GB)
-├── rfam/                 Rfam 15.1: seed, CMs, 3D seeds, full region, PDB map
-├── bgsu_nrlist/          NR equivalence classes at 7 resolution cutoffs
-├── bgsu_motifs/          IL + HL motif atlas 4.12 (CSV+JSON)
-├── benchmarks/
-│   ├── secondary_structure/  ArchiveII, bpRNA (full/spot/new), RNAStrAlign
-│   ├── tertiary/             RNA-Puzzles, CASP15, CASP16 (mmCIF)
-│   ├── fitness/              RNAGym (zip + repo), NABench
-│   ├── splicing/             Spliceator, SpliceBERT, G3PO
-│   └── structure/            RNA3DB (jsons, cmscans, mmcifs)
-└── rna_training_db/      ← THIS catalog
-    ├── catalog.sqlite    queryable metadata (sources, files, splits)
-    ├── MANIFEST.json     machine-readable inventory
-    └── rna_db.py         Python loader API
+data/rna/
+├── catalog/            ← THIS catalog (sqlite + manifest + docs)
+├── sequences/          elDORS_v1 (20 chunks) + rnacentral
+├── structures/         databases/ (rna3db, grnade_rnasolo)
+│                       blind_tests/ (casp15, casp16, rna_puzzles)
+│                       indices/ (bgsu nrlist, motifs, rfam map, pdb seqres)
+├── families/           Rfam 15.1
+├── benchmarks/         secondary_structure/, fitness/, splicing/
+├── derived/            parquet_starter/, parquet_demo/
+└── exploration/        figures/ + reports/
 ```
 
 ## Querying the catalog
 
 ```python
 import sqlite3
-con = sqlite3.connect("data/rna_training_db/catalog.sqlite")
+con = sqlite3.connect("data/rna/catalog/catalog.sqlite")
 
 # All sources with sizes
 con.execute("""
@@ -66,7 +57,7 @@ con.execute("SELECT name, purpose, description FROM splits").fetchall()
 ```python
 from rna_db import RNADatabase
 
-db = RNADatabase("data/rna_training_db/catalog.sqlite")
+db = RNADatabase("data/rna/catalog/catalog.sqlite")
 
 db.sources()                       # list of source dicts
 db.files("elDORS_v1")              # files for a source
@@ -96,12 +87,12 @@ Parquet shards with columns `(id, sequence)`:
 ```bash
 # demo run (verified: 100k seqs -> 2 shards, ~2.5k seq/s single-threaded)
 python3 scripts/eldors_to_parquet.py --chunk 001 --limit 100000 \
-    --shard-size 50000 --out data/parquet/eldors_v1_demo --t2u
+    --shard-size 50000 --out data/rna/derived/parquet_demo --t2u
 
 # full corpus (run 8 chunks in parallel; ~7 h/chunk single-threaded)
 for i in 001 002 ... 020; do
   python3 scripts/eldors_to_parquet.py --chunk $i \
-      --out data/parquet/eldors_v1 --t2u &
+      --out data/rna/derived/parquet_full --t2u &
 done; wait
 ```
 

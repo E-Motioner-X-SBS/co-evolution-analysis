@@ -30,8 +30,8 @@ from pathlib import Path
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-DATA = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis/data")
-ELDORS = DATA / "elDORS_v1"
+DATA = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis/data/rna")
+ELDORS = DATA / "sequences" / "elDORS_v1"
 
 
 def stream_fasta(path: Path, limit: int | None):

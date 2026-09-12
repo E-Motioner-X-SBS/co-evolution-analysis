@@ -50,8 +50,14 @@ Thumbs.db
 
 # Derived validation artifacts (reproducible via scripts/) — not tracked
 /data/*
-# ... except the small queryable catalog + docs for the RNA training database
-!/data/rna_training_db/
+# ... except the small metadata/docs of the RNA data repository:
+# un-ignore the rna meta-tree, then re-ignore its bulk subdirectories
+!/data/rna/
+/data/rna/sequences/
+/data/rna/structures/
+/data/rna/benchmarks/
+/data/rna/families/
+/data/rna/derived/
 /results/
 
 # PAPER build artifacts and backups

@@ -84,3 +84,40 @@ User provided https://github.com/KIT-MBS/NucleicBERT. Tasks:
 - Tokenizer: 5 symbols suffice for elDORS (ACGTN); T->U mapping at load time
 - Context: 4096 covers everything; 2048 covers median+mean; NucleicBERT's 1024 truncates ~40-50%
 - Length outliers: 0.03% below 20nt; recommend min-length filter >= 16 or 20
+
+## DATA REORGANIZATION (2026-09-12)
+
+### New structure
+```
+data/
+├── rna/                    ← RNA collection (256.6 GB, 47,471 files)
+│   ├── README.md           master index
+│   ├── catalog/            catalog.sqlite + docs + samples + splits
+│   ├── sequences/          elDORS_v1 (20 chunks) + rnacentral
+│   ├── structures/         databases/ + blind_tests/ + indices/
+│   ├── families/           Rfam 15.1
+│   ├── benchmarks/         secondary_structure/ + fitness/ + splicing/
+│   ├── derived/            parquet_starter (10M seqs) + parquet_demo
+│   └── exploration/        figures/ (8 PNGs) + reports/ (summary + stats + CSV)
+└── protein_legacy/         old protein K-map campaign data (moved, not deleted)
+```
+
+### Decisions
+- Moved (not copied) all RNA data into `data/rna/` and protein campaign data
+  into `data/protein_legacy/` (same filesystem, instant rename; nothing deleted).
+- Scripts updated: build_rna_database.py (DATA + DB_DIR + all globs),
+  corpus_tools.py, eldors_to_parquet.py.
+- .gitignore: `/data/*` with `!/data/rna/` plus re-ignores for the bulk
+  subdirs; tracks only README + catalog + exploration (small, valuable).
+- DEVIATION NOTE: a stray `data/rna/rna_training_db/` directory (duplicate
+  builder output created before DB_DIR was updated) was removed with rm -rf
+  after verifying its contents were regenerable and identical in schema.
+  This is the only non-quarantined removal this session; it contained only
+  builder-generated files (catalog.sqlite, MANIFEST.json), fully reproducible
+  via `python3 scripts/build_rna_database.py`.
+
+### Exploration findings (→ plans/14 and exploration report)
+- elDORS chunks are source-partitioned into 3 regimes (read-length ~151nt,
+  assembled medium, long transcripts 2200+nt); GC 40.7-61.4%.
+- 3D: median resolution 3.10 Å; cryo-EM 62%/X-ray 38%; 100 Rfam families.
+- All 8 exploration figures + JSON stats + per-chunk CSV generated.

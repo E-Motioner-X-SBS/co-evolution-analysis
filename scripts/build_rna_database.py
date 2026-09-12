@@ -20,8 +20,8 @@ import time
 from pathlib import Path
 
 ROOT = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis")
-DATA = ROOT / "data"
-DB_DIR = DATA / "rna_training_db"
+DATA = ROOT / "data" / "rna"
+DB_DIR = DATA / "catalog"
 DB_DIR.mkdir(parents=True, exist_ok=True)
 
 
@@ -115,7 +115,7 @@ SOURCES = [
         "https://registry.opendata.aws/eldors_v1/",
         "CC BY 4.0",
         "v1",
-        "elDORS_v1/elDORS_v1_*.fasta.gz",
+        "sequences/elDORS_v1/elDORS_v1_*.fasta.gz",
     ),
     (
         "RNAcentral",
@@ -125,7 +125,7 @@ SOURCES = [
         "https://rnacentral.org/",
         "CC0",
         "27",
-        "rnacentral/rnacentral_active.fasta.gz",
+        "sequences/rnacentral/rnacentral_active.fasta.gz",
     ),
     (
         "Rfam",
@@ -135,7 +135,7 @@ SOURCES = [
         "https://rfam.org/",
         "CC0",
         "15.1",
-        "rfam/Rfam*",
+        "families/rfam/Rfam*",
     ),
     (
         "BGSU_motifs",
@@ -145,7 +145,7 @@ SOURCES = [
         "https://rna.bgsu.edu/rna3dhub/motifs",
         "CC BY 4.0",
         "4.12",
-        "bgsu_motifs/*",
+        "structures/indices/bgsu_motifs/*",
     ),
     (
         "BGSU_nrlist",
@@ -155,7 +155,7 @@ SOURCES = [
         "https://rna.bgsu.edu/rna3dhub/nrlist",
         "CC BY 4.0",
         "4.56",
-        "bgsu_nrlist/*.csv",
+        "structures/indices/bgsu_nrlist/*.csv",
     ),
     (
         "BGSU_rfam_map",
@@ -165,7 +165,7 @@ SOURCES = [
         "https://rna.bgsu.edu/data/pdb_chain_to_best_rfam.txt",
         "CC BY 4.0",
         "2026-09",
-        "rfam/pdb_chain_to_best_rfam.txt",
+        "structures/indices/pdb_chain_to_best_rfam.txt",
     ),
     (
         "ArchiveII",
@@ -225,7 +225,7 @@ SOURCES = [
         "https://github.com/mmagnus/RNA-Puzzles-Standardized-Submissions",
         "see repo",
         "2026",
-        "benchmarks/tertiary/rna_puzzles_std/*",
+        "structures/blind_tests/rna_puzzles_std/*",
     ),
     (
         "RNA-Puzzles_site",
@@ -235,7 +235,7 @@ SOURCES = [
         "https://github.com/rnapuzzles/rnapuzzles.github.io",
         "see repo",
         "2026",
-        "benchmarks/tertiary/rnapuzzles_github_io/*",
+        "structures/blind_tests/rnapuzzles_github_io/*",
     ),
     (
         "CASP15_RNA",
@@ -245,7 +245,7 @@ SOURCES = [
         "https://predictioncenter.org/casp15/",
         "PDB terms",
         "2022",
-        "benchmarks/tertiary/casp15/*.cif",
+        "structures/blind_tests/casp15/*.cif",
     ),
     (
         "CASP16_RNA",
@@ -255,7 +255,7 @@ SOURCES = [
         "https://predictioncenter.org/casp16/",
         "PDB terms",
         "2024",
-        "benchmarks/tertiary/casp16/*.cif",
+        "structures/blind_tests/casp16/*.cif",
     ),
     (
         "RNAGym",
@@ -315,7 +315,7 @@ SOURCES = [
         "https://github.com/marcellszi/rna3db",
         "see repo",
         "2026-01-05",
-        "benchmarks/structure/rna3db*",
+        "structures/databases/rna3db/*",
     ),
     (
         "training_assets",
@@ -325,7 +325,7 @@ SOURCES = [
         "local",
         "n/a",
         "2026-09",
-        "rna_training_db/samples/*",
+        "catalog/samples/*",
     ),
     (
         "training_assets_parquet",
@@ -335,7 +335,7 @@ SOURCES = [
         "local",
         "n/a",
         "2026-09",
-        "parquet/**/*.parquet",
+        "derived/**/*.parquet",
     ),
     (
         "gRNAde_RNASolo",
@@ -346,7 +346,7 @@ SOURCES = [
         "https://huggingface.co/datasets/chaitjo/gRNAde_datasets",
         "see repo",
         "2023-11",
-        "benchmarks/structure/grnade/*",
+        "structures/databases/grnade_rnasolo/*",
     ),
     (
         "PDB_seqres",
@@ -356,7 +356,7 @@ SOURCES = [
         "https://files.rcsb.org/pub/pdb/derived_data/",
         "PDB terms",
         "weekly",
-        "structure_aux_pdb_seqres.txt.gz",
+        "structures/indices/pdb_seqres.txt.gz",
     ),
 ]
 
@@ -366,7 +366,7 @@ SPLITS = [
         "pretraining",
         "elDORS_v1",
         "20 chunks x ~9GB, concatenate to full 1.32B-sequence corpus",
-        "elDORS_v1/elDORS_v1_*.fasta.gz",
+        "sequences/elDORS_v1/elDORS_v1_*.fasta.gz",
     ),
     (
         "bprna_spot_train",
@@ -408,14 +408,14 @@ SPLITS = [
         "test",
         "CASP15_RNA",
         "15 experimental mmCIF target structures",
-        "benchmarks/tertiary/casp15/*.cif",
+        "structures/blind_tests/casp15/*.cif",
     ),
     (
         "casp16_targets",
         "test",
         "CASP16_RNA",
         "10 experimental mmCIF target structures",
-        "benchmarks/tertiary/casp16/*.cif",
+        "structures/blind_tests/casp16/*.cif",
     ),
 ]
 
@@ -528,8 +528,8 @@ def main() -> None:
 
     # Merge exact counts produced by background counters
     for counts_file, prefix in [
-        (DATA / "elDORS_v1" / "seq_counts.txt", "elDORS_v1/"),
-        (DATA / "rnacentral" / "seq_count.txt", "rnacentral/"),
+        (DATA / "sequences" / "elDORS_v1" / "seq_counts.txt", "sequences/elDORS_v1/"),
+        (DATA / "sequences" / "rnacentral" / "seq_count.txt", "sequences/rnacentral/"),
     ]:
         if counts_file.exists():
             for line in counts_file.read_text().splitlines():

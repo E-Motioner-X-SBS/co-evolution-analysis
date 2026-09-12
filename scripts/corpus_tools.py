@@ -21,9 +21,9 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-ROOT = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis/data")
-ELDORS = ROOT / "elDORS_v1"
-OUT = ROOT / "rna_training_db"
+ROOT = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis/data/rna")
+ELDORS = ROOT / "sequences" / "elDORS_v1"
+OUT = ROOT / "catalog"
 
 
 def split() -> None:
