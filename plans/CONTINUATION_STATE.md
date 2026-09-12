@@ -190,3 +190,26 @@ PDB parser updated: strict/tolerant dual mode for inconsistent residue names
   - SpliceBERT 3.83/8.64GB (Zenodo) → log: data/benchmarks/splicing/splicebert/*.dl.log
   - On completion: `.done` markers appear; then rerun build_rna_database.py
 - Next session: verify .done markers; rebuild catalog; commit; begin model design
+
+---
+## RNA-DATA-ORG + EXPLORATION (Sep 12, 2026)
+
+### Delivered
+- **Reorganized** all data into `data/rna/` (256.6GB): catalog/, sequences/,
+  structures/{databases,blind_tests,indices}/, families/, benchmarks/,
+  derived/, exploration/. Old protein data → `data/protein_legacy/`.
+- **Exploration**: 8 figures + reports in `data/rna/exploration/`:
+  - elDORS chunks are source-partitioned: 3 regimes (read-length ~151nt,
+    assembled medium, long transcripts >1500nt); GC 40.7–61.4%.
+  - 3D: median 3.10Å, cryo-EM 62%/X-ray 38%, 100 Rfam families.
+  - Reports: 00-EXPLORATION-SUMMARY.md, exploration_stats.json,
+    eldors_chunk_profiles.csv
+- **Scripts updated** for new paths: build_rna_database, corpus_tools,
+  eldors_to_parquet, acquire_benchmarks, explore_rna_data, explore_eldors_chunks.
+- Commits: 0a03f88 (reorg + exploration) on main.
+
+### Next session priorities
+1. Decide pretraining corpus curation: keep/downsample the ~151nt read population
+2. Model design inputs locked: vocab 5 (ACGTN), context 2048 recommended
+3. Optional: generate pseudo-label structures (teacher models) — see plans/13
+4. Optional: full-corpus parquet conversion (~528GB — disk check first)

@@ -18,9 +18,9 @@ import sys
 import time
 from pathlib import Path
 
-DATA = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis/data/benchmarks")
+DATA = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis/data/rna")
 DATA.mkdir(parents=True, exist_ok=True)
-LOG = DATA / "download.log"
+LOG = DATA / "benchmarks" / "acquisition.log"
 
 
 def log(msg: str) -> None:
@@ -114,35 +114,35 @@ def main() -> int:
     results["archiveii"] = hf_file(
         "multimolecule/archiveii",
         "test.parquet",
-        DATA / "secondary_structure/archiveii",
+        DATA / "benchmarks/secondary_structure/archiveii",
     )
     for split in ("train", "validation", "test"):
         results[f"bprna_spot_{split}"] = hf_file(
             "multimolecule/bprna-spot",
             f"{split}.parquet",
-            DATA / "secondary_structure/bprna_spot",
+            DATA / "benchmarks/secondary_structure/bprna_spot",
         )
     results["rnastralign"] = hf_file(
-        "rouskinlab/RNAstralign", "data.json", DATA / "secondary_structure/rnastralign"
+        "rouskinlab/RNAstralign", "data.json", DATA / "benchmarks/secondary_structure/rnastralign"
     )
     results["bprna_new"] = hf_file(
         "multimolecule/bprna-new",
         "test.parquet",
-        DATA / "secondary_structure/bprna_new",
+        DATA / "benchmarks/secondary_structure/bprna_new",
     )
     results["bprna_full"] = hf_file(
-        "rouskinlab/bpRNA-1m", "data.json", DATA / "secondary_structure/bprna_full"
+        "rouskinlab/bpRNA-1m", "data.json", DATA / "benchmarks/secondary_structure/bprna_full"
     )
 
     # 2. Tertiary benchmarks
     log("=== 2. TERTIARY / RNA-PUZZLES / CASP ===")
     results["rna_puzzles_std"] = git_clone(
         "https://github.com/mmagnus/RNA-Puzzles-Standardized-Submissions",
-        DATA / "tertiary/rna_puzzles_std",
+        DATA / "structures/blind_tests/rna_puzzles_std",
     )
     results["rna_puzzles_main"] = git_clone(
         "https://github.com/rnapuzzles/rnapuzzles.github.io",
-        DATA / "tertiary/rnapuzzles_github_io",
+        DATA / "structures/blind_tests/rnapuzzles_github_io",
     )
 
     casp15 = [
@@ -190,27 +190,27 @@ def main() -> int:
     curl(
         "https://marks.hms.harvard.edu/rnagym/fitness_prediction/"
         "fitness_processed_assays.zip",
-        DATA / "fitness/rnagym/fitness_processed_assays.zip",
+        DATA / "benchmarks/fitness/rnagym/fitness_processed_assays.zip",
     )
     results["rnagym_repo"] = git_clone(
-        "https://github.com/MarksLab-DasLab/RNAGym", DATA / "fitness/rnagym_repo"
+        "https://github.com/MarksLab-DasLab/RNAGym", DATA / "benchmarks/fitness/rnagym_repo"
     )
     results["nabench"] = git_clone(
-        "https://github.com/mrzzmrzz/NABench", DATA / "fitness/nabench"
+        "https://github.com/mrzzmrzz/NABench", DATA / "benchmarks/fitness/nabench"
     )
 
     # 4. Splicing
     log("=== 4. SPLICING ===")
     curl(
         "https://bigest-icube.fr/spliceator/static/data/data.tar.gz",
-        DATA / "splicing/spliceator/data.tar.gz",
+        DATA / "benchmarks/splicing/spliceator/data.tar.gz",
     )
     results["splicebert_zenodo"] = curl(
         "https://zenodo.org/records/7995778/files/data.tar.gz?download=1",
-        DATA / "splicing/splicebert/data.tar.gz",
+        DATA / "benchmarks/splicing/splicebert/data.tar.gz",
     )
     results["g3po"] = git_clone(
-        "https://github.com/BiGEst-ICube/g3po", DATA / "splicing/g3po"
+        "https://github.com/BiGEst-ICube/g3po", DATA / "benchmarks/splicing/g3po"
     )
 
     # 5. Structure datasets (RNA3DB releases)
@@ -219,7 +219,7 @@ def main() -> int:
         curl(
             f"https://github.com/marcellszi/rna3db/releases/download/"
             f"2026-01-05-full-release/{asset}",
-            DATA / "structure/rna3db" / asset,
+            DATA / "structures/databases/rna3db" / asset,
         )
 
     # Summary
