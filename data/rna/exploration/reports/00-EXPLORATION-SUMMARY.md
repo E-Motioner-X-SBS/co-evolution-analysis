@@ -30,7 +30,7 @@ Sampling 100k sequences from every chunk reveals **three distinct data regimes**
 GC content varies from **40.7%** (chunk 3) to **61.4%** (chunk 10), consistent
 with organism/metagenome variation. N-content ranges 0.000–0.619%.
 
-![chunk populations](figures/08_eldors_chunk_populations.png)
+![chunk populations](../figures/08_eldors_chunk_populations.png)
 
 ### Curation implications
 - The **151-nt population is read-length data** (~7–13 chunks): legitimate RNA
@@ -41,8 +41,8 @@ with organism/metagenome variation. N-content ranges 0.000–0.619%.
 - N-masking: 0.1% average, negligible; keep.
 - Chunks 6 and 9 are the natural source for **long-context** training samples.
 
-![length distribution](figures/01_eldors_length_distribution.png)
-![composition](figures/02_eldors_composition.png)
+![length distribution](../figures/01_eldors_length_distribution.png)
+![composition](../figures/02_eldors_composition.png)
 
 ---
 
@@ -67,8 +67,8 @@ with organism/metagenome variation. N-content ranges 0.000–0.619%.
 | Method split | cryo-EM 62% · X-ray 38% |
 | Median chain length | 121 nt |
 
-![resolution](figures/04_structures_resolution_method.png)
-![lengths](figures/05_structures_lengths.png)
+![resolution](../figures/04_structures_resolution_method.png)
+![lengths](../figures/05_structures_lengths.png)
 
 ### Family concentration
 The 3D data is dominated by a few large families:
@@ -76,7 +76,7 @@ The 3D data is dominated by a few large families:
 LSU rRNA bacteria (130) · U2 snRNA (101) · SSU rRNA eukarya (98) ·
 5.8S rRNA (77) · Purine riboswitch (57).
 
-![rfam coverage](figures/06_structures_rfam_coverage.png)
+![rfam coverage](../figures/06_structures_rfam_coverage.png)
 
 ### Curation implications
 - Deduplicate at the sequence level: 15,441 chains → 3,157 unique sequences
@@ -101,7 +101,7 @@ LSU rRNA bacteria (130) · U2 snRNA (101) · SSU rRNA eukarya (98) ·
 | bpRNA-1m (full) | 66,715 | — | — | full database |
 | RNAStrAlign | 27,125 | — | — | training (TurboFold II) |
 
-![benchmark lengths](figures/07_benchmarks_2d_lengths.png)
+![benchmark lengths](../figures/07_benchmarks_2d_lengths.png)
 
 ### Fitness / splicing
 | Dataset | Scale |
@@ -131,6 +131,6 @@ LSU rRNA bacteria (130) · U2 snRNA (101) · SSU rRNA eukarya (98) ·
 ## Files
 | File | Content |
 |---|---|
-| `figures/01–08_*.png` | 8 exploration figures |
+| `../figures/01–08_*.png` | 8 exploration figures |
 | `reports/exploration_stats.json` | all computed statistics |
 | `reports/eldors_chunk_profiles.csv` | per-chunk length/GC/N profile |
