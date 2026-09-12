@@ -526,17 +526,19 @@ def main() -> None:
                 bytes_total += m.get("size_bytes") or 0
         manifest["sources"].append(entry)
 
-    # Merge exact elDORS counts if the background counter has produced them
-    counts_file = DATA / "elDORS_v1" / "seq_counts.txt"
-    if counts_file.exists():
-        for line in counts_file.read_text().splitlines():
-            parts = line.split()
-            if len(parts) == 2 and parts[1].isdigit():
-                rel = f"elDORS_v1/{parts[0]}"
-                cur.execute(
-                    "UPDATE files SET n_records=?, count_exact=1 WHERE path=?",
-                    (int(parts[1]), rel),
-                )
+    # Merge exact counts produced by background counters
+    for counts_file, prefix in [
+        (DATA / "elDORS_v1" / "seq_counts.txt", "elDORS_v1/"),
+        (DATA / "rnacentral" / "seq_count.txt", "rnacentral/"),
+    ]:
+        if counts_file.exists():
+            for line in counts_file.read_text().splitlines():
+                parts = line.split()
+                if len(parts) == 2 and parts[1].isdigit():
+                    cur.execute(
+                        "UPDATE files SET n_records=?, count_exact=1 WHERE path=?",
+                        (int(parts[1]), prefix + parts[0]),
+                    )
         con.commit()
 
     for sp in SPLITS:

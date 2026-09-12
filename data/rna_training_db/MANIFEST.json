@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-11 16:46:45",
+  "generated": "2026-09-12 13:48:57",
   "root": "/store/shuvam/E-motioner-X-SBS/co-evolution-analysis/data",
   "sources": [
     {
@@ -112,7 +112,7 @@
       "files": [
         {
           "path": "rnacentral/rnacentral_active.fasta.gz",
-          "size": 4803145728,
+          "size": 10919860429,
           "n_records": 50000
         }
       ]
@@ -87552,12 +87552,17 @@
       "files": [
         {
           "path": "benchmarks/splicing/splicebert/data.tar.gz",
-          "size": 3833586860,
+          "size": 8638073169,
           "n_records": null
         },
         {
           "path": "benchmarks/splicing/splicebert/data.tar.gz.dl.log",
-          "size": 382,
+          "size": 459,
+          "n_records": null
+        },
+        {
+          "path": "benchmarks/splicing/splicebert/data.tar.gz.done",
+          "size": 0,
           "n_records": null
         },
         {
@@ -237474,8 +237479,8 @@
     }
   ],
   "totals": {
-    "files": 47469,
-    "bytes": 245713755423,
-    "gb": 245.71
+    "files": 47470,
+    "bytes": 256634956510,
+    "gb": 256.63
   }
 }
