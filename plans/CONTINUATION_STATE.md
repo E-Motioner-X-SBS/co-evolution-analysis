@@ -213,3 +213,12 @@ PDB parser updated: strict/tolerant dual mode for inconsistent residue names
 2. Model design inputs locked: vocab 5 (ACGTN), context 2048 recommended
 3. Optional: generate pseudo-label structures (teacher models) — see plans/13
 4. Optional: full-corpus parquet conversion (~528GB — disk check first)
+
+---
+## MOVED TO sbs-rna REPO (Sep 12, 2026)
+The RNA data repository now lives in its own project:
+  /store/shuvam/E-motioner-X-SBS/sbs-rna/
+    ├── data/       (was co-evolution-analysis/data/rna)
+    ├── scripts/    (RNA acquisition/catalog/ETL/exploration scripts)
+    └── plans/      (12-nucleicbert-data-scanner, 13-sequence-structure-gap)
+RNA work continues there; this repo keeps the protein K-map campaign only.
