@@ -45,7 +45,7 @@ def combined_pipeline_section():
 COMPLETE PIPELINE DOCUMENTATION GENERATOR
 ==========================================
 Generates FULL_PIPELINE_ANALYSIS.md with:
- - All 221 Lean theorems catalog (106 in lean_proofs + 115 in n-ary-kmap)
+ - All 246 Lean theorems catalog (131 in lean_proofs + 115 in n-ary-kmap)
  - Complete dataset description
  - K-map construction step-by-step with formulas
  - All Boolean expressions (Quine-McCluskey minimized)
@@ -314,17 +314,23 @@ w(f"{len(var_positions)}/{full_len_actual} positions are evolutionarily variable
 w()
 
 # ── 1. LEAN THEOREMS ────────────────────────────────────────────────
-w("## 1. Formal Foundations — 221 Lean 4 Theorems (106 + 115)")
+w("## 1. Formal Foundations — 246 Lean 4 Theorems (131 + 115)")
 w()
 w(
-    "The entire framework rests on formal proofs in Lean 4.29.0. All theorems use `native_decide`,"
+    "The entire framework rests on formal proofs in Lean 4.29.0. All theorems are **sorry-free** with"
 )
 w(
-    "are **sorry-free** and **axiom-free**, and compile via `lake build` in under 1 second."
+    "**no user-declared axioms**; most are proved by `native_decide` (100 of the 131 in `lean_proofs/`),"
+)
+w(
+    "which additionally trusts the compiler. `lake build` passes clean (per-theorem audit:"
+)
+w(
+    "`lean_proofs/proofs/is_kmap_possible/axiom_audit.py`)."
 )
 w()
 
-w("### 1.1 Binary K-map (`lean_proofs/`) — 106 Theorems")
+w("### 1.1 Binary K-map (`lean_proofs/`) — 131 Theorems")
 w()
 w("| File | Theorems | What Is Proved |")
 w("|------|----------|---------------|")
@@ -342,6 +348,12 @@ w(
 )
 w(
     "| `KmapEncodingEquiv.lean` | 8 | Distance distribution, Q₅ hypercube degree=5, encoding captures 50% of Q₅ edges |"
+)
+w(
+    "| `ContactCircuits.lean` | 12 | Contact-campaign plumbing: He-code distance counts, separation bins, cell-index injectivity, QM cover soundness, padding safety |"
+)
+w(
+    "| `SequenceCircuits.lean` | 13 | Sequence-as-circuit: segment lemma, Gray/binary encoding invariance, faithfulness, Gray code is GF(2)-linear |"
 )
 w()
 
@@ -374,7 +386,7 @@ w()
 w(
     "The `lean_consistency.py` script in `kmap-sbm-validation/` re-computes every Lean theorem"
 )
-w("in Python and reports discrepancies. Result: **103/103 pass**, zero discrepancies.")
+w("in Python and reports discrepancies. Result: **156/156 checks pass** (4 files), zero discrepancies.")
 w()
 
 # ── 2. DATASET ──────────────────────────────────────────────────────
@@ -968,7 +980,7 @@ w(
     f"| Boolean expressions (QM minimized) | {len(all_rules)} essential prime implicants |"
 )
 w(f"| Unique position pairs with rules | {len(rules_by_pair)} |")
-w(f"| Lean 4 theorems | 221 (106 + 115) |")
+w(f"| Lean 4 theorems | 246 (131 + 115) |")
 w(f"| Python scripts | 23 |")
 w(f"| Total Python LOC | ~7,000 |")
 w(f"| Shared module LOC | 340 |")
@@ -1054,5 +1066,5 @@ print(f"  - {len(mi_pairs)} MI pairs documented")
 print(f"  - {len(consensus)} positions with entropy/perplexity")
 print(f"  - {len(couplings)} coupling constant tables")
 print(f"  - {len(perp_results)} perplexity analyses")
-print(f"  - 221 Lean theorems cataloged")
+print(f"  - 246 Lean theorems cataloged")
 print(f"  - Full scripts inventory")

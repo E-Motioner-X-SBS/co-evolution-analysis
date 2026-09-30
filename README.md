@@ -51,13 +51,20 @@ nohup $PY -u gpu_full_analysis.py > logs/gpu_full.log 2>&1 &
 | Co-evolutionary pairs (mutation-only MI > 0.1) | 10 |
 | Max full-MI | 0.8067 @ (373, 378) |
 | Max mutation-only MI | 0.8710 @ (495, 498) |
-| Distinct Boolean rules (essential) | 36 (2) |
+| Distinct Boolean rules (essential) | 36 (2) ¹ |
 | Flipped Boolean forbidden rules | 490 |
 | High-MI pairs (full length) | 5 (MI > 0.5) |
 | LOO-CV accuracy | 9.24% (corrected) |
 | DCA-style accuracy | 17.6% (local precision, NOT real DCA) |
 | Variant signatures | 40 |
 | GPU MI matrix speed | 813K pairs in 1.6 s (~800× vs CPU) |
+
+¹ From `master_boolean/master_boolean_summary.json`. The reference minimiser
+(`kmap_sbm.analysis.prime_implicants`) is not exact Quine–McCluskey: it keeps only
+don't-cares at Hamming distance 1 from an on-minterm, so it under-merges when
+don't-cares cluster (187 cubes vs 522 true primes on a 10-variable test). The rules
+are sound, but PI counts and "essential" designations are approximations. See
+`My_Own_Interpretation_Across_New_Datasets/3D_Structure_Analysis/12_Sequence_Circuits_And_The_3D_Ceiling.md` §7.1.
 
 ## Scripts
 
@@ -71,7 +78,7 @@ nohup $PY -u gpu_full_analysis.py > logs/gpu_full.log 2>&1 &
 | 6 | `position_kmap_coevolution.py` | Position-pair K-maps with MI (25,199 pairs) | `position_kmap_results/` |
 | 7 | `run_allseq_analysis.py` | Full analysis on all sequences | `full_position_results/` |
 | 8 | `run_kmap_analysis.py` | Master K-map pipeline (H1-H6) | `kmap_results/` |
-| 9 | `flipped_boolean_coevolution.py` | Forbidden pairs (negative selection, 345 rules) | `flipped_boolean_results/` |
+| 9 | `flipped_boolean_coevolution.py` | Forbidden pairs (negative selection, 490 rules) | `flipped_boolean_results/` |
 | 10 | `kmap_boolean_coevolution.py` | K-map Boolean with markdown output | `kmap_boolean_coevolution/` |
 | 11 | `variable_position_coevolution.py` | Variable-position K-map with don't-care | `variable_position_results/` |
 | 12 | `predictive_constraint_function.py` | Constraint function train/test | `constraint_function_results/` |
@@ -163,7 +170,7 @@ co-evolution-analysis/
 
 - [kmap-sbm-validation](https://github.com/E-Motioner-X-SBS/kmap-sbm-validation) — Binary K-map validation via SBM MD
 - [n-ary-kmap](https://github.com/E-Motioner-X-SBS/n-ary-kmap) — Base-N K-map generalization
-- [lean_proofs](https://github.com/E-Motioner-X-SBS/lean_proofs) — Lean 4 formal proofs (106 theorems)
+- [lean_proofs](https://github.com/E-Motioner-X-SBS/lean_proofs) — Lean 4 formal proofs (131 theorems)
 - [datasets](https://github.com/E-Motioner-X-SBS/datasets) — Curated PDB structures
 
 ## Citation

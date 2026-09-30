@@ -1,6 +1,6 @@
 # E-Motioner-X-SBS: Complete Co-Evolution Analysis Pipeline
 
-**Generated:** August 17, 2026 at 15:45
+**Generated:** October 01, 2026 at 02:02
 **Dataset:** SARS-CoV-2 Omicron Spike Protein — 1,299 sequences, 1276 positions
 **Compute:** NVIDIA A100 80GB + 24-core Xeon, Python 3.10
 **Author:** Shuvam Banerji Seal — IISER Kolkata
@@ -21,12 +21,14 @@ an irreducible co-evolutionary constraint.
 max pairwise MI = **0.8067** at positions (373,378);
 21/1276 positions are evolutionarily variable (H > 0.3).
 
-## 1. Formal Foundations — 221 Lean 4 Theorems (106 + 115)
+## 1. Formal Foundations — 246 Lean 4 Theorems (131 + 115)
 
-The entire framework rests on formal proofs in Lean 4.29.0. All theorems use `native_decide`,
-are **sorry-free** and **axiom-free**, and compile via `lake build` in under 1 second.
+The entire framework rests on formal proofs in Lean 4.29.0. All theorems are **sorry-free** with
+**no user-declared axioms**; most are proved by `native_decide` (100 of the 131 in `lean_proofs/`),
+which additionally trusts the compiler. `lake build` passes clean (per-theorem audit:
+`lean_proofs/proofs/is_kmap_possible/axiom_audit.py`).
 
-### 1.1 Binary K-map (`lean_proofs/`) — 106 Theorems
+### 1.1 Binary K-map (`lean_proofs/`) — 131 Theorems
 
 | File | Theorems | What Is Proved |
 |------|----------|---------------|
@@ -35,6 +37,8 @@ are **sorry-free** and **axiom-free**, and compile via `lake build` in under 1 s
 | `AminoAcidEncoding.lean` | 27 | 20 AAs → 5-bit Gray code, 7 physicochemical groups, within-group dist-1 (14 pairs), cross-group dist-1 (26 pairs), max-dist pairs (F-H, Y-E, W-R, M-K at dist=5) |
 | `ContactMapCompleteness.lean` | 20 | Contact maps as symmetric Boolean functions, irreducibility proof (no two contact pairs are 1-bit K-map adjacent) |
 | `KmapEncodingEquiv.lean` | 8 | Distance distribution, Q₅ hypercube degree=5, encoding captures 50% of Q₅ edges |
+| `ContactCircuits.lean` | 12 | Contact-campaign plumbing: He-code distance counts, separation bins, cell-index injectivity, QM cover soundness, padding safety |
+| `SequenceCircuits.lean` | 13 | Sequence-as-circuit: segment lemma, Gray/binary encoding invariance, faithfulness, Gray code is GF(2)-linear |
 
 ### 1.2 N-ary K-map (`n-ary-kmap/`) — 115 Theorems
 
@@ -54,7 +58,7 @@ are **sorry-free** and **axiom-free**, and compile via `lake build` in under 1 s
 ### 1.4 Theorem Verification Bridge
 
 The `lean_consistency.py` script in `kmap-sbm-validation/` re-computes every Lean theorem
-in Python and reports discrepancies. Result: **103/103 pass**, zero discrepancies.
+in Python and reports discrepancies. Result: **156/156 checks pass** (4 files), zero discrepancies.
 
 ## 2. Dataset
 
@@ -576,7 +580,7 @@ Rules learned from one variant do not generalize to others.
 | Co-evolving pairs (MI > 0.1) | 17 |
 | Boolean expressions (QM minimized) | 2 essential prime implicants |
 | Unique position pairs with rules | 2 |
-| Lean 4 theorems | 221 (106 + 115) |
+| Lean 4 theorems | 246 (131 + 115) |
 | Python scripts | 23 |
 | Total Python LOC | ~7,000 |
 | Shared module LOC | 340 |
@@ -649,5 +653,5 @@ Top 3 by PP ratio: (212,215), (210,215), (378,407)
 Top 3 by combined: (378,407), (18,26), (66,94)
 
 ---
-*Generated August 17, 2026 at 15:45 by `generate_full_pipeline_doc.py`*
+*Generated October 01, 2026 at 02:02 by `generate_full_pipeline_doc.py`*
 *All values computed from 1,299 Omicron Spike sequences using shared `coevolution_shared` module*

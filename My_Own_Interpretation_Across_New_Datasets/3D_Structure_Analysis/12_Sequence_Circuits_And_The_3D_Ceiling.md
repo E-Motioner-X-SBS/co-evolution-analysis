@@ -302,13 +302,30 @@ Verified with `#print axioms`:
 | `cc_padding_safety` | `omega` over a `native_decide` lemma | `propext, Classical.choice, Quot.sound, …native_decide.ax_1_1` |
 
 `native_decide` discharges goals through the compiler and introduces a trust
-axiom. **90 of the 118 theorems in `is_kmap_possible` use it** (KmapProofs
-16/16, AminoAcidEncoding 25/27, ContactMapCompleteness 16/20, KmapEncodingEquiv
-7/8, KmerIndexing 20/35, ContactCircuits 6/12), as do all the new ones here.
+axiom. **Audited count (Oct 1, 2026, after a clean `lake build`):** applying
+`Lean.collectAxioms` to all 131 theorems of `is_kmap_possible`
+(`lean_proofs/proofs/is_kmap_possible/axiom_audit.py`), **100 depend on
+`native_decide`** — KmapProofs 15/16, KmerIndexing 17/35, AminoAcidEncoding
+25/27, ContactMapCompleteness 17/20, KmapEncodingEquiv 7/8, ContactCircuits
+6/12, SequenceCircuits 13/13 — 7 also use `Classical.choice`, 8 depend on no
+axiom at all, and none on `sorryAx`. (The per-file figures first given here,
+"90 of 118", were counted from `native_decide` occurrences in the source text,
+which is not the same as dependency: a helper lemma can carry it into a theorem
+that never mentions it.)
 
-"Sorry-free" is accurate. "Axiom-free" is not, and appears in at least five
-places: `kmap-sbm-validation/RESULTS.md:15` and `:178`, `lean_proofs/agents.md:11`,
+"Sorry-free" is accurate. "Axiom-free" is not. It appeared in
+`kmap-sbm-validation/RESULTS.md:15` and `:187`, `lean_proofs/agents.md:11`,
 `co-evolution-analysis/FULL_PIPELINE_ANALYSIS.md:27` (and its copy in
-`datasets/co-evolution/`), `skills/kmap_sbm_validation.md:52`. Suggested
-wording: *"no user-declared axioms; `native_decide` theorems additionally
-depend on `ofReduceBool`/compiler trust."*
+`datasets/co-evolution/`), `skills/kmap_sbm_validation.md:52`, among others.
+**Status (Oct 1, 2026):** replaced with *"no user-declared axioms;
+`native_decide` theorems additionally depend on compiler trust"* in the live
+docs, papers and slides that describe this corpus: `lean_proofs/` (README,
+index, agents.md, paper, presentation, Lean header comments),
+`kmap-sbm-validation/` (RESULTS.md, README.md, docs/comprehensive_methods.md,
+paper/manuscript.tex), this repo (FULL_PIPELINE_ANALYSIS.md/.html and their
+generator, both papers' Lean sections) and `skills/`. Deliberately left as-is:
+the frozen `datasets/co-evolution/` snapshot (now marked superseded), dated
+audit reports (`kmap-sbm-validation/docs/FINAL_AUDIT.md`, `docs/H5_REPORT.md`,
+`results/reports/`), slides in `SBS_Thesis/` and `presentations/` (both repos
+carry uncommitted work), and the separate Lean corpora of `n-ary-kmap/`,
+`research-papers/` and `speculative-binary-encoding/`, which were not audited.

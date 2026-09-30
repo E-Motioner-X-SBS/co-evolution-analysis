@@ -166,7 +166,7 @@ The LOO-CV experiment (`analysis/combined_mi_perplexity.py`) tested whether rank
 
 1. **MI remains the primary ranking** - the combined score does not change which pairs pass the MI > 0.1 threshold meaningfully.
 2. **The perplexity ratio adds interpretation, not ranking power** - it identifies WHICH high-MI pairs are deterministic (rivets) vs indirectly coupled.
-3. **For rule extraction (master Boolean):** the 10-12 corrected pairs are all high in both scores; the 3 essential rules come from the deterministic core.
+3. **For rule extraction (master Boolean):** the 10-12 corrected pairs are all high in both scores; the 2 essential rules come from the deterministic 210–216 cluster: (210, 215) and (212, 216), perplexity ratios 1.79 and 1.68 (`master_boolean/master_boolean_summary.json`).
 4. **For prediction:** no improvement from combining - the bottleneck is the probabilistic nature of mutation, not the ranking score.
 
 ## Scholar Questions and Answers

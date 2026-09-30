@@ -26,10 +26,10 @@ implicants → rules.
 | Repo | Contents | Read for |
 |---|---|---|
 | `co-evolution-analysis/` | **THIS repo** — the 23-script co-evolution pipeline + all validation + 3D structural analysis | everything |
-| `lean_proofs/` | Lean 4 formal proofs of the encoding framework — **106 theorems, zero `sorry`** | the mathematical foundation |
+| `lean_proofs/` | Lean 4 formal proofs of the encoding framework — **131 theorems (7 modules), zero `sorry`** (100 rely on `native_decide`, i.e. compiler trust) | the mathematical foundation |
 | `n-ary-kmap/` | Base-N K-map generalization — 115 Lean theorems; `src/nkmap/` encoders | base-20 encoding |
 | `kmap-sbm-validation/` | Empirical validation via structure-based models (SMOG/SBM MD); `src/kmap_sbm/` (Gray encoding + Quine–McCluskey) | encodings + QM + MD plans |
-| `datasets/` | Curated PDB structures; `datasets/co-evolution/` = working copy of the analysis | raw data |
+| `datasets/` | Curated PDB structures; `datasets/co-evolution/` = older snapshot of this repo (frozen Aug 7, 2026: corrected result JSONs, but older scripts and partly pre-correction docs — do not use as a source) | raw data |
 | `skills/` | Agent onboarding docs + small tools (lit_review_adder, gh_org_manager, latex_tikz_diagrams…) | org conventions |
 | `contact_mapping/`, `pdb_hunter/`, `ml_folding_models/`, `Is-Kmap-Possible/`, `KMAP-rethink/`, `e-motioner-x-sbs.github.io/` | related exploratory projects | context (optional) |
 
@@ -84,9 +84,12 @@ per-process GPU memory at 10% (see `coevolution_gpu.get_device()`).
 ## 2. The scientific framework — read these in order
 
 1. **`skills/ORGANIZATION.md`** — org overview, results summary, cheat sheet.
-2. **`lean_proofs/`** — the 106 Lean theorems: Gray-code properties
+2. **`lean_proofs/`** — the 131 Lean theorems: Gray-code properties
    (`KmapProofs.lean`), amino-acid 5-bit Gray encoding with 7 physicochemical
-   groups (`AminoAcidEncoding.lean`), k-mer indexing, contact-map completeness.
+   groups (`AminoAcidEncoding.lean`), k-mer indexing, contact-map completeness,
+   the contact-campaign plumbing (`ContactCircuits.lean`) and the
+   sequence-circuit layer (`SequenceCircuits.lean`). Axiom footprint:
+   `proofs/is_kmap_possible/axiom_audit.py`.
    Build: `lake build` (needs
    `LD_LIBRARY_PATH=/home/roy/.elan/toolchains/leanprover--lean4---v4.29.0/lib/lean`).
 3. **`n-ary-kmap/`** — the base-N generalization (115 theorems); the base-20
@@ -314,7 +317,8 @@ Notes:
    with the remaining jobs documented, see below) = **3,687+ runs** over days
    on the A100 + 24-core machine.
 2. **The Spike analysis** (all 23 scripts on the 1,299 sequences; corrected
-   results in `datasets/co-evolution/` result folders and
+   results in this repo's result folders (e.g. `master_boolean/`,
+   mirrored in the `datasets/co-evolution/` snapshot) and
    `My_Interpretation_of_the_Results/`).
 3. **SWISS-MODEL batch**: 299 automodel jobs → 1,128 PDBs (submission ~13
    min, total ~75 min; rate limits respected: 0 × 429).
