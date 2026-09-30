@@ -15,16 +15,18 @@ prover~\cite{lean4}, establishing machine-checkable proofs that the
 implementation satisfies its specification.
 
 \subsection{Verification Architecture}
-Our formalisation comprises 118 theorems distributed across five modules in
-two repositories: \texttt{lean\_proofs/} (106 theorems covering Gray-code
+Our formalisation comprises 118 theorems across six modules of the
+\texttt{lean\_proofs/} repository: five modules with 106 theorems covering Gray-code
 fundamentals, $k$-mer indexing, amino-acid encodings, contact-map topology,
-and encoding equivalence) and \texttt{ContactCircuits.lean} (12 theorems
+and encoding equivalence, and \texttt{ContactCircuits.lean} (12 theorems
 covering separation-bin monotonicity, level-1 cell-index boundedness and
 injectivity, implicant-cover completeness and soundness, and padding safety).
-All proofs are constructed without \texttt{sorry} and rely only on the
-standard axioms \texttt{propext}, \texttt{Quot.sound}, and (where
-\texttt{native\_decide} is used) the trusted-evaluation axiom inherent to
-bounded-domain computation.
+All proofs are constructed without \texttt{sorry} and without user-declared
+axioms.  They rely on the standard axioms \texttt{propext} and
+\texttt{Quot.sound}, on \texttt{Classical.choice} in seven cases, and, where
+\texttt{native\_decide} is used (87 of the 118), on the trusted-evaluation
+axiom inherent to compiled bounded-domain computation --- that is, on
+compiler trust.
 
 \subsection{Key Theorems}
 
@@ -65,8 +67,10 @@ guarantee that these border cells cannot leak into decoded rules:
 
 \subsection{Axiom Audit}
 We verify the axiom dependency graph for all 12 theorems in the
-\texttt{ContactCircuits} module using Lean's \texttt{\#print axioms} command.
-Every theorem depends only on \texttt{propext}, \texttt{Quot.sound}, and
-(where applicable) the native-decide evaluation axiom; no theorem depends on
-\texttt{sorryAx}.  This matches the trust profile of the existing 106 theorems
-in the companion repository.
+\texttt{ContactCircuits} module using \texttt{Lean.collectAxioms}.  Six
+depend on the native-decide evaluation axiom, \texttt{cc\_padding\_safety}
+additionally on \texttt{Classical.choice}, and the rest only on
+\texttt{propext} and \texttt{Quot.sound} (one on no axiom at all); no theorem
+depends on \texttt{sorryAx}.  The same audit over the other five modules finds
+81 of 106 theorems depending on \texttt{native\_decide} and six on
+\texttt{Classical.choice}, again with no \texttt{sorryAx}.

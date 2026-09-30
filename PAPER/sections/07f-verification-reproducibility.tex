@@ -35,21 +35,23 @@ the pipeline faithfully implements its design, while the design's effectiveness
 is established empirically.
 
 \subsection{Verification Infrastructure}
-The verification infrastructure consists of two Lean~4 packages.  The first,
-\texttt{is\_kmap\_possible}, contains 106 theorems across five modules
+The verification infrastructure is one Lean~4 package,
+\texttt{is\_kmap\_possible}, whose first five modules contain 106 theorems
 covering Gray-code fundamentals (bijectivity, adjacency, involution),
 $k$-mer indexing (injectivity and boundedness for $k = 1$ through $4$),
 amino-acid encodings (injectivity, within-group distance bounds, charge-group
 adjacency), contact-map completeness (symmetry, irreflexivity, Boolean
 minimisation semantics), and encoding equivalence (BLOSUM bound, distance
-distribution invariance).  The second, \texttt{ContactCircuits}, contains
+distribution invariance).  A sixth module, \texttt{ContactCircuits}, contains
 12 theorems covering the specific assertions made by the circuit-extraction
 pipeline: cover completeness, cover soundness, padding safety, separation-bin
 monotonicity, and cell-index injectivity.
 
-All proofs use only \texttt{Init} (the Lean standard library) and bounded-domain
-tactics (\texttt{decide}, \texttt{native\_decide}).  No theorem depends on
-\texttt{sorry} or on axioms beyond the standard logical framework.  The axiom
-audit performed via \texttt{\#print axioms} confirms that every theorem
-depends at most on \texttt{propext}, \texttt{Quot.sound}, and the
-\texttt{native\_decide} evaluation axiom.
+All modules except \texttt{KmapEncodingEquiv} (which uses Mathlib) import only
+\texttt{Init}, and the proofs use bounded-domain tactics (\texttt{decide},
+\texttt{native\_decide}, \texttt{omega}, \texttt{simp}, case analysis).  No
+theorem depends on \texttt{sorry} or on a user-declared axiom.  The axiom
+audit (\texttt{Lean.collectAxioms} on every theorem) finds dependencies only on
+\texttt{propext}, \texttt{Quot.sound}, \texttt{Classical.choice} (seven
+theorems) and the \texttt{native\_decide} evaluation axiom (87 of the 118), so
+the \texttt{native\_decide} theorems additionally rest on compiler trust.

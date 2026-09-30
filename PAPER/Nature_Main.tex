@@ -58,12 +58,15 @@
 	held-out proteins at a mean top-$L/5$ precision of 0.179 ($5.1\times$ random
 	enrichment).  Fusing circuit-derived scores with continuous DCA rankings via
 	rank aggregation yields a hybrid predictor that exceeds both individual
-	methods ($p < 10^{-4}$), demonstrating for the first time that
+	methods ($p < 10^{-4}$), showing that
 	Boolean-minimisation features carry structural information orthogonal to
 	standard covariation analysis.  Flipped (forbidden-combination) circuits
 	generalise across proteins with 98.3\% specificity.  Gray-code adjacency is
-	enriched among native contacts ($1.178\times$, $p < 10^{-77}$), and conserved
-	column pairs are contact-enriched by $3.2\times$.  We further prove an
+	enriched among native contacts ($1.178\times$, $p < 10^{-77}$), although a
+	code-permutation control places the assigned encoding only $z = 2.51$ above
+	random residue-to-code assignments; conserved column pairs are
+	contact-enriched by $3.2\times$, an effect carried by near-conserved
+	columns, since fully invariant columns are depleted ($0.69\times$).  We further prove an
 	information ceiling: any predictor that is a function of a residue-level
 	feature map is bounded by that map's cell purity, which on consensus residue
 	identity and separation is prec@$L/5 = 0.193$---so the trained circuit already
