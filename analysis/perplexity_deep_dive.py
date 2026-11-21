@@ -12,17 +12,22 @@ Questions explored:
 
 Run: python analysis/perplexity_deep_dive.py
 """
+
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import NARY_SRC, REPO_ROOT  # noqa: E402
 import sys, numpy as np, json
 from collections import Counter
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/n-ary-kmap/src")
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
+sys.path.insert(0, str(NARY_SRC))
+sys.path.insert(0, str(REPO_ROOT))
 from coevolution_shared import load_position_arrays, mutual_information, compute_entropy_vectorized
 
 pos_arrays, n_all, full_len = load_position_arrays(max_pos=None)
 AA = "AILVMFYWEDQNHKRSTCPG"
 ent = compute_entropy_vectorized(pos_arrays, n_all, full_len)
 PP = 2.0 ** ent
-MI_full = np.load("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution/mi_heatmap/mi_matrix.npy")
+MI_full = np.load(str(REPO_ROOT / "mi_heatmap/mi_matrix.npy"))
 
 def conditional_PP(pos_i, pos_j):
     """PP(j|i=a) for each residue a, plus marginal PP(j)."""
@@ -168,6 +173,6 @@ out = {
     "bootstrap_ratio_std": float(boot.std()),
     "prob_ratio_gt_1": float((boot > 1).mean()),
 }
-with open("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution/analysis/perplexity_deep_dive.json", "w") as f:
+with open(str(REPO_ROOT / "analysis/perplexity_deep_dive.json"), "w") as f:
     json.dump(out, f, indent=2)
 print("\nSaved to analysis/perplexity_deep_dive.json")

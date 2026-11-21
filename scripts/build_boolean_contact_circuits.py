@@ -16,16 +16,21 @@ Phase 3: Co-evolution transfer circuit (MI + perplexity + sep → contact)
 
 Output: results/contacts/boolean_contact_circuits.json + printed report.
 """
+
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import KMAP_SBM_SRC, NARY_SRC, REPO_ROOT  # noqa: E402
 import sys, json, math, random
 from pathlib import Path
 from collections import defaultdict, Counter
 import numpy as np
 
-REPO = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis")
+REPO = REPO_ROOT
 sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO))
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/kmap-sbm-validation/src")
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/n-ary-kmap/src")
+sys.path.insert(0, str(KMAP_SBM_SRC))
+sys.path.insert(0, str(NARY_SRC))
 
 from rules3d_common import OmicronModels, CANON, dist, CONTACT, MIN_SEP
 from kmap_sbm.analysis.prime_implicants import boolean_minimize_kmap

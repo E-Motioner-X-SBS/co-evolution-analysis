@@ -19,14 +19,19 @@ Test, for every co-evolving position pair:
 
 Output: results/contacts/gray_flip_analysis.json
 """
+
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import KMAP_SBM_SRC, NARY_SRC, REPO_ROOT  # noqa: E402
 import json
 import sys
 from collections import Counter
 from pathlib import Path
 
-REPO = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis")
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/kmap-sbm-validation/src")
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/n-ary-kmap/src")
+REPO = REPO_ROOT
+sys.path.insert(0, str(KMAP_SBM_SRC))
+sys.path.insert(0, str(NARY_SRC))
 from kmap_sbm.encoding.gray_amino import encode_gray_single  # noqa: E402
 from nkmap.encoding.bio_sequences import AMINO_HE_2012  # noqa: E402
 

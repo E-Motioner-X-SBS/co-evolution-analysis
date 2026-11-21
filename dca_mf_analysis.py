@@ -38,6 +38,8 @@ References:
   - Ekeberg M, et al. Phys. Rev. E 87:012707 (2013) for plmDCA (not used here).
 """
 
+from kmap_paths import NARY_SRC, REPO_ROOT  # noqa: E402
+
 import sys
 import json
 import time
@@ -45,10 +47,10 @@ import numpy as np
 import torch
 from pathlib import Path
 
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/n-ary-kmap/src")
+sys.path.insert(0, str(NARY_SRC))
 from nkmap.encoding.bio_sequences import AMINO_HE_2012
 
-BASE = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
+BASE = REPO_ROOT
 FASTA = Path(__import__("os").environ.get("COEVO_FASTA") or (BASE / "Spike_protein.aln-fasta"))
 OUT = Path(__import__("os").environ.get("COEVO_RESULTS") or (BASE / "dca_results"))
 OUT.mkdir(parents=True, exist_ok=True)
@@ -68,21 +70,7 @@ AA_ORDER = AMINO_HE_2012 + "-"
 AA_TO_IDX = {aa: i for i, aa in enumerate(AA_ORDER)}
 
 
-def parse_fasta(filepath):
-    seqs, cur_h, cur_s = [], None, []
-    with open(filepath) as f:
-        for line in f:
-            line = line.strip()
-            if line.startswith(">"):
-                if cur_h is not None:
-                    seqs.append((cur_h, "".join(cur_s)))
-                cur_h = line[1:]
-                cur_s = []
-            elif line:
-                cur_s.append(line.upper())
-    if cur_h is not None:
-        seqs.append((cur_h, "".join(cur_s)))
-    return seqs
+from coevolution_shared import parse_fasta  # single source of truth
 
 
 def encode_msa(seqs):

@@ -1,3 +1,4 @@
+from kmap_paths import REPO_ROOT  # noqa: E402
 
 
 def combined_pipeline_section():
@@ -63,7 +64,7 @@ from collections import Counter
 import numpy as np
 
 # ── Setup ────────────────────────────────────────────────────────────
-BASE = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
+BASE = REPO_ROOT
 sys.path.insert(0, str(BASE))
 os.chdir(str(BASE))
 

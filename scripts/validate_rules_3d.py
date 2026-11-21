@@ -16,6 +16,11 @@ Method (per unique sequence u0000..u0298):
 
 Output: results/contacts/rules_3d_omicron.json + printed table.
 """
+
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import REPO_ROOT  # noqa: E402
 import gzip
 import json
 import os
@@ -24,10 +29,10 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-REPO = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis")
+REPO = REPO_ROOT
 SWISS = REPO / "swissmodel"
 FASTA = REPO / "Spike_protein.aln-fasta"
-MB = "/store/shuvam/E-motioner-X-SBS/datasets/co-evolution/master_boolean/master_boolean_summary.json"
+MB = str(REPO_ROOT / "master_boolean/master_boolean_summary.json")
 CORR = REPO / "analysis" / "corrected_results.json"
 OUT = REPO / "results" / "contacts" / "rules_3d_omicron.json"
 CONTACT = 8.0

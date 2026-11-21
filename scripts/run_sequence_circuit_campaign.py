@@ -25,7 +25,7 @@ Stages (each resumable, each writes one JSON under results/sequence_circuits/)
 
 Usage
 -----
-    PY=/store/shuvam/.venv/bin/python; export OMP_PROC_BIND=FALSE
+    PY=python; export OMP_PROC_BIND=FALSE
     $PY scripts/run_sequence_circuit_campaign.py --stage seq
     $PY scripts/run_sequence_circuit_campaign.py --stage coevo
     $PY scripts/run_sequence_circuit_campaign.py --stage contact

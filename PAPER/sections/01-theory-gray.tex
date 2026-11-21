@@ -12,9 +12,11 @@ property of this encoding is that consecutive integers map to codewords that
 differ in exactly one bit position, a property that follows from the identity
 $g(n) \oplus g(n{+}1) = 2^{\nu_2(n+1)}$, where $\nu_2(m)$ is the two-adic
 valuation of $m$.  Over a fixed width of $w$ bits, the mapping $g : \{0,
-	\ldots, 2^w{-}1\} \to \{0, \ldots, 2^w{-}1\}$ is an involution (that is,
-applying it twice recovers the original value), and its image forms a
-Hamiltonian cycle on the $w$-dimensional hypercube $Q_w$.
+	\ldots, 2^w{-}1\} \to \{0, \ldots, 2^w{-}1\}$ is a bijection whose inverse is the
+prefix exclusive-or $g^{-1}(m) = m \oplus (m \gg 1) \oplus (m \gg 2) \oplus \cdots$; it is
+\emph{not} an involution once $w \geq 3$ (for example $g(g(4)) = g(6) = 5$).  The
+sequence $g(0), g(1), \ldots, g(2^w{-}1)$ forms a Hamiltonian cycle on the
+$w$-dimensional hypercube $Q_w$.
 
 The Hamming distance between two Gray-encoded values $a$ and $b$ is defined as
 \begin{equation}
@@ -35,9 +37,12 @@ the binary codes $00_2 = 0$, $01_2 = 1$, $11_2 = 3$, and $10_2 = 2$,
 respectively.  Under this assignment, the Gray-code transformation maps A to
 $0$, C to $1$, G to $2$, and T to $3$, and the transition--transversion
 classification of point mutations acquires a direct interpretation in terms of
-Gray-code adjacency: transitions (purine$\leftrightarrow$purine or
-pyrimidine$\leftrightarrow$pyrimidine) correspond to single bit-flips, while
-transversions correspond to two-bit flips.  This property was formalised in
+Gray-code adjacency: in the Gray image the low bit records purine/pyrimidine
+and the high bit amino/keto, so transitions (A$\leftrightarrow$G,
+C$\leftrightarrow$T) and the amino/keto-preserving transversions
+(A$\leftrightarrow$C, G$\leftrightarrow$T) are single bit-flips, while only the
+Watson--Crick complementary transversions (A$\leftrightarrow$T,
+C$\leftrightarrow$G) are two-bit flips.  This property was formalised in
 Lean~4 as part of the verification framework described in
 Section~\ref{sec:theory-lean}.
 
@@ -46,7 +51,8 @@ Section~\ref{sec:theory-lean}.
 
 For amino-acid sequences, we extend the encoding from four nucleotides to
 twenty canonical residues by assigning each amino acid a five-bit code under
-the He~2012 physicochemical ordering~\cite{he2012}.  The ordering groups the
+the He~2012 physicochemical ordering~\cite{he2012}, \texttt{AILVMFYWEDQNHKRSTCPG}
+(index~0 to~19, as in \texttt{nkmap.encoding.bio\_sequences.AMINO\_HE\_2012}).  The ordering groups the
 twenty residues into seven classes based on hydrophobicity, charge, and
 aromaticity:
 \begin{center}
@@ -55,12 +61,12 @@ aromaticity:
 		\textbf{Group} & \textbf{Residues} & \textbf{He indices} \\
 		\midrule
 		Aliphatic      & A, I, L, V        & 0--3                \\
-		Aromatic       & F, Y, W           & 4--6                \\
-		Sulfur         & M, C              & 7--8                \\
-		Structure      & P, G              & 9--10               \\
-		Polar          & S, T, N, Q        & 11--14              \\
-		Negative       & D, E              & 15--16              \\
-		Positive       & H, K, R           & 17--19              \\
+		Aromatic       & F, Y, W           & 5--7                \\
+		Sulfur         & M, C              & 4, 17               \\
+		Structure      & P, G              & 18--19              \\
+		Polar          & Q, N, S, T        & 10, 11, 15, 16      \\
+		Negative       & E, D              & 8--9                \\
+		Positive       & H, K, R           & 12--14              \\
 		\bottomrule
 	\end{tabular}
 \end{center}

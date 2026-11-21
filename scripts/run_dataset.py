@@ -14,6 +14,11 @@ Every run: env COEVO_FASTA + COEVO_RESULTS, cwd = results dir, timeout, exit cod
 stdout/stderr tails captured into run_log.json. Resumable (skips done runs).
 """
 
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import REPO_ROOT  # noqa: E402
+
 import argparse
 import json
 import os
@@ -23,8 +28,8 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-REPO = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis")
-PY = "/store/shuvam/.venv/bin/python"
+REPO = REPO_ROOT
+PY = sys.executable
 RESULTS = REPO / "results"
 TIMEOUT_S = None  # user directive: NO timeouts — let every job run to completion
 

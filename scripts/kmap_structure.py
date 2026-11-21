@@ -77,6 +77,11 @@ unit-tested in scripts/tests/test_kmap_structure.py including adversarial cases.
 
 from __future__ import annotations
 
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import KMAP_SBM_SRC  # noqa: E402
+
 
 
 import math
@@ -662,7 +667,7 @@ def qm_minimize(truth_flat: np.ndarray) -> dict:
     Returns the boolean_minimize_kmap result dict unchanged.
     """
     import sys as _sys
-    for p in ("/store/shuvam/E-motioner-X-SBS/kmap-sbm-validation/src",):
+    for p in (str(KMAP_SBM_SRC),):
         if p not in _sys.path:
             _sys.path.insert(0, p)
     from kmap_sbm.analysis.prime_implicants import boolean_minimize_kmap  # type: ignore # noqa: E501 (sibling-repo path resolved at runtime)

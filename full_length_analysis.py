@@ -7,49 +7,27 @@ Analyzes ALL 1,276 positions of the Spike protein,
 not just the first 80.
 """
 
+from kmap_paths import NARY_SRC, REPO_ROOT  # noqa: E402
+
 import sys
 import json
 import numpy as np
 from collections import Counter
 from pathlib import Path
 
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/n-ary-kmap/src")
+sys.path.insert(0, str(NARY_SRC))
 
 from nkmap.encoding.bio_sequences import Base20AminoEncoder, AMINO_HE_2012
 
 
-def parse_fasta(filepath):
-    sequences = []
-    current_header = None
-    current_seq = []
-    with open(filepath, "r") as f:
-        for line in f:
-            line = line.strip()
-            if line.startswith(">"):
-                if current_header is not None:
-                    sequences.append((current_header, "".join(current_seq)))
-                current_header = line[1:]
-                current_seq = []
-            elif line:
-                current_seq.append(line.upper())
-    if current_header is not None:
-        sequences.append((current_header, "".join(current_seq)))
-    return sequences
+from coevolution_shared import parse_fasta  # single source of truth
 
 
-def compute_entropy(pos_arrays, pos, n_seqs):
-    counts = Counter()
-    for arr in pos_arrays[:n_seqs]:
-        if pos < len(arr) and 0 <= arr[pos] < 20:
-            counts[int(arr[pos])] += 1
-    total = sum(counts.values())
-    if total == 0:
-        return 0.0
-    return -sum((c / total) * np.log2(c / total) for c in counts.values() if c > 0)
+from coevolution_shared import compute_entropy  # single source of truth
 
 
 def main():
-    base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
+    base_dir = REPO_ROOT
     fasta_file = Path(__import__("os").environ.get("COEVO_FASTA") or (base_dir / "Spike_protein.aln-fasta"))
     results_dir = Path(__import__("os").environ.get("COEVO_RESULTS") or (base_dir / "full_length_results"))
     results_dir.mkdir(parents=True, exist_ok=True)

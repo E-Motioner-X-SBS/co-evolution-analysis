@@ -22,16 +22,21 @@ Method:
 
 Output: results/contacts/perplexity_3d_analysis.json
 """
+
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import KMAP_SBM_SRC, NARY_SRC, REPO_ROOT  # noqa: E402
 import json
 import math
 import sys
 from pathlib import Path
 
-REPO = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis")
+REPO = REPO_ROOT
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "scripts"))
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/kmap-sbm-validation/src")
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/n-ary-kmap/src")
+sys.path.insert(0, str(KMAP_SBM_SRC))
+sys.path.insert(0, str(NARY_SRC))
 from coevolution_shared import (load_position_arrays, compute_entropy_vectorized,
                                 combined_pair_scores)  # noqa: E402
 from rules3d_common import OmicronModels, evaluate_pairs  # noqa: E402

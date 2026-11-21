@@ -25,11 +25,16 @@ Design:
 
 Run: python analysis/combined_mi_perplexity.py
 """
+
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import NARY_SRC, REPO_ROOT  # noqa: E402
 import sys, json, numpy as np
 from collections import Counter
 from scipy.stats import spearmanr
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/n-ary-kmap/src")
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
+sys.path.insert(0, str(NARY_SRC))
+sys.path.insert(0, str(REPO_ROOT))
 from coevolution_shared import (load_position_arrays, compute_entropy_vectorized,
                                 majority_ref, mutual_information)
 
@@ -174,5 +179,5 @@ out = {
         "combined_z": loo_accuracy(order_cz, K),
     },
 }
-json.dump(out, open("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution/analysis/combined_mi_perplexity.json", "w"), indent=2)
+json.dump(out, open(str(REPO_ROOT / "analysis/combined_mi_perplexity.json"), "w"), indent=2)
 print("\nSaved to analysis/combined_mi_perplexity.json")

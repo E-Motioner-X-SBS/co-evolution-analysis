@@ -3,7 +3,9 @@
 > **CORRECTION (Aug 7, 2026):** two defects (A1 gap-stripping misalignment,
 > A2 8-bit QM wrap-around) were fixed; all scripts re-run on aligned columns
 > with padded 32x32 K-maps. Verified corrected results: 21 variable
-> positions, 10 co-evolving pairs, 36 distinct Boolean rules (2 essential).
+> positions, 10 co-evolving pairs, 36 distinct Boolean rules — 35 of them essential under
+> exact Quine–McCluskey (the earlier "2 essential" came from the approximate minimiser; see
+> correction A3 in the notice below).
 > See [My_Interpretation_of_the_Results/CORRECTION_NOTICE.md](My_Interpretation_of_the_Results/CORRECTION_NOTICE.md).
 
 Karnaugh map (K-map) Boolean minimization applied to predict co-evolutionary constraints in the SARS-CoV-2 Spike protein.
@@ -51,7 +53,7 @@ nohup $PY -u gpu_full_analysis.py > logs/gpu_full.log 2>&1 &
 | Co-evolutionary pairs (mutation-only MI > 0.1) | 10 |
 | Max full-MI | 0.8067 @ (373, 378) |
 | Max mutation-only MI | 0.8710 @ (495, 498) |
-| Distinct Boolean rules (essential) | 36 (2) ¹ |
+| Distinct Boolean rules (essential) | 36 (35 exact; 2 approximate) ¹ |
 | Flipped Boolean forbidden rules | 490 |
 | High-MI pairs (full length) | 5 (MI > 0.5) |
 | LOO-CV accuracy | 9.24% (corrected) |
@@ -65,6 +67,8 @@ don't-cares at Hamming distance 1 from an on-minterm, so it under-merges when
 don't-cares cluster (187 cubes vs 522 true primes on a 10-variable test). The rules
 are sound, but PI counts and "essential" designations are approximations. See
 `My_Own_Interpretation_Across_New_Datasets/3D_Structure_Analysis/12_Sequence_Circuits_And_The_3D_Ceiling.md` §7.1.
+Exact QM on the same maps (`analysis/exact_master_boolean.py`, brute-force verified) gives
+36 prime implicants of which 35 are essential, with a 35-cube minimum cover.
 
 ## Scripts
 
@@ -72,7 +76,7 @@ are sound, but PI counts and "essential" designations are approximations. See
 |---|--------|---------|--------|
 | 1 | `coevolution_shared.py` | Shared module (FASTA, MI, entropy, GPU pair-finder) | — |
 | 2 | `coevolution_gpu.py` | **GPU kernels** (torch CUDA: MI matrix, entropy, refs, coupling, H1) | — |
-| 3 | `master_boolean.py` | Master Boolean function (36 rules, 2 essential) | `master_boolean/` |
+| 3 | `master_boolean.py` | Master Boolean function (36 rules; 35 essential under exact QM) | `master_boolean/` |
 | 4 | `boolean_co-evolution.py` | Binary K-map Boolean minimization (796,953 pairs) | `boolean_results/` |
 | 5 | `nary_kmap_co-evolution.py` | Base-20 K-map analysis | `nary_kmap_results/` |
 | 6 | `position_kmap_coevolution.py` | Position-pair K-maps with MI (25,199 pairs) | `position_kmap_results/` |

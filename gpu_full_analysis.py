@@ -11,17 +11,19 @@ Uses torch CUDA (A100 80GB) for ALL computations:
 No position truncation, no sequence subsampling.
 """
 
+from kmap_paths import NARY_SRC, REPO_ROOT  # noqa: E402
+
 import sys, json, time
 import numpy as np
 from pathlib import Path
 
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/n-ary-kmap/src")
+sys.path.insert(0, str(NARY_SRC))
 from nkmap.encoding.bio_sequences import Base20AminoEncoder, AMINO_HE_2012
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import coevolution_gpu as cg
 
-BASE = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
+BASE = REPO_ROOT
 FASTA = Path(__import__("os").environ.get("COEVO_FASTA") or (BASE / "Spike_protein.aln-fasta"))
 OUT = Path(__import__("os").environ.get("COEVO_RESULTS") or (BASE / "full_gpu_results"))
 OUT.mkdir(parents=True, exist_ok=True)

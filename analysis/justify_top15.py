@@ -10,17 +10,22 @@ identical MI, i.e., they add redundant rules rather than new biology.
 
 Run: python analysis/justify_top15.py
 """
+
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import KMAP_SBM_SRC, NARY_SRC, REPO_ROOT  # noqa: E402
 import sys, numpy as np, json
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/n-ary-kmap/src")
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/kmap-sbm-validation/src")
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
+sys.path.insert(0, str(NARY_SRC))
+sys.path.insert(0, str(KMAP_SBM_SRC))
+sys.path.insert(0, str(REPO_ROOT))
 from nkmap.encoding.bio_sequences import Base20AminoEncoder, AMINO_HE_2012
 from kmap_sbm.analysis.prime_implicants import boolean_minimize_kmap
 from coevolution_shared import find_coevolving_pairs_gpu
 from collections import Counter
 
 enc = Base20AminoEncoder(version=1)
-FASTA = "/store/shuvam/E-motioner-X-SBS/datasets/co-evolution/Spike_protein.aln-fasta"
+FASTA = str(REPO_ROOT / "Spike_protein.aln-fasta")
 seqs = []
 h = None; s = []
 for line in open(FASTA):
@@ -82,6 +87,6 @@ out = {
     "rules_by_K": {str(k): v for k, v in results.items()},
     "pairs_ranked_16_20": pairs_16_20,
 }
-with open("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution/analysis/top15_justification.json", "w") as f:
+with open(str(REPO_ROOT / "analysis/top15_justification.json"), "w") as f:
     json.dump(out, f, indent=2)
 print(json.dumps(out, indent=2))

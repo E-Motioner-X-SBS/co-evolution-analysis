@@ -12,57 +12,28 @@ The constraint function predicts whether a mutation will be
 destabilizing based on the K-map structure.
 """
 
+from kmap_paths import KMAP_SBM_SRC, NARY_SRC, REPO_ROOT  # noqa: E402
+
 import sys
 import json
 import numpy as np
 from collections import Counter
 from pathlib import Path
 
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/n-ary-kmap/src")
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/kmap-sbm-validation/src")
+sys.path.insert(0, str(NARY_SRC))
+sys.path.insert(0, str(KMAP_SBM_SRC))
 
 from nkmap.encoding.bio_sequences import Base20AminoEncoder, AMINO_HE_2012
 from kmap_sbm.analysis.prime_implicants import boolean_minimize_kmap
 
 
-def parse_fasta(filepath):
-    sequences = []
-    current_header = None
-    current_seq = []
-    with open(filepath, "r") as f:
-        for line in f:
-            line = line.strip()
-            if line.startswith(">"):
-                if current_header is not None:
-                    sequences.append((current_header, "".join(current_seq)))
-                current_header = line[1:]
-                current_seq = []
-            elif line:
-                current_seq.append(line.upper())
-    if current_header is not None:
-        sequences.append((current_header, "".join(current_seq)))
-    return sequences
+from coevolution_shared import parse_fasta  # single source of truth
 
 
-def compute_entropy(pos_arrays, pos, n_seqs):
-    counts = Counter()
-    for arr in pos_arrays[:n_seqs]:
-        if pos < len(arr) and 0 <= arr[pos] < 20:
-            counts[int(arr[pos])] += 1
-    total = sum(counts.values())
-    if total == 0:
-        return 0.0
-    return -sum((c / total) * np.log2(c / total) for c in counts.values() if c > 0)
+from coevolution_shared import compute_entropy  # single source of truth
 
 
-def get_majority_ref(pos_arrays, pos, n_seqs):
-    cnt = Counter(
-        int(a[pos]) for a in pos_arrays[:n_seqs] if pos < len(a) and 0 <= a[pos] < 20
-    )
-    if not cnt:
-        return 0
-    best = max(cnt.values())
-    return min(c for c, n in cnt.items() if n == best)
+from coevolution_shared import majority_ref as get_majority_ref  # single source of truth
 
 
 def compute_frequency_kmap(pos_arrays, pos_i, pos_j, n_seqs):
@@ -107,7 +78,7 @@ def sigmoid(x):
 
 
 def main():
-    base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
+    base_dir = REPO_ROOT
     fasta_file = Path(
         __import__("os").environ.get("COEVO_FASTA")
         or (base_dir / "Spike_protein.aln-fasta")

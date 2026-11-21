@@ -37,7 +37,7 @@ CPU baseline for the same MI matrix: **20+ minutes** (timed out). GPU: **1.6 s**
 |---|--------|--------|------------------------|
 | 1 | `coevolution_shared.py` | ✅ | shared module: FASTA, MI, entropy, coupling, GPU pair-finder |
 | 2 | `coevolution_gpu.py` | ✅ GPU | CUDA kernels: MI matrix, entropy, refs, H1, coupling |
-| 3 | ` `master_boolean.py` | ✅ GPU | **36 distinct PIs (2 essential)**, 10 pairs |
+| 3 | ` `master_boolean.py` | ✅ GPU | **36 distinct PIs (35 essential exact; 2 approximate — A3)**, 10 pairs |
 | 4 | `boolean_co-evolution.py` | ✅ GPU | whole-protein dipeptide Boolean minimization |
 | 5 | `nary_kmap_co-evolution.py` | ✅ | base-20 (n-ary) K-map motifs (no position info) |
 | 6 | `position_kmap_coevolution.py` | ✅ GPU | per-position-pair K-maps with MI |
@@ -68,7 +68,7 @@ CPU baseline for the same MI matrix: **20+ minutes** (timed out). GPU: **1.6 s**
 | Max MI | **0.8067** at (373,378) | gpu_full ✓, full_length ✓ |
 | Variable positions | **21** / 1,276 | all scripts ✓ |
 | Co-evolving pairs (mutation-only MI > 0.1) | **10** | master_boolean ✓, flipped ✓ |
-| Master rules | **36 distinct PIs (2 essential)** | master_boolean ✓, kmap_boolean ✓, docs ✓ |
+| Master rules | **36 distinct PIs (35 essential exact; 2 approximate — A3)** | master_boolean ✓, kmap_boolean ✓, docs ✓ |
 | Forbidden rules | **490** | flipped ✓ |
 | H1 (5-bit group-order Gray) | 0.2167 (**1.34×**) | run_kmap ✓, gpu_full ✓ |
 | Network | 21 nodes / 8 edges | advanced ✓ |
@@ -123,7 +123,7 @@ not specific outcomes.
 | **A2** 8-bit QM wrap-around | 20×20 (400-cell) map → 8 bits → cells 256–399 wrapped onto 0–143 → 143/152 phantom rules | pad to 32×32 (5 bits/axis, 10 bits), rows/cols 20–31 don't-care; `kmap_truth_table` raises on non-power-of-4 |
 
 **Corrected headline numbers:** 21 variable positions · 10 co-evolving pairs ·
-36 distinct prime implicants (2 essential) · 490 forbidden rules · max MI
+36 distinct prime implicants (35 essential under exact QM) · 490 forbidden rules · max MI
 0.8067 · LOO-CV 9.24% · 0 phantom rules.
 
 ---

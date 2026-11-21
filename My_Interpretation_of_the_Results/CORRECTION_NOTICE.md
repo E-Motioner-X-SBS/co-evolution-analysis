@@ -145,3 +145,27 @@ python analysis/corrected_pipeline.py
 ```
 
 The corrected loader is `coevolution_shared.load_position_arrays(aligned=True)` (default). All scripts that consume position arrays should use it. The `My_Interpretation_of_the_Results` documentation has been updated to state which numbers are corrected and which are historical (buggy).
+
+---
+
+## Correction A3 (Nov 2026): the essential count — exact QM gives 35, not 2
+
+`analysis/exact_master_boolean.py` rebuilds the same 10 padded 32x32 maps with
+master_boolean.py's own functions and minimises them with exact Quine-McCluskey
+(`scripts/sequence_circuits.prime_implicants`), cross-checked against an
+independent brute-force enumeration of every prime cube; every cover is
+verified complete and sound (`analysis/exact_master_boolean.json`).
+
+| | prime implicants | essential | minimum cover |
+|---|---|---|---|
+| reference minimiser (published) | 36 distinct decoded rules (70 cubes) | **2** | — |
+| **exact QM**, padding = don't-care (as master_boolean.py) | **36** | **35** | 35 |
+| **exact QM**, padding = off-set | 35 | **35** | 35 |
+
+The rule COUNT stands (36), but "2 essential" is an artifact of the approximate
+minimiser (doc 12 §7.1): it emits 70 overlapping sub-cubes, so almost no on-cell
+has a unique cover.  Exactly, 35 of the 36 observed co-mutations are isolated
+K-map cells (no Hamming-1 neighbour in the on-set), so nearly every rule is
+essential; the single merge is at pair (210, 212).  Read "2 essential" anywhere
+in this repository as "35 essential (exact)".
+

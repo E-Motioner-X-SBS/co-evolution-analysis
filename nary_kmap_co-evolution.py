@@ -14,6 +14,8 @@ The n-ary approach is more compact and directly captures the
 biochemical relationships between amino acids.
 """
 
+from kmap_paths import KMAP_SBM_SRC, NARY_SRC, REPO_ROOT  # noqa: E402
+
 import os
 import sys
 import json
@@ -21,7 +23,7 @@ import numpy as np
 from collections import Counter, defaultdict
 from pathlib import Path
 
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/n-ary-kmap/src")
+sys.path.insert(0, str(NARY_SRC))
 
 from nkmap.encoding.bio_sequences import (
     Base20AminoEncoder,
@@ -43,23 +45,7 @@ from coevolution_shared import compute_mi_matrix_gpu
 # ============================================================
 
 
-def parse_fasta(filepath):
-    sequences = []
-    current_header = None
-    current_seq = []
-    with open(filepath, "r") as f:
-        for line in f:
-            line = line.strip()
-            if line.startswith(">"):
-                if current_header is not None:
-                    sequences.append((current_header, "".join(current_seq)))
-                current_header = line[1:]
-                current_seq = []
-            elif line:
-                current_seq.append(line.upper())
-    if current_header is not None:
-        sequences.append((current_header, "".join(current_seq)))
-    return sequences
+from coevolution_shared import parse_fasta  # single source of truth
 
 
 # ============================================================
@@ -167,7 +153,7 @@ def minimize_nary_boolean(kmap_bool):
     print("\n=== Quine-McCluskey on N-ary Boolean K-map ===")
 
     # Import from kmap-sbm-validation
-    sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/kmap-sbm-validation/src")
+    sys.path.insert(0, str(KMAP_SBM_SRC))
     from kmap_sbm.analysis.prime_implicants import (
         kmap_truth_table,
         prime_implicants_quine_mccluskey,
@@ -441,7 +427,7 @@ def predict_coevolution_nary(freq_2d, encoder, sequences, n_seqs=100):
 
 
 def main():
-    base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
+    base_dir = REPO_ROOT
     fasta_file = Path(
         __import__("os").environ.get("COEVO_FASTA")
         or (base_dir / "Spike_protein.aln-fasta")

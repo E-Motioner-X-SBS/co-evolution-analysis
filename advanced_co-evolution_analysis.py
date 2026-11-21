@@ -10,13 +10,15 @@ Implements:
 4. Clustering of sequences by co-evolution patterns
 """
 
+from kmap_paths import NARY_SRC, REPO_ROOT  # noqa: E402
+
 import sys
 import json
 import numpy as np
 from collections import Counter
 from pathlib import Path
 
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/n-ary-kmap/src")
+sys.path.insert(0, str(NARY_SRC))
 
 from nkmap.encoding.bio_sequences import Base20AminoEncoder, AMINO_HE_2012
 
@@ -25,23 +27,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from coevolution_shared import mutual_information, compute_entropy, majority_ref
 
 
-def parse_fasta(filepath):
-    sequences = []
-    current_header = None
-    current_seq = []
-    with open(filepath, "r") as f:
-        for line in f:
-            line = line.strip()
-            if line.startswith(">"):
-                if current_header is not None:
-                    sequences.append((current_header, "".join(current_seq)))
-                current_header = line[1:]
-                current_seq = []
-            elif line:
-                current_seq.append(line.upper())
-    if current_header is not None:
-        sequences.append((current_header, "".join(current_seq)))
-    return sequences
+from coevolution_shared import parse_fasta  # single source of truth
 
 
 # (Removed duplicate mi_vectorized and compute_mi_vectorized — now in coevolution_shared.mutual_information)
@@ -100,7 +86,7 @@ def fwht(a):
 
 
 def main():
-    base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
+    base_dir = REPO_ROOT
     fasta_file = Path(__import__("os").environ.get("COEVO_FASTA") or (base_dir / "Spike_protein.aln-fasta"))
     results_dir = Path(__import__("os").environ.get("COEVO_RESULTS") or (base_dir / "advanced_analysis_results"))
     results_dir.mkdir(parents=True, exist_ok=True)

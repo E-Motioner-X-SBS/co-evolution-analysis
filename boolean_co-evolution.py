@@ -19,6 +19,8 @@ co-evolution analysis. The key insight:
    co-evolution patterns (mutual information, correlation).
 """
 
+from kmap_paths import KMAP_SBM_SRC, REPO_ROOT  # noqa: E402
+
 import os
 import sys
 import json
@@ -29,7 +31,7 @@ from itertools import combinations
 
 from coevolution_shared import compute_mi_matrix_gpu
 
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/kmap-sbm-validation/src")
+sys.path.insert(0, str(KMAP_SBM_SRC))
 
 from kmap_sbm.encoding.gray_amino import (
     encode_gray_single,
@@ -57,23 +59,7 @@ from kmap_sbm.analysis.prime_implicants import (
 # ============================================================
 
 
-def parse_fasta(filepath):
-    sequences = []
-    current_header = None
-    current_seq = []
-    with open(filepath, "r") as f:
-        for line in f:
-            line = line.strip()
-            if line.startswith(">"):
-                if current_header is not None:
-                    sequences.append((current_header, "".join(current_seq)))
-                current_header = line[1:]
-                current_seq = []
-            elif line:
-                current_seq.append(line.upper())
-    if current_header is not None:
-        sequences.append((current_header, "".join(current_seq)))
-    return sequences
+from coevolution_shared import parse_fasta  # single source of truth
 
 
 def encode_sequence_gray(seq):
@@ -526,7 +512,7 @@ def predict_coevolution(qm_result, kmap_freq, sequences, n_seqs=100):
         print(f"  Off-set correctly predicted: {off_correct}/{len(off_set_mi)}")
 
     return {
-        "on_set_pairs": list(on_set_pairs),
+        "on_set_pairs": sorted(on_set_pairs),  # sorted: set order varies with PYTHONHASHSEED
         "avg_on_mi": avg_on_mi,
         "avg_off_mi": avg_off_mi,
         "n_on_set": len(on_set_mi),
@@ -541,7 +527,7 @@ def predict_coevolution(qm_result, kmap_freq, sequences, n_seqs=100):
 
 
 def main():
-    base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
+    base_dir = REPO_ROOT
     fasta_file = Path(
         __import__("os").environ.get("COEVO_FASTA")
         or (base_dir / "Spike_protein.aln-fasta")

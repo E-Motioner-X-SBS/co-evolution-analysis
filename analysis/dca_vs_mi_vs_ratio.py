@@ -7,19 +7,24 @@ Discovery: how do the three pair-scoring lenses compare?
 
 Run: python analysis/dca_vs_mi_vs_ratio.py
 """
+
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import NARY_SRC, REPO_ROOT  # noqa: E402
 import sys, numpy as np, json
 from collections import Counter
 from scipy.stats import spearmanr
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/n-ary-kmap/src")
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
+sys.path.insert(0, str(NARY_SRC))
+sys.path.insert(0, str(REPO_ROOT))
 from coevolution_shared import load_position_arrays, compute_entropy_vectorized
 
 pos_arrays, n_all, full_len = load_position_arrays(max_pos=None)
 ent = compute_entropy_vectorized(pos_arrays, n_all, full_len)
 PP = 2.0 ** ent
-MI_full = np.load("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution/mi_heatmap/mi_matrix.npy")
-F = np.load("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution/dca_results/frobenius_scores.npy")
-DI = np.load("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution/dca_results/di_scores.npy")
+MI_full = np.load(str(REPO_ROOT / "mi_heatmap/mi_matrix.npy"))
+F = np.load(str(REPO_ROOT / "dca_results/frobenius_scores.npy"))
+DI = np.load(str(REPO_ROOT / "dca_results/di_scores.npy"))
 
 def ratio_of(i, j):
     counts = Counter()
@@ -64,5 +69,5 @@ res = {
         "direct coupling (DCA). They answer different questions."
     ),
 }
-json.dump(res, open("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution/analysis/dca_vs_mi_vs_ratio.json", "w"), indent=2)
+json.dump(res, open(str(REPO_ROOT / "analysis/dca_vs_mi_vs_ratio.json"), "w"), indent=2)
 print(json.dumps(res, indent=2))

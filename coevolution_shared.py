@@ -17,6 +17,8 @@ This ELIMINATES:
 
 from __future__ import annotations
 
+from kmap_paths import NARY_SRC  # noqa: E402
+
 import os
 import sys
 import json
@@ -25,7 +27,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Optional
 
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/n-ary-kmap/src")
+sys.path.insert(0, str(NARY_SRC))
 from nkmap.encoding.bio_sequences import Base20AminoEncoder, AMINO_HE_2012
 
 AA_LIST = list(AMINO_HE_2012)

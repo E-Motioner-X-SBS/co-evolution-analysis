@@ -1,3 +1,7 @@
+> **Correction A3 (Nov 2026):** exact Quine–McCluskey on these maps gives 36 prime
+> implicants of which **35 are essential** (not 2); the "2 essential" below comes from
+> the approximate minimiser. See `analysis/exact_master_boolean.py` and CORRECTION_NOTICE.md.
+
 > **CORRECTION (Aug 7, 2026):** This file was rewritten after two confirmed
 > defects were fixed (A1: gap-stripping column misalignment; A2: 8-bit QM
 > wrap-around). The 152-rule content below is replaced by the verified

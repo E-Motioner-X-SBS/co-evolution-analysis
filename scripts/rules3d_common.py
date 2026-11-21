@@ -17,6 +17,11 @@ Rigor guarantees:
      contact fractions are computed — the trimer interface is a distinct
      structural dimension.
 """
+
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import REPO_ROOT  # noqa: E402
 import gzip
 import json
 import math
@@ -24,7 +29,7 @@ import os
 import random
 from pathlib import Path
 
-REPO = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis")
+REPO = REPO_ROOT
 SWISS = REPO / "swissmodel"
 FASTA = REPO / "Spike_protein.aln-fasta"
 CONTACT = 8.0

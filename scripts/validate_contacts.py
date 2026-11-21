@@ -15,6 +15,11 @@ Output: results/contacts/<dataset>/<target>.json + consolidated table.
 Usage: python scripts/validate_contacts.py [--dataset X --target Y] [--all]
 """
 
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import REPO_ROOT  # noqa: E402
+
 import argparse
 import json
 import os
@@ -23,7 +28,7 @@ import sys
 import time
 from pathlib import Path
 
-REPO = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis")
+REPO = REPO_ROOT
 RESULTS = REPO / "results"
 CONTACT_CUTOFF = 8.0
 MIN_SEP = 6

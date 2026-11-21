@@ -15,6 +15,8 @@ Analysis pipeline:
 5. Generate co-evolution analysis
 """
 
+from kmap_paths import KMAP_SBM_SRC, REPO_ROOT  # noqa: E402
+
 import os
 import re
 import sys
@@ -24,7 +26,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 # Add the kmap-sbm-validation src to path
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/kmap-sbm-validation/src")
+sys.path.insert(0, str(KMAP_SBM_SRC))
 
 from kmap_sbm.encoding.gray_amino import (
     encode_gray_single,
@@ -45,27 +47,7 @@ from kmap_sbm.encoding.gray_amino import (
 # ============================================================
 
 
-def parse_fasta(filepath):
-    """Parse a FASTA file and return list of (header, sequence) tuples."""
-    sequences = []
-    current_header = None
-    current_seq = []
-
-    with open(filepath, "r") as f:
-        for line in f:
-            line = line.strip()
-            if line.startswith(">"):
-                if current_header is not None:
-                    sequences.append((current_header, "".join(current_seq)))
-                current_header = line[1:]  # Remove '>'
-                current_seq = []
-            elif line:
-                current_seq.append(line.upper())
-
-    if current_header is not None:
-        sequences.append((current_header, "".join(current_seq)))
-
-    return sequences
+from coevolution_shared import parse_fasta  # single source of truth
 
 
 def extract_accession(header):
@@ -524,7 +506,8 @@ def analyze_h5_contacts(sequences, n_seqs=100):
 
     # Sample pairs for efficiency
     if len(all_encoded) > 100:
-        indices = np.random.choice(len(all_encoded), size=(n_pairs, 2), replace=True)
+        # fixed seed: the sample, and hence h5_contacts, is reproducible run to run
+        indices = np.random.default_rng(0).choice(len(all_encoded), size=(n_pairs, 2), replace=True)
         for i, j in indices:
             if i != j:
                 d = gray_hamming_int(all_encoded[i], all_encoded[j])
@@ -815,7 +798,7 @@ def main():
     """Run the complete K-map analysis pipeline."""
 
     # Paths
-    base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
+    base_dir = REPO_ROOT
     fasta_file = Path(
         __import__("os").environ.get("COEVO_FASTA")
         or (base_dir / "Spike_protein.aln-fasta")

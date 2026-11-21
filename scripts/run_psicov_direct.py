@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 """Direct driver for remaining psicov150 jobs (bypasses runner executor)."""
+
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import REPO_ROOT  # noqa: E402
 import json, os, subprocess, sys, time
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 
-REPO = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis")
-PY = "/store/shuvam/.venv/bin/python"
+REPO = REPO_ROOT
+PY = sys.executable
 RESULTS = REPO / "results"
 
 DM = {"master_boolean.py":"master_boolean","boolean_co-evolution.py":"boolean_results",

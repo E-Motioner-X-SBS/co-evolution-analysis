@@ -8,7 +8,7 @@ co-evolving pair in all three polarities x both don't-care policies, the
 sequence-circuit statistics, the contact-map block circuits, and the
 feature-class ceiling table.
 
-    PY=/store/shuvam/.venv/bin/python
+    PY=python
     $PY scripts/generate_circuit_equations_md.py
 """
 

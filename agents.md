@@ -125,7 +125,8 @@ FASTA (aligned) → base-20 (He 2012) encoding, gaps/ambiguous = state 20
 - **A2 QM wrap-around**: never feed a 20×20 (400-cell) map to the 8-bit QM —
   pad to 32×32 (1,024 cells, 5 bits/axis) with don't-care rows/cols 20–31.
   The old bug produced 143/152 phantom rules; the corrected set is
-  **36 distinct prime implicants, 2 essential**.
+  **36 distinct prime implicants** (35 essential under exact QM — correction A3;
+  the approximate minimiser reports 2).
 
 ---
 
@@ -162,7 +163,7 @@ co-evolution-analysis/
 |---|---|---|
 | 1 | `coevolution_shared.py` | shared module: FASTA parsing, entropy, MI, coupling, GPU pair-finder, combined MI+perplexity (single source of truth) |
 | 2 | `coevolution_gpu.py` | GPU kernels (torch CUDA): MI matrix, entropy, majority refs, H1, coupling |
-| 3 | `master_boolean.py` | master Boolean function → 36 PIs / 2 essential (the flagship rule extractor) |
+| 3 | `master_boolean.py` | master Boolean function → 36 PIs (35 essential exact / 2 approximate; `analysis/exact_master_boolean.py`) |
 | 4 | `boolean_co-evolution.py` | whole-protein dipeptide Boolean minimization + coupling constants |
 | 5 | `nary_kmap_co-evolution.py` | base-20 (n-ary) K-map analysis |
 | 6 | `position_kmap_coevolution.py` | per-position-pair K-maps with MI |

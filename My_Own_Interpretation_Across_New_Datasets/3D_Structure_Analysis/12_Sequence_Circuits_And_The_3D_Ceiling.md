@@ -290,6 +290,11 @@ Published PI counts derived from it — including the headline "36 distinct prim
 implicants (2 essential)" — should be read as lower bounds under an
 approximation, not as exact QM quantities.
 
+**Resolved (Nov 2026).** `analysis/exact_master_boolean.py` runs exact QM on the
+same ten maps (brute-force verified, covers checked complete and sound): **36
+prime implicants, 35 essential**, minimum cover 35 cubes.  The distinct-rule count
+was right; the essential count was not (correction A3 in CORRECTION_NOTICE.md).
+
 ### 7.2 "Axiom-free" is incorrect for most theorems
 
 Verified with `#print axioms`:

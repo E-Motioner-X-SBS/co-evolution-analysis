@@ -5,36 +5,22 @@ Full Position-Based K-map Co-evolution Analysis
 Runs on ALL 1,299 sequences from the Spike protein alignment.
 """
 
+from kmap_paths import KMAP_SBM_SRC, NARY_SRC, REPO_ROOT  # noqa: E402
+
 import sys
 import json
 import numpy as np
 from collections import Counter
 from pathlib import Path
 
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/n-ary-kmap/src")
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/kmap-sbm-validation/src")
+sys.path.insert(0, str(NARY_SRC))
+sys.path.insert(0, str(KMAP_SBM_SRC))
 
 from nkmap.encoding.bio_sequences import Base20AminoEncoder, AMINO_HE_2012
 from kmap_sbm.analysis.prime_implicants import boolean_minimize_kmap
 
 
-def parse_fasta(filepath):
-    sequences = []
-    current_header = None
-    current_seq = []
-    with open(filepath, "r") as f:
-        for line in f:
-            line = line.strip()
-            if line.startswith(">"):
-                if current_header is not None:
-                    sequences.append((current_header, "".join(current_seq)))
-                current_header = line[1:]
-                current_seq = []
-            elif line:
-                current_seq.append(line.upper())
-    if current_header is not None:
-        sequences.append((current_header, "".join(current_seq)))
-    return sequences
+from coevolution_shared import parse_fasta  # single source of truth
 
 
 def build_position_arrays(sequences, encoder, max_pos=None):
@@ -168,7 +154,7 @@ def minimize_kmap(kmap_2d):
 
 
 def main():
-    base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
+    base_dir = REPO_ROOT
     fasta_file = Path(
         __import__("os").environ.get("COEVO_FASTA")
         or (base_dir / "Spike_protein.aln-fasta")
