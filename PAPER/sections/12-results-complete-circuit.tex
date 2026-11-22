@@ -20,11 +20,12 @@ signal even without residue-identity resolution.
 
 \subsection{Flipped Channel: Cross-Protein Transfer of Negative Selection}
 The flipped circuit's specificity---the fraction of FORBIDDEN calls that are
-correctly non-contacts---is \textbf{98.3\%} on held-out proteins.  Critically,
-the observed contact rate within forbidden-called cells on test proteins
-($1.7\%$) matches the training-set prediction of at most half the base rate
-(1.75\%), almost exactly, demonstrating that negative-selection rules generalise across
-proteins with high fidelity.
+correctly non-contacts---is 98.3\% on held-out proteins.  Because only 3.5\% of
+candidate pairs are contacts, a classifier that calls every pair a non-contact
+already scores 96.5\%; the informative number is the contact rate inside the
+forbidden-called cells, $1.7\%$ on test proteins, which matches the training
+criterion of at most half the base rate (1.75\%).  Negative-selection cells
+therefore transfer as trained: they halve the contact rate.
 
 \subsection{Conservation Channel}
 Pairs in which both columns are fully conserved (entropy $< 0.001$) show a

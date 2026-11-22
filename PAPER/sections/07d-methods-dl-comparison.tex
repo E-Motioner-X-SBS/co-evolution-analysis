@@ -27,7 +27,8 @@ them is correct?''
 
 A promising future direction is to use circuit-derived features as input to
 neural architectures, combining the interpretability of Boolean logic with
-the representational power of deep learning.  The rank-fusion result
-(Section~\ref{sec:results-fusion}) already demonstrates that K-map features
-carry information orthogonal to continuous coupling scores; incorporating them
-into a learned model might yield further improvements.
+the representational power of deep learning.  The rank-fusion experiment
+(Section~\ref{sec:results-fusion}) is a caution: fused with a correct
+mean-field DCA, the K-map prior lowers precision, so any such combination
+would have to learn its weighting rather than add the prior with equal
+weight.

@@ -20,13 +20,11 @@ anti-correlated with structural hubs (median $\rho = -0.06$), indicating that
 entropic attention concentrates on variable surface clusters rather than
 buried cores.
 
-\subsection{Iterative DI is unreliable on conserved-rich families}
-Our mean-field implementation of iterative direct information produced
-anti-predictive rankings (AUC $\approx 0.41$) on families with many fully
-conserved columns, due to pseudo-inverse conditioning when variance approaches
-zero for locked positions.  APC-corrected Frobenius norm was adopted as the
-primary DCA score instead; this choice was validated against native contacts
-and matches published mean-field benchmarks.
+\subsection{Iterative DI was mis-signed, not unreliable}
+An earlier version reported anti-predictive direct information (AUC
+$\approx 0.41$) on conserved-rich families.  The cause was a sign error in
+the direct-pair model ($\exp(-e_{ij})$ instead of $\exp(e_{ij})$); corrected,
+DI reaches mean prec@L/5 $= 0.566$ on the 150 PSICOV targets.
 
 \subsection{Cross-dataset pilot}
 A pilot evaluation on three EVmutation proteins produced inconclusive results

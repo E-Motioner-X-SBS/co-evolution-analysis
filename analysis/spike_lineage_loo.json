@@ -1,0 +1,1243 @@
+{
+ "n_sequences": 1299,
+ "pairs": [
+  [
+   495,
+   498
+  ],
+  [
+   448,
+   454
+  ],
+  [
+   488,
+   498
+  ],
+  [
+   442,
+   454
+  ],
+  [
+   442,
+   448
+  ],
+  [
+   212,
+   215
+  ],
+  [
+   215,
+   216
+  ],
+  [
+   212,
+   216
+  ],
+  [
+   210,
+   215
+  ],
+  [
+   210,
+   212
+  ]
+ ],
+ "distance": {
+  "median": 1.0,
+  "p90": 12.0,
+  "max": 44,
+  "nearest_neighbour_median": 0.0
+ },
+ "radii": [
+  -1,
+  0,
+  1,
+  2,
+  3,
+  5,
+  8,
+  12,
+  20
+ ],
+ "by_radius": {
+  "-1": {
+   "n_mutations": 3259,
+   "coverage": 0.9990794722307457,
+   "accuracy": 0.9953931203931204,
+   "conditional_accuracy": 0.6560196560196561,
+   "majority_accuracy": 0.47235872235872234,
+   "accuracy_over_all": 0.9944768333844738,
+   "mean_sequences_removed": 1.0,
+   "per_pair": [
+    {
+     "pair": [
+      495,
+      498
+     ],
+     "n_mutations": 425,
+     "covered": 425,
+     "correct": 425,
+     "correct_conditional": 124,
+     "correct_majority": 124,
+     "mean_removed": 425.0
+    },
+    {
+     "pair": [
+      448,
+      454
+     ],
+     "n_mutations": 393,
+     "covered": 393,
+     "correct": 392,
+     "correct_conditional": 282,
+     "correct_majority": 282,
+     "mean_removed": 393.0
+    },
+    {
+     "pair": [
+      488,
+      498
+     ],
+     "n_mutations": 405,
+     "covered": 405,
+     "correct": 405,
+     "correct_conditional": 104,
+     "correct_majority": 104,
+     "mean_removed": 405.0
+    },
+    {
+     "pair": [
+      442,
+      454
+     ],
+     "n_mutations": 188,
+     "covered": 188,
+     "correct": 182,
+     "correct_conditional": 77,
+     "correct_majority": 77,
+     "mean_removed": 188.0
+    },
+    {
+     "pair": [
+      442,
+      448
+     ],
+     "n_mutations": 363,
+     "covered": 363,
+     "correct": 361,
+     "correct_conditional": 81,
+     "correct_majority": 81,
+     "mean_removed": 363.0
+    },
+    {
+     "pair": [
+      212,
+      215
+     ],
+     "n_mutations": 300,
+     "covered": 300,
+     "correct": 300,
+     "correct_conditional": 300,
+     "correct_majority": 279,
+     "mean_removed": 300.0
+    },
+    {
+     "pair": [
+      215,
+      216
+     ],
+     "n_mutations": 301,
+     "covered": 300,
+     "correct": 299,
+     "correct_conditional": 299,
+     "correct_majority": 21,
+     "mean_removed": 301.0
+    },
+    {
+     "pair": [
+      212,
+      216
+     ],
+     "n_mutations": 301,
+     "covered": 300,
+     "correct": 299,
+     "correct_conditional": 299,
+     "correct_majority": 278,
+     "mean_removed": 301.0
+    },
+    {
+     "pair": [
+      210,
+      215
+     ],
+     "n_mutations": 282,
+     "covered": 281,
+     "correct": 280,
+     "correct_conditional": 272,
+     "correct_majority": 0,
+     "mean_removed": 282.0
+    },
+    {
+     "pair": [
+      210,
+      212
+     ],
+     "n_mutations": 301,
+     "covered": 301,
+     "correct": 298,
+     "correct_conditional": 298,
+     "correct_majority": 292,
+     "mean_removed": 301.0
+    }
+   ]
+  },
+  "0": {
+   "n_mutations": 3259,
+   "coverage": 0.9990794722307457,
+   "accuracy": 0.9631449631449631,
+   "conditional_accuracy": 0.6560196560196561,
+   "majority_accuracy": 0.4318181818181818,
+   "accuracy_over_all": 0.9622583614605708,
+   "mean_sequences_removed": 201.05001534212948,
+   "per_pair": [
+    {
+     "pair": [
+      495,
+      498
+     ],
+     "n_mutations": 425,
+     "covered": 425,
+     "correct": 425,
+     "correct_conditional": 124,
+     "correct_majority": 71,
+     "mean_removed": 95737.0
+    },
+    {
+     "pair": [
+      448,
+      454
+     ],
+     "n_mutations": 393,
+     "covered": 393,
+     "correct": 392,
+     "correct_conditional": 282,
+     "correct_majority": 282,
+     "mean_removed": 97322.0
+    },
+    {
+     "pair": [
+      488,
+      498
+     ],
+     "n_mutations": 405,
+     "covered": 405,
+     "correct": 405,
+     "correct_conditional": 104,
+     "correct_majority": 51,
+     "mean_removed": 95762.0
+    },
+    {
+     "pair": [
+      442,
+      454
+     ],
+     "n_mutations": 188,
+     "covered": 188,
+     "correct": 77,
+     "correct_conditional": 77,
+     "correct_majority": 77,
+     "mean_removed": 61149.0
+    },
+    {
+     "pair": [
+      442,
+      448
+     ],
+     "n_mutations": 363,
+     "covered": 363,
+     "correct": 361,
+     "correct_conditional": 81,
+     "correct_majority": 55,
+     "mean_removed": 74179.0
+    },
+    {
+     "pair": [
+      212,
+      215
+     ],
+     "n_mutations": 300,
+     "covered": 300,
+     "correct": 300,
+     "correct_conditional": 300,
+     "correct_majority": 279,
+     "mean_removed": 47008.0
+    },
+    {
+     "pair": [
+      215,
+      216
+     ],
+     "n_mutations": 301,
+     "covered": 300,
+     "correct": 299,
+     "correct_conditional": 299,
+     "correct_majority": 21,
+     "mean_removed": 47009.0
+    },
+    {
+     "pair": [
+      212,
+      216
+     ],
+     "n_mutations": 301,
+     "covered": 300,
+     "correct": 299,
+     "correct_conditional": 299,
+     "correct_majority": 278,
+     "mean_removed": 47009.0
+    },
+    {
+     "pair": [
+      210,
+      215
+     ],
+     "n_mutations": 282,
+     "covered": 281,
+     "correct": 280,
+     "correct_conditional": 272,
+     "correct_majority": 0,
+     "mean_removed": 41372.0
+    },
+    {
+     "pair": [
+      210,
+      212
+     ],
+     "n_mutations": 301,
+     "covered": 301,
+     "correct": 298,
+     "correct_conditional": 298,
+     "correct_majority": 292,
+     "mean_removed": 48675.0
+    }
+   ]
+  },
+  "1": {
+   "n_mutations": 3259,
+   "coverage": 0.9917152500767107,
+   "accuracy": 0.9542079207920792,
+   "conditional_accuracy": 0.6534653465346535,
+   "majority_accuracy": 0.41120049504950495,
+   "accuracy_over_all": 0.9463025467934949,
+   "mean_sequences_removed": 303.0840748695919,
+   "per_pair": [
+    {
+     "pair": [
+      495,
+      498
+     ],
+     "n_mutations": 425,
+     "covered": 425,
+     "correct": 425,
+     "correct_conditional": 124,
+     "correct_majority": 36,
+     "mean_removed": 152107.0
+    },
+    {
+     "pair": [
+      448,
+      454
+     ],
+     "n_mutations": 393,
+     "covered": 393,
+     "correct": 392,
+     "correct_conditional": 282,
+     "correct_majority": 282,
+     "mean_removed": 152477.0
+    },
+    {
+     "pair": [
+      488,
+      498
+     ],
+     "n_mutations": 405,
+     "covered": 405,
+     "correct": 405,
+     "correct_conditional": 104,
+     "correct_majority": 16,
+     "mean_removed": 152165.0
+    },
+    {
+     "pair": [
+      442,
+      454
+     ],
+     "n_mutations": 188,
+     "covered": 188,
+     "correct": 49,
+     "correct_conditional": 77,
+     "correct_majority": 77,
+     "mean_removed": 109131.0
+    },
+    {
+     "pair": [
+      442,
+      448
+     ],
+     "n_mutations": 363,
+     "covered": 363,
+     "correct": 361,
+     "correct_conditional": 81,
+     "correct_majority": 48,
+     "mean_removed": 104225.0
+    },
+    {
+     "pair": [
+      212,
+      215
+     ],
+     "n_mutations": 300,
+     "covered": 288,
+     "correct": 288,
+     "correct_conditional": 288,
+     "correct_majority": 279,
+     "mean_removed": 65228.0
+    },
+    {
+     "pair": [
+      215,
+      216
+     ],
+     "n_mutations": 301,
+     "covered": 300,
+     "correct": 299,
+     "correct_conditional": 299,
+     "correct_majority": 21,
+     "mean_removed": 65227.0
+    },
+    {
+     "pair": [
+      212,
+      216
+     ],
+     "n_mutations": 301,
+     "covered": 288,
+     "correct": 287,
+     "correct_conditional": 287,
+     "correct_majority": 278,
+     "mean_removed": 65229.0
+    },
+    {
+     "pair": [
+      210,
+      215
+     ],
+     "n_mutations": 282,
+     "covered": 281,
+     "correct": 280,
+     "correct_conditional": 272,
+     "correct_majority": 0,
+     "mean_removed": 56515.0
+    },
+    {
+     "pair": [
+      210,
+      212
+     ],
+     "n_mutations": 301,
+     "covered": 301,
+     "correct": 298,
+     "correct_conditional": 298,
+     "correct_majority": 292,
+     "mean_removed": 65447.0
+    }
+   ]
+  },
+  "2": {
+   "n_mutations": 3259,
+   "coverage": 0.9898741945382019,
+   "accuracy": 0.9525728456292623,
+   "conditional_accuracy": 0.652820830750155,
+   "majority_accuracy": 0.4042157470551767,
+   "accuracy_over_all": 0.9429272783062289,
+   "mean_sequences_removed": 338.70021478981283,
+   "per_pair": [
+    {
+     "pair": [
+      495,
+      498
+     ],
+     "n_mutations": 425,
+     "covered": 425,
+     "correct": 425,
+     "correct_conditional": 124,
+     "correct_majority": 24,
+     "mean_removed": 174025.0
+    },
+    {
+     "pair": [
+      448,
+      454
+     ],
+     "n_mutations": 393,
+     "covered": 393,
+     "correct": 392,
+     "correct_conditional": 282,
+     "correct_majority": 282,
+     "mean_removed": 173246.0
+    },
+    {
+     "pair": [
+      488,
+      498
+     ],
+     "n_mutations": 405,
+     "covered": 405,
+     "correct": 405,
+     "correct_conditional": 104,
+     "correct_majority": 4,
+     "mean_removed": 174083.0
+    },
+    {
+     "pair": [
+      442,
+      454
+     ],
+     "n_mutations": 188,
+     "covered": 188,
+     "correct": 44,
+     "correct_conditional": 77,
+     "correct_majority": 77,
+     "mean_removed": 129876.0
+    },
+    {
+     "pair": [
+      442,
+      448
+     ],
+     "n_mutations": 363,
+     "covered": 363,
+     "correct": 361,
+     "correct_conditional": 81,
+     "correct_majority": 47,
+     "mean_removed": 112031.0
+    },
+    {
+     "pair": [
+      212,
+      215
+     ],
+     "n_mutations": 300,
+     "covered": 285,
+     "correct": 285,
+     "correct_conditional": 285,
+     "correct_majority": 279,
+     "mean_removed": 69958.0
+    },
+    {
+     "pair": [
+      215,
+      216
+     ],
+     "n_mutations": 301,
+     "covered": 300,
+     "correct": 299,
+     "correct_conditional": 299,
+     "correct_majority": 21,
+     "mean_removed": 69958.0
+    },
+    {
+     "pair": [
+      212,
+      216
+     ],
+     "n_mutations": 301,
+     "covered": 285,
+     "correct": 284,
+     "correct_conditional": 284,
+     "correct_majority": 278,
+     "mean_removed": 69959.0
+    },
+    {
+     "pair": [
+      210,
+      215
+     ],
+     "n_mutations": 282,
+     "covered": 281,
+     "correct": 280,
+     "correct_conditional": 272,
+     "correct_majority": 0,
+     "mean_removed": 60723.0
+    },
+    {
+     "pair": [
+      210,
+      212
+     ],
+     "n_mutations": 301,
+     "covered": 301,
+     "correct": 298,
+     "correct_conditional": 298,
+     "correct_majority": 292,
+     "mean_removed": 69965.0
+    }
+   ]
+  },
+  "3": {
+   "n_mutations": 3259,
+   "coverage": 0.9898741945382019,
+   "accuracy": 0.8766274023558587,
+   "conditional_accuracy": 0.652820830750155,
+   "majority_accuracy": 0.4032858028518289,
+   "accuracy_over_all": 0.8677508438171219,
+   "mean_sequences_removed": 354.582694077938,
+   "per_pair": [
+    {
+     "pair": [
+      495,
+      498
+     ],
+     "n_mutations": 425,
+     "covered": 425,
+     "correct": 425,
+     "correct_conditional": 124,
+     "correct_majority": 23,
+     "mean_removed": 181848.0
+    },
+    {
+     "pair": [
+      448,
+      454
+     ],
+     "n_mutations": 393,
+     "covered": 393,
+     "correct": 148,
+     "correct_conditional": 282,
+     "correct_majority": 282,
+     "mean_removed": 180143.0
+    },
+    {
+     "pair": [
+      488,
+      498
+     ],
+     "n_mutations": 405,
+     "covered": 405,
+     "correct": 405,
+     "correct_conditional": 104,
+     "correct_majority": 3,
+     "mean_removed": 181882.0
+    },
+    {
+     "pair": [
+      442,
+      454
+     ],
+     "n_mutations": 188,
+     "covered": 188,
+     "correct": 43,
+     "correct_conditional": 77,
+     "correct_majority": 77,
+     "mean_removed": 136127.0
+    },
+    {
+     "pair": [
+      442,
+      448
+     ],
+     "n_mutations": 363,
+     "covered": 363,
+     "correct": 361,
+     "correct_conditional": 81,
+     "correct_majority": 46,
+     "mean_removed": 117101.0
+    },
+    {
+     "pair": [
+      212,
+      215
+     ],
+     "n_mutations": 300,
+     "covered": 285,
+     "correct": 285,
+     "correct_conditional": 285,
+     "correct_majority": 279,
+     "mean_removed": 73594.0
+    },
+    {
+     "pair": [
+      215,
+      216
+     ],
+     "n_mutations": 301,
+     "covered": 300,
+     "correct": 299,
+     "correct_conditional": 299,
+     "correct_majority": 21,
+     "mean_removed": 73595.0
+    },
+    {
+     "pair": [
+      212,
+      216
+     ],
+     "n_mutations": 301,
+     "covered": 285,
+     "correct": 284,
+     "correct_conditional": 284,
+     "correct_majority": 278,
+     "mean_removed": 73595.0
+    },
+    {
+     "pair": [
+      210,
+      215
+     ],
+     "n_mutations": 282,
+     "covered": 281,
+     "correct": 280,
+     "correct_conditional": 272,
+     "correct_majority": 0,
+     "mean_removed": 64095.0
+    },
+    {
+     "pair": [
+      210,
+      212
+     ],
+     "n_mutations": 301,
+     "covered": 301,
+     "correct": 298,
+     "correct_conditional": 298,
+     "correct_majority": 292,
+     "mean_removed": 73605.0
+    }
+   ]
+  },
+  "5": {
+   "n_mutations": 3259,
+   "coverage": 0.9898741945382019,
+   "accuracy": 0.8648481091134532,
+   "conditional_accuracy": 0.652820830750155,
+   "majority_accuracy": 0.4020458772473652,
+   "accuracy_over_all": 0.8560908254065664,
+   "mean_sequences_removed": 366.65572261429884,
+   "per_pair": [
+    {
+     "pair": [
+      495,
+      498
+     ],
+     "n_mutations": 425,
+     "covered": 425,
+     "correct": 425,
+     "correct_conditional": 124,
+     "correct_majority": 23,
+     "mean_removed": 186174.0
+    },
+    {
+     "pair": [
+      448,
+      454
+     ],
+     "n_mutations": 393,
+     "covered": 393,
+     "correct": 114,
+     "correct_conditional": 282,
+     "correct_majority": 282,
+     "mean_removed": 183946.0
+    },
+    {
+     "pair": [
+      488,
+      498
+     ],
+     "n_mutations": 405,
+     "covered": 405,
+     "correct": 405,
+     "correct_conditional": 104,
+     "correct_majority": 3,
+     "mean_removed": 185330.0
+    },
+    {
+     "pair": [
+      442,
+      454
+     ],
+     "n_mutations": 188,
+     "covered": 188,
+     "correct": 39,
+     "correct_conditional": 77,
+     "correct_majority": 77,
+     "mean_removed": 141450.0
+    },
+    {
+     "pair": [
+      442,
+      448
+     ],
+     "n_mutations": 363,
+     "covered": 363,
+     "correct": 361,
+     "correct_conditional": 81,
+     "correct_majority": 42,
+     "mean_removed": 123797.0
+    },
+    {
+     "pair": [
+      212,
+      215
+     ],
+     "n_mutations": 300,
+     "covered": 285,
+     "correct": 285,
+     "correct_conditional": 285,
+     "correct_majority": 279,
+     "mean_removed": 76792.0
+    },
+    {
+     "pair": [
+      215,
+      216
+     ],
+     "n_mutations": 301,
+     "covered": 300,
+     "correct": 299,
+     "correct_conditional": 299,
+     "correct_majority": 21,
+     "mean_removed": 76801.0
+    },
+    {
+     "pair": [
+      212,
+      216
+     ],
+     "n_mutations": 301,
+     "covered": 285,
+     "correct": 284,
+     "correct_conditional": 284,
+     "correct_majority": 278,
+     "mean_removed": 76793.0
+    },
+    {
+     "pair": [
+      210,
+      215
+     ],
+     "n_mutations": 282,
+     "covered": 281,
+     "correct": 280,
+     "correct_conditional": 272,
+     "correct_majority": 0,
+     "mean_removed": 67071.0
+    },
+    {
+     "pair": [
+      210,
+      212
+     ],
+     "n_mutations": 301,
+     "covered": 301,
+     "correct": 298,
+     "correct_conditional": 298,
+     "correct_majority": 292,
+     "mean_removed": 76777.0
+    }
+   ]
+  },
+  "8": {
+   "n_mutations": 3259,
+   "coverage": 0.9898741945382019,
+   "accuracy": 0.8605083694978302,
+   "conditional_accuracy": 0.652820830750155,
+   "majority_accuracy": 0.3973961562306262,
+   "accuracy_over_all": 0.851795029150046,
+   "mean_sequences_removed": 380.39981589444614,
+   "per_pair": [
+    {
+     "pair": [
+      495,
+      498
+     ],
+     "n_mutations": 425,
+     "covered": 425,
+     "correct": 421,
+     "correct_conditional": 124,
+     "correct_majority": 22,
+     "mean_removed": 191966.0
+    },
+    {
+     "pair": [
+      448,
+      454
+     ],
+     "n_mutations": 393,
+     "covered": 393,
+     "correct": 109,
+     "correct_conditional": 282,
+     "correct_majority": 282,
+     "mean_removed": 187258.0
+    },
+    {
+     "pair": [
+      488,
+      498
+     ],
+     "n_mutations": 405,
+     "covered": 405,
+     "correct": 401,
+     "correct_conditional": 104,
+     "correct_majority": 3,
+     "mean_removed": 189307.0
+    },
+    {
+     "pair": [
+      442,
+      454
+     ],
+     "n_mutations": 188,
+     "covered": 188,
+     "correct": 38,
+     "correct_conditional": 77,
+     "correct_majority": 77,
+     "mean_removed": 144751.0
+    },
+    {
+     "pair": [
+      442,
+      448
+     ],
+     "n_mutations": 363,
+     "covered": 363,
+     "correct": 361,
+     "correct_conditional": 81,
+     "correct_majority": 41,
+     "mean_removed": 129764.0
+    },
+    {
+     "pair": [
+      212,
+      215
+     ],
+     "n_mutations": 300,
+     "covered": 285,
+     "correct": 285,
+     "correct_conditional": 285,
+     "correct_majority": 275,
+     "mean_removed": 81338.0
+    },
+    {
+     "pair": [
+      215,
+      216
+     ],
+     "n_mutations": 301,
+     "covered": 300,
+     "correct": 299,
+     "correct_conditional": 299,
+     "correct_majority": 21,
+     "mean_removed": 81366.0
+    },
+    {
+     "pair": [
+      212,
+      216
+     ],
+     "n_mutations": 301,
+     "covered": 285,
+     "correct": 284,
+     "correct_conditional": 284,
+     "correct_majority": 272,
+     "mean_removed": 81339.0
+    },
+    {
+     "pair": [
+      210,
+      215
+     ],
+     "n_mutations": 282,
+     "covered": 281,
+     "correct": 280,
+     "correct_conditional": 272,
+     "correct_majority": 0,
+     "mean_removed": 71313.0
+    },
+    {
+     "pair": [
+      210,
+      212
+     ],
+     "n_mutations": 301,
+     "covered": 301,
+     "correct": 298,
+     "correct_conditional": 298,
+     "correct_majority": 289,
+     "mean_removed": 81321.0
+    }
+   ]
+  },
+  "12": {
+   "n_mutations": 3259,
+   "coverage": 0.9726910095121203,
+   "accuracy": 0.6728706624605678,
+   "conditional_accuracy": 0.6501577287066246,
+   "majority_accuracy": 0.3495268138801262,
+   "accuracy_over_all": 0.6544952439398588,
+   "mean_sequences_removed": 878.687634243633,
+   "per_pair": [
+    {
+     "pair": [
+      495,
+      498
+     ],
+     "n_mutations": 425,
+     "covered": 425,
+     "correct": 130,
+     "correct_conditional": 124,
+     "correct_majority": 75,
+     "mean_removed": 474612.0
+    },
+    {
+     "pair": [
+      448,
+      454
+     ],
+     "n_mutations": 393,
+     "covered": 393,
+     "correct": 108,
+     "correct_conditional": 282,
+     "correct_majority": 282,
+     "mean_removed": 461235.0
+    },
+    {
+     "pair": [
+      488,
+      498
+     ],
+     "n_mutations": 405,
+     "covered": 349,
+     "correct": 54,
+     "correct_conditional": 48,
+     "correct_majority": 3,
+     "mean_removed": 470441.0
+    },
+    {
+     "pair": [
+      442,
+      454
+     ],
+     "n_mutations": 188,
+     "covered": 188,
+     "correct": 35,
+     "correct_conditional": 77,
+     "correct_majority": 77,
+     "mean_removed": 191354.0
+    },
+    {
+     "pair": [
+      442,
+      448
+     ],
+     "n_mutations": 363,
+     "covered": 363,
+     "correct": 361,
+     "correct_conditional": 92,
+     "correct_majority": 68,
+     "mean_removed": 395195.0
+    },
+    {
+     "pair": [
+      212,
+      215
+     ],
+     "n_mutations": 300,
+     "covered": 285,
+     "correct": 285,
+     "correct_conditional": 285,
+     "correct_majority": 274,
+     "mean_removed": 85386.0
+    },
+    {
+     "pair": [
+      215,
+      216
+     ],
+     "n_mutations": 301,
+     "covered": 300,
+     "correct": 299,
+     "correct_conditional": 299,
+     "correct_majority": 21,
+     "mean_removed": 321299.0
+    },
+    {
+     "pair": [
+      212,
+      216
+     ],
+     "n_mutations": 301,
+     "covered": 285,
+     "correct": 284,
+     "correct_conditional": 284,
+     "correct_majority": 21,
+     "mean_removed": 85387.0
+    },
+    {
+     "pair": [
+      210,
+      215
+     ],
+     "n_mutations": 282,
+     "covered": 281,
+     "correct": 279,
+     "correct_conditional": 272,
+     "correct_majority": 0,
+     "mean_removed": 293361.0
+    },
+    {
+     "pair": [
+      210,
+      212
+     ],
+     "n_mutations": 301,
+     "covered": 301,
+     "correct": 298,
+     "correct_conditional": 298,
+     "correct_majority": 287,
+     "mean_removed": 85373.0
+    }
+   ]
+  },
+  "20": {
+   "n_mutations": 3259,
+   "coverage": 0.5421908560908254,
+   "accuracy": 0.45840407470288624,
+   "conditional_accuracy": 0.6140350877192983,
+   "majority_accuracy": 0.49122807017543857,
+   "accuracy_over_all": 0.2485424976986806,
+   "mean_sequences_removed": 999.060447990181,
+   "per_pair": [
+    {
+     "pair": [
+      495,
+      498
+     ],
+     "n_mutations": 425,
+     "covered": 127,
+     "correct": 124,
+     "correct_conditional": 124,
+     "correct_majority": 121,
+     "mean_removed": 542331.0
+    },
+    {
+     "pair": [
+      448,
+      454
+     ],
+     "n_mutations": 393,
+     "covered": 391,
+     "correct": 5,
+     "correct_conditional": 282,
+     "correct_majority": 282,
+     "mean_removed": 505641.0
+    },
+    {
+     "pair": [
+      488,
+      498
+     ],
+     "n_mutations": 405,
+     "covered": 289,
+     "correct": 0,
+     "correct_conditional": 0,
+     "correct_majority": 0,
+     "mean_removed": 522359.0
+    },
+    {
+     "pair": [
+      442,
+      454
+     ],
+     "n_mutations": 188,
+     "covered": 168,
+     "correct": 164,
+     "correct_conditional": 163,
+     "correct_majority": 61,
+     "mean_removed": 232639.0
+    },
+    {
+     "pair": [
+      442,
+      448
+     ],
+     "n_mutations": 363,
+     "covered": 344,
+     "correct": 342,
+     "correct_conditional": 341,
+     "correct_majority": 293,
+     "mean_removed": 456694.0
+    },
+    {
+     "pair": [
+      212,
+      215
+     ],
+     "n_mutations": 300,
+     "covered": 32,
+     "correct": 32,
+     "correct_conditional": 32,
+     "correct_majority": 32,
+     "mean_removed": 89888.0
+    },
+    {
+     "pair": [
+      215,
+      216
+     ],
+     "n_mutations": 301,
+     "covered": 46,
+     "correct": 46,
+     "correct_conditional": 46,
+     "correct_majority": 14,
+     "mean_removed": 378224.0
+    },
+    {
+     "pair": [
+      212,
+      216
+     ],
+     "n_mutations": 301,
+     "covered": 32,
+     "correct": 32,
+     "correct_conditional": 32,
+     "correct_majority": 32,
+     "mean_removed": 89889.0
+    },
+    {
+     "pair": [
+      210,
+      215
+     ],
+     "n_mutations": 282,
+     "covered": 40,
+     "correct": 33,
+     "correct_conditional": 33,
+     "correct_majority": 1,
+     "mean_removed": 348382.0
+    },
+    {
+     "pair": [
+      210,
+      212
+     ],
+     "n_mutations": 301,
+     "covered": 298,
+     "correct": 32,
+     "correct_conditional": 32,
+     "correct_majority": 32,
+     "mean_removed": 89891.0
+    }
+   ]
+  }
+ }
+}

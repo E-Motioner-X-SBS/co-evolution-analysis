@@ -56,12 +56,10 @@
 	PSICOV150 benchmark.  Our universal contact circuits, trained on consensus
 	residue identities from approximately one hundred proteins, transfer to
 	held-out proteins at a mean top-$L/5$ precision of 0.179 ($5.1\times$ random
-	enrichment).  Fusing circuit-derived scores with continuous DCA rankings via
-	rank aggregation yields a hybrid predictor that exceeds both individual
-	methods ($p < 10^{-4}$), showing that
-	Boolean-minimisation features carry structural information orthogonal to
-	standard covariation analysis.  Flipped (forbidden-combination) circuits
-	generalise across proteins with 98.3\% specificity.  Gray-code adjacency is
+	enrichment), level with APC-corrected mutual information (0.176).  Rank fusion of the circuit prior with mean-field DCA, first reported
+	as a gain (0.169 to 0.204), improved only a defective DCA score; fused with
+	a correct mean-field DCA (0.566) it lowers precision (0.471).  Flipped (forbidden-combination) circuits
+	transfer as trained, halving the contact rate in forbidden-called cells (1.7\% vs a 3.5\% base rate).  Gray-code adjacency is
 	enriched among native contacts ($1.178\times$, $p < 10^{-77}$), although a
 	code-permutation control places the assigned encoding only $z = 2.51$ above
 	random residue-to-code assignments; conserved column pairs are

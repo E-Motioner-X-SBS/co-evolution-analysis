@@ -68,6 +68,12 @@ checked against an independent exact QM and brute force (`analysis/exact_master_
 
 ² The partner at one position of a co-evolving pair is almost determined by the residue at the
 other: the variants are linked lineage alleles of one clonal population (`allseq_constraint_function.py`).
+Withholding the test sequence's relatives within 12 mismatches drops the accuracy to 67%, level with
+the 65% frequency baseline (`analysis/spike_lineage_loo.py`).
+
+In 3D, with same-separation controls and the 11 SWISS-MODEL templates as the independent units, none
+of the 10 co-evolving pairs is in contact more often than its sequence separation predicts
+(`analysis/spike_3d_matched_check.py`).
 
 Positions are 0-based alignment columns, not Spike residue numbers (in the RBD, Wuhan
 residue = column − 2). mfDCA on this alignment is not meaningful: all sequences are within 80%

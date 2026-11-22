@@ -7,8 +7,9 @@ identities and separation distances from approximately 100 PSICOV150 proteins,
 then evaluated on 50 entirely held-out proteins (maximum pairwise 5-mer
 Jaccard index 0.029 across all $\binom{150}{2}$ pairs).  The identity-level
 circuit achieved a mean top-$L/5$ precision of \textbf{0.179} ($5.1\times$
-enrichment over base rate 0.035), a $1.9\times$ improvement over plain MI
-(0.097), and a $15\times$ improvement over separation-only features (0.033).
+enrichment over base rate 0.035), $1.8\times$ plain MI (0.097) and $5\times$
+separation-only features (0.033), but level with APC-corrected MI (MIp, 0.176; Wilcoxon $p = 0.55$; five-fold CV 0.165 vs 0.189, MIp ahead in four folds).  The circuit re-encodes
+the signal MIp captures; it does not add to it.
 Binary classification at circuit membership achieved MCC $\approx$ 0.095 with
 enrichment of $2.5$--$2.8\times$.  Ranked precision was invariant across all
 nine labelling-threshold combinations tested.

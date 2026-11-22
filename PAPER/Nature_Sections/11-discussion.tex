@@ -8,12 +8,12 @@ minimisation, and prime-implicant extraction can be made machine-provable in
 Lean~4, and that the resulting Boolean circuits carry genuine structural
 information when applied to protein multiple sequence alignments.
 
-The principal finding is that the Karnaugh-map cell-rate prior carries
-orthogonal structural information demonstrable by rank-fusion with continuous
-DCA scores.  The fused predictor achieves prec@L/5 = 0.204, exceeding both
-the circuit alone (0.124) and DCA alone (0.169) at $p < 10^{-4}$.  This is
-the first evidence that Boolean-minimisation features improve continuous
-coevolutionary contact prediction.
+The rank-fusion result first reported here (0.204 vs 0.169 for DCA alone)
+reproduces but does not hold up: the DCA input was defective, and fused with
+a correct mean-field DCA (0.566 DI; 0.692 zero-sum-gauge APC-Frobenius) the
+Karnaugh-map prior lowers precision.  The circuits' predictive content
+matches APC-corrected mutual information; their value is interpretability
+and formal verification, not additional signal.
 
 The biological interpretation of learned circuit rules confirms known
 structural principles.  Level-1 essential implicants encode hydrophobic-core

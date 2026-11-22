@@ -96,6 +96,7 @@ separation only                                   & 4    & 0.0598 \\
 \multicolumn{3}{l}{\emph{Measured on the same benchmark:}} \\
 Trained circuit, held out (Sec.~\ref{sec:res-transfer}) & & 0.179 \\
 Plain mutual information                                & & 0.097 \\
+APC-corrected mutual information (MIp)                  & & 0.176 \\
 Published DCA~\cite{jones2012}                          & & 0.723 \\
 \bottomrule
 \end{tabular}
@@ -119,6 +120,6 @@ the bound depends only on the partition, the only lever is a finer partition
 separating contacting from non-contacting pairs \emph{within} existing cells.
 Adding a single crudely binned column statistic already lifts the ceiling from
 $0.1933$ to $0.2412$, whereas richer residue vocabularies lift nothing---which
-is the formal counterpart of the rank-fusion result of
-Section~\ref{sec:res-gray-fusion}, where combining the circuit with continuous
-DCA outperforms either alone.
+is consistent with the rank-fusion result of
+Section~\ref{sec:res-gray-fusion}: a score bounded by this ceiling cannot add
+to a pairwise DCA score that already reaches 0.57--0.69.

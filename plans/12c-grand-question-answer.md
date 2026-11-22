@@ -1,3 +1,7 @@
+> **Correction (Nov 2026):** the rank-fusion result below (0.204 vs 0.169) reproduces, but its DCA input
+> (`path_h.mfdca_di`) was defective. With a correct mfDCA (0.566 DI / 0.692 APC-Frobenius) fusing the
+> K-map prior lowers precision. See `analysis/dca_fusion_recheck.py` and CORRECTION_NOTICE A4.
+
 # 12c — Answering the Grand Questions (baseline, coupling, reconstruction)
 **Date:** Aug 22, 2026
 

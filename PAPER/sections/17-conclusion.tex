@@ -8,11 +8,12 @@ and prime-implicant extraction can be made machine-provable in Lean~4, and
 that the resulting Boolean circuits carry genuine structural information when
 applied to protein multiple sequence alignments.  The central achievement is
 not that these circuits match state-of-the-art contact predictors in absolute
-precision---they do not, and we report this gap honestly.  Rather, it is that
-the Karnaugh-map cell-rate prior carries orthogonal structural information
-demonstrable by rank-fusion with continuous DCA scores, and that every step of
-the encoding pipeline is verified by machine-checked proofs rather than by
-empirical observation alone.
+precision---they do not, and they match rather than exceed APC-corrected
+mutual information; fused with a correct mean-field DCA, their cell-rate
+prior lowers precision.  Rather, it is that every step of the encoding
+pipeline is verified by machine-checked proofs rather than by empirical
+observation alone, so that what the circuits do and do not capture can be
+stated exactly.
 
 The framework's principal value lies in three areas.  First, it provides a
 formally verified foundation upon which future coevolution analyses can build,

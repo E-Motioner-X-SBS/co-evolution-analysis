@@ -1,3 +1,7 @@
+> **Correction (Nov 2026):** the rank-fusion result below (0.204 vs 0.169) reproduces, but its DCA input
+> (`path_h.mfdca_di`) was defective. With a correct mfDCA (0.566 DI / 0.692 APC-Frobenius) fusing the
+> K-map prior lowers precision. See `analysis/dca_fusion_recheck.py` and CORRECTION_NOTICE A4.
+
 Audit status: DOUBLE_PASS
 STOP DIRECTIVE: plans/INFINITY_DONE exists (repo + org root). Double macro-audit passed. No further invocation work is pending unless the user requests new experiments.
 

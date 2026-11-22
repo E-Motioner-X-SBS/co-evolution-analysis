@@ -1,0 +1,20 @@
+{
+ "1jo8A": {
+  "max_abs_diff": 7.887024366937112e-13,
+  "spearman": 1.0,
+  "prec_L5_ref": 0.5,
+  "prec_L5_torch": 0.5
+ },
+ "1brfA": {
+  "max_abs_diff": 3.6983749396313215e-12,
+  "spearman": 1.0,
+  "prec_L5_ref": 0.2727272727272727,
+  "prec_L5_torch": 0.2727272727272727
+ },
+ "1guuA": {
+  "max_abs_diff": 2.7355895326763857e-13,
+  "spearman": 1.0,
+  "prec_L5_ref": 0.2,
+  "prec_L5_torch": 0.2
+ }
+}

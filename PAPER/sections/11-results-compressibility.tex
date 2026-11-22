@@ -18,9 +18,10 @@ and separation structure.
 
 \subsection{Result}
 All six proteins show lower compression ratios (#prime implicants / #contact
-cells) for real maps than for their shuffled counterparts.  The mean
-compression ratio is 2.31 for real maps versus 2.74 for shuffled controls,
-with a Wilcoxon signed-rank test $p$-value of 0.031 ($6/6$ consistent
-direction).  This demonstrates that protein geometry carries K-map-expressible
-structure that is not explained by contact density or separation distribution
-alone.
+cells) for real maps than for their shuffled counterparts.  With the exact
+minimiser the mean ratio is 1.11 for real maps versus 1.25 for shuffled
+controls (first reported as 2.31 vs 2.74 with a minimiser that under-merged),
+Wilcoxon signed-rank $p = 0.031$, $6/6$ in the same direction.  With six
+proteins, $p = 0.031$ is the smallest value a two-sided Wilcoxon test can
+return, so this is a consistent but small-sample effect: contact maps are
+somewhat more regular than density- and separation-matched shuffles.

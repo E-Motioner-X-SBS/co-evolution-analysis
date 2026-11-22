@@ -24,25 +24,28 @@ from result JSONs or from the cited literature; no number is approximated.
 		\multicolumn{5}{l}{\textit{Cross-protein circuit transfer}}                                                                 \\
 		Circuit prec@L/5              & QM circuit-L2                 & PSICOV150 holdout & 0.179           & $<10^{-4}$            \\
 		Circuit AUC                   & QM circuit-L2                 & PSICOV150 holdout & 0.638           & ---                   \\
+		MIp baseline prec@L/5         & APC-corrected MI              & PSICOV150 holdout & 0.176           & $p=0.55$              \\
+		5-fold CV, circuit vs MIp     & mean over folds               & PSICOV150         & 0.165 vs 0.189  & ---                   \\
 		\midrule
 		\multicolumn{5}{l}{\textit{Literature calibration}}                                                                         \\
 		PSICOV prec@L/5               & Published con/ files          & PSICOV150 natives & 0.727           & ---                   \\
-		Our mfDCA prec@L/5            & APC-Frobenius                 & PSICOV150 natives & 0.169           & ---                   \\
+		First mfDCA prec@L/5          & path\_h (defective)            & PSICOV150         & 0.169           & ---                   \\
+		Corrected mfDCA, DI           & direct information            & PSICOV150         & 0.566           & ---                   \\
+		Corrected mfDCA, Frobenius    & zero-sum gauge + APC          & PSICOV150         & 0.692           & ---                   \\
 		Calibration $\Delta$          & Ours vs.\ Jones               & ---               & 0.003           & ---                   \\
 		\midrule
-		\multicolumn{5}{l}{\textit{Rank fusion (the headline positive)}}                                                            \\
-		Fused prec@L/5                & ranksum(DCA+prior)            & PSICOV150 holdout & \textbf{0.204}  & $<10^{-4}$            \\
-		vs.\ rawDCA                   & Wilcoxon diff                 & ---               & $+0.036$        & $<10^{-4}$            \\
-		vs.\ circH                    & Wilcoxon diff                 & ---               & $+0.080$        & $<10^{-4}$            \\
-		Three-way (+MI)               & rank3way                      & ---               & 0.201           & $p=0.61$ (ns)         \\
+		\multicolumn{5}{l}{\textit{Rank fusion (5-fold CV, 150 proteins)}}                                                          \\
+		Fused, published DCA input    & ranksum(DCA+prior)            & PSICOV150         & 0.204           & $2{\times}10^{-5}$ \\
+		Fused, corrected DI           & ranksum(DI+prior)             & PSICOV150         & 0.471           & $4{\times}10^{-13}$ \\
+		Fused, corrected Frobenius    & ranksum(FN+prior)             & PSICOV150         & 0.565           & $5{\times}10^{-16}$ \\
 		\midrule
 		\multicolumn{5}{l}{\textit{Gray-code adjacency}}                                                                            \\
 		Enrichment at $d_G{=}1$       & vs.\ matched background       & PSICOV150         & 1.178$\times$   & $1.1{\times}10^{-77}$ \\
-		Permutation $z$-score         & vs.\ random codes             & PSICOV150         & 2.51            & $\approx$0.006        \\
+		Permutation $z$-score         & vs.\ 30 random codes          & PSICOV150         & 2.51            & $\leq 1/31$           \\
 		Conservation gradient         & Spearman($H$, contact)        & PSICOV150         & $-0.053$        & $\approx 0$           \\
 		\midrule
 		\multicolumn{5}{l}{\textit{Contact-map compressibility}}                                                                    \\
-		Real maps compress better     & QM cover ratio                & 6 small proteins  & 2.31 vs 2.74    & 0.031                 \\
+		Real maps compress better     & QM cover ratio                & 6 small proteins  & 1.11 vs 1.25    & 0.031                 \\
 		\midrule
 		\multicolumn{5}{l}{\textit{Complete circuit (two-sided)}}                                                                   \\
 		Positive precision            & groups$\times$sep$\times$cons & held-out          & 0.092           & ---                   \\
@@ -71,8 +74,9 @@ in training proteins, predict native contacts in entirely unseen proteins?
 \textbf{What we find:} Yes.  The identity-level circuit achieves a mean
 top-$L/5$ precision of 0.179 across five cross-validation folds and a fixed
 holdout split (Table~\ref{tab:transfer}).  This represents 5.1$\times$
-enrichment over random expectation (base rate 0.035) and 1.9$\times$ improvement
-over plain mutual information computed per-protein.
+enrichment over random expectation (base rate 0.035) and 1.8$\times$ plain
+mutual information computed per protein, but it is level with APC-corrected MI
+(MIp, 0.176 on the holdout; 0.189 vs 0.165 in five-fold CV).
 
 \textbf{Why it matters:} This is the first demonstration that
 Quine--McCluskey-minimised Karnaugh-map features carry transferable structural
@@ -82,9 +86,9 @@ single protein families; here we show the learned rules generalise.
 \textbf{Connection to other results:} The transfer precision exceeds plain MI
 because the Karnaugh map encodes discrete amino-acid identity patterns that
 capture compositional biases (hydrophobic-core packing, aromatic clustering)
-that raw covariation scores miss.  The rank-fusion experiment
-(Section~\ref{sec:results-fusion}) confirms this orthogonality by showing
-that fusing circuit and DCA scores outperforms either alone.
+that raw covariation scores miss.  APC-corrected MI captures the same
+signal (0.176), and fusing the circuit prior with a correct mean-field DCA
+lowers its precision (Section~\ref{sec:results-fusion}).
 
 \subsection{Result 2: Gray-Code Adjacency Is Enriched Among Native Contacts}
 
@@ -107,33 +111,32 @@ Spike protein found the same point estimate ($1.18\times$) but failed to reach
 significance ($p = 0.345$) with only 38 contact pairs.  The present analysis
 with three orders of magnitude more data resolves this: the effect is real.
 
-\subsection{Result 3: Rank Fusion Demonstrates Orthogonality}
+\subsection{Result 3: Rank Fusion Does Not Add to a Working DCA}
 
 \textbf{What we test:} Does the Karnaugh-map cell-rate prior carry information
 that continuous DCA scores do not?
 
-\textbf{What we find:} Yes.  Simple rank aggregation (sum of normalised ranks)
-of DCA and circuit scores yields prec@L/5 = 0.204, exceeding rawDCA (0.169;
-$p < 10^{-4}$) and circH (0.124; $p < 10^{-4}$).  The mechanism is
-coincidence-of-evidence amplification: all rescued pairs have above-median
-scores from both methods, indicating agreement between physics-based and
-identity-based evidence.
+\textbf{What we find:} No.  Rank aggregation lifts the first, defective DCA
+score from 0.169 to 0.204 (reproduced exactly), but lowers a correct
+mean-field DCA from 0.566 to 0.471 (DI) and from 0.692 to 0.565
+(zero-sum-gauge APC-Frobenius).
 
-\textbf{Biological interpretation:} The fused predictions are enriched for
-hydrophobic/aromatic core packing rules discovered by the circuit
-(AND$_1$: hydrophobic $\times$ aromatic at sep~[6,21)) that DCA's continuous
-scores underweight because they involve conserved residues with low
-covariation variance.
+\textbf{Interpretation:} The prior is a smoothed contact rate over 1{,}024
+coarse cells; equal-weight rank aggregation with it (or with MIp: DI$+$MIp
+gives 0.520) dilutes a strong pairwise score.  The earlier reading of the
+fused predictions as enriched for circuit packing rules has no surviving
+analysis and is withdrawn.
 
 \subsection{Result 4: Complete Circuit with Flipped Polarity and Conservation}
 
 \textbf{What we test:} Does adding negative-selection (flipped) constraints
 and conservation-pair types improve the two-sided classifier?
 
-\textbf{What we find:} Partially.  The flipped circuit transfers perfectly
-(specificity 98.3\%; forbidden cells show exactly the predicted $\leq$1.75\%
-contact rate on held-out proteins), confirming that negative-selection rules
-generalise.  Conservation-pair typing adds the cons/cons channel (3.2$\times$
+\textbf{What we find:} Partially.  The flipped circuit's calls transfer as
+trained: forbidden-called cells have a 1.7\% contact rate on held-out proteins,
+half the 3.5\% base rate, as the training labels require (specificity 98.3\%
+against a 96.5\% non-contact base rate).  This is a modest depletion, not
+near-perfect specificity.  Conservation-pair typing adds the cons/cons channel (3.2$\times$
 enrichment).  Combined definitive-call MCC is +0.169 at 22\% coverage.
 
 \subsection{Result 5: Reconstruction Is Not Yet Possible}

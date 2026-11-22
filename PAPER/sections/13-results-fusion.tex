@@ -4,15 +4,15 @@
 
 \subsection{Hypothesis}
 The Karnaugh-map cell-rate prior improves global ranking (AUC $0.658$) while
-degrading top-$K$ sharpness relative to raw DCA (AUC $0.583$).  We hypothesise
-that fusing the two signals via simple rank aggregation captures both
-properties: DCA provides continuous physics, while the K-map prior denoises
-phylogenetic and entropic bias.
+degrading top-$K$ sharpness relative to raw DCA (AUC $0.583$).  We
+hypothesised that fusing the two signals by rank aggregation captures both
+properties.
 
 \subsection{Fusion Rules}
 Five label-free fusion rules are evaluated on held-out proteins under the same
-five-fold protein-level cross-validation as PATH~B.  Each rule combines the
-APC-corrected Frobenius-norm DCA score with the Level-H cell-rate score:
+five-fold protein-level cross-validation as PATH~B.  Each rule combines a DCA
+score with the Level-H cell-rate score (cells: residue groups $\times$
+separation $\times$ DCA quartile, trained on the other folds):
 
 \begin{enumerate}[nosep]
 	\item \textbf{ranksum}: $\mathrm{rank}(\mathrm{DCA}) + \mathrm{rank}(\mathrm{prior})$
@@ -26,46 +26,70 @@ APC-corrected Frobenius-norm DCA score with the Level-H cell-rate score:
 \subsection{Result}
 \begin{table}[ht]
 	\centering
-	\caption{Rank-fusion results: mean precision@L/5 and AUC over five folds.}
+	\caption{Rank fusion on PSICOV150, five-fold protein CV (150 proteins):
+		mean precision@L/5 and AUC.  Top block: the published experiment,
+		re-run unchanged.  Bottom block: the same protocol with a working
+		mean-field DCA (\texttt{analysis/dca\_fusion\_recheck.py}).}
 	\label{tab:fusion}
 	\begin{tabular}{lcc}
 		\toprule
-		Method              & prec@L/5 (mean $\pm$ sd)   & AUC              \\
+		Method                                    & prec@L/5 (mean $\pm$ sd) & AUC     \\
 		\midrule
-		rawDCA alone        & $0.169 \pm 0.125$          & $0.583$          \\
-		circH (K-map prior) & $0.124 \pm 0.088$          & $\mathbf{0.658}$ \\
+		\multicolumn{3}{l}{\emph{Published DCA input (path\_h APC-Frobenius)}}        \\
+		rawDCA alone                              & $0.169 \pm 0.125$        & $0.583$ \\
+		circH (K-map prior)                       & $0.124 \pm 0.088$        & $0.658$ \\
+		ranksum                                   & $0.204 \pm 0.104$        & $0.638$ \\
+		geometric mean                            & $0.203 \pm 0.103$        & $0.634$ \\
+		product                                   & $0.199 \pm 0.108$        & $0.592$ \\
+		zsum                                      & $0.172 \pm 0.095$        & $0.641$ \\
+		DCA-gated                                 & $0.172 \pm 0.101$        & $0.635$ \\
 		\midrule
-		\textbf{ranksum}    & $\mathbf{0.204 \pm 0.104}$ & $0.638$          \\
-		geometric mean      & $0.203 \pm 0.103$          & $0.634$          \\
-		product             & $0.199 \pm 0.108$          & $0.592$          \\
-		zsum                & $0.172 \pm 0.095$          & $0.641$          \\
-		DCA-gated           & $0.172 \pm 0.101$          & $0.635$          \\
+		\multicolumn{3}{l}{\emph{Working mean-field DCA}}                            \\
+		DI (direct information)                   & $0.566 \pm 0.172$        & $0.637$ \\
+		\quad K-map prior on DI quartiles         & $0.208 \pm 0.129$        & $0.679$ \\
+		\quad ranksum(DI, prior)                  & $0.471 \pm 0.153$        & $0.674$ \\
+		APC-Frobenius, zero-sum gauge             & $\mathbf{0.692 \pm 0.172}$ & $0.758$ \\
+		\quad K-map prior on its quartiles        & $0.235 \pm 0.138$        & $0.752$ \\
+		\quad ranksum(Frobenius, prior)           & $0.565 \pm 0.191$        & $0.767$ \\
+		\midrule
+		MIp (APC-corrected MI)                    & $0.189 \pm 0.185$        & $0.676$ \\
 		\bottomrule
 	\end{tabular}
 \end{table}
 
-The rank-sum fusion achieves a mean top-$L/5$ precision of $0.204$,
-exceeding rawDCA ($p < 10^{-4}$, Wilcoxon signed-rank test on paired
-per-protein values) and circH ($p < 10^{-4}$).  The geometric-mean fusion
-performs comparably ($0.203$), while z-score sum and DCA-gated variants show
-smaller improvements that do not reach significance against rawDCA.
+Re-running the published experiment on regenerated DCA caches reproduces it
+to three decimals: rank-sum fusion reaches $0.204$ against $0.169$ for the
+DCA score alone (paired difference $+0.036$, 95\% protein-bootstrap interval
+$+0.017$ to $+0.054$, Wilcoxon $p = 1.8\times10^{-5}$).
+
+The DCA score used there, however, is defective.  Its pair frequencies are
+weighted by $W_n^3$ (the Gram matrix is built from one-hot vectors already
+multiplied by $W_n$ and then by $\sqrt{W_n}$) while its single-site
+frequencies use $W_n$, and its Frobenius norm is taken in the gauge left by the
+inversion rather than in the zero-sum gauge that APC-Frobenius scoring
+assumes~\cite{ekeberg2013}.  The result, $0.169$, is not better than
+APC-corrected MI ($0.189$, $p = 0.24$).  A standard mean-field DCA on the same
+alignments reaches $0.566$ (direct information) and $0.692$ (zero-sum-gauge
+APC-Frobenius), close to PSICOV's $0.727$.
+
+Against a working DCA the fusion does the opposite of the published claim.
+Rank-sum fusion with the K-map prior lowers precision@L/5 from $0.566$ to
+$0.471$ for DI ($-0.095$, interval $-0.116$ to $-0.073$, worse on 108 of 135
+proteins that change) and from $0.692$ to $0.565$ for the Frobenius score
+($-0.127$, interval $-0.151$ to $-0.103$).  The fusion raises AUC slightly
+(0.758 to 0.767), so the prior helps order the bulk of candidate pairs, but it
+costs the top of the ranking, which is what contact prediction uses.  The
+drop is not specific to the prior: equal-weight rank aggregation of DI with
+MIp lowers it too ($0.520$).  Rank aggregation with a much weaker score
+dilutes a strong one.  The published gain therefore reflects a weak DCA input
+being partly compensated, not information that DCA lacks.
 
 \subsection{Mechanistic Decomposition}
-To understand where the improvement originates, we decompose the fused
-top-$L/5$ predictions into three categories: shared hits (found by both DCA
-and the fusion), rescued contacts (found by the fusion but missed by DCA), and
-lost contacts (found by DCA but missed by the fusion).  Across all held-out
-proteins, the fusion rescues 264 contacts while losing 185, for a net gain of
-+79 correct pairs.  Critically, \emph{every rescued pair has an above-median
-	K-map prior}, confirming that the prior selectively amplifies pairs whose
-consensus-residue identity pattern is consistent with contact formation.
-No rescued pair has below-median DCA, indicating that the fusion does not
-promote weak-signal pairs but rather sharpens the ranking of pairs already
-moderately scored by physics.
+An earlier version reported that the fusion rescues 264 contacts and loses
+185, with every rescued pair above the prior's median.  The analysis behind
+those counts is not in the repository and could not be re-derived; we
+withdraw them.
 
 \subsection{Three-Way Fusion}
-Adding plain MI as a third signal to the two-way fusion (DCA + prior) does not
-improve performance: rank-3-way = $0.201$ vs.\ rank-2-way = $0.204$
-($p = 0.607$, Wilcoxon).  MI is redundant when both DCA and the K-map prior
-are present, confirming that the prior subsumes the information content of
-uncorrected mutual information at the consensus level.
+Adding plain MI as a third signal to the published two-way fusion does not
+change it (rank-3-way $0.201$ vs rank-2-way $0.204$, $p = 0.607$).

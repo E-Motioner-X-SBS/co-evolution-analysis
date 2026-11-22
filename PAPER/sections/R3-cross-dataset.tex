@@ -32,18 +32,29 @@ alignment depths, and structural sources.
 	\centering
 	\caption{Contact prediction enrichment across datasets (top-20 MI pairs vs.\ native contacts).}
 	\label{tab:cross-validation}
+	% PSICOV rows recomputed by analysis/psicov_top_pairs_check.py (column c = residue c+1).
 	\begin{tabular}{llrrl}
 		\toprule
 		Dataset    & Target       & Pairs mapped & Precision & Enrichment            \\
 		\midrule
-		PSICOV150  & mean of 150  & ---          & 0.066     & \textbf{2.49$\times$} \\
-		PSICOV150  & best (1dbxA) & ---          & ---       & 16.7$\times$          \\
+		PSICOV150  & mean of 150  & 20           & 0.071     & \textbf{2.38$\times$} \\
+		PSICOV150  & best (1ny1A) & 20           & 0.200     & 13.3$\times$          \\
 		GPCRdb     & b2ar (2RH1)  & 20           & 0.500     & \textbf{18.5$\times$} \\
 		Unit tests & 1whzA (1WHZ) & 20           & 0.250     & 8.1$\times$           \\
 		Unit tests & 1atzA (1ATZ) & 20           & 0.050     & 1.8$\times$           \\
 		\bottomrule
 	\end{tabular}
 \end{table}
+
+The PSICOV150 rows were recomputed with the correct column map (PSICOV
+alignments are numbered like the native chain; the first alignment row is a
+gapped homologue, so mapping through it was partly wrong) and with a random
+control that always draws inside the chain (\texttt{analysis/psicov\_top\_pairs\_check.py}):
+mean precision 0.071, mean enrichment 2.38$\times$, 67 of 150 targets above
+2$\times$ (first reported 0.066 and 2.49$\times$).  The GPCRdb and unit-test rows
+use the same first-row mapping and control and were not re-run (their
+alignments are not part of this repository); they rest on 20 pairs each and
+should be read as anecdotes.
 
 The $\beta_2$-adrenergic receptor (b2AR) shows the strongest enrichment
 (18.5$\times$), consistent with its deep alignment (136 sequences) and
@@ -54,32 +65,17 @@ of 5-HT1A.
 
 \subsection{Omicron Spike Structural Validation}
 
-For the Omicron Spike, we validated co-evolving position pairs against 299
-SWISS-MODEL homology structures.  Among ten co-evolving pairs detected by our
-pipeline, seven achieve significant enrichment for native contacts:
-
-\begin{table}[ht]
-	\centering
-	\caption{Structurally validated co-evolving pairs on the Omicron Spike.}
-	\label{tab:spike-validation}
-	\begin{tabular}{lccl}
-		\toprule
-		Pair       & Contact frac. & Enrichment   & Domain         \\
-		\midrule
-		(500, 503) & ---           & 11.3$\times$ & RBD            \\
-		(503, 507) & ---           & 11.3$\times$ & RBD            \\
-		(407, 410) & 88.9\%        & 10.0$\times$ & RBD            \\
-		(454, 495) & ---           & 5.97$\times$ & RBD (DCA-only) \\
-		(210, 214) & ---           & 4.33$\times$ & NTD            \\
-		(212, 215) & ---           & 3.91$\times$ & NTD            \\
-		(210, 215) & ---           & 3.71$\times$ & NTD            \\
-		\bottomrule
-	\end{tabular}
-\end{table}
-
-Pairs in the 442--498 cluster show strong covariation but no structural
-enrichment, demonstrating that our framework correctly distinguishes
-contact-driven coevolution from lineage-specific phylogenetic signal.
+For the Omicron Spike, the co-evolving pairs were checked against the 299
+SWISS-MODEL models with same-separation controls and templates as the unit
+(Section~\ref{sec:results-spike}, Table~\ref{tab:spike-3d}).  None of the ten
+co-evolving pairs is in contact more often than residue pairs at the same
+sequence separation.  The pairs (407, 410), (500, 503) and (503, 507) are
+enriched against that control, but they are $i,i{+}3$/$i,i{+}4$ pairs that are
+close in every Spike structure.  The earlier table here (seven pairs at
+3.7--11.3$\times$, including a ``DCA-only'' pair (454, 495)) used a control
+pooled over separations and a binomial test over models; mfDCA on this
+alignment has $M_{\text{eff}} = 1$ (every sequence lies within 80\% identity
+of every other), so it cannot single out pairs either.
 
 \subsection{Literature Calibration}
 
@@ -97,10 +93,10 @@ ground truth.
 
 \subsection{mfDCA Benchmark Validation}
 
-Our own mean-field DCA implementation achieves prec@L/5 = 0.169 on PSICOV150
-(all separations), which is consistent with published mfDCA benchmarks on this
-dataset (approximately 0.15--0.20 depending on Neff filtering).  The gap to
-PSICOV's 0.73 reflects the methodological difference between simple covariance
-inversion and $\ell_1$-regularised sparse estimation, not an implementation
-error.  Three bugs were identified during development and are documented in
-Section~\ref{sec:results-coupling}.
+Our first mean-field DCA implementation achieved prec@L/5 = 0.169 on
+PSICOV150, which we described as consistent with mean-field benchmarks.  It
+was not: a corrected mean-field DCA reaches 0.566 (direct information) and
+0.692 (zero-sum-gauge APC-Frobenius) on the same alignments, against PSICOV's
+0.727.  The remaining defects ($W^3$ pair weighting, non-zero-sum gauge) and
+their effect on the rank-fusion result are described in
+Section~\ref{sec:results-fusion}.

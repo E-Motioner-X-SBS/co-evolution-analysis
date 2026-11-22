@@ -15,8 +15,8 @@ evolutionary history with the training set (maximum pairwise 5-mer Jaccard
 index 0.029 across all $\binom{150}{2}$ pairs).  The identity-level circuit
 achieved a mean top-$L/5$ precision of \textbf{0.179} on held-out proteins,
 representing $5.1\times$ enrichment over the random expectation of 0.035 and
-a $1.9\times$ improvement over plain mutual information computed per-protein
-(0.097).  The group-level circuit achieved 0.142.
+$1.8\times$ plain mutual information computed per protein (0.097), but
+level with APC-corrected MI (MIp, 0.176; Wilcoxon $p = 0.55$; five-fold CV 0.165 vs 0.189, MIp ahead in four folds).  The group-level circuit achieved 0.142.
 
 At the circuit-membership threshold, the binary classifier achieved MCC
 $\approx 0.095$ with enrichment of $2.5$--$2.8\times$.  Sensitivity analysis
@@ -66,46 +66,45 @@ identical point estimate ($1.18\times$) but failed to reach significance
 analysis with three orders of magnitude more data resolves this ambiguity:
 the effect is real but requires adequate statistical power to detect.
 
-\subsection{Rank fusion improves DCA ranking}
+\subsection{Rank fusion with DCA}
 \label{sec:res-fusion}
-
-The Karnaugh-map cell-rate prior improved global ranking (circuit AUC 0.658
-vs.\ DCA AUC 0.583) while degrading top-$K$ sharpness relative to raw DCA.
-We hypothesised that fusing the two signals via rank aggregation would capture
-both properties.  Five fusion rules were evaluated under identical protein-level
-cross-validation:
 
 \begin{table}[ht]
 	\centering
-	\caption{Rank-fusion results over five-fold protein-level cross-validation.}
+	\caption{Rank fusion over five-fold protein-level CV (150 proteins).  Top:
+		the published experiment, re-run unchanged.  Bottom: a working mean-field DCA.}
 	\label{tab:fusion}
 	\begin{tabular}{lcc}
 		\toprule
-		Method            & prec@L/5 (mean $\pm$ sd)   & AUC            \\
+		Method                          & prec@L/5 (mean $\pm$ sd)   & AUC   \\
 		\midrule
-		rawDCA alone      & $0.169 \pm 0.125$          & 0.583          \\
-		circH prior alone & $0.124 \pm 0.088$          & \textbf{0.658} \\
+		rawDCA (published input)        & $0.169 \pm 0.125$          & 0.583 \\
+		circH prior alone               & $0.124 \pm 0.088$          & 0.658 \\
+		ranksum                         & $0.204 \pm 0.104$          & 0.638 \\
 		\midrule
-		\textbf{ranksum}  & $\mathbf{0.204 \pm 0.104}$ & 0.638          \\
-		geometric mean    & $0.203 \pm 0.103$          & 0.634          \\
-		product           & $0.199 \pm 0.108$          & 0.592          \\
+		DI (corrected mfDCA)            & $0.566 \pm 0.172$          & 0.637 \\
+		\quad ranksum(DI, prior)        & $0.471 \pm 0.153$          & 0.674 \\
+		APC-Frobenius, zero-sum gauge   & $\mathbf{0.692 \pm 0.172}$ & 0.758 \\
+		\quad ranksum(Frobenius, prior) & $0.565 \pm 0.191$          & 0.767 \\
+		MIp                             & $0.189 \pm 0.185$          & 0.676 \\
 		\bottomrule
 	\end{tabular}
 \end{table}
 
-The rank-sum fusion achieved prec@L/5 = \textbf{0.204}, exceeding rawDCA
-(Wilcoxon $p < 10^{-4}$, mean difference $+0.036$) and circH ($p < 10^{-4}$,
-mean difference $+0.080$).  Cohen's $d = 0.31$ with a bootstrap 95\% CI of
-$[0.017, 0.054]$ on the paired difference.  Mechanistic decomposition revealed
-that all rescued pairs had above-median scores from \emph{both} methods,
-confirming coincidence-of-evidence amplification rather than rescue of weak
-signals.  Adding plain MI as a third signal did not improve further
-(three-way 0.201 vs.\ two-way 0.204, $p = 0.607$).
-
-This constitutes the first demonstration that Karnaugh-map-derived features
-carry structural information orthogonal to continuous coupling scores from
-DCA, providing a novel post-processing step applicable to any existing
-coevolution pipeline.
+Re-run unchanged, the published experiment reproduces: rank-sum fusion
+reaches 0.204 against 0.169 for its DCA input (paired difference $+0.036$,
+95\% CI $[0.017, 0.054]$).  That DCA input is defective, however: it weights
+pair frequencies by $W^3$ and takes the Frobenius norm outside the zero-sum
+gauge, and at 0.169 it is no better than APC-corrected MI (0.189, $p = 0.24$).
+A standard mean-field DCA on the same alignments reaches 0.566 (direct
+information) and 0.692 (zero-sum-gauge APC-Frobenius).  Fused with either, the
+K-map prior lowers precision@L/5 (to 0.471 and 0.565; $-0.095$ and $-0.127$,
+$p < 10^{-12}$), while raising AUC slightly.  Equal-weight rank aggregation
+with any much weaker score dilutes a strong one (DI with MIp: 0.520).  The
+published gain reflects a weak DCA being partly compensated; it is not
+evidence that the circuit carries information DCA lacks.  The earlier
+``mechanistic decomposition'' counts have no surviving analysis and are
+withdrawn.
 
 \subsection{Flipped circuits generalise across proteins}
 \label{sec:res-flipped}
@@ -114,9 +113,7 @@ In addition to positive (mutation-detecting) maps, we constructed flipped maps
 in which ON cells represent never-observed residue combinations, i.e. negative
 selection constraints.  When trained on PSICOV proteins and applied to
 held-out proteins, the flipped circuit achieved a specificity of
-\textbf{98.3\%}: forbidden-called cells showed exactly the predicted
-$\leq 1.75\%$ contact rate on unseen proteins, matching the training-set
-upper bound almost perfectly.
+98.3\%: forbidden-called cells had a 1.7\% contact rate on unseen proteins, half the 3.5\% base rate and within the training bound of 1.75\% (a classifier calling every pair a non-contact already scores 96.5\%).
 
 Combined with the positive channel, the two-sided classifier achieved MCC =
 $+0.169$ over definitive calls (22\% coverage), confirming that both polarity
@@ -149,10 +146,10 @@ For six PSICOV proteins small enough for exact Quine--McCluskey minimisation
 of a padded $64 \times 64$ grid, we compared the compression ratio (\# prime
 implicants / \# contact cells) between real contact matrices and controls whose
 labels were shuffled within separation bins.  Real maps required fewer prime
-implicants than shuffled controls in all six cases (mean 2.31 vs 2.74;
-Wilcoxon $p = 0.031$), demonstrating that three-dimensional geometry carries
-Karnaugh-map-expressible regularity beyond what density and separation
-structure alone explain.
+implicants than shuffled controls in all six cases (mean 1.11 vs 1.25 with
+the exact minimiser; Wilcoxon $p = 0.031$, the smallest value possible with
+six proteins), a consistent but small-sample sign that contact maps are more
+regular than density- and separation-matched shuffles.
 
 \subsection{Reconstruction assessment}
 \label{sec:res-reconstruction}

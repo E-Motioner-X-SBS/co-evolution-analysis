@@ -388,7 +388,7 @@ byte-compare-verified re-runs; coverage audit 0 flags on 3,732 runs.
 
 | Question | Answer | Evidence |
 |---|---|---|
-| Is the co-evolution signal structural? | **Weakly at best** — the 6 "contact" pairs (500,503), (503,507), (407,410), (210,214), (212,215), (210,215) are 3–5 residues apart (near-automatic Cβ contacts; the literature convention excludes \|i−j\| < 6), their control is not separation-matched per pair, and the 299 models come from 10 templates, so the p-values are not independent | validate_3d_complete |
+| Is the co-evolution signal structural? | **No** — against residue pairs at the same separation, with the 11 templates as units, none of the 10 co-evolving pairs is enriched; only the i,i+3/4 pairs (407,410), (500,503), (503,507) are (a property of the fold). The earlier 3.4–10.5× used a pooled-separation control and a binomial over 299 models | validate_3d_complete → analysis/spike_3d_matched_check |
 | Where does it fail? | The 442–498 cluster and (373,378): 13–27 Å apart — immune/lineage covariation | validate_3d_complete |
 | Prime implicants? | 210/212–215 rules fire on contacts (2.8×); pooled 0.58× | validate_residue_rules_3d |
 | Flipped rules? | Steric at 210/212–215; rarity overall | validate_flipped_3d |
@@ -449,8 +449,8 @@ control z=2.51); map-compression 6/6 p=0.031; determinism md5-stable ×5.
 |---|---|
 | Tension mechanism (G): no lift | circ-G 0.154 < circ-L2 0.165; hubs anti-correlated |
 | mfDCA-in-K-map (H): no lift from DI bins | circH 0.124 < L1 0.134 < L2 0.165 |
-| Our mfDCA matches published benchmarks | 0.169 ≈ literature 0.15–0.20 |
-| **Rank-fusion: K-map prior + DCA** | **0.204 prec@L/5, p≈0 vs both parents** |
+| Our mfDCA matches published benchmarks | **No** — path_h's 0.169 has W³ pair weighting and a non-zero-sum gauge; a correct mfDCA gives 0.566 (DI) / 0.692 (zero-sum APC-Frobenius) (`analysis/dca_fusion_recheck.py`) |
+| Rank-fusion: K-map prior + DCA | reproduces (0.204 vs 0.169), but with a correct mfDCA the fusion **lowers** prec@L/5: DI 0.566 → 0.471, Frobenius 0.692 → 0.565 |
 | Reconstruction verdict (I) | circuits NOT ready (recall@L 2.8%); PSICOV's published predictions are (21.8%) |
 | Complete circuit (K): flipped transfers | specificity 98.3%; cons/cons 3.2× enriched |
 | Gray adjacency at scale | 1.178×, p=1e-77; permutation z=2.51 |

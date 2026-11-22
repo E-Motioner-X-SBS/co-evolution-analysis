@@ -30,13 +30,15 @@ outperforms random encodings ($z = 2.51$), but the majority of the raw
 enrichment reflects generic chemistry clustering that any grouped encoding
 would capture.
 
-\subsection{Iterative DI Is Unreliable on Conserved-Rich Families}
-Our mean-field implementation of iterative direct information produces
-anti-predictive rankings (AUC $\approx 0.41$) on PSICOV proteins with many
-fully conserved columns, due to pseudo-inverse conditioning of the covariance
-matrix when variance approaches zero for locked positions.  We adopt the
-APC-corrected Frobenius norm as primary DCA score; this choice is validated
-against native contacts and matches published mean-field benchmarks.
+\subsection{Iterative DI Was Mis-Signed, Not Unreliable}
+An earlier version of this section reported that iterative direct
+information is anti-predictive (AUC $\approx 0.41$) on families with many
+conserved columns, and the APC-Frobenius score was adopted instead.  The
+cause was an implementation error: the direct-pair model used
+$\exp(-e_{ij})$ instead of $\exp(e_{ij})$ with $e_{ij} = -C^{-1}$.  With the
+sign corrected, DI reaches mean prec@L/5 $= 0.566$ over the 150 PSICOV
+targets (\texttt{analysis/mfdca\_psicov\_check.py}), the best of the
+mean-field scores we computed.
 
 \subsection{Cross-Dataset Generalisation Requires Format-Specific Parsing}
 A pilot evaluation on three EVmutation proteins produced inconclusive results

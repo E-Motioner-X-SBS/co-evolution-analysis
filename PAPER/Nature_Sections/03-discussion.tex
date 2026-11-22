@@ -10,10 +10,10 @@ discrete mathematical structures interact with protein coevolution analysis.
 First, we demonstrate that Quine--McCluskey-minimised Karnaugh-map circuits,
 learned from consensus-residue identities in training proteins, transfer to
 held-out proteins at $5.1\times$ random enrichment for native contacts.
-Second, we show that the cell-rate prior derived from these circuits improves
-continuous DCA ranking when fused via rank aggregation, providing the first
-evidence that Boolean-minimisation features carry structural information
-orthogonal to standard covariation analysis.  Third, we confirm at proper
+Second, we find that the cell-rate prior derived from these circuits does
+not add to a correct mean-field DCA: the published fusion gain was measured
+against a defective DCA score, and fused with a working one the prior lowers
+precision.  Third, we confirm at proper
 statistical power ($p < 10^{-77}$) that Gray-code adjacency is enriched among
 native contacts and demonstrate through permutation testing that this
 enrichment is specific to the He/Gray encoding rather than an artefact of
@@ -21,13 +21,14 @@ generic chemistry clustering.
 
 \subsection{Comparison with existing methods}
 Our circuits achieve prec@L/5 = 0.179 on held-out proteins, which is
-substantially below PSICOV's sparse inverse covariance method (0.727) but
-above plain mutual information without correction (0.097).  The gap reflects
+substantially below PSICOV's sparse inverse covariance method (0.727), above
+plain mutual information without correction (0.097), and level with
+APC-corrected MI (0.176).  The gap reflects
 the fundamental difference between discrete consensus-identity encoding with
 Boolean minimisation and continuous covariance-based inference with
 phylogenetic correction.  These approaches are complementary rather than
-competing: the rank-fusion experiment demonstrates that combining them yields
-better predictions than either alone.
+competing, but the rank-fusion experiment shows that naive combination does
+not help: with a correct mean-field DCA the fused ranking is worse.
 
 The biological interpretation of learned circuit rules is a key advantage
 over neural-network-based methods.  Our Level-1 essential implicants encode

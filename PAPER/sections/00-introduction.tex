@@ -47,13 +47,12 @@ observations against native experimental structures, and demonstrate that the
 resulting Boolean circuits transfer across proteins: a universal contact
 circuit trained on approximately one hundred proteins predicts native contacts
 on held-out proteins at a mean top-$L/5$ precision of $0.179$, corresponding
-to $5.1\times$ enrichment over random expectation.  Third, we show that the
-Karnaugh-map cell-rate prior, when fused with mean-field DCA scores via simple
-rank aggregation, yields a hybrid predictor that exceeds both individual
-methods ($0.204$ vs.\ $0.169$ for DCA alone and $0.124$ for the circuit alone;
-$p < 10^{-4}$ by Wilcoxon signed-rank test), providing the first demonstration
-that Boolean-minimisation-derived features carry orthogonal structural
-information not present in continuous coupling scores.
+to $5.1\times$ enrichment over random expectation, level with APC-corrected
+mutual information.  Third, we test whether the Karnaugh-map cell-rate prior
+adds to mean-field DCA: rank fusion raised our first DCA score from $0.169$ to
+$0.204$, but that score was defective, and with a correct mean-field DCA
+($0.566$) the fusion lowers precision to $0.471$, so we find no evidence that
+the circuit carries information DCA lacks.
 
 We further report honest negative results.  An attention-style ``tension''
 mechanism, which normalises each position's mutual-information profile by its

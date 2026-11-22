@@ -100,9 +100,11 @@ are linked alleles of one clonal population.
 
 1. **Strongest co-evolution:** (373,378) MI = 0.8067 — but this pair is NOT
    3D-close (13–27 Å); its covariation is immune/lineage-driven.
-2. **Pairs in 3D contact:** (407,410), (210,214), (212,215), (210,215), (500,503),
-   (503,507) — but all are 3–5 residues apart in sequence (near-automatic Cβ
-   contacts), so this is weak evidence; the 299 models come from 10 templates.
+2. **Pairs in 3D contact:** re-tested against residue pairs at the same sequence
+   separation, with the 11 templates as units (`analysis/spike_3d_matched_check.py`):
+   none of the 10 co-evolving pairs is enriched (the five 442–498 RBD pairs are in
+   contact in 0/11 templates); only the i,i+3/4 pairs (407,410), (500,503), (503,507)
+   are, which reflects the fold, not co-evolution.
 3. **Never-observed combinations:** 246 cubes; absence of evidence in 299 unique
    sequences, not demonstrated incompatibility.
 4. **Network:** 21 variable positions, 8 edges — small, interpretable.
@@ -112,7 +114,8 @@ are linked alleles of one clonal population.
 7. **Perplexity ratio** correlates with 3D contact (ρ = 0.67, p = 0.006, n = 15
    pairs; same template caveat).
 8. **LOO-CV 99.4%:** the residue at one position of a pair nearly determines the
-   other (linkage).
+   other (linkage). Withholding relatives within 12 mismatches: 67.3% vs 65.0%
+   frequency baseline (`analysis/spike_lineage_loo.py`).
 
 ---
 

@@ -22,7 +22,7 @@ characterised protein family.
 		Unique sequences                         & 299 (587 identical copies of dominant variant) \\
 		Variable positions ($H > 0.3$)           & 21 of 1{,}276                                  \\
 		Co-evolving pairs (mut.-only MI $> 0.1$) & 10                                             \\
-		Forbidden rules (flipped QM)             & 490                                            \\
+		Never-observed cubes (flipped QM)        & 246                                            \\
 		Conserved positions                      & 1{,}255                                        \\
 		Mean mutations per sequence              & 11.1                                           \\
 		\bottomrule
@@ -67,60 +67,88 @@ producing strong mutation correlation without necessarily implying physical
 contact.
 
 \subsection{Prime Implicants and Essential Rules}
-Quine--McCluskey minimisation over ten co-evolving pairs produces 36 distinct
-prime implicants, of which exactly 2 are essential (the minimal irredundant
-core):
-\begin{align}
-	 & \textbf{Rule E1:} \quad \text{pos}212 = \text{G} \;\wedge\; \text{pos}216 = \text{R}, \\
-	 & \textbf{Rule E2:} \quad \text{pos}210 = \text{K} \;\wedge\; \text{pos}215 = \text{G}.
-\end{align}
-Each essential rule fires in only one of 1{,}299 sequences, reflecting the
-rarity of the specific double-mutant combination.  The remaining 34 non-essential
-implicants cover the broader coevolutionary landscape at each pair.
+Quine--McCluskey minimisation over the ten co-evolving pairs (padded
+$32\times32$ mutation maps, reference pair and padding as don't-cares)
+produces 36 prime implicants, of which 35 are essential; the essential set is
+also the minimum cover.  Nearly every observed co-mutation is an isolated
+cell of its map, so it has exactly one covering implicant; only a few cubes
+merge two residues on one axis, e.g.
+\begin{equation}
+	\text{pos}495 \in \{\text{Q},\text{R}\} \;\wedge\; \text{pos}498 = \text{G}.
+\end{equation}
+The minimisation therefore compresses the observed combinations very little:
+the circuit is close to a list of the double mutants seen in the alignment.
+(A first version reported ``2 essential'' implicants; that count came from a
+bookkeeping defect in the minimiser, corrected in \texttt{kmap\_sbm} and
+checked against brute force.)  Positions are 0-based alignment columns; in
+the RBD, Wuhan-Hu-1 residue $=$ column $- 2$.
 
 \subsection{Flipped Circuit: Forbidden Combinations}
 Applying Quine--McCluskey to the flipped maps (ON = never observed, OFF =
-observed, DC = reference) produces 490 forbidden rules across 117 unique
-residue-pair identities.  These represent negative-selection constraints:
-combinations that are never sampled across 1{,}299 sequences despite adequate
-sampling depth at both positions.
-
-Three-dimensional validation reveals that forbidden pairs at the NTD
-positions (210, 215) and (212, 215) sit at contact-compatible distances
-(enrichment $2.57\times$ and $2.71\times$ respectively), consistent with
-steric incompatibility driving their absence.  Forbidden pairs in the
-442--498 cluster show no such enrichment, supporting their interpretation as
-lineage-covariation artefacts rather than structural constraints.
+observed, DC = reference) produces 246 never-observed cubes over the ten
+pairs (52 essential).  With 1{,}299 sequences of which only 299 are unique,
+all from one clonal population, a combination that was never observed is
+absence of evidence, not a demonstrated negative-selection constraint.  In
+the separation-matched 3D test below, the NTD pairs (210, 215) and (212, 215)
+are not in contact more often than other residue pairs at the same sequence
+separation, so the earlier steric reading of their forbidden cells is not
+supported.
 
 \subsection{Structural Validation Against 299 Homology Models}
 We mapped each alignment column to the corresponding residue in the best-GMQE
-SWISS-MODEL structure (identity mapping verified for all 299 unique
-sequences).  Among the ten co-evolving pairs:
+SWISS-MODEL model of each of the 299 unique sequences (column-to-residue map
+verified against the model's target sequence) and called a contact when the
+C$\beta$--C$\beta$ distance is below 8\,\AA{}.  Two features of these data
+decide how the contact rates can be tested.  First, most candidate pairs are
+only 3--5 residues apart, where a contact is close to automatic; the expected
+rate must come from residue pairs at the \emph{same} separation (all of
+chain~A, and within $\pm30$ residues of the pair), not from a control pooled
+over all separations.  Second, the models are built on 11 templates, one of
+which (8d55) supplies 203 of the 299 models, so the independent units are the
+templates, not the models.  Table~\ref{tab:spike-3d} uses both
+(\texttt{analysis/spike\_3d\_matched\_check.py}).
 
 \begin{table}[ht]
 	\centering
-	\caption{3D validation of co-evolving pairs against SWISS-MODEL structures.}
+	\caption{Spike pairs in 3D against same-separation controls; template-level
+		binomial test against the local same-separation rate.  The first ten rows
+		are the co-evolving pairs; the last three were reported as contacts by
+		other scripts.}
 	\label{tab:spike-3d}
-	\begin{tabular}{lcccl}
+	\begin{tabular}{lccccc}
 		\toprule
-		Pair       & Contact frac. & Enrichment   & Median \AA{} & Region         \\
+		Pair       & Sep.    & Contact & Expected (all / local) & Templates & $p_{\text{tpl}}$  \\
 		\midrule
-		(407, 410) & 88.6\%        & 6.97$\times$ & 6.7          & RBD            \\
-		(212, 215) & 35.4\%        & 2.78$\times$ & 8.5          & NTD            \\
-		(210, 215) & 29.3\%        & 2.30$\times$ & 11.0         & NTD            \\
-		(500, 503) & ---           & 11.3$\times$ & 5.3          & RBD            \\
-		(503, 507) & ---           & 11.3$\times$ & 5.0          & RBD            \\
-		(454, 495) & ---           & 5.97$\times$ & 8.0          & RBD (DCA-only) \\
+		(495, 498) & 3       & 0.00    & 0.35 / 0.15            & 0/11      & 1                 \\
+		(448, 454) & 2--6    & 0.00    & 0.06 / 0.06            & 0/11      & 1                 \\
+		(488, 498) & 9--10   & 0.00    & 0.04 / 0.07            & 0/11      & 1                 \\
+		(442, 454) & 8--12   & 0.00    & 0.04 / 0.01            & 0/11      & 1                 \\
+		(442, 448) & 5--6    & 0.00    & 0.06 / 0.05            & 0/11      & 1                 \\
+		(212, 215) & 1--3    & 0.43    & 0.43 / 0.23            & 5/10      & 0.07              \\
+		(215, 216) & 1       & 1.00    & 1.00 / 1.00            & 11/11     & 1                 \\
+		(212, 216) & 1--4    & 0.11    & 0.35 / 0.16            & 2/10      & 0.59              \\
+		(210, 215) & 1--5    & 0.81    & 0.66 / 0.65            & 4/11      & 0.48              \\
+		(210, 212) & 1--2    & 1.00    & 1.00 / 1.00            & 10/10     & 0.93              \\
+		\midrule
+		(407, 410) & 3       & 0.89    & 0.35 / 0.31            & 8/11      & 0.004             \\
+		(500, 503) & 3       & 1.00    & 0.35 / 0.16            & 11/11     & $1.5\times10^{-9}$ \\
+		(503, 507) & 4       & 1.00    & 0.27 / 0.15            & 10/11     & $10^{-8}$         \\
 		\bottomrule
 	\end{tabular}
 \end{table}
 
-Seven pairs achieve enrichment $\geq 2\times$ with $p < 10^{-6}$, confirming
-that the Karnaugh-map framework detects genuine structural signal.  However,
-the strongest full-MI pair (373, 378; MI $= 0.807$) shows zero enrichment,
-demonstrating that high covariation does not necessarily imply physical
-proximity when the underlying cause is shared phylogenetic history rather
-than structural constraint.
+None of the ten co-evolving pairs is in contact more often than residue pairs
+at the same separation: the five RBD pairs of the 442--498 cluster are never
+in contact, and the NTD pairs sit at the rate their separation predicts (the
+NTD separations vary because of the Omicron deletions).  The three pairs that
+are enriched, (407, 410), (500, 503) and (503, 507), are $i,i{+}3$ and
+$i,i{+}4$ pairs that are close in every Spike structure; their contact is a
+property of the fold and does not single out co-evolution.  An earlier
+version of this table reported 2.3--11.3$\times$ enrichments with
+$p < 10^{-6}$, from a pooled-separation control and a binomial test over the
+299 models; with matched controls and templates as units that evidence does
+not hold.  The strongest full-MI pair (373, 378; MI $= 0.807$) is not in
+contact either.
 
 \subsection{Perplexity Ratio as a Structural Predictor}
 Among all sequence-derived metrics evaluated on the Spike, the perplexity
@@ -132,7 +160,46 @@ Near-deterministic pairs (ratio $> 1.5$) are enriched for contacts at
 $1.80\times$, while low-ratio pairs show no enrichment.  This suggests that
 perplexity ratio captures a property of coevolution---near-determinism of the
 amino-acid relationship---that raw MI does not distinguish from noisy
-covariation.
+covariation.  The correlation is over 15 pairs and uses the per-model contact
+fractions of the pooled-control analysis, so it carries the same template
+caveat as the original 3D table and should be read as exploratory.
+
+\subsection{Partner Prediction and Lineage Linkage}
+For every sequence carrying a mutation at one of the ten pairs, the
+constraint function $C(a,b) = \ln\frac{P(a,b)}{P(a)P(b)}$, built from the
+other 1{,}298 sequences, predicts its residue at $j$ from its residue at $i$
+(argmax over partners that co-occur with $a$).  Leave-one-out accuracy is
+99.4\% (3{,}241/3{,}259; conditional-frequency baseline $\arg\max_b P(b\mid a)$:
+65.5\%).  The earlier 9.24\% came from taking the argmax of an
+$\varepsilon$-smoothed $C$ over all 20 residues, where a never-observed partner
+scores $\ln(1/P(a)) > 0$ and wins.
+
+The high accuracy is linkage within one clonal population, not a portable
+rule.  Withholding, together with the test sequence, every training sequence
+within $h$ mismatches of it (\texttt{analysis/spike\_lineage\_loo.py};
+median pairwise distance 1, 90th percentile 12) gives:
+
+\begin{table}[ht]
+	\centering
+	\caption{Partner prediction with the test sequence's relatives withheld.}
+	\label{tab:spike-lineage-loo}
+	\begin{tabular}{rcccc}
+		\toprule
+		$h$       & Withheld (mean) & Coverage & Constraint function & Conditional baseline \\
+		\midrule
+		LOO       & 1               & 0.999    & 0.995               & 0.656                \\
+		0         & 201             & 0.999    & 0.963               & 0.656                \\
+		2         & 339             & 0.990    & 0.953               & 0.653                \\
+		5         & 367             & 0.990    & 0.865               & 0.653                \\
+		12        & 879             & 0.973    & 0.673               & 0.650                \\
+		20        & 999             & 0.542    & 0.458               & 0.614                \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+Once the test sequence's lineage is withheld ($h = 12$) the constraint
+function is no better than the frequency baseline, and at $h = 20$ it is
+worse and can predict only half of the mutations.
 
 \subsection{Conserved Core Analysis}
 Of the 1{,}276 alignment columns, 1{,}255 are conserved ($H < 0.3$).  These
