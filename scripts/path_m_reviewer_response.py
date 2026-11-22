@@ -56,9 +56,11 @@ def m1_per_protein_variance(hs):
                          "n": v.get("n")})
     # Count how many proteins have prec > base rate
     pp = hs.get("per_protein", [])
+    # per-protein base rate = contacts / candidate pairs (the records do not
+    # carry a "base_rate" key; reading it with default 1 counted nothing)
     l2_above_base = sum(1 for r in pp
                         if r.get("L2", {}).get("ranked", {}).get("prec@L/5", 0)
-                        > r.get("base_rate", 1))
+                        > r["n_contacts"] / max(r["n_pairs"], 1))
     total = len(pp)
     return {"summary": vals,
             "proteins_above_base": f"{l2_above_base}/{total}",
@@ -201,32 +203,23 @@ def m3_separation_ablation(train_names, test_names, caches):
 
 # ── M4: MIp baseline ──
 def m4_mip_baseline(test_names, caches):
-    """Compute APC-corrected MI (MIp) and compare against raw MI."""
+    """APC-corrected MI (MIp, Dunn 2008) against raw MI on held-out proteins."""
     results = {"raw_MI": [], "MIp": []}
     for name in test_names:
         tc = caches[name]
         mi = np.nan_to_num(tc.mi, nan=0.0)
-        i_idx = tc.pairs[:, 0]; j_idx = tc.pairs[:, 1]
-
-        # APC correction
-        row_sum = np.zeros(tc.n_cols); col_sum = np.zeros(tc.n_cols)
-        deg = np.zeros(tc.n_cols, dtype=int)
-        np.add.at(row_sum, i_idx, mi); np.add.at(row_sum, j_idx, mi)
-        np.add.at(deg, i_idx, 1); np.add.at(deg, j_idx, 1)
-        row_mean = row_sum / np.maximum(deg, 1)
-        col_mean = col_sum / np.maximum(deg, 1)
-        grand_mean = mi.mean()
-        mip = mi - row_mean[i_idx] * col_mean[j_idx] / max(grand_mean, 1e-12)
-
+        mip = ks.apc_corrected(mi, tc.pairs, tc.n_cols)
         L = tc.n_cols; K = max(1, round(L / 5))
         results["raw_MI"].append(ks.precision_at_k(mi, tc.lab, K))
         results["MIp"].append(ks.precision_at_k(mip, tc.lab, K))
 
+    w = wilcoxon(results["MIp"], results["raw_MI"])
     return {
         "raw_MI_prec_L5": round(float(np.mean(results["raw_MI"])), 4),
         "MIp_prec_L5": round(float(np.mean(results["MIp"])), 4),
         "improvement": round(float(np.mean(results["MIp"])) -
                              float(np.mean(results["raw_MI"])), 4),
+        "wilcoxon_p": float(w.pvalue),
         "note": "MIp (Dunn 2008) is the standard phylogenetic correction",
     }
 

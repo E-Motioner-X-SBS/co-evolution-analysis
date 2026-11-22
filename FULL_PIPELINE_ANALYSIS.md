@@ -1,8 +1,8 @@
 # E-Motioner-X-SBS: Complete Co-Evolution Analysis Pipeline
 
-**Generated:** October 01, 2026 at 02:02
+**Generated:** November 22, 2026 at 23:30
 **Dataset:** SARS-CoV-2 Omicron Spike Protein — 1,299 sequences, 1276 positions
-**Compute:** NVIDIA A100 80GB + 24-core Xeon, Python 3.10
+**Compute:** NVIDIA A100 80GB + 24-core Xeon (torch; CPU fallback)
 **Author:** Shuvam Banerji Seal — IISER Kolkata
 
 ---
@@ -13,52 +13,24 @@ This document presents the complete computational pipeline for analyzing co-evol
 constraints in the SARS-CoV-2 Spike protein using Karnaugh map (K-map) Boolean minimization.
 **1,299** Omicron variant Spike sequences from GISAID were encoded using base-20
 (He 2012 ordering) amino acid representation. Position-pair mutual information identified
-**2** co-evolving position pairs with Boolean rules. Quine-McCluskey
-minimization produced **2 essential prime implicants** — each representing
-an irreducible co-evolutionary constraint.
+**10** co-evolving position pairs with Boolean rules. Quine-McCluskey
+minimization produced **35 essential prime implicants** — each the only
+cover of some observed mutation combination.
 
 **Key results:** H1 Gray-code adjacency enrichment = **0.19×**; 
 max pairwise MI = **0.8067** at positions (373,378);
 21/1276 positions are evolutionarily variable (H > 0.3).
 
-## 1. Formal Foundations — 246 Lean 4 Theorems (131 + 115)
+## 1. Formal Foundations (Lean 4)
 
-The entire framework rests on formal proofs in Lean 4.29.0. All theorems are **sorry-free** with
-**no user-declared axioms**; most are proved by `native_decide` (100 of the 131 in `lean_proofs/`),
-which additionally trusts the compiler. `lake build` passes clean (per-theorem audit:
-`lean_proofs/proofs/is_kmap_possible/axiom_audit.py`).
-
-### 1.1 Binary K-map (`lean_proofs/`) — 131 Theorems
-
-| File | Theorems | What Is Proved |
-|------|----------|---------------|
-| `KmapProofs.lean` | 16 | Gray code boundedness, injectivity, involution, DNA 2-bit encoding (A=00,C=01,G=11,T=10), complementarity, transition/transversion |
-| `KmerIndexing.lean` | 35 | k-mer encoding (k=1..4) injectivity and boundedness via concatenation, row/column K-map decomposition |
-| `AminoAcidEncoding.lean` | 27 | 20 AAs → 5-bit Gray code, 7 physicochemical groups, within-group dist-1 (14 pairs), cross-group dist-1 (26 pairs), max-dist pairs (F-H, Y-E, W-R, M-K at dist=5) |
-| `ContactMapCompleteness.lean` | 20 | Contact maps as symmetric Boolean functions, irreducibility proof (no two contact pairs are 1-bit K-map adjacent) |
-| `KmapEncodingEquiv.lean` | 8 | Distance distribution, Q₅ hypercube degree=5, encoding captures 50% of Q₅ edges |
-| `ContactCircuits.lean` | 12 | Contact-campaign plumbing: He-code distance counts, separation bins, cell-index injectivity, QM cover soundness, padding safety |
-| `SequenceCircuits.lean` | 13 | Sequence-as-circuit: segment lemma, Gray/binary encoding invariance, faithfulness, Gray code is GF(2)-linear |
-
-### 1.2 N-ary K-map (`n-ary-kmap/`) — 115 Theorems
-
-| File | Theorems | What Is Proved |
-|------|----------|---------------|
-| `NaryGrayCode.lean` | 54 | Generalized n-ary reflected Gray code; digit-sum formula g_k = (d_k + d_{k+1}) mod b |
-| `BaseNDnaEncoding.lean` | 13 | Base-4 DNA encoder with transition adjacency (A↔C, C↔G, G↔T, T↔A as Gray neighbors) |
-| `BaseNAminoEncoding.lean` | 33 | Base-20 amino acid encoder, 7-group physicochemical ordering |
-| `BaseNKMap.lean` | 15 | Base-N K-map structure, cell adjacency, cyclic wrapping |
-
-### 1.3 Speculative Encoding (`speculative-binary-encoding/`) — 15 Theorems
-
-| File | Theorems | What Is Proved |
-|------|----------|---------------|
-| `AntiCorrelation.lean` | 15 | H1 encoding-invariance: the anti-correlation result holds across all 22 binary encodings |
-
-### 1.4 Theorem Verification Bridge
-
-The `lean_consistency.py` script in `kmap-sbm-validation/` re-computes every Lean theorem
-in Python and reports discrepancies. Result: **156/156 checks pass** (4 files), zero discrepancies.
+The encoding framework is formalised in Lean 4 in the `lean_proofs` repository
+(binary K-maps, Gray codes, amino-acid encoding, contact circuits, sequence
+circuits) and in `n-ary-kmap` (base-N K-maps).  All theorems are sorry-free with
+no user-declared axioms; theorems proved by `native_decide` additionally trust
+the compiler.  Current theorem counts and the per-theorem axiom audit are in
+`lean_proofs/README.md` and `lean_proofs/proofs/is_kmap_possible/axiom_audit.py`;
+`kmap-sbm-validation/src/kmap_sbm/validation/lean_consistency.py` re-checks the
+encoding facts in Python.
 
 ## 2. Dataset
 
@@ -119,7 +91,7 @@ Each sequence is converted to a position array of integers (0-19):
 $$\text{seq}[i] \rightarrow \text{encoder.encode}(\text{seq}[i]) \in \{0, 1, \dots, 19\}$$
 
 For 1,299 sequences, each of length up to 1276, we build a list of `np.int32` arrays.
-Gap characters ('-') and ambiguous residues are mapped to -1 and excluded.
+Gap characters ('-') and ambiguous residues are encoded as state 20 and excluded from all counts.
 
 ### 3.3 Step 2: Position-Pair K-map (20×20)
 
@@ -127,32 +99,33 @@ For each pair of positions $(i, j)$, a 20×20 frequency matrix is built:
 
 $$K_{ij}(a, b) = \frac{1}{N}\sum_{s=1}^{N} \mathbb{1}[\text{seq}_s[i] = a \land \text{seq}_s[j] = b]$$
 
-where $N = {n_all:,}$ is the number of sequences, $a,b \in \{0,\dots,19\}$.
+where $N = 1,299$ is the number of sequences, $a,b \in \{0,\dots,19\}$.
 
-### 3.4 Example: Frequency K-map for Positions (76, 77)
+### 3.4 Example: Frequency K-map for Positions (495, 498)
 
-The reference residues are **D** at position 76 and **N** at position 77 (Wuhan-Hu-1).
-
-The top 10 most frequent dipeptide pairs at (76, 77):
+The pair with the highest mutation-only MI (0-based alignment columns, not Spike
+residue numbers). The most frequent residue pairs at (495, 498):
 
 | Rank | AA(i) | AA(j) | Frequency |
 |------|-------|-------|-----------|
-| 1 | K | R | 1.0000 |
+| 1 | R | G | 0.6723 |
+| 2 | R | S | 0.2321 |
+| 3 | Q | G | 0.0956 |
 
 ### 3.5 Step 3: Boolean Thresholding
 
 The frequency K-map is converted to a Boolean function by thresholding:
 
-$$B_{ij}(a,b) = \begin{cases} 1 & \text{if } K_{ij}(a,b) \geq \text{threshold} \\ 0 & \text{if } K_{ij}(a,b) < \text{threshold} \\ -1 & \text{if position is conserved (don't-care)} \end{cases}$$
+$$B_{ij}(a,b) = \begin{cases} 1 & \text{observed, not the reference pair} \\ 0 & \text{never observed} \\ -1 & \text{reference pair or padding (don't-care)} \end{cases}$$
 
-The threshold is typically the 75th percentile of non-zero frequencies.
-Don't-care (-1) marks the reference pair (conserved).
+This is the mutation K-map of master_boolean.py; rows/cols 20-31 are padding (don't-care).
+
 
 ### 3.6 Step 4: Quine-McCluskey Boolean Minimization
 
 The 32×32 = 1,024-cell padded K-map is flattened to a truth table with 10 binary variables
 (5 bits for row amino acid + 5 bits for column amino acid). The Quine-McCluskey
-algorithm finds the minimal set of prime implicants covering all on-set cells:
+algorithm (exact, don't-care aware) gives the prime implicants; essentials plus a greedy completion cover every on-set cell:
 
 $$f(\text{pos}_i, \text{pos}_j, \text{aa}_i, \text{aa}_j) = \bigvee_k \bigwedge_{m \in S_k} b_m$$
 
@@ -342,42 +315,147 @@ def mutual_information(pos_arrays, pos_i, pos_j, n_seqs):
 | 49 | 488 | 498 | 0.0320 | F | G | 0.414 | 0.781 | 10 |
 | 50 | 479 | 495 | 0.0313 | N | R | 0.142 | 0.455 | 16 |
 
-## 6. Quine-McCluskey Boolean Minimization — 2 Essential Prime Implicants
+## 6. Quine-McCluskey Boolean Minimization — 35 Essential Prime Implicants
 
-The Boolean minimization was performed on 2 position pairs,
-producing **2 essential prime implicants**. Each rule has the form:
+The Boolean minimization was performed on 10 position pairs,
+producing **35 essential prime implicants**. Each rule has the form:
 
 $$f(s_4, s_3, s_2, s_1, s_0, t_4, t_3, t_2, t_1, t_0) = \text{AND of literals}$$
 
 **Variables:**
-- $s_4 s_3 s_2 s_1 s_0$ = 5-bit Gray encoding of residue at position $i$
-- $t_4 t_3 t_2 t_1 t_0$ = 5-bit Gray encoding of residue at position $j$
+- $s_4 s_3 s_2 s_1 s_0$ = bits of the He-2012 code (natural binary) of the residue at position $i$
+- $t_4 t_3 t_2 t_1 t_0$ = the same for position $j$
 - $\bar{s}_k$ = NOT ($s_k = 0$), $s_k$ = ($s_k = 1$)
 
-### 6.1 Complete Inference Rules (2 rules across 2 position pairs)
+### 6.1 Complete Inference Rules (35 rules across 10 position pairs)
+
+### Position Pair (210, 212) — MI = 0.1769, Reference: N→V
+
+| Rule | Boolean Expression | Amino Acids |
+|------|-------------------|-------------|
+| 1 | $$\bar{s4}  \cdot  \bar{s3}  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  s0  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  t0$$ | (I, VG) |
+| 2 | $$s3  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  \bar{t4}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  \bar{t0}$$ | (N, L) |
+| 3 | $$s3  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  t0$$ | (N, S) |
+
+**Interpretation:** the listed residue combinations occur together in the alignment;
+they are observations, not stability constraints.
+The reference pair is (N, V).
 
 ### Position Pair (210, 215) — MI = 0.7532, Reference: N→G
 
 | Rule | Boolean Expression | Amino Acids |
 |------|-------------------|-------------|
-| 1 | $$s3  \cdot  s2  \cdot  \bar{s1}  \cdot  s0  \cdot  t4  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  t0$$ | (K, G) |
+| 4 | $$\bar{s4}  \cdot  \bar{s3}  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  s0  \cdot  t4  \cdot  t1  \cdot  \bar{t0}$$ | (I, P) |
+| 5 | $$s3  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  t0$$ | (N, VG) |
+| 6 | $$s3  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  \bar{t0}$$ | (N, E) |
+| 7 | $$s3  \cdot  s2  \cdot  \bar{s1}  \cdot  s0  \cdot  t4  \cdot  t1  \cdot  t0$$ | (K, G) |
 
-**Interpretation:** When position 210 mutates to any of the listed residues,
-position 215 must co-evolve to the corresponding partner residue to maintain
-protein stability. The reference pair is (N, G).
+**Interpretation:** the listed residue combinations occur together in the alignment;
+they are observations, not stability constraints.
+The reference pair is (N, G).
+
+### Position Pair (212, 215) — MI = 0.3977, Reference: V→G
+
+| Rule | Boolean Expression | Amino Acids |
+|------|-------------------|-------------|
+| 8 | $$\bar{s4}  \cdot  \bar{s3}  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  s0  \cdot  \bar{t4}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  t0$$ | (I, V) |
+| 9 | $$\bar{s4}  \cdot  \bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  \bar{s0}  \cdot  \bar{t4}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  t0$$ | (L, V) |
+| 10 | $$\bar{s4}  \cdot  \bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t4  \cdot  t1  \cdot  \bar{t0}$$ | (V, P) |
+| 11 | $$s3  \cdot  s2  \cdot  s1  \cdot  s0  \cdot  t4  \cdot  t1  \cdot  t0$$ | (S, G) |
+
+**Interpretation:** the listed residue combinations occur together in the alignment;
+they are observations, not stability constraints.
+The reference pair is (V, G).
 
 ### Position Pair (212, 216) — MI = 0.3773, Reference: V→R
 
 | Rule | Boolean Expression | Amino Acids |
 |------|-------------------|-------------|
-| 2 | $$s4  \cdot  s1  \cdot  s0  \cdot  \bar{t4}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$ | (G, R) |
+| 12 | $$\bar{s4}  \cdot  \bar{s3}  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$ | (I, R) |
+| 13 | $$\bar{s4}  \cdot  \bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$ | (L, R) |
+| 14 | $$\bar{s4}  \cdot  \bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  \bar{t0}$$ | (V, E) |
+| 15 | $$\bar{s4}  \cdot  \bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  \bar{t1}  \cdot  t0$$ | (V, K) |
+| 16 | $$s3  \cdot  s2  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$ | (S, R) |
+| 17 | $$s4  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$ | (G, R) |
 
-**Interpretation:** When position 212 mutates to any of the listed residues,
-position 216 must co-evolve to the corresponding partner residue to maintain
-protein stability. The reference pair is (V, R).
+**Interpretation:** the listed residue combinations occur together in the alignment;
+they are observations, not stability constraints.
+The reference pair is (V, R).
+
+### Position Pair (215, 216) — MI = 0.7571, Reference: G→R
+
+| Rule | Boolean Expression | Amino Acids |
+|------|-------------------|-------------|
+| 18 | $$\bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$ | (VG, R) |
+| 19 | $$s3  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$ | (E, R) |
+| 20 | $$s4  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  \bar{t0}$$ | (P, E) |
+| 21 | $$s4  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  \bar{t1}  \cdot  t0$$ | (P, K) |
+
+**Interpretation:** the listed residue combinations occur together in the alignment;
+they are observations, not stability constraints.
+The reference pair is (G, R).
+
+### Position Pair (442, 448) — MI = 0.0162, Reference: K→G
+
+| Rule | Boolean Expression | Amino Acids |
+|------|-------------------|-------------|
+| 22 | $$s3  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  t0$$ | (N, S) |
+| 23 | $$s3  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t4  \cdot  t1  \cdot  t0$$ | (N, G) |
+| 24 | $$s3  \cdot  s2  \cdot  \bar{s1}  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  t0$$ | (K, S) |
+
+**Interpretation:** the listed residue combinations occur together in the alignment;
+they are observations, not stability constraints.
+The reference pair is (K, G).
+
+### Position Pair (442, 454) — MI = 0.8110, Reference: K→L
+
+| Rule | Boolean Expression | Amino Acids |
+|------|-------------------|-------------|
+| 25 | $$s3  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  \bar{t4}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  \bar{t0}$$ | (N, L) |
+| 26 | $$s3  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$ | (N, R) |
+| 27 | $$s3  \cdot  s2  \cdot  \bar{s1}  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$ | (K, R) |
+
+**Interpretation:** the listed residue combinations occur together in the alignment;
+they are observations, not stability constraints.
+The reference pair is (K, L).
+
+### Position Pair (448, 454) — MI = 0.0270, Reference: G→L
+
+| Rule | Boolean Expression | Amino Acids |
+|------|-------------------|-------------|
+| 28 | $$s3  \cdot  s2  \cdot  s1  \cdot  s0  \cdot  \bar{t4}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  \bar{t0}$$ | (S, L) |
+| 29 | $$s3  \cdot  s2  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$ | (S, R) |
+| 30 | $$s4  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$ | (G, R) |
+
+**Interpretation:** the listed residue combinations occur together in the alignment;
+they are observations, not stability constraints.
+The reference pair is (G, L).
+
+### Position Pair (488, 498) — MI = 0.0320, Reference: F→G
+
+| Rule | Boolean Expression | Amino Acids |
+|------|-------------------|-------------|
+| 31 | $$\bar{s4}  \cdot  \bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t4  \cdot  t1  \cdot  t0$$ | (V, G) |
+| 32 | $$\bar{s3}  \cdot  s2  \cdot  \bar{s1}  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  t0$$ | (F, S) |
+| 33 | $$s4  \cdot  s1  \cdot  \bar{s0}  \cdot  t4  \cdot  t1  \cdot  t0$$ | (P, G) |
+
+**Interpretation:** the listed residue combinations occur together in the alignment;
+they are observations, not stability constraints.
+The reference pair is (F, G).
+
+### Position Pair (495, 498) — MI = 0.0386, Reference: R→G
+
+| Rule | Boolean Expression | Amino Acids |
+|------|-------------------|-------------|
+| 34 | $$s3  \cdot  s1  \cdot  \bar{s0}  \cdot  t4  \cdot  t1  \cdot  t0$$ | (QR, G) |
+| 35 | $$s3  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  t0$$ | (R, S) |
+
+**Interpretation:** the listed residue combinations occur together in the alignment;
+they are observations, not stability constraints.
+The reference pair is (R, G).
 
 
-**Total inference rules:** 2
+**Total inference rules:** 35
 
 ## 7. Coupling Constants and Constraint Functions
 
@@ -465,7 +543,7 @@ Consecutive residues in protein sequences are preferentially K-map-adjacent
 
 ### 9.2 Method
 
-For each consecutive pair of residues in each of the {n_all:,} sequences:
+For each consecutive pair of residues in each of the 1,299 sequences:
 1. Encode each residue using its base-20 index (He 2012)
 2. Compute Gray code: $g(i) = i \oplus (i \gg 1)$
 3. Compute Hamming distance: $h = \text{popcount}(g(i) \oplus g(j))$
@@ -493,32 +571,32 @@ For each consecutive pair of residues in each of the {n_all:,} sequences:
 
 ## 10. Complete Analysis Scripts Inventory
 
-The `datasets/co-evolution/` directory contains **23 Python scripts**
-and **1 shared module** (`coevolution_shared.py`).
+This repository's analysis scripts and the shared module (line counts computed at generation time):
+
 
 | # | Script | Lines | Purpose |
 |---|--------|-------|---------|
-| 1 | `coevolution_shared.py` | 329 | Shared module: FASTA parsing, position arrays (cached), vectorized MI via `np.bincount`, entropy, perplexity, coupling, constraint function, shared-memory worker pool |
-| 2 | `run_kmap_analysis.py` | 908 | Master K-map pipeline: H1-H6 on binary 32×32 K-map, consensus K-map, co-evolution analysis |
-| 3 | `boolean_co-evolution.py` | 637 | Binary K-map Boolean minimization: 32×32 thresholded → Quine-McCluskey → essential prime implicants |
-| 4 | `nary_kmap_co-evolution.py` | 537 | Base-20 K-map analysis: 20×20 frequency map → Boolean → coupling constants |
-| 5 | `master_boolean.py` | 330 | Master Boolean function: 2 essential PIs across 10 pairs (full-length) |
-| 6 | `position_kmap_coevolution.py` | 481 | Position-pair K-maps with MI: builds per-position-pair 20×20 K-maps and minimizes |
-| 7 | `run_allseq_analysis.py` | 328 | Full position-based K-map analysis on ALL 1,299 sequences |
-| 8 | `kmap_boolean_coevolution.py` | 383 | K-map Boolean with full markdown output: 2 rules across 2 position pairs |
-| 9 | `generate_co-evolution_md.py` | 313 | Markdown generator from JSON results |
-| 10 | `generate_full_analysis_md.py` | 397 | Comprehensive report generator from all JSON outputs |
-| 11 | `create_mi_heatmap.py` | 247 | MI heatmap visualization (full + focus region), matplotlib |
-| 12 | `allseq_constraint_function.py` | 247 | Leave-One-Out Cross-Validation: constraint function prediction accuracy |
-| 13 | `predictive_constraint_function.py` | 308 | Three K-map approaches: Observed, Flipped, Continuous prediction |
-| 14 | `flipped_boolean_coevolution.py` | 254 | Flipped Boolean: forbidden pairs analysis (negative selection) |
-| 15 | `dca_boolean_coevolution.py` | 344 | DCA → Boolean pipeline: inverse covariance → coupling → QM minimization |
-| 16 | `variable_position_coevolution.py` | 421 | Variable-position K-map with strategic don't-care conditions |
-| 17 | `perplexity_coevolution.py` | 217 | Perplexity-based co-evolution strength measurement |
-| 18 | `advanced_co-evolution_analysis.py` | 471 | Co-evolution network, Walsh-Hadamard spectrum, variant classification, clustering |
-| 19 | `full_length_analysis.py` | 206 | Full-length entropy and MI analysis (all positions), |
-| 20 | `gpu_full_analysis.py` | 280 | GPU-accelerated analysis: numba parallel entropy/H1/mutations + shared-memory Pool for MI |
-| 21 | `run_all_bg.sh` | 107 | Master launcher: runs all 23 scripts concurrently |
+| 1 | `coevolution_shared.py` | 790 | Shared module: FASTA parsing, position arrays (cached), vectorized MI via `np.bincount`, entropy, perplexity, coupling, constraint function, shared-memory worker pool |
+| 2 | `run_kmap_analysis.py` | 1018 | Master K-map pipeline: H1-H6 on binary 32×32 K-map, consensus K-map, co-evolution analysis |
+| 3 | `boolean_co-evolution.py` | 690 | Binary K-map Boolean minimization: 32×32 thresholded → Quine-McCluskey → essential prime implicants |
+| 4 | `nary_kmap_co-evolution.py` | 591 | Base-20 K-map analysis: 20×20 frequency map → Boolean → coupling constants |
+| 5 | `master_boolean.py` | 424 | Master Boolean function: 35 essential PIs across 10 pairs (full-length) |
+| 6 | `position_kmap_coevolution.py` | 527 | Position-pair K-maps with MI: builds per-position-pair 20×20 K-maps and minimizes |
+| 7 | `run_allseq_analysis.py` | 365 | Full position-based K-map analysis on ALL 1,299 sequences |
+| 8 | `kmap_boolean_coevolution.py` | 385 | K-map Boolean with full markdown output: 35 rules across 10 position pairs |
+| 9 | `generate_co-evolution_md.py` | 345 | Markdown generator from JSON results |
+| 10 | `generate_full_analysis_md.py` | 501 | Comprehensive report generator from all JSON outputs |
+| 11 | `create_mi_heatmap.py` | 303 | MI heatmap visualization (full + focus region), matplotlib |
+| 12 | `allseq_constraint_function.py` | 211 | Leave-One-Out Cross-Validation: constraint function prediction accuracy |
+| 13 | `predictive_constraint_function.py` | 328 | Three K-map approaches: Observed, Flipped, Continuous prediction |
+| 14 | `flipped_boolean_coevolution.py` | 232 | Flipped Boolean: forbidden pairs analysis (negative selection) |
+| 15 | `dca_boolean_coevolution.py` | 391 | DCA → Boolean pipeline: inverse covariance → coupling → QM minimization |
+| 16 | `variable_position_coevolution.py` | 474 | Variable-position K-map with strategic don't-care conditions |
+| 17 | `perplexity_coevolution.py` | 287 | Perplexity-based co-evolution strength measurement |
+| 18 | `advanced_co-evolution_analysis.py` | 474 | Co-evolution network, Walsh-Hadamard spectrum, variant classification, clustering |
+| 19 | `full_length_analysis.py` | 267 | Full-length entropy and MI analysis (all positions), |
+| 20 | `gpu_full_analysis.py` | 274 | torch (GPU, CPU fallback) full analysis: entropy, H1, mutations, full MI matrix |
+| 21 | `run_all_bg.sh` | 110 | Master launcher: runs all 23 scripts concurrently |
 
 ## 11. Flipped Boolean Analysis — Negative Selection
 
@@ -538,18 +616,9 @@ NEVER observed together across all sequences, capturing **negative selection**.
 
 ### 11.3 Results
 
-The flipped analysis produced **0** forbidden rules. Why?
-
-With 1,299 sequences across multiple Omicron sub-lineages,
-virtually every amino acid pair appears at least once at every position pair.
-The Spike protein's N-terminal region is under **purifying selection** but not
-**absolute constraint** — any single substitution has been sampled by evolution.
-
-This means:
-
-- **No universally forbidden pairs exist** — only statistically disfavored ones
-- Co-evolution is **probabilistic**, not deterministic
-- The constraint function $J_{ij}$ (continuous) is more appropriate than Boolean
+The flipped analysis produced **246** never-observed
+cubes over 10 position pairs.  With 1,299 sequences (299 unique)
+a never-observed combination is absence of evidence, not proof of incompatibility.
 
 ## 12. Leave-One-Out Cross-Validation
 
@@ -557,15 +626,15 @@ This means:
 
 For each position pair $(i,j)$:
 1. Exclude one sequence from the dataset
-2. Build constraint function $C_{ij}(a,b)$ from the remaining {n_all - 1:,} sequences
-3. Predict the co-evolving partner for the held-out sequence: $b^* = \arg\max_b C_{ij}(a_{\text{mutation}}, b)$
+2. Build constraint function $C_{ij}(a,b)$ from the remaining 1,298 sequences
+3. Predict the partner for the held-out sequence: $b^* = \arg\max_b C_{ij}(a_{\text{mutation}}, b)$ over partners $b$ observed with $a$
 4. Check if prediction matches
 
-### 12.2 Key Insight
+### 12.2 Result
 
-LOO-CV accuracy was near zero (0.08%). This reveals that co-evolutionary rules are **lineage-specific** —
-different Omicron sub-variants (BA.1, BA.2, BA.4, BA.5, XBB, etc.) have **different co-evolutionary patterns**.
-Rules learned from one variant do not generalize to others.
+LOO-CV accuracy 99.4% (3241/3259); conditional-frequency baseline 65.5%; on the 300 de-duplicated sequences 98.3%.
+The residue at one position of a co-evolving pair nearly determines the other: the
+variants are linked alleles of one clonal population, so this measures linkage.
 
 ## 13. What This Analysis Pipeline Achieves
 
@@ -578,12 +647,10 @@ Rules learned from one variant do not generalize to others.
 | Position arrays built | 1,299 × 1276 = 1,657,524 integers |
 | Variable positions (H > 0.3) | 21 |
 | Co-evolving pairs (MI > 0.1) | 17 |
-| Boolean expressions (QM minimized) | 2 essential prime implicants |
-| Unique position pairs with rules | 2 |
-| Lean 4 theorems | 246 (131 + 115) |
-| Python scripts | 23 |
-| Total Python LOC | ~7,000 |
-| Shared module LOC | 340 |
+| Boolean expressions (QM minimized) | 35 essential prime implicants |
+| Unique position pairs with rules | 10 |
+| Top-level Python scripts | 25 |
+| Top-level Python LOC | 10,779 |
 
 ## 14. How to Apply the Co-evolution Rules
 
@@ -595,11 +662,11 @@ Rules learned from one variant do not generalize to others.
 
 # 2. For each co-evolving position pair, check the Boolean function
 for (pos_i, pos_j) in coevolving_pairs:
-    aa_i = encode(seq_region[pos_i - 68])
-    aa_j = encode(seq_region[pos_j - 68])
+    aa_i = encode(seq[pos_i])   # He-2012 code at alignment column pos_i
+    aa_j = encode(seq[pos_j])
 
-    # Encode as 4+4 bits
-    bits = int_to_bits(aa_i, 4) + int_to_bits(aa_j, 4)
+    # 5 + 5 bits (32x32 padded map)
+    bits = int_to_bits(aa_i, 5) + int_to_bits(aa_j, 5)
 
     # Check if ANY essential prime implicant matches
     is_coevolving = any(pi.matches(bits) for pi in prime_implicants[(pos_i, pos_j)])
@@ -653,5 +720,5 @@ Top 3 by PP ratio: (212,215), (210,215), (378,407)
 Top 3 by combined: (378,407), (18,26), (66,94)
 
 ---
-*Generated October 01, 2026 at 02:02 by `generate_full_pipeline_doc.py`*
+*Generated November 22, 2026 at 23:30 by `generate_full_pipeline_doc.py`*
 *All values computed from 1,299 Omicron Spike sequences using shared `coevolution_shared` module*

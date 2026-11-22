@@ -165,37 +165,34 @@ def build_mutation_kmap(pos_arrays, pos_i, pos_j, ref_i, ref_j, n_seqs):
 
 
 def extract_prime_implicants(result, aa_list):
-    """Extract all prime implicants from QM result.
+    """Decode every prime implicant of a padded 32x32 mutation map.
 
-    CORRECTED (FIX A2): the QM now runs on a 32x32 (10-bit) map, so each
-    implicant has 10 bits: 5 for row, 5 for column. Values 20-31 on either
-    axis are padding (don't-care) and are rejected.
+    Each cube admits a SET of residues on each axis (codes 20-31 are padding
+    and are dropped): ``aa_i`` / ``aa_j`` are the admitted residues as a
+    string, e.g. "K" or "KR".  ``is_essential`` comes from the minimiser's
+    essential list (primes that are the only cover of some observed mutation).
     """
+    from coevolution_shared import decode_pair_cube
+
+    essential_keys = {
+        (tuple(p["values"]), tuple(p["mask"])) for p in result["essential_prime_implicants"]
+    }
     pis = []
     for pi in result["prime_implicants"]:
-        values = list(pi["values"])
-        mask = list(pi["mask"])
-        while len(values) < 10:
-            values.append(0)
-            mask.append(False)
-
-        row_code = sum(values[j] * (2 ** (4 - j)) for j in range(5) if not mask[j])
-        col_code = sum(
-            values[j + 5] * (2 ** (4 - j)) for j in range(5) if not mask[j + 5]
+        rows, cols = decode_pair_cube(pi)
+        if not rows or not cols:
+            continue  # cube lies wholly in the padding
+        pis.append(
+            {
+                "aa_i": "".join(aa_list[c] for c in rows),
+                "aa_j": "".join(aa_list[c] for c in cols),
+                "row_codes": rows,
+                "col_codes": cols,
+                "n_dontcares": pi["n_dontcares"],
+                "coverage": len(pi["coverage"]),
+                "is_essential": (tuple(pi["values"]), tuple(pi["mask"])) in essential_keys,
+            }
         )
-
-        if row_code < 20 and col_code < 20:
-            pis.append(
-                {
-                    "aa_i": aa_list[row_code],
-                    "aa_j": aa_list[col_code],
-                    "row_code": row_code,
-                    "col_code": col_code,
-                    "n_dontcares": pi["n_dontcares"],
-                    "coverage": len(pi["coverage"]),
-                    "is_essential": pi in result["essential_prime_implicants"],
-                }
-            )
     return pis
 
 
@@ -286,9 +283,9 @@ def main():
                 }
             )
 
-    # Deduplicate: multiple QM cubes can decode to the same residue pair
-    # (differing only in which don't-care cells they cover). Report the
-    # distinct-pair count so it matches the markdown generator.
+    # Deduplicate: two cubes can admit the same residue sets (differing only
+    # in which padding cells they cover). Report the distinct-rule count so
+    # it matches the markdown generator.
     seen_pis = {}
     deduped_pis = []
     for pi in all_pis:
@@ -334,8 +331,8 @@ def main():
         for r in rules:
             rule_count += 1
             print(
-                f"    Rule {rule_count:3d}: IF pos {pos_i}={r['aa_i']} AND pos {pos_j}={r['aa_j']} "
-                f"THEN co-evolutionary (MI={r['mi']:.3f})"
+                f"    Rule {rule_count:3d}: IF pos {pos_i} in {{{r['aa_i']}}} AND pos {pos_j} in {{{r['aa_j']}}} "
+                f"THEN observed mutation (MI={r['mi']:.3f})"
             )
 
     print(f"\nTotal inference rules: {rule_count}")
@@ -378,9 +375,9 @@ def main():
     print(f"Essential prime implicants: {len(all_essential)}")
     print(f"Total inference rules: {rule_count}")
     print(f"\nThe master Boolean function:")
-    print(f"  f(pos_i, pos_j, aa_i, aa_j) = OR of all essential prime implicants")
-    print(f"  Each PI is an AND of residue conditions at two positions")
-    print(f"  The function returns 1 (co-evolutionary) when ANY PI matches")
+    print(f"  f(pos_i, pos_j, aa_i, aa_j) = OR of the prime implicants (cover = essentials + greedy)")
+    print(f"  Each PI is an AND of residue-set conditions at two positions")
+    print(f"  The function returns 1 when the residue pair is an observed mutation")
 
 
 

@@ -124,6 +124,7 @@ loocv    = _load(RESULTS / "allseq_constraint_results/allseq_constraint_summary.
 full_len = _load(RESULTS / "full_length_results/full_length_summary.json")
 cons     = _load(RESULTS / "constraint_function_results/constraint_function_summary.json")
 dca      = _load(RESULTS / "dca_boolean_results/dca_boolean_summary.json")
+flipped  = _load(RESULTS / "flipped_boolean_results/flipped_boolean_summary.json")
 
 date_str = datetime.now().strftime("%B %d, %Y")
 
@@ -137,7 +138,7 @@ a()
 a(f"**Generated:** {date_str}")
 a(f"**Data:** {kmap.get('num_sequences', 0):,} SARS-CoV-2 Omicron Spike protein sequences from `Spike_protein.aln-fasta`")
 a(f"**Compute:** NVIDIA A100 80GB + 24-core Xeon, {gpu.get('compute_time_s', 0)}s total")
-a(f"**Scripts:** 18 Python analysis scripts, all run with ALL {kmap.get('num_sequences', 0):,} sequences")
+a(f"**Scripts:** the analysis scripts listed in §16, run on all {kmap.get('num_sequences', 0):,} sequences")
 a()
 a("---")
 a()
@@ -151,7 +152,7 @@ a("```")
 a(f"{kmap.get('num_sequences', 0):,} Spike sequences → Gray code encoding → K-map construction → Boolean minimization → Co-evolution inference rules")
 a("```")
 a()
-a("**Mathematical foundation:** 221 Lean 4 theorems (zero sorry, zero axiom, `lake build` passes clean).")
+a("**Formal layer:** Lean 4 proofs in the `lean_proofs` repository (sorry-free; theorem counts and the per-theorem axiom audit, including `native_decide` compiler trust, are in its README).")
 a()
 
 # ── 2. Quick Start ──────────────────────────────────────────────────
@@ -186,7 +187,7 @@ a(f"| Sequences | {kmap.get('num_sequences', 0):,} |")
 a(f"| Full length | {gpu['full_length']} residues |")
 a(f"| Variable positions (entropy > 0.3) | {gpu['entropy'].get('n_variable', 0):,} ({100*gpu['entropy'].get('n_variable', 0)/gpu['full_length']:.1f}%) |")
 a(f"| Conserved positions | {gpu['entropy']['n_conserved']:,} ({100*gpu['entropy']['n_conserved']/gpu['full_length']:.1f}%) |")
-a(f"| Variable in first 80 | {master.get('variable_positions', 0)} |")
+a(f"| Variable positions (master_boolean) | {master.get('variable_positions', 0)} |")
 a()
 
 # ── 4. Encoding ─────────────────────────────────────────────────────
@@ -199,7 +200,7 @@ a()
 a("| Property | Value |")
 a("|----------|-------|")
 a("| K-map size | 32×32 = 1024 cells |")
-a("| Used cells | 20 (12 don't-care) |")
+a("| Residue cells | 400 of 1,024 (20 of 32 codes per axis) |")
 a("| Gray formula | gray(i) = i XOR (i >> 1) |")
 a()
 a("### N-ary Base-20 (sequence-level K-maps)")
@@ -209,7 +210,7 @@ a()
 a("| Property | Value |")
 a("|----------|-------|")
 a("| K-map size | 20×20 = 400 cells |")
-a("| Used cells | 20 (all used, 0 don't-care) |")
+a("| Residue cells | 400 (padded to 32×32 for minimisation) |")
 a()
 
 # ── 5. H1 ───────────────────────────────────────────────────────────
@@ -290,7 +291,10 @@ a()
 # ── 8. Coupling ─────────────────────────────────────────────────────
 a("## 8. Coupling Landscape")
 a()
-a(f"**Critical finding:** ALL coupling constants C < 0 — the protein is under strong **purifying selection**.")
+n_pos = sum(len(c.get('top_co', [])) for c in gpu['couplings'])
+n_neg = sum(len(c.get('top_anti', [])) for c in gpu['couplings'])
+a(f"Couplings J = ln(P/P_exp) take both signs (listed: {n_pos} positive, {n_neg} negative among cells with P > 0.001); "
+  "they cannot all be negative, since Σ P·J = MI·ln 2 ≥ 0.")
 a()
 a("### Top Coupling Constants (GPU-computed, full length)")
 a()
@@ -312,7 +316,7 @@ a("|--------|-------|")
 a(f"| Nodes | {len(network['nodes'])} |")
 a(f"| Edges | {len(network['edges'])} |")
 a(f"| **Hub** | Position {hub['position'] if hub else 'n/a'} (degree {hub['degree'] if hub else 0}) |")
-a(f"| Components | 1 giant component |")
+a(f"| Clusters (MI > 1.0) | {len(network['clusters'])} |")
 a()
 
 # ── 10. Full-Length ─────────────────────────────────────────────────
@@ -384,14 +388,16 @@ for c in variants['clusters'][:5]:
 a()
 
 # ── 14. Failed ──────────────────────────────────────────────────────
-a("## 14. Algorithms That Failed (Informative Failures)")
+a("## 14. Prediction and Negative-Selection Results")
 a()
-a("| Algorithm | Accuracy | Why |")
-a("|-----------|----------|-----|")
-a(f"| LOO-CV | {100*loocv.get('overall_accuracy', 0):.2f}% ({loocv['total_correct']}/{loocv['total_test']}) | Lineage-specific references |")
-a(f"| DCA Boolean | {100*dca['avg_accuracy']:.1f}% | Singular covariance matrix |")
-a("| Flipped Boolean | 0 forbidden pairs | All observed with 1,299 seqs |")
-a(f"| Constraint function | {100*cons['prediction_accuracy']:.1f}% | All C < 0 (no positive signal) |")
+a("| Analysis | Result | Note |")
+a("|----------|--------|------|")
+a(f"| LOO-CV (constraint function) | {100*loocv.get('overall_accuracy', 0):.2f}% ({loocv['total_correct']}/{loocv['total_test']}) | "
+  f"conditional baseline {100*loocv.get('conditional_baseline_accuracy', 0):.1f}%; de-duplicated "
+  f"{100*loocv.get('unique_sequences', {}).get('accuracy', 0):.1f}% — partners are near-determined by lineage linkage |")
+a(f"| Train/test (constraint function) | {100*cons['prediction_accuracy']:.1f}% | file-order split |")
+a(f"| Local-precision Boolean | {100*dca['avg_accuracy']:.1f}% | per-pair pinv of a cross-covariance block (not DCA) |")
+a(f"| Flipped Boolean | {flipped.get('total_forbidden_rules', 0)} never-observed cubes | absence of evidence in 299 unique sequences |")
 a()
 
 # ── 15. Complete Summary ────────────────────────────────────────────
@@ -413,12 +419,12 @@ a(f"| | Hub | Position {hub['position'] if hub else 'n/a'} (degree {hub['degree'
 a(f"| Mutations | Mean / Max | {mu['mean']:.1f} / {mu['max']} |")
 a(f"| Perplexity | Max ratio | {perpl['results'][0].get('ratio', 0):.2f}× |" if perpl['results'] else "| Perplexity | Max ratio | n/a (no pairs with PP>3) |")
 a(f"| Variants | Unique signatures | {variants['n_unique_signatures']} |")
-a(f"| Couplings | All C < 0 | Purifying selection |")
+a(f"| Flipped | Never-observed cubes | {flipped.get('total_forbidden_rules', 0)} |")
 a(f"| Compute | Time | {gpu.get('compute_time_s', 0)}s (A100) |")
 a()
 
 # ── 16. Scripts ─────────────────────────────────────────────────────
-a("## 16. Script Index (All 18 Scripts)")
+a("## 16. Script Index")
 a()
 a("| # | Script | Output Directory |")
 a("|---|--------|-----------------|")
@@ -449,14 +455,12 @@ a()
 # ── 17. Key Discoveries ─────────────────────────────────────────────
 a("## 17. Key Discoveries")
 a()
-a(f"1. **K-map framework validated**: {h1['enrichment_ratio']:.2f}× H1 enrichment proves Gray code captures biochemistry")
-a(f"2. **50.7% sequence-level prediction**: Boolean function achieves best predictive result, doubles with more data")
+a(f"1. **H1**: consecutive residues are Gray-adjacent {h1['enrichment_ratio']:.2f}× more often than the uniform 5/31 null (a composition-matched null is lower; see 3D_Structure_Analysis/11 §5)")
+a(f"2. **Dipeptide Boolean K-map**: {bm_min.get('n_prime_implicants', 0)} prime implicants over {bm.get('n_on_set', 0)} frequent dipeptides")
 a(f"3. **Co-evolution is near-deterministic**: Conditional perplexity ≈ 1.0 at strongest pairs ({perpl['results'][0]['pp_conditional']:.3f})" if perpl['results'] else "3. **Co-evolution is near-deterministic**: n/a (no pairs with PP>3)")
-a("4. **Purifying selection dominates**: ALL coupling constants C < 0")
-a(f"5. **Protein is a single network**: {len(network['nodes'])} nodes, {len(network['edges'])} edges, position {hub['position'] if hub else 'n/a'} as hub")
-a(f"6. **Lineage-specific co-evolution**: Global LOO-CV {100*loocv.get('overall_accuracy', 0):.2f}% — rules don't generalize across variants")
-a(f"7. **{gpu['entropy']['n_conserved']} conserved positions**: Universal vaccine targets")
-a(f"8. **{gpu['entropy'].get('n_variable', 0):,}/{gpu['full_length']} positions variable**: Nearly entire protein under evolutionary constraint")
+a(f"4. **Co-evolution network**: {len(network['nodes'])} nodes, {len(network['edges'])} edges (MI > 0.5)")
+a(f"5. **Partner prediction**: LOO-CV {100*loocv.get('overall_accuracy', 0):.1f}% — the residue at one position of a pair almost determines the other (lineage linkage within one clonal population)")
+a(f"6. **{gpu['entropy'].get('n_variable', 0):,}/{gpu['full_length']} positions variable** (H > 0.3); {gpu['entropy']['n_conserved']} conserved within this Omicron sample")
 a()
 
 # ── 18. Generated Files ─────────────────────────────────────────────

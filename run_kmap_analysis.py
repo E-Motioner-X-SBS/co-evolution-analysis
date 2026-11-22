@@ -663,25 +663,26 @@ def analyze_walsh_hadamard(sequences, n_seqs=100):
     # Reshape to 32x32
     kmap_2d = kmap.reshape(32, 32)
 
-    # Fast Walsh-Hadamard Transform (simplified)
-    # For a 32x32 map, we compute the 1D FWHT on flattened vector
+    # Walsh-Hadamard transform of the full 1,024-cell consensus K-map (one
+    # 10-bit transform = the separable 2D transform over row and column bits).
+    # The earlier recursive version returned fwht(lo) + fwht(hi) — numpy
+    # elementwise addition, not concatenation — so it collapsed to a single
+    # number, and it only ever transformed the first 32 cells.
     def fwht(a):
-        """Fast Walsh-Hadamard Transform."""
+        """Fast Walsh-Hadamard transform (iterative butterfly, natural order)."""
+        a = np.asarray(a, dtype=np.float64).copy()
         n = len(a)
-        if n <= 1:
-            return a
-        h = n // 2
-        result = np.zeros(n)
-        for i in range(h):
-            result[i] = a[2 * i] + a[2 * i + 1]
-            result[h + i] = a[2 * i] - a[2 * i + 1]
-        return fwht(result[:h]) + fwht(result[h:])
+        h = 1
+        while h < n:
+            a = a.reshape(-1, 2, h)
+            a = np.concatenate([a[:, 0] + a[:, 1], a[:, 0] - a[:, 1]], axis=1)
+            a = a.reshape(n)
+            h *= 2
+        return a
 
-    # Compute FWHT on first 32 values (power of 2)
-    spectrum = fwht(kmap[:32])
-    spectrum = np.abs(spectrum)
-
-    # Normalize
+    coeffs = fwht(kmap)
+    # share of the total (Parseval) energy carried by each Walsh mode
+    spectrum = coeffs ** 2
     spectrum /= spectrum.sum() if spectrum.sum() > 0 else 1
 
     # Find dominant modes
@@ -697,7 +698,7 @@ def analyze_walsh_hadamard(sequences, n_seqs=100):
     top_modes = spectrum[dominant_modes[:3]]
     explained_var = top_modes.sum() * 100
 
-    print(f"  Top 3 modes explain: {explained_var:.1f}% of variance")
+    print(f"  Top 3 modes carry: {explained_var:.1f}% of the spectral energy (mode 0 = mean)")
 
     return {
         "nonzero_cells": int(np.count_nonzero(kmap)),

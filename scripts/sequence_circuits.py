@@ -330,11 +330,11 @@ def _ref_pi_keys(on_set: Sequence[int], dc_set: Sequence[int],
                  n_vars: int) -> Set[Tuple[int, int]]:
     """Prime implicants of the reference implementation as (val, mask) keys.
 
-    NOTE the reference is NOT exact QM: it keeps only don't-cares at Hamming
-    distance 1 from a real on-minterm (its own documented performance choice).
-    With clustered don't-cares it therefore under-merges — see
-    tests/test_sequence_circuits.py::t06d, which pins down the exact
-    consequence.  Kept here for cross-validation, not used in production.
+    The reference returns only primes that cover an on-minterm, whereas
+    `prime_implicants` here also returns primes made of don't-cares alone.
+    Versions of the reference before the kmap-sbm-validation fix of
+    2026-11 kept only don't-cares at Hamming distance 1 from an on-minterm and
+    under-merged (see tests/test_sequence_circuits.py::t06d).
     """
     if n_vars % 2 != 0:
         raise ValueError("reference implementation needs an even variable count")

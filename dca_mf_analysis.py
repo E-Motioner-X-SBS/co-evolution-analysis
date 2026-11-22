@@ -20,7 +20,7 @@ Algorithm (per Morcos 2011):
        for alpha,beta in 0..q-2 (last state / gap removed)
   5. Couplings: J = -C^{-1}   (invert the covariance on GPU)
   6. Direct Information DI_ij via iterative mean-field (mu1/mu2 fixed point):
-       W_mf = exp(-J_ij) padded to q x q
+       W_mf = exp(e_ij) = exp(-C^{-1}_ij) padded to q x q
        iterate: mu1 = P_i / (W_mf . mu2), mu2 = P_j / (W_mf^T . mu1)
        P_dir = W_mf * (mu1 otimes mu2)  normalized
        DI = trace(P_dir^T * log(P_dir / (P_i otimes P_j)))
@@ -59,6 +59,7 @@ Q = 21  # 20 AAs + gap
 Q_USED = 20  # states in covariance (q-1, gap removed)
 THETA = 0.2  # reweighting threshold (80% identity)
 LAMBDA = 0.5  # pseudocount
+MIN_MEFF = 100  # below this the mean-field couplings are noise (flagged in the summary)
 try:
     import coevolution_gpu as _cg
     DEVICE = _cg.get_device()  # memory-fraction capped; fails fast on OOM
@@ -164,7 +165,10 @@ def direct_information(Pi, J4d):
     q = Q
     eps = 4e-5
     tiny = 1e-300
-    W_mf = torch.exp(-J4d).to(DEVICE)  # [L, L, q, q]
+    # Boltzmann weight of the pair couplings: W = exp(e_ij) with
+    # e_ij = -C^{-1} = J4d (dca.m / py-mfdca: W_mf = exp(-invC)).  An earlier
+    # version used exp(-J4d) = exp(+C^{-1}), i.e. couplings of the wrong sign.
+    W_mf = torch.exp(J4d).to(DEVICE)  # [L, L, q, q]
     pi = Pi.to(DEVICE)  # [L, q]
     pj = Pi.to(DEVICE)
     # mu1[i,j,a], mu2[i,j,b] init uniform over q
@@ -245,6 +249,11 @@ def main():
     W = reweight(X)
     Meff = W.sum()
     print(f"  Meff = {Meff:.1f} (effective sequence count after reweighting)")
+    meff_ok = Meff >= MIN_MEFF
+    if not meff_ok:
+        print(f"  WARNING: Meff = {Meff:.1f} < {MIN_MEFF}: almost all sequences are "
+              f"within {int(100 * (1 - THETA))}% identity of each other, so the "
+              f"couplings below are not statistically meaningful")
     print(f"  Max weight {W.max():.3f} (sequence with fewest neighbors)")
 
     print("\n[3/6] Computing frequencies with pseudocount lambda=0.5...")
@@ -303,6 +312,7 @@ def main():
         "theta": THETA,
         "lambda": LAMBDA,
         "Meff": float(Meff),
+        "meff_sufficient": bool(meff_ok),
         "compute_time_s": round(time.time() - t0, 1),
         "n_pairs_total": L * (L - 1) // 2,
         "top_20_frobenius": [{"pos_i": i, "pos_j": j, "score": s} for i, j, s in top_F],

@@ -6,7 +6,7 @@ Every circuit in this document is **verified sound and complete** at build time:
 
 ## 1. Co-evolution circuits — SARS-CoV-2 Spike
 
-Dataset: 1,299 Omicron Spike sequences, 21 variable positions (Shannon H > 0.3), 11 co-evolving pairs (mutation-only MI > 0.1, |i-j| ≤ 30, ≥ 5 mutations).
+Dataset: 1,299 Omicron Spike sequences, 21 variable positions (Shannon H > 0.3), 11 co-evolving pairs (binary mutation MI > 0.1, |i-j| ≤ 30, ≥ 5 mutations).  The binary statistic is the MI of the two differs-from-reference indicators; it is not master_boolean.py's 20×20 mutation-only MI, so this pair set differs from master_boolean's 10 pairs.
 
 Variables: `a4..a0` = 5-bit Gray code of the residue at position i, `b4..b0` = same at position j (He-2012 ordering `AILVMFYWEDQNHKRSTCPG`). Each product term is one prime implicant; a free bit widens the term into a residue tolerance class.
 

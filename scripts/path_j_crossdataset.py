@@ -2,9 +2,14 @@
 """
 path_j_crossdataset.py — Test PSICOV150-trained circuits on independent datasets.
 
-Trains the universal contact circuit on ALL 150 PSICOV proteins, then evaluates
-on completely independent protein families from GPCRdb and unit_tests.
-No protein in the test set shares evolutionary history with any training protein.
+Trains the universal contact circuit on the PSICOV proteins, then evaluates on
+the GPCRdb and unit-test alignments.  A test protein that is itself a PSICOV
+target (1atzA is) is removed from the training set for its own evaluation.
+
+Alignment columns are mapped to native-structure residues by global alignment
+of the alignment's first sequence to the PDB chain (validate_contacts.py), and
+contacts / separation bins use the structure's residue indices.  The PSICOV
+identity mapping (column c = residue c+1) does not hold for these structures.
 
 Also computes plain MI ranking as a per-protein baseline for comparison.
 
@@ -26,6 +31,7 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent))
 
 import kmap_structure as ks  # noqa: E402
+from validate_contacts import best_row_column_map, contact_map  # noqa: E402
 
 OUT = ks.RESULTS / "cross_dataset"
 OUT.mkdir(parents=True, exist_ok=True)
@@ -38,7 +44,7 @@ TARGETS = [
     ("unit_tests", "1whzA",  "data/unit_tests/converted/1whzA.fasta",
      "data/structures/1whz.pdb", "Protein G B1 domain"),
     ("unit_tests", "1atzA",  "data/unit_tests/converted/1atzA.fasta",
-     "data/structures/1atz.pdb", "Azurin"),
+     "data/structures/1atz.pdb", "von Willebrand factor A3 domain (also a PSICOV target)"),
     ("gpcrdb", "b2ar",   "data/gpcrdb/converted/b2ar.fasta",
      "data/structures/2rh1.pdb", "β2-adrenergic receptor"),
     ("gpcrdb", "5ht1a",  "data/gpcrdb/converted/5ht1a.fasta",
@@ -98,19 +104,22 @@ def main():
     caches = load_all_caches()
     psicov_targets = sorted(caches)
 
-    tr_pos = np.zeros(1024, np.int64)
-    tr_tot = np.zeros(1024, np.int64)
+    def train_prior(exclude=()):
+        tr_pos = np.zeros(1024, np.int64)
+        tr_tot = np.zeros(1024, np.int64)
+        for name in psicov_targets:
+            if name in exclude:
+                continue
+            tc = caches[name]
+            idx = tc.level1_cells()
+            np.add.at(tr_tot, idx, 1)
+            np.add.at(tr_pos, idx, tc.lab.astype(np.int64))
+        return ks.CellCounts(1024, tr_pos, tr_tot)
 
-    for name in psicov_targets:
-        tc = caches[name]
-        idx = tc.level1_cells()
-        np.add.at(tr_tot, idx, 1)
-        np.add.at(tr_pos, idx, tc.lab.astype(np.int64))
-
-    prior_counts = ks.CellCounts(1024, tr_pos, tr_tot)
-    base_psicov = float(tr_pos.sum() / max(tr_tot.sum(), 1))
+    full_prior = train_prior()
+    base_psicov = full_prior.base_rate()
     n_on = int((ks.label_truth_table(
-        ks.CellCounts(1024, tr_pos.copy(), tr_tot.copy()), 2.0, 30) == 1).sum())
+        ks.CellCounts(1024, full_prior.pos.copy(), full_prior.tot.copy()), 2.0, 30) == 1).sum())
     print(f"  Trained on {len(psicov_targets)} proteins")
     print(f"  Base rate: {base_psicov:.4f} | ON cells: {n_on}/256")
 
@@ -138,31 +147,37 @@ def main():
         valid = cons >= 0
         vc = np.flatnonzero(valid)
 
-        # Candidate pairs
-        ii, jj = np.triu_indices(vc.size, k=1)
-        pi_arr, pj_arr = vc[ii], vc[jj]
-        sep_arr = pj_arr - pi_arr
-        kp = sep_arr >= 6
-        pi_arr, pj_arr, sep_arr = pi_arr[kp], pj_arr[kp], sep_arr[kp]
+        # Column -> structure residue map: pick the MSA row that best matches
+        # the PDB chain (shared 3-mers; the first row is not necessarily the
+        # structure's own sequence), then align its residues to the chain.
+        seq_pdb, contacts = contact_map(str(pdb_path))
+        col_to_res = best_row_column_map(str(fasta_path), seq_pdb)
 
-        if len(pi_arr) < 50 or L < 30:
-            print(f"  SKIP: only {len(pi_arr)} pairs, L={L}")
+        # Candidate pairs: valid consensus at both columns, both mapped,
+        # structure separation >= 6
+        mapped = [c for c in vc if c in col_to_res]
+        cand = [(a, b) for x, a in enumerate(mapped) for b in mapped[x + 1:]
+                if abs(col_to_res[b] - col_to_res[a]) >= 6]
+        if len(cand) < 50 or len(mapped) < 30:
+            print(f"  SKIP: only {len(cand)} mapped pairs, {len(mapped)} mapped columns")
             continue
+        pi_arr = np.array([a for a, _ in cand]); pj_arr = np.array([b for _, b in cand])
+        sep_arr = np.array([abs(col_to_res[b] - col_to_res[a]) for a, b in cand])
 
-        # Native contacts
-        contacts = ks.native_contacts(pdb_path, n_cols=L)
-        lab = np.array([(int(a), int(b)) in contacts
-                        for a, b in zip(pi_arr, pj_arr)])
+        lab = np.array([(min(col_to_res[a], col_to_res[b]), max(col_to_res[a], col_to_res[b])) in contacts
+                        for a, b in cand])
         n_contacts = int(lab.sum())
         base_rate = float(lab.mean())
 
         if n_contacts == 0:
-            print(f"  SKIP: zero native contacts"); continue
+            print(f"  SKIP: zero native contacts among mapped pairs"); continue
 
-        # Features
+        # Features (same separation bins as training: kmap_structure.sep_bin)
         g_i = np.array([group_map.get(int(c), 7) for c in cons[pi_arr]], dtype=np.int8)
         g_j = np.array([group_map.get(int(c), 7) for c in cons[pj_arr]], dtype=np.int8)
-        s_bins = np.array([min((s - 6) // 10, 3) for s in sep_arr], dtype=np.int8)
+        s_bins = np.array([ks.sep_bin(int(x)) for x in sep_arr], dtype=np.int8)
+        L_struct = len(mapped)
+        prior_counts = train_prior(exclude={target_name}) if target_name in caches else full_prior
 
         # MI scores (per-protein baseline)
         print(f"  Computing MI ({len(pi_arr)} pairs, N={N})...")
@@ -179,11 +194,12 @@ def main():
         fused = rank01(mi_vals) + rank01(circ_scores)
 
         # Evaluate
-        K = max(1, round(L / 5))
+        K = max(1, round(L_struct / 5))
         results_row = {
             "dataset": ds_name, "target": target_name,
             "description": desc,
-            "L": L, "N": N, "n_pairs": len(pi_arr),
+            "L": L, "L_mapped": L_struct, "N": N, "n_pairs": len(pi_arr),
+            "trained_without_self": target_name in caches,
             "n_contacts": n_contacts,
             "base_rate": round(base_rate, 4),
             "K": K,

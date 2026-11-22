@@ -1,5 +1,14 @@
 # 12 — Sequence-as-Circuit, Contact-Map Blocks, and the Information Ceiling
 
+> **Correction A4 (Nov 2026)** — see `My_Interpretation_of_the_Results/CORRECTION_NOTICE.md`.
+> Spike rules: 36 prime implicants, **35 essential** (not 2). Constraint-function LOO-CV **99.4%**
+> (the 9.24% was a predictor artefact). APC-corrected MI on PSICOV150 holdout **0.176** vs circuit
+> 0.179 (5-fold CV 0.189 vs 0.165), so the circuit does not beat the standard sequence baseline.
+> Spike mfDCA: Meff = 1 (all sequences within 80% identity), so its pairs, incl. "(454,495)
+> DCA-only", are not meaningful; the DI coupling sign is fixed. Omicron "contact" pairs are 3–5
+> residues apart and the 299 models come from 10 templates, so the 3D p-values are not
+> independent. PSICOV top-20 MI pairs: 2.38× / precision 0.071 (first reported 2.49× / 0.066).
+
 **Date:** Sep 5, 2026 · **Status:** all four stages executed, gates green
 **Engine:** `scripts/sequence_circuits.py` · **Gates:** `scripts/tests/test_sequence_circuits.py` (22/22)
 **Driver:** `scripts/run_sequence_circuit_campaign.py` · **Outputs:** `results/sequence_circuits/*.json`
@@ -133,10 +142,13 @@ prime implicant of `C_X` encodes. The K-map formalism sees real folds.
 ## 3. Co-evolution circuits (R-C) — three polarities, and a trap
 
 Full equations in [`BOOLEAN_CIRCUIT_EQUATIONS.md`](../../BOOLEAN_CIRCUIT_EQUATIONS.md) §1.
-Reproduces the published conventions exactly: **21 variable positions**
-(H > 0.3) — matching the corrected repo figure — and 11 co-evolving pairs at
-mutation-only MI > 0.1 (the published set is 10; the extra pair sits at the
-threshold).
+Same 21 variable positions (H > 0.3) as the corrected repo figure, but 11
+co-evolving pairs, because this stage scores pairs by *binary* mutation MI
+(the MI of the two differs-from-reference indicators) rather than
+master_boolean.py's 20×20 mutation-only MI.  Only 4 of the 11 pairs are among
+master_boolean's 10.  (An earlier version of this paragraph said the
+conventions were identical and the extra pair sat at the threshold; both
+statements were wrong.)
 
 The `standard` polarity is clean and biologically legible. For the top pair
 (373, 378), MI = 0.803, the entire circuit is four essential terms:
@@ -271,29 +283,23 @@ Seeds: folds 42, controls/shuffles 20260905. All stages deterministic.
 
 ## 7. Two corrections to existing repo claims
 
-### 7.1 The reference minimiser is not exact QM
+### 7.1 The reference minimiser was not exact QM — and its bookkeeping was wrong
 
-`kmap_sbm.analysis.prime_implicants` keeps only don't-cares at Hamming distance
-1 from a real on-minterm — a performance choice stated in its own docstring.
-With clustered don't-cares (the contact-campaign regime, where DC = "cell has
-n < n_min") it **under-merges**. Measured on a 10-variable table, 60 on-cells,
-400 don't-cares:
+`kmap_sbm.analysis.prime_implicants` kept only don't-cares at Hamming
+distance 1 from a real on-minterm, so with clustered don't-cares it
+under-merged (measured on a 10-variable table, 60 on-cells, 400 don't-cares:
+it reported 187 cubes where exact QM has 205 primes covering an on-cell, and
+every cube it reported was inside a true prime).
 
-| | exact QM | reference |
-|---|---|---|
-| prime implicants | **522** | 187 |
-
-and every one of the 74 cubes the reference reports that exact QM does not is
-**strictly inside** a true prime (`test_sequence_circuits.py::t06d`). The rules
-stay sound; the *counts* and the *"essential"* designations are approximations.
-Published PI counts derived from it — including the headline "36 distinct prime
-implicants (2 essential)" — should be read as lower bounds under an
-approximation, not as exact QM quantities.
-
-**Resolved (Nov 2026).** `analysis/exact_master_boolean.py` runs exact QM on the
-same ten maps (brute-force verified, covers checked complete and sound): **36
-prime implicants, 35 essential**, minimum cover 35 cubes.  The distinct-rule count
-was right; the essential count was not (correction A3 in CORRECTION_NOTICE.md).
+**Resolved (Nov 2026).** A full read found a second, larger defect: coverage
+indices and on-set indices referred to two different minterm orders, so
+essentials and the greedy cover were wrong whenever a don't-care preceded an
+on-cell.  On the Spike maps the published cover reached 2 of 36 observed
+mutations — the source of "2 essential".  Both defects are fixed in
+kmap-sbm-validation; the fixed minimiser equals exact QM
+(`scripts/tests/test_sequence_circuits.py::t06d`), and the Spike maps give 36
+primes, **35 essential**, a 35-cube cover (correction A3 in
+CORRECTION_NOTICE.md).
 
 ### 7.2 "Axiom-free" is incorrect for most theorems
 

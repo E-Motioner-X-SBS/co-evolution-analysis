@@ -1,5 +1,14 @@
 # 07 — DCA vs MI vs Perplexity: 3D-Contact Prediction Comparison
 
+> **Correction A4 (Nov 2026)** — see `My_Interpretation_of_the_Results/CORRECTION_NOTICE.md`.
+> Spike rules: 36 prime implicants, **35 essential** (not 2). Constraint-function LOO-CV **99.4%**
+> (the 9.24% was a predictor artefact). APC-corrected MI on PSICOV150 holdout **0.176** vs circuit
+> 0.179 (5-fold CV 0.189 vs 0.165), so the circuit does not beat the standard sequence baseline.
+> Spike mfDCA: Meff = 1 (all sequences within 80% identity), so its pairs, incl. "(454,495)
+> DCA-only", are not meaningful; the DI coupling sign is fixed. Omicron "contact" pairs are 3–5
+> residues apart and the 299 models come from 10 templates, so the 3D p-values are not
+> independent. PSICOV top-20 MI pairs: 2.38× / precision 0.071 (first reported 2.49× / 0.066).
+
 **Question:** On the 299 Omicron Spike models, which sequence-derived method
 best predicts 3D residue-residue contact — plain mutual information, mfDCA
 direct information, or the perplexity ratio?
@@ -25,8 +34,8 @@ $P(\text{seq}) \propto \exp(\sum_{i<j} J_{ij}(a_i,a_j) + \sum_i h_i(a_i))$
 via the mean-field approximation (J = covariance⁻¹), applies the **average-
 product correction** (APC: subtract the rank-1 component $J_{ij} \approx
 \text{row}_i \cdot \text{col}_j^T$ that captures shared phylogenetic bias),
-then computes **direct information** $DI = \sum_{a,b} P_{\text{direct}}(a,b)
-\cdot J_{ij}^{\text{APC}}(a,b)^2$. DI isolates direct coupling.
+then computes **direct information** $DI_{ij} = \sum_{a,b} P^{dir}_{ij}(a,b)
+\ln \frac{P^{dir}_{ij}(a,b)}{P_i(a) P_j(b)}$ with $P^{dir}_{ij} \propto \exp(e_{ij}(a,b) + \tilde h_i(a) + \tilde h_j(b))$. DI isolates direct coupling.
 
 ### Perplexity ratio (determinism)
 $$r(i,j) = \frac{PP(j)}{\text{mean}_a\, PP(j \mid i=a)}, \quad PP = 2^{H}$$

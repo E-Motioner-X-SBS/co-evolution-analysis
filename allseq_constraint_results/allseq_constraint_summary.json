@@ -3,9 +3,19 @@
   "method": "Leave-One-Out Cross-Validation",
   "variable_positions": 21,
   "co_evolving_pairs": 10,
-  "overall_accuracy": 0.09235961951518872,
-  "total_correct": 301,
+  "predictor": "argmax_b C(a,b) over partners b co-occurring with a (LOO, exact)",
+  "overall_accuracy": 0.9944768333844738,
+  "total_correct": 3241,
   "total_test": 3259,
+  "conditional_baseline_accuracy": 0.6554157717091132,
+  "n_unique_sequences": 300,
+  "unique_sequences": {
+    "n_mutations": 995,
+    "correct": 978,
+    "correct_conditional": 673,
+    "accuracy": 0.9829145728643216,
+    "conditional_accuracy": 0.6763819095477387
+  },
   "results": [
     {
       "pos_i": 495,
@@ -14,8 +24,16 @@
       "ref_i": "R",
       "ref_j": "G",
       "n_mutations": 425,
-      "correct": 301,
-      "accuracy": 0.7082352941176471
+      "correct": 425,
+      "accuracy": 1.0,
+      "correct_conditional": 124,
+      "abstained": 0,
+      "unique_sequences": {
+        "n_mutations": 133,
+        "correct": 133,
+        "correct_conditional": 55,
+        "abstained": 0
+      }
     },
     {
       "pos_i": 448,
@@ -24,8 +42,16 @@
       "ref_i": "G",
       "ref_j": "L",
       "n_mutations": 393,
-      "correct": 0,
-      "accuracy": 0.0
+      "correct": 392,
+      "accuracy": 0.9974554707379135,
+      "correct_conditional": 282,
+      "abstained": 0,
+      "unique_sequences": {
+        "n_mutations": 106,
+        "correct": 105,
+        "correct_conditional": 63,
+        "abstained": 0
+      }
     },
     {
       "pos_i": 488,
@@ -34,8 +60,16 @@
       "ref_i": "F",
       "ref_j": "G",
       "n_mutations": 405,
-      "correct": 0,
-      "accuracy": 0.0
+      "correct": 405,
+      "accuracy": 1.0,
+      "correct_conditional": 104,
+      "abstained": 0,
+      "unique_sequences": {
+        "n_mutations": 115,
+        "correct": 115,
+        "correct_conditional": 37,
+        "abstained": 0
+      }
     },
     {
       "pos_i": 442,
@@ -44,8 +78,16 @@
       "ref_i": "K",
       "ref_j": "L",
       "n_mutations": 188,
-      "correct": 0,
-      "accuracy": 0.0
+      "correct": 182,
+      "accuracy": 0.9680851063829787,
+      "correct_conditional": 77,
+      "abstained": 0,
+      "unique_sequences": {
+        "n_mutations": 89,
+        "correct": 83,
+        "correct_conditional": 46,
+        "abstained": 0
+      }
     },
     {
       "pos_i": 442,
@@ -54,8 +96,16 @@
       "ref_i": "K",
       "ref_j": "G",
       "n_mutations": 363,
-      "correct": 0,
-      "accuracy": 0.0
+      "correct": 361,
+      "accuracy": 0.9944903581267218,
+      "correct_conditional": 81,
+      "abstained": 0,
+      "unique_sequences": {
+        "n_mutations": 114,
+        "correct": 113,
+        "correct_conditional": 51,
+        "abstained": 0
+      }
     },
     {
       "pos_i": 212,
@@ -64,8 +114,16 @@
       "ref_i": "V",
       "ref_j": "G",
       "n_mutations": 300,
-      "correct": 0,
-      "accuracy": 0.0
+      "correct": 300,
+      "accuracy": 1.0,
+      "correct_conditional": 300,
+      "abstained": 0,
+      "unique_sequences": {
+        "n_mutations": 90,
+        "correct": 90,
+        "correct_conditional": 90,
+        "abstained": 0
+      }
     },
     {
       "pos_i": 215,
@@ -74,8 +132,16 @@
       "ref_i": "G",
       "ref_j": "R",
       "n_mutations": 301,
-      "correct": 0,
-      "accuracy": 0.0
+      "correct": 299,
+      "accuracy": 0.9933554817275747,
+      "correct_conditional": 299,
+      "abstained": 1,
+      "unique_sequences": {
+        "n_mutations": 91,
+        "correct": 89,
+        "correct_conditional": 89,
+        "abstained": 1
+      }
     },
     {
       "pos_i": 212,
@@ -84,8 +150,16 @@
       "ref_i": "V",
       "ref_j": "R",
       "n_mutations": 301,
-      "correct": 0,
-      "accuracy": 0.0
+      "correct": 299,
+      "accuracy": 0.9933554817275747,
+      "correct_conditional": 299,
+      "abstained": 1,
+      "unique_sequences": {
+        "n_mutations": 91,
+        "correct": 89,
+        "correct_conditional": 89,
+        "abstained": 1
+      }
     },
     {
       "pos_i": 210,
@@ -94,8 +168,16 @@
       "ref_i": "N",
       "ref_j": "G",
       "n_mutations": 282,
-      "correct": 0,
-      "accuracy": 0.0
+      "correct": 280,
+      "accuracy": 0.9929078014184397,
+      "correct_conditional": 272,
+      "abstained": 1,
+      "unique_sequences": {
+        "n_mutations": 81,
+        "correct": 79,
+        "correct_conditional": 71,
+        "abstained": 1
+      }
     },
     {
       "pos_i": 210,
@@ -104,8 +186,16 @@
       "ref_i": "N",
       "ref_j": "V",
       "n_mutations": 301,
-      "correct": 0,
-      "accuracy": 0.0
+      "correct": 298,
+      "accuracy": 0.9900332225913622,
+      "correct_conditional": 298,
+      "abstained": 0,
+      "unique_sequences": {
+        "n_mutations": 85,
+        "correct": 82,
+        "correct_conditional": 82,
+        "abstained": 0
+      }
     }
   ]
 }

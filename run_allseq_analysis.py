@@ -256,36 +256,12 @@ def main():
 
         # Prime implicant equations
         print(f"  Prime implicants as equations:")
+        from coevolution_shared import decode_pair_cube, pi_literals
         for pi_idx, pi in enumerate(result["prime_implicants"][:5]):
-            values = list(pi["values"])
-            mask = list(pi["mask"])
-            while len(values) < 8:
-                values.append(0)
-                mask.append(False)
-
-            # Decode row and col codes
-            row_code = 0
-            col_code = 0
-            for j in range(4):
-                if not mask[j]:
-                    row_code = row_code * 2 + values[j]
-            for j in range(4):
-                if not mask[j + 4]:
-                    col_code = col_code * 2 + values[j + 4]
-
-            row_aa = aa_list[row_code % 20] if row_code < 20 else "?"
-            col_aa = aa_list[col_code % 20] if col_code < 20 else "?"
-
-            terms = []
-            for j in range(8):
-                if not mask[j]:
-                    var = f"r{3 - j}" if j < 4 else f"c{7 - j}"
-                    if values[j] == 0:
-                        terms.append(f"~{var}")
-                    else:
-                        terms.append(var)
-            term_str = " & ".join(terms) if terms else "TRUE"
-
+            rows, cols = decode_pair_cube(pi)
+            row_aa = "".join(aa_list[c] for c in rows) or "?"
+            col_aa = "".join(aa_list[c] for c in cols) or "?"
+            term_str = " & ".join(pi_literals(pi)) or "TRUE"
             print(f"    PI_{pi_idx + 1}: {term_str} = ({row_aa},{col_aa})")
 
         position_results.append(

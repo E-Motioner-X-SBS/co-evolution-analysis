@@ -3,13 +3,12 @@
 Predictive Constraint Function for Co-evolution
 ================================================
 
-Implements the three K-map approaches:
-A. Original: observed pairs (co-evolutionary motifs)
-B. Flipped: forbidden pairs (destabilization constraints)
-C. Continuous: frequency-based prediction function
-
-The constraint function predicts whether a mutation will be
-destabilizing based on the K-map structure.
+Continuous constraint function C(a, b) = ln(P(a,b) / (P(a) P(b))) on each
+co-evolving pair, evaluated by a train/test split in file order (~62/38):
+for every test sequence carrying a mutation at the pair, predict its residue
+at j from its residue at i using the training table.  (The observed- and
+flipped-pair K-maps are master_boolean.py and flipped_boolean_coevolution.py;
+this script does not use them, and it carries no stability information.)
 """
 
 from kmap_paths import KMAP_SBM_SRC, NARY_SRC, REPO_ROOT  # noqa: E402
@@ -209,49 +208,51 @@ def main():
 
     # Test prediction
     print("\n[5/5] Testing prediction...")
-    # For each position pair, predict: given mutation at i, what's the best j?
+    # For each position pair: given the mutated residue at i in a test
+    # sequence, predict its residue at j from the TRAINING table.
+    # Prediction = argmax of C over partners that co-occur with that residue in
+    # training (coevolution_shared.predict_partner); the earlier argmax over
+    # all 20 residues picked never-seen partners because of the eps smoothing.
+    from coevolution_shared import predict_partner
+
     correct = 0
+    correct_cond = 0
+    abstained = 0
     total = 0
 
     # Proportional train/test split (~62/38, like the original 800/499 for
-    # 1299 sequences) — works for ANY dataset size, guarantees a non-empty
-    # test set.
+    # 1299 sequences), in file order — works for ANY dataset size, guarantees a
+    # non-empty test set.
     n_train = max(1, int(0.62 * n_all))
     print(f"  Train: {n_train} sequences, Test: {n_all - n_train} sequences")
 
     for pos_i, pos_j, mi, n_muts, ref_i, ref_j in co_evolving[:10]:
-        # BUG FIX: ref_i, ref_j are already int codes (0-19) from get_majority_ref
-        ref_i_code = int(ref_i)
+        ref_i_code = int(ref_i)  # integer He-2012 codes from the majority ref
         ref_j_code = int(ref_j)
-        # Build constraint function from the training sequences
-        kmap_freq = np.zeros((20, 20), dtype=np.float64)
+        counts = np.zeros((20, 20), dtype=np.float64)
         for arr in pos_arrays[:n_train]:
             if pos_i < len(arr) and pos_j < len(arr):
                 ci, cj = int(arr[pos_i]), int(arr[pos_j])
                 if 0 <= ci < 20 and 0 <= cj < 20:
-                    kmap_freq[ci, cj] += 1
-        total_freq = kmap_freq.sum()
-        if total_freq > 0:
-            kmap_freq /= total_freq
+                    counts[ci, cj] += 1
 
-        C = compute_constraint_function(kmap_freq)
-
-        # Test on the remaining sequences
         for arr in pos_arrays[n_train:]:
             if pos_i < len(arr) and pos_j < len(arr):
                 ci, cj = int(arr[pos_i]), int(arr[pos_j])
                 if 0 <= ci < 20 and 0 <= cj < 20:
-                    # BUG FIX: ref_i, ref_j are already int codes — no lookup needed
                     if ci != ref_i_code or cj != ref_j_code:
-                        # This is a mutation pair
-                        # Predict: what's the best cj for this ci?
-                        best_cj = np.argmax(C[ci, :])
-                        if best_cj == cj:
-                            correct += 1
                         total += 1
+                        pick, cond = predict_partner(counts, ci)
+                        if pick is None:
+                            abstained += 1  # residue at i never seen in training
+                            continue
+                        correct += int(pick == cj)
+                        correct_cond += int(cond == cj)
 
     accuracy = correct / total if total > 0 else 0
-    print(f"  Prediction accuracy: {accuracy:.4f} ({correct}/{total})")
+    cond_accuracy = correct_cond / total if total > 0 else 0
+    print(f"  Prediction accuracy: {accuracy:.4f} ({correct}/{total}); "
+          f"conditional baseline {cond_accuracy:.4f}; abstained {abstained}")
 
     # Save results
     print("\n" + "=" * 80)
@@ -262,6 +263,10 @@ def main():
         "variable_positions": len(variable_positions),
         "co_evolving_pairs": len(co_evolving),
         "prediction_accuracy": accuracy,
+        "predictor": "argmax_b C(a,b) over partners b co-occurring with a in training",
+        "n_test_mutations": total,
+        "conditional_baseline_accuracy": cond_accuracy,
+        "abstained": abstained,
         "results": all_results,
     }
     with open(results_dir / "constraint_function_summary.json", "w") as f:

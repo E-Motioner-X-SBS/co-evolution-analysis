@@ -6,7 +6,7 @@ Mirrors the style of test_kmap_structure.py: every gate is an assertion with a
 printed verdict, exit code 1 on any failure.  The gates that matter most:
 
   t04-t06  our sparse QM produces the SAME prime-implicant set as the repo's
-           reference dense implementation (`kmap_sbm.analysis.prime_implicants`)
+           reference implementation (`kmap_sbm.analysis.prime_implicants`)
   t07-t09  the positional circuit is LOSSLESS — the sequence is recovered
            exactly by evaluating the minimised circuit
   t12-t13  the encoding conventions (binary for position, Gray for residue)
@@ -99,42 +99,21 @@ for tag, n_vars, n_on, n_dc in (("t06a", 8, 30, 20), ("t06b", 10, 60, 400),
     check(f"{tag} self-audit n={n_vars}", bad_i == 0 and bad_p == 0,
           f"pis={n_pi} non-implicants={bad_i} non-prime={bad_p}")
 
-# t06d: DOCUMENTED DIVERGENCE — characterised, not just observed.
-#
-# The reference prunes don't-cares to those at Hamming distance 1 from a real
-# on-minterm (a performance choice stated in its own docstring).  With DCs
-# clustered — which is exactly the regime of the contact campaign, where DC =
-# "cell has n < n_min" — cubes that would grow through a chain of don't-cares
-# never form.  The consequence is precise and worth pinning down:
-#
-#   * the reference UNDER-MERGES: it misses true primes, and
-#   * every cube it reports that we do not is STRICTLY INSIDE one of ours.
-#
-# So its rules stay SOUND (each cube still touches no off-cell) but its
-# prime-implicant counts, and hence its "essential" designations, are
-# approximations rather than the exact QM quantities the docstring claims.
+# t06d: the reference (kmap_sbm) returns exactly our primes that cover an
+# on-minterm.  Before the kmap-sbm-validation fix of 2026-11 it kept only
+# don't-cares at Hamming distance 1 from an on-minterm, so with clustered
+# don't-cares (the contact-campaign regime) it missed true primes and
+# reported sub-cubes of them instead.
 cells = 1 << 10
 perm = rng.permutation(cells)
 on = sorted(int(x) for x in perm[:60])
 dc = sorted(int(x) for x in perm[60:460])
 ours_pis = sc.prime_implicants(on, dc, 10)
-rep = sc.qm_agreement_check(on, dc, 10)
-
-
-def _inside(val: int, mask: int, b: sc.Implicant) -> bool:
-    """Cube (val, mask) lies inside cube b."""
-    return (mask & ~b.mask) == 0 and ((val ^ b.val) & ~b.mask) == 0
-
-
-# `only_ref` is truncated to 8 for display; recompute the full difference.
-ref_only_all = {(v, m) for v, m in
-                (sc._ref_pi_keys(on, dc, 10) - {(p.val, p.mask) for p in ours_pis})}
-subsumed = sum(1 for (v, m) in ref_only_all
-               if any(_inside(v, m, p) for p in ours_pis))
-check("t06d reference under-merges (every extra cube is subsumed)",
-      rep["n_ref"] < rep["n_ours"] and subsumed == len(ref_only_all),
-      f"exact={rep['n_ours']} reference={rep['n_ref']} "
-      f"ref-only={len(ref_only_all)} all-subsumed={subsumed == len(ref_only_all)}")
+ours_on = {(p.val, p.mask) for p in ours_pis if any(p.covers(m) for m in on)}
+ref_keys = sc._ref_pi_keys(on, dc, 10)
+check("t06d reference == exact primes covering an on-cell",
+      ref_keys == ours_on,
+      f"exact on-covering={len(ours_on)} (all {len(ours_pis)}) reference={len(ref_keys)}")
 
 # --- §3 losslessness of the positional circuit ------------------------------
 def _roundtrip(tag: str, seq: str) -> None:

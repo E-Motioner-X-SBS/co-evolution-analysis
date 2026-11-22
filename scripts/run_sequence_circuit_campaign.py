@@ -61,8 +61,8 @@ SPIKE = REPO / "Spike_protein.aln-fasta"
 CONTROL_SEED = 20260905
 SPLIT_SEED = 42
 
-# Spike co-evolution conventions, matching coevolution_shared.py exactly so the
-# pair set reproduces the published 21 positions / 10 pairs.
+# Spike co-evolution thresholds as in coevolution_shared.py (entropy, MI, window,
+# minimum mutations); the MI statistic itself differs — see _mi_mutation_only.
 ENTROPY_THRESHOLD = 0.3
 MI_THRESHOLD = 0.1
 MAX_GAP = 30
@@ -171,10 +171,12 @@ def _entropy_all(dense: np.ndarray) -> np.ndarray:
 
 def _mi_mutation_only(dense: np.ndarray, i: int, j: int,
                       ref_i: int, ref_j: int) -> Tuple[float, int]:
-    """Mutation-only MI: binary "differs from majority reference" per column.
+    """Binary mutation MI: MI of the two "differs from the majority reference"
+    indicators (a 2x2 table).
 
-    Mirrors coevolution_shared.mi_mutation_only — the repo's pair-selection
-    statistic (this is what produced the published 10-pair set).
+    This is NOT coevolution_shared.mi_mutation_only (20x20 MI over the
+    non-reference pairs, the statistic behind master_boolean's 10 pairs): on
+    the Spike it selects 11 pairs, only 4 of which are among those 10.
     """
     ci, cj = dense[:, i], dense[:, j]
     ok = (ci != ks.GAP_STATE) & (cj != ks.GAP_STATE) & (ci >= 0) & (cj >= 0)
@@ -411,12 +413,14 @@ def stage_chem(limit: Optional[int], t_mult: float, n_min: int) -> Dict:
                 pd = ks.load_protein(t)
             except Exception:                        # noqa: BLE001
                 continue
-            pairs = ks.pair_universe(pd)
-            ks.accumulate_protein(counts1, counts2, pd, pairs)
+            feats = ks.pair_features(pd, ks.pair_universe(pd))
+            ks.accumulate_protein(counts1, counts2, feats)
         return counts1
 
     fold_rows: List[Dict] = []
-    for f, (train, test) in enumerate(folds):
+    for f in range(len(folds)):
+        test = folds[f]
+        train = [t for g, grp in enumerate(folds) if g != f for t in grp]
         c1 = _accumulate(train)
         tt = ks.label_truth_table(c1, t_mult=t_mult, n_min=n_min)
         on = [int(i) for i in np.where(tt == 1)[0]]

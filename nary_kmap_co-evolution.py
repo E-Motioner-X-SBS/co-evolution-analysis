@@ -6,12 +6,13 @@ N-ary K-map Analysis of SARS-CoV-2 Spike Protein Co-evolution
 Uses base-20 encoding (direct amino acid mapping) instead of binary
 5-bit Gray code. This gives a 20x20 K-map for dipeptides.
 
-Key difference from binary approach:
-- Binary: 32x32 = 1024 cells (12 don't-care cells)
-- N-ary: 20x20 = 400 cells (0 don't-care cells, all used)
+Key difference from the binary (Gray) script:
+- Binary: 32x32 grid of Gray codes, 400 of 1,024 cells are residue pairs
+- N-ary: 20x20 frequency map indexed by the He-2012 code
 
-The n-ary approach is more compact and directly captures the
-biochemical relationships between amino acids.
+The QM step pads the 20x20 map to 32x32 (rows/cols 20-31 don't-care) and
+minimises it over the natural-binary bits of the He-2012 index; it is a
+binary minimisation of the base-20 map, not an n-ary one.
 """
 
 from kmap_paths import KMAP_SBM_SRC, NARY_SRC, REPO_ROOT  # noqa: E402
@@ -232,8 +233,9 @@ def extract_nary_motifs(qm_result, encoder, sequences, n_seqs=100):
             if len(arr) < 2:
                 continue
             # Find all positions where consecutive pair matches (row_aa, col_aa)
-            matches_first = arr[:-1] % 20 == row_code % 20
-            matches_second = arr[1:] % 20 == col_code % 20
+            # gaps/unknown are -1 here; `% 20` used to fold them onto code 19 (G)
+            matches_first = arr[:-1] == row_code % 20
+            matches_second = arr[1:] == col_code % 20
             motif_count += int(np.sum(matches_first & matches_second))
 
         if motif_count > 0:
@@ -522,7 +524,7 @@ def main():
     print("=" * 70)
     print(f"\nKey Results:")
     print(f"  Encoding: Base-20 (He 2012 order)")
-    print(f"  K-map size: 20x20 = 400 cells (no don't-care)")
+    print(f"  K-map size: 20x20 = 400 cells (padded to 32x32 for QM)")
     print(f"  Boolean on-set: {int(kmap_bool.sum())} cells")
     print(f"  Prime implicants: {qm_result['n_prime_implicants']}")
     print(f"  Essential prime implicants: {qm_result['n_essential']}")
@@ -532,10 +534,10 @@ def main():
 
     print(f"\n  The n-ary K-map captures the co-evolutionary structure of the")
     print(f"  Spike protein using direct base-20 encoding. The 400-cell K-map")
-    print(f"  has no don't-care cells, providing a complete picture of all")
-    print(f"  dipeptide relationships. The prime implicants identify the essential")
-    print(f"  co-evolutionary motifs, and the coupling constants quantify the")
-    print(f"  strength of co-evolution between residue pairs.")
+    print(f"  is padded to 32x32 (don't-care border) for minimisation. The prime")
+    print(f"  implicants summarise the frequent dipeptides (protein-wide, no position")
+    print(f"  information), and the coupling constants measure dipeptide over- and")
+    print(f"  under-representation relative to residue composition.")
 
     # ============================================================
     # COMBINED MI + PERPLEXITY ANALYSIS (all experiments)

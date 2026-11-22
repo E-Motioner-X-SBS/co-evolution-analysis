@@ -8,9 +8,9 @@
       "mi": 0.8709897994995117,
       "n_on": 2,
       "reference": {
-        "raw_primes": 6,
-        "primes_covering_on": 6,
-        "raw_essential": 0
+        "raw_primes": 2,
+        "primes_covering_on": 2,
+        "raw_essential": 2
       },
       "padding-DC": {
         "exact_primes": 2,
@@ -67,9 +67,9 @@
       "mi": 0.8343690633773804,
       "n_on": 3,
       "reference": {
-        "raw_primes": 5,
-        "primes_covering_on": 5,
-        "raw_essential": 0
+        "raw_primes": 3,
+        "primes_covering_on": 3,
+        "raw_essential": 3
       },
       "padding-DC": {
         "exact_primes": 3,
@@ -138,9 +138,9 @@
       "mi": 0.8218638896942139,
       "n_on": 3,
       "reference": {
-        "raw_primes": 8,
-        "primes_covering_on": 8,
-        "raw_essential": 0
+        "raw_primes": 3,
+        "primes_covering_on": 3,
+        "raw_essential": 3
       },
       "padding-DC": {
         "exact_primes": 3,
@@ -209,9 +209,9 @@
       "mi": 0.8109789490699768,
       "n_on": 3,
       "reference": {
-        "raw_primes": 5,
-        "primes_covering_on": 5,
-        "raw_essential": 0
+        "raw_primes": 3,
+        "primes_covering_on": 3,
+        "raw_essential": 3
       },
       "padding-DC": {
         "exact_primes": 3,
@@ -280,9 +280,9 @@
       "mi": 0.7283939123153687,
       "n_on": 3,
       "reference": {
-        "raw_primes": 6,
-        "primes_covering_on": 6,
-        "raw_essential": 0
+        "raw_primes": 3,
+        "primes_covering_on": 3,
+        "raw_essential": 3
       },
       "padding-DC": {
         "exact_primes": 3,
@@ -351,9 +351,9 @@
       "mi": 0.39768385887145996,
       "n_on": 4,
       "reference": {
-        "raw_primes": 7,
-        "primes_covering_on": 7,
-        "raw_essential": 0
+        "raw_primes": 4,
+        "primes_covering_on": 4,
+        "raw_essential": 4
       },
       "padding-DC": {
         "exact_primes": 4,
@@ -434,9 +434,9 @@
       "mi": 0.3773494362831116,
       "n_on": 4,
       "reference": {
-        "raw_primes": 10,
-        "primes_covering_on": 10,
-        "raw_essential": 0
+        "raw_primes": 4,
+        "primes_covering_on": 4,
+        "raw_essential": 4
       },
       "padding-DC": {
         "exact_primes": 4,
@@ -517,9 +517,9 @@
       "mi": 0.3773493766784668,
       "n_on": 6,
       "reference": {
-        "raw_primes": 8,
-        "primes_covering_on": 8,
-        "raw_essential": 1
+        "raw_primes": 6,
+        "primes_covering_on": 6,
+        "raw_essential": 6
       },
       "padding-DC": {
         "exact_primes": 6,
@@ -624,9 +624,9 @@
       "mi": 0.23771017789840698,
       "n_on": 4,
       "reference": {
-        "raw_primes": 9,
-        "primes_covering_on": 9,
-        "raw_essential": 1
+        "raw_primes": 4,
+        "primes_covering_on": 4,
+        "raw_essential": 4
       },
       "padding-DC": {
         "exact_primes": 4,
@@ -707,9 +707,9 @@
       "mi": 0.17692936956882477,
       "n_on": 4,
       "reference": {
-        "raw_primes": 6,
-        "primes_covering_on": 6,
-        "raw_essential": 0
+        "raw_primes": 4,
+        "primes_covering_on": 4,
+        "raw_essential": 3
       },
       "padding-DC": {
         "exact_primes": 4,
@@ -773,8 +773,8 @@
   ],
   "totals": {
     "reference_distinct_rules": 36,
-    "reference_essential": 2,
-    "reference_primes_covering_on": 70,
+    "reference_essential": 35,
+    "reference_primes_covering_on": 36,
     "padding-DC": {
       "exact_primes": 36,
       "exact_essential": 35,
@@ -788,5 +788,11 @@
       "bruteforce_agree": true
     }
   },
-  "n_pairs": 10
+  "n_pairs": 10,
+  "published_before_fix": {
+    "distinct_rules": 36,
+    "essential": 2,
+    "on_cells_covered_by_published_cover": 2,
+    "on_cells": 36
+  }
 }

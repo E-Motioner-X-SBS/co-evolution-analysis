@@ -1,16 +1,17 @@
 # Co-evolution Analysis of SARS-CoV-2 Spike Protein
 
-> **CORRECTION (Aug 7, 2026):** two defects (A1 gap-stripping misalignment,
-> A2 8-bit QM wrap-around) were fixed; all scripts re-run on aligned columns
-> with padded 32x32 K-maps. Verified corrected results: 21 variable
-> positions, 10 co-evolving pairs, 36 distinct Boolean rules — 35 of them essential under
-> exact Quine–McCluskey (the earlier "2 essential" came from the approximate minimiser; see
-> correction A3 in the notice below).
-> See [My_Interpretation_of_the_Results/CORRECTION_NOTICE.md](My_Interpretation_of_the_Results/CORRECTION_NOTICE.md).
+> **CORRECTIONS:** A1 (gap-stripping misalignment) and A2 (8-bit QM wrap-around)
+> were fixed in Aug 2026. A3/A4 (Nov 2026): the QM minimiser's essential/cover
+> bookkeeping was wrong (the "2 essential" rules), the constraint-function
+> predictor picked never-observed residues (the "9.24% LOO-CV"), the reviewer
+> check of APC-corrected MI never applied the correction, and mfDCA's direct
+> information used the wrong coupling sign. Current values: 21 variable positions,
+> 10 co-evolving pairs, 36 prime implicants of which **35 are essential**, LOO-CV
+> **99.4%**. See [My_Interpretation_of_the_Results/CORRECTION_NOTICE.md](My_Interpretation_of_the_Results/CORRECTION_NOTICE.md).
 
 Karnaugh map (K-map) Boolean minimization applied to predict co-evolutionary constraints in the SARS-CoV-2 Spike protein.
 
-**FULL-LENGTH + GPU:** All 20 scripts run on the complete sequence (1,276 positions) with all 1,299 sequences, GPU-accelerated via torch CUDA (A100). See [RESULTS_ANALYSIS.md](RESULTS_ANALYSIS.md) for the rigorous audit.
+**FULL-LENGTH + GPU:** the analysis scripts run on the complete alignment (1,276 columns) with all 1,299 sequences (299 unique), GPU-accelerated via torch (CUDA when available, CPU otherwise). See [RESULTS_ANALYSIS.md](RESULTS_ANALYSIS.md).
 
 ## Overview
 
@@ -53,22 +54,24 @@ nohup $PY -u gpu_full_analysis.py > logs/gpu_full.log 2>&1 &
 | Co-evolutionary pairs (mutation-only MI > 0.1) | 10 |
 | Max full-MI | 0.8067 @ (373, 378) |
 | Max mutation-only MI | 0.8710 @ (495, 498) |
-| Distinct Boolean rules (essential) | 36 (35 exact; 2 approximate) ¹ |
-| Flipped Boolean forbidden rules | 490 |
+| Prime implicants (essential) | 36 (35) ¹ |
+| Flipped Boolean never-observed cubes | 246 |
 | High-MI pairs (full length) | 5 (MI > 0.5) |
-| LOO-CV accuracy | 9.24% (corrected) |
-| DCA-style accuracy | 17.6% (local precision, NOT real DCA) |
-| Variant signatures | 40 |
+| LOO-CV partner prediction | 99.4% (conditional baseline 65.5%; 98.3% on the 300 unique sequences) ² |
+| Local-precision Boolean accuracy | 0.0% (NOT real DCA) |
+| Variant signatures | 24 |
 | GPU MI matrix speed | 813K pairs in 1.6 s (~800× vs CPU) |
 
-¹ From `master_boolean/master_boolean_summary.json`. The reference minimiser
-(`kmap_sbm.analysis.prime_implicants`) is not exact Quine–McCluskey: it keeps only
-don't-cares at Hamming distance 1 from an on-minterm, so it under-merges when
-don't-cares cluster (187 cubes vs 522 true primes on a 10-variable test). The rules
-are sound, but PI counts and "essential" designations are approximations. See
-`My_Own_Interpretation_Across_New_Datasets/3D_Structure_Analysis/12_Sequence_Circuits_And_The_3D_Ceiling.md` §7.1.
-Exact QM on the same maps (`analysis/exact_master_boolean.py`, brute-force verified) gives
-36 prime implicants of which 35 are essential, with a 35-cube minimum cover.
+¹ From `master_boolean/master_boolean_summary.json`, regenerated with the fixed minimiser and
+checked against an independent exact QM and brute force (`analysis/exact_master_boolean.py`).
+35 of the 36 observed co-mutations are isolated K-map cells, so nearly every prime is essential.
+
+² The partner at one position of a co-evolving pair is almost determined by the residue at the
+other: the variants are linked lineage alleles of one clonal population (`allseq_constraint_function.py`).
+
+Positions are 0-based alignment columns, not Spike residue numbers (in the RBD, Wuhan
+residue = column − 2). mfDCA on this alignment is not meaningful: all sequences are within 80%
+identity of each other, so the effective sequence count is Meff = 1.
 
 ## Scripts
 
@@ -76,18 +79,19 @@ Exact QM on the same maps (`analysis/exact_master_boolean.py`, brute-force verif
 |---|--------|---------|--------|
 | 1 | `coevolution_shared.py` | Shared module (FASTA, MI, entropy, GPU pair-finder) | — |
 | 2 | `coevolution_gpu.py` | **GPU kernels** (torch CUDA: MI matrix, entropy, refs, coupling, H1) | — |
-| 3 | `master_boolean.py` | Master Boolean function (36 rules; 35 essential under exact QM) | `master_boolean/` |
+| 3 | `master_boolean.py` | Master Boolean function (36 prime implicants, 35 essential) | `master_boolean/` |
 | 4 | `boolean_co-evolution.py` | Binary K-map Boolean minimization (796,953 pairs) | `boolean_results/` |
 | 5 | `nary_kmap_co-evolution.py` | Base-20 K-map analysis | `nary_kmap_results/` |
 | 6 | `position_kmap_coevolution.py` | Position-pair K-maps with MI (25,199 pairs) | `position_kmap_results/` |
 | 7 | `run_allseq_analysis.py` | Full analysis on all sequences | `full_position_results/` |
 | 8 | `run_kmap_analysis.py` | Master K-map pipeline (H1-H6) | `kmap_results/` |
-| 9 | `flipped_boolean_coevolution.py` | Forbidden pairs (negative selection, 490 rules) | `flipped_boolean_results/` |
+| 9 | `flipped_boolean_coevolution.py` | Never-observed combinations (246 cubes) | `flipped_boolean_results/` |
 | 10 | `kmap_boolean_coevolution.py` | K-map Boolean with markdown output | `kmap_boolean_coevolution/` |
 | 11 | `variable_position_coevolution.py` | Variable-position K-map with don't-care | `variable_position_results/` |
 | 12 | `predictive_constraint_function.py` | Constraint function train/test | `constraint_function_results/` |
 | 13 | `allseq_constraint_function.py` | LOO-CV constraint function | `allseq_constraint_results/` |
 | 14 | `dca_boolean_coevolution.py` | Local precision matrix → Boolean (NOT real DCA) | `dca_boolean_results/` |
+| 14b | `dca_mf_analysis.py` | Mean-field DCA (Frobenius/APC, direct information) | `dca_results/` |
 | 15 | `perplexity_coevolution.py` | Perplexity-based co-evolution | `perplexity_results/` |
 | 16 | `advanced_co-evolution_analysis.py` | Network, Walsh-Hadamard, clustering, signatures | `advanced_analysis_results/` |
 | 17 | `full_length_analysis.py` | Full-length (1276 positions) entropy/MI | `full_length_results/` |

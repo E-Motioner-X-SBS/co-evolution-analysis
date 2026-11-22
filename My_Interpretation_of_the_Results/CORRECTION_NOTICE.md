@@ -64,13 +64,13 @@ From `analysis/corrected_pipeline.py` and the re-run of every script (Aug 7, 202
 | Strongest full-MI pair | (372, 401) MI = 1.5917 | **(373, 378) MI = 0.8067** |
 | Strongest mutation-only MI pair | (413, 427) MI = 2.352 | **(495, 498) MI = 0.8710** |
 | Master Boolean prime implicants | 162 (143 phantom) | **36 distinct pairs** (all cover real cells) |
-| Essential rules | 152 | **2** (minimal irredundant core) |
+| Essential rules | 152 | **35** (correction A3; first reported as 2) |
 | Forbidden rules (flipped) | 345 | **490** |
 | Mean mutations per sequence | 1,061 | **11.1** |
 | High-MI pairs (MI > 0.5) | 35,858 | **5** |
 | MI > 1.0 pairs | 106,626 | **0** |
-| LOO-CV accuracy | 2.93% | **9.24%** (301/3259) |
-| Train/test accuracy | 5.84% | **0.11%** |
+| LOO-CV accuracy | 2.93% | **99.4%** (3241/3259; first reported as 9.24%, correction A4) |
+| Train/test accuracy | 5.84% | **25.9%** (first reported as 0.11%, correction A4) |
 | Network nodes/edges | 1,249 / 35,098 | **21 / 8** |
 
 ### Code corrections applied to ALL scripts (Aug 7, 2026)
@@ -115,12 +115,7 @@ Every analysis script was corrected and re-run:
 
 ### Corrected rules
 
-The corrected master Boolean function has **36 distinct prime implicants** (residue-pair rules) across 10 pairs, of which **2 are essential** (the minimal irredundant core). Every rule was verified programmatically against the alignment: each listed residue pair is actually observed, so there are no phantom rules. The 2 essential rules:
-
-```
-IF pos 212 = G AND pos 216 = R THEN co-evolutionary (mutation-only MI = 0.377)
-IF pos 210 = K AND pos 215 = G THEN co-evolutionary (mutation-only MI = 0.238)
-```
+The corrected master Boolean function has **36 distinct prime implicants** (residue-pair rules) across 10 pairs, of which **35 are essential** (see correction A3 below; the "2 essential" first reported here came from a defect in the minimiser). Every rule was verified programmatically against the alignment: each listed residue pair is actually observed, so there are no phantom rules.
 
 Note on MI conventions: the top-pair table in this notice uses FULL MI (all pairs incl. reference); the master Boolean pipeline ranks by MUTATION-ONLY MI (reference pair excluded). Both are valid; they rank pairs differently - e.g. (495, 498) has full MI 0.0386 but mutation-only MI 0.8710, because its signal lives in the non-reference pairs.
 
@@ -130,16 +125,16 @@ Note on MI conventions: the top-pair table in this notice uses FULL MI (all pair
 
 2. The strongest genuine co-evolution signals are (373, 378), (18, 26), (66, 94), and the 210-216 cluster - NOT the (372, 401) hub reported earlier.
 
-3. The original 152 rules were mostly artifacts. The corrected rule set is 36 distinct real prime implicants with a 2-rule essential core.
+3. The original 152 rules were mostly artifacts. The corrected rule set is 36 distinct real prime implicants, 35 of them essential (correction A3).
 
 4. The DCA analysis (dca_mf_analysis.py) was NOT affected by A1 (it uses the raw alignment with gap as state 20); its direct-coupling results stand, but the DCA-vs-MI comparison must be re-interpreted against the corrected MI matrix (max 0.807).
 
-5. The LOO-CV accuracy IMPROVED to 9.24% on corrected data: the genuine pairs are more predictable than the artifact pairs.
+5. The LOO-CV accuracy of 9.24% reported here was itself an artifact of the predictor (correction A4); the corrected value is 99.4%.
 
 ## Reproducibility
 
 ```bash
-cd /store/shuvam/E-motioner-X-SBS/datasets/co-evolution
+cd co-evolution-analysis
 python analysis/corrected_pipeline.py
 # -> analysis/corrected_results.json
 ```
@@ -148,24 +143,51 @@ The corrected loader is `coevolution_shared.load_position_arrays(aligned=True)` 
 
 ---
 
-## Correction A3 (Nov 2026): the essential count — exact QM gives 35, not 2
+## Correction A3 (Nov 2026): the essential count — 35, not 2
 
-`analysis/exact_master_boolean.py` rebuilds the same 10 padded 32x32 maps with
-master_boolean.py's own functions and minimises them with exact Quine-McCluskey
-(`scripts/sequence_circuits.prime_implicants`), cross-checked against an
-independent brute-force enumeration of every prime cube; every cover is
-verified complete and sound (`analysis/exact_master_boolean.json`).
+The published "36 distinct prime implicants, 2 essential" came from a defect
+in `kmap_sbm.analysis.prime_implicants.boolean_minimize_kmap`
+(kmap-sbm-validation), not from the data:
 
-| | prime implicants | essential | minimum cover |
+* **Index mismatch.** Each implicant's coverage indexed one minterm order
+  (on-set first, then don't-cares) while the essential test and the greedy
+  cover used another (cells in table order, don't-cares interleaved).  On the
+  padded Spike maps every on-cell after the first row's padding was shifted,
+  so the reported essentials were arbitrary and the reported **cover reached
+  only 2 of the 36 observed mutations** (8 of the 10 pairs had an empty
+  cover).  `essential_prime_implicants` also included the greedy picks, so
+  `n_essential` always equalled `covering_size`.
+* **Not exact.** Only don't-cares adjacent to an on-cell took part in
+  merging, so cubes could not grow through the padding and some reported
+  cubes were not prime.
+
+Both are fixed in kmap-sbm-validation (exact merging, coverage indexed by the
+on-set, essentials and cover reported separately).  `analysis/exact_master_boolean.py`
+rebuilds the same 10 padded maps and checks the minimiser against an
+independent exact QM and brute-force enumeration (`analysis/exact_master_boolean.json`):
+
+| | prime implicants | essential | cover |
 |---|---|---|---|
-| reference minimiser (published) | 36 distinct decoded rules (70 cubes) | **2** | — |
-| **exact QM**, padding = don't-care (as master_boolean.py) | **36** | **35** | 35 |
-| **exact QM**, padding = off-set | 35 | **35** | 35 |
+| published (defective minimiser) | 36 distinct decoded rules | **2** | reached 2 of 36 on-cells |
+| fixed minimiser / exact QM, padding = don't-care (as master_boolean.py) | **36** | **35** | 35, complete |
+| exact QM, padding = off-set | 35 | **35** | 35, complete |
 
-The rule COUNT stands (36), but "2 essential" is an artifact of the approximate
-minimiser (doc 12 §7.1): it emits 70 overlapping sub-cubes, so almost no on-cell
-has a unique cover.  Exactly, 35 of the 36 observed co-mutations are isolated
-K-map cells (no Hamming-1 neighbour in the on-set), so nearly every rule is
-essential; the single merge is at pair (210, 212).  Read "2 essential" anywhere
-in this repository as "35 essential (exact)".
+35 of the 36 observed co-mutations are isolated K-map cells, so almost every
+rule is essential; the one merge is at pair (210, 212).  On these maps QM
+therefore compresses 36 observations into 35 rules: the rules are, in
+effect, the list of observed mutation pairs.  `master_boolean_summary.json`,
+`kmap_boolean_coevolution/`, `flipped_boolean_results/` and the other
+minimiser outputs have been regenerated with the fixed minimiser.  Read
+"2 essential" anywhere in this repository as "35 essential".
 
+## Correction A4 (Nov 2026): other defects found in a full read
+
+| Defect | Effect | Fix / corrected value |
+|---|---|---|
+| Constraint-function predictor took argmax of the eps-smoothed C over all 20 residues | a never-observed partner scores ln(1/P(a)) > 0 and won 90.8% of predictions → "LOO-CV 9.24%", "train/test 0.11%" | argmax over partners that co-occur with the residue (ties by count); exact O(N) LOO: **99.4%** (3241/3259), conditional baseline 65.5%, **98.3%** on the 300 unique sequences; train/test 25.9%. Partners are linked lineage alleles. |
+| `path_m` M4 "MIp" never accumulated the column sum | MIp = MI, so "APC adds nothing" | true MIp on the PSICOV holdout **0.176** vs circuit 0.179 (p = 0.55); 5-fold CV 0.189 vs 0.165. MIp is now a standing baseline in `run_contact_campaign.py`. |
+| `dca_mf_analysis.py` used W = exp(−e_ij) | direct information with flipped couplings | sign fixed; on PSICOV150 (`analysis/mfdca_psicov_check.py`) DI prec@L/5 **0.566** vs 0.517 with the old sign (better on 93, worse on 25 targets). This also shows `path_h`'s APC-Frobenius mfDCA (0.169), used as "rawDCA" in the rank-fusion result, is far below a working mfDCA. |
+| Spike mfDCA | Meff = 1.0 (all sequences within 80% identity) | Spike DCA pairs, incl. "(454,495) DCA-only 5.97×", are not meaningful |
+| `validate_contacts.py` mapped columns via the first alignment row and its random control counted out-of-range draws | PSICOV first rows are gapped homologues | best-matching-row mapping, in-range control: top-20 MI pairs **2.38×**, precision **0.071** (`analysis/psicov_top_pairs_check.py`; first reported 2.49× / 0.066) |
+| Omicron 3D statistics | the 6 "contact" pairs are 3–5 residues apart; control pooled over separations; 299 models from 10 templates | treat those enrichments and p-values as weak, non-independent evidence (not re-computed) |
+| Other script bugs | `path_l` had no entry point; `path_j` used wrong separation bins, identity mapping and trained on its test protein 1atzA; `stage_chem` crashed; Walsh–Hadamard collapsed to one value; residue decoders read cubes by their lowest corner or as Gray/8-bit; gaps counted as G / as matching cube bits; `justify_top15` gap-stripped; `run_all_bg.sh` ran the superseded snapshot; report generators hard-coded false claims | all fixed; affected Spike outputs regenerated |

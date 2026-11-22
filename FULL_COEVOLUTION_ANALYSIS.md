@@ -1,10 +1,10 @@
 # Co-evolution Analysis of SARS-CoV-2 Spike Protein
 ## Complete Pipeline — ALL 1,299 Omicron Sequences
 
-**Generated:** August 17, 2026
+**Generated:** November 22, 2026
 **Data:** 1,299 SARS-CoV-2 Omicron Spike protein sequences from `Spike_protein.aln-fasta`
-**Compute:** NVIDIA A100 80GB + 24-core Xeon, 11.0s total
-**Scripts:** 18 Python analysis scripts, all run with ALL 1,299 sequences
+**Compute:** NVIDIA A100 80GB + 24-core Xeon, 34.8s total
+**Scripts:** the analysis scripts listed in §16, run on all 1,299 sequences
 
 ---
 
@@ -16,12 +16,12 @@ We represent biological protein sequences as **Karnaugh maps** — the same math
 1,299 Spike sequences → Gray code encoding → K-map construction → Boolean minimization → Co-evolution inference rules
 ```
 
-**Mathematical foundation:** 221 Lean 4 theorems (zero sorry, zero axiom, `lake build` passes clean).
+**Formal layer:** Lean 4 proofs in the `lean_proofs` repository (sorry-free; theorem counts and the per-theorem axiom audit, including `native_decide` compiler trust, are in its README).
 
 ## 2. Quick Start — Run Everything
 
 ```bash
-cd /store/shuvam/E-motioner-X-SBS/datasets/co-evolution
+cd co-evolution-analysis
 export PYTHONUNBUFFERED=1
 
 # Run individual scripts:
@@ -37,6 +37,7 @@ python3 flipped_boolean_coevolution.py
 python3 full_length_analysis.py
 python3 generate_full_pipeline_doc.py
 python3 kmap_boolean_coevolution.py
+python3 kmap_paths.py
 python3 master_boolean.py
 python3 nary_kmap_co-evolution.py
 python3 perplexity_coevolution.py
@@ -65,7 +66,7 @@ python3 generate_full_analysis_md.py  # THIS FILE
 | Full length | 1276 residues |
 | Variable positions (entropy > 0.3) | 21 (1.6%) |
 | Conserved positions | 1,255 (98.4%) |
-| Variable in first 80 | 21 |
+| Variable positions (master_boolean) | 21 |
 
 ## 4. The Encoding
 
@@ -76,7 +77,7 @@ Each AA → 5-bit Gray using `_AA_TO_INDEX` (A=0,V=1,L=2,I=3,F=4,Y=5,W=6,M=7,C=8
 | Property | Value |
 |----------|-------|
 | K-map size | 32×32 = 1024 cells |
-| Used cells | 20 (12 don't-care) |
+| Residue cells | 400 of 1,024 (20 of 32 codes per axis) |
 | Gray formula | gray(i) = i XOR (i >> 1) |
 
 ### N-ary Base-20 (sequence-level K-maps)
@@ -86,7 +87,7 @@ He 2012 ordering: `AILVMFYWEDQNHKRSTCPG` (0-19). Direct mapping — no binary in
 | Property | Value |
 |----------|-------|
 | K-map size | 20×20 = 400 cells |
-| Used cells | 20 (all used, 0 don't-care) |
+| Residue cells | 400 (padded to 32×32 for minimisation) |
 
 ## 5. H1: Consecutive Hamming-1 Adjacency
 
@@ -122,25 +123,25 @@ He 2012 ordering: `AILVMFYWEDQNHKRSTCPG` (0-19). Direct mapping — no binary in
 | On-set cells | 93 (9.1% density) |
 | Threshold | 0.003948 |
 | Prime implicants | 70 |
-| Essential PIs | 38 |
+| Essential PIs | 23 |
 | Covering size | 38 |
-| **Prediction accuracy** | **55.6%** |
-| On-set MI (avg) | 0.048 |
-| Off-set MI (avg) | 0.006 |
+| **Prediction accuracy** | **47.2%** |
+| On-set MI (avg) | 0.010 |
+| Off-set MI (avg) | 0.005 |
 
 ### N-ary K-map (20×20)
 
 | Metric | Value |
 |--------|-------|
 | On-set cells | 93 (23.2% density) |
-| Prime implicants | 150 |
-| Essential PIs | 34 |
+| Prime implicants | 92 |
+| Essential PIs | 12 |
 | Strong couplings | 337 |
-| MI ratio (on/off) | 7.3939 |
+| MI ratio (on/off) | 1.8532 |
 
 ## 7. Position-Level Co-evolution
 
-**21** variable positions (full length), **10** co-evolving pairs, **2** inference rules across **2** position pairs.
+**21** variable positions (full length), **10** co-evolving pairs, **35** inference rules across **10** position pairs.
 
 ### Top Co-evolving Position Pairs
 
@@ -154,7 +155,7 @@ He 2012 ordering: `AILVMFYWEDQNHKRSTCPG` (0-19). Direct mapping — no binary in
 
 ## 8. Coupling Landscape
 
-**Critical finding:** ALL coupling constants C < 0 — the protein is under strong **purifying selection**.
+Couplings J = ln(P/P_exp) take both signs (listed: 28 positive, 8 negative among cells with P > 0.001); they cannot all be negative, since Σ P·J = MI·ln 2 ≥ 0.
 
 ### Top Coupling Constants (GPU-computed, full length)
 
@@ -176,7 +177,7 @@ He 2012 ordering: `AILVMFYWEDQNHKRSTCPG` (0-19). Direct mapping — no binary in
 | Nodes | 21 |
 | Edges | 8 |
 | **Hub** | Position n/a (degree 0) |
-| Components | 1 giant component |
+| Clusters (MI > 1.0) | 0 |
 
 ## 10. Full-Length Analysis (All 1,276 Positions)
 
@@ -185,7 +186,7 @@ He 2012 ordering: `AILVMFYWEDQNHKRSTCPG` (0-19). Direct mapping — no binary in
 | Variable positions | 21 (1.6%) |
 | Conserved | 1,255 |
 | High-MI pairs (full length) | 5 |
-| Compute time | 11.0s (A100 + 24-core) |
+| Compute time | 34.8s (A100 + 24-core) |
 
 ### Top 10 Most Variable Positions
 
@@ -247,14 +248,14 @@ Co-evolution ratio = PP(j) / PP(j|i). Ratio > 1 means position i constrains j.
 | 4 | 20 | 1.5% |
 | 5 | 15 | 1.2% |
 
-## 14. Algorithms That Failed (Informative Failures)
+## 14. Prediction and Negative-Selection Results
 
-| Algorithm | Accuracy | Why |
-|-----------|----------|-----|
-| LOO-CV | 9.24% (301/3259) | Lineage-specific references |
-| DCA Boolean | 0.0% | Singular covariance matrix |
-| Flipped Boolean | 0 forbidden pairs | All observed with 1,299 seqs |
-| Constraint function | 0.1% | All C < 0 (no positive signal) |
+| Analysis | Result | Note |
+|----------|--------|------|
+| LOO-CV (constraint function) | 99.45% (3241/3259) | conditional baseline 65.5%; de-duplicated 98.3% — partners are near-determined by lineage linkage |
+| Train/test (constraint function) | 25.9% | file-order split |
+| Local-precision Boolean | 0.0% | per-pair pinv of a cross-covariance block (not DCA) |
+| Flipped Boolean | 246 never-observed cubes | absence of evidence in 299 unique sequences |
 
 ## 15. Complete Numerical Summary
 
@@ -263,21 +264,21 @@ Co-evolution ratio = PP(j) / PP(j|i). Ratio > 1 means position i constrains j.
 | Dataset | Sequences / Length | 1,299 / 1276 |
 | | Variable positions | 21 (1.6%) |
 | H1 | Enrichment | 1.34× |
-| Binary K-map | On-set / PIs / EPIs | 93 / 70 / 38 |
-| | Prediction accuracy | 55.6% |
-| N-ary K-map | On-set / PIs / EPIs | 93 / 150 / 34 |
+| Binary K-map | On-set / PIs / EPIs | 93 / 70 / 23 |
+| | Prediction accuracy | 47.2% |
+| N-ary K-map | On-set / PIs / EPIs | 93 / 92 / 12 |
 | | Strong couplings | 337 |
 | Position | Co-evolving pairs | 10 |
-| | Inference rules | 2 |
+| | Inference rules | 35 |
 | Network | Nodes / Edges | 21 / 8 |
 | | Hub | Position n/a (degree 0) |
 | Mutations | Mean / Max | 11.1 / 38 |
 | Perplexity | Max ratio | n/a (no pairs with PP>3) |
 | Variants | Unique signatures | 24 |
-| Couplings | All C < 0 | Purifying selection |
-| Compute | Time | 11.0s (A100) |
+| Flipped | Never-observed cubes | 246 |
+| Compute | Time | 34.8s (A100) |
 
-## 16. Script Index (All 18 Scripts)
+## 16. Script Index
 
 | # | Script | Output Directory |
 |---|--------|-----------------|
@@ -302,14 +303,12 @@ Co-evolution ratio = PP(j) / PP(j|i). Ratio > 1 means position i constrains j.
 
 ## 17. Key Discoveries
 
-1. **K-map framework validated**: 1.34× H1 enrichment proves Gray code captures biochemistry
-2. **50.7% sequence-level prediction**: Boolean function achieves best predictive result, doubles with more data
+1. **H1**: consecutive residues are Gray-adjacent 1.34× more often than the uniform 5/31 null (a composition-matched null is lower; see 3D_Structure_Analysis/11 §5)
+2. **Dipeptide Boolean K-map**: 70 prime implicants over 93 frequent dipeptides
 3. **Co-evolution is near-deterministic**: n/a (no pairs with PP>3)
-4. **Purifying selection dominates**: ALL coupling constants C < 0
-5. **Protein is a single network**: 21 nodes, 8 edges, position n/a as hub
-6. **Lineage-specific co-evolution**: Global LOO-CV 9.24% — rules don't generalize across variants
-7. **1255 conserved positions**: Universal vaccine targets
-8. **21/1276 positions variable**: Nearly entire protein under evolutionary constraint
+4. **Co-evolution network**: 21 nodes, 8 edges (MI > 0.5)
+5. **Partner prediction**: LOO-CV 99.4% — the residue at one position of a pair almost determines the other (lineage linkage within one clonal population)
+6. **21/1276 positions variable** (H > 0.3); 1255 conserved within this Omicron sample
 
 ## 18. Generated Output Files
 
@@ -367,4 +366,4 @@ Top 5 by combined score:
 | 5 | 212 | 215 | 0.398 | 1.84 | 0.750 |
 
 ---
-*Generated August 17, 2026 by `generate_full_analysis_md.py` — ALL values computed by Python analysis scripts, not hand-written.*
+*Generated November 22, 2026 by `generate_full_analysis_md.py` — ALL values computed by Python analysis scripts, not hand-written.*

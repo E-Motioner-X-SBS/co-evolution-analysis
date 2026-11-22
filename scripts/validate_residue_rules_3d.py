@@ -96,7 +96,7 @@ def main():
             # columns, and the char at a mapped column is canonical by
             # construction, but it may differ from the RULE's aa_i (the rule
             # aa is from the MSA consensus of that column).
-            if aligned[pi] == ai and aligned[pj] == aj:
+            if aligned[pi] in ai and aligned[pj] in aj:  # ai/aj are residue sets, e.g. "KR"
                 fired = True
             if not fired:
                 continue

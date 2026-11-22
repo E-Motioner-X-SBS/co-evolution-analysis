@@ -13,7 +13,7 @@ Fusion rules tested (all label-free on test proteins):
   F2  z-score sum:   fused = z(DCA) + z(cell-rate)
   F3  product:       fused = z(DCA) * cell-rate   (gated by prior)
   F4  geometric:     fused = sqrt(rank(DCA) * rank(cell-rate))
-  F5  DCA-gated:     fused = DCA where cell-rate > median else DCA - |z(prior)|
+  F5  DCA-gated:     fused = DCA + |z(prior)| where cell-rate > median, else DCA - |z(prior)|
 
 Evaluation: 5-fold protein-level CV identical to PATH B/H.
 """
@@ -152,3 +152,7 @@ def main():
          {m: len(v["prec@L/5"]) for m, v in agg.items()}}, indent=1))
     print(json.dumps({m: summary[m] for m in methods if m != "paired_stats"},
                      indent=1))
+
+
+if __name__ == "__main__":
+    main()

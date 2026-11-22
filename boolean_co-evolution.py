@@ -231,7 +231,9 @@ def extract_coevolution_motifs(qm_result, sequences, n_seqs=100):
                 continue
             r_vals = arr[:-1]
             c_vals = arr[1:]
-            matches = np.ones(len(r_vals), dtype=bool)
+            # -1 marks a gap/unknown; its bits are all 1 in two's complement,
+            # so it would otherwise match every cube whose fixed bits are 1
+            matches = (r_vals >= 0) & (c_vals >= 0)
             for k in range(5):
                 if not row_mask_arr[k]:
                     matches &= ((r_vals >> (4 - k)) & 1) == row_bits[k]
@@ -285,9 +287,8 @@ def compute_coupling_constants(kmap_freq, sequences, n_seqs=100):
     The coupling constant J_ij measures the strength of co-evolution
     between positions i and j. It's derived from the K-map structure:
 
-    J_ij = log(P(aa_i, aa_j) / (P(aa_i) * P(aa_j)))
-
-    This is analogous to the inverse Ising coupling in statistical physics.
+    Here the "coupling" is simply J_ij = MI(i, j) (beta = 1): the mutual
+    information between positions i and j, computed for all pairs.
     """
     print("\n=== Computing Coupling Constants ===")
 
@@ -631,7 +632,7 @@ def main():
         print(f"    J({i},{j}) = {J:.4f}")
 
     print(
-        f"\n  The minimized Boolean function captures {qm_result['n_prime_implicants']} essential"
+        f"\n  The minimized Boolean function has {qm_result['n_prime_implicants']} prime implicants"
     )
     print(f"  residue-pair motifs that define the co-evolutionary structure of the")
     print(f"  target protein. These motifs can be used to predict")

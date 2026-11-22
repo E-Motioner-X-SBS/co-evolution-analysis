@@ -282,31 +282,12 @@ def main():
 
         # Decode essential PIs
         print(f"  Essential prime implicants:")
+        from coevolution_shared import decode_pair_cube, pi_literals
         for pi_idx, pi in enumerate(result["essential_prime_implicants"]):
-            values = list(pi["values"])
-            mask = list(pi["mask"])
-            while len(values) < 10:
-                values.append(0)
-                mask.append(False)
-
-            row_code = sum(values[j] * (2 ** (4 - j)) for j in range(5) if not mask[j])
-            col_code = sum(
-                values[j + 5] * (2 ** (4 - j)) for j in range(5) if not mask[j + 5]
-            )
-
-            row_aa = aa_list[row_code % 20] if row_code < 20 else "?"
-            col_aa = aa_list[col_code % 20] if col_code < 20 else "?"
-
-            terms = []
-            for j in range(8):
-                if not mask[j]:
-                    var = f"s{3 - j}" if j < 4 else f"t{7 - j}"
-                    if values[j] == 0:
-                        terms.append(f"~{var}")
-                    else:
-                        terms.append(var)
-            term_str = " & ".join(terms) if terms else "TRUE"
-
+            rows, cols = decode_pair_cube(pi)
+            row_aa = "".join(aa_list[c] for c in rows) or "?"
+            col_aa = "".join(aa_list[c] for c in cols) or "?"
+            term_str = " & ".join(pi_literals(pi)) or "TRUE"
             print(f"    PI_{pi_idx + 1}: {term_str} = ({row_aa}, {col_aa})")
 
         # Step 5: Test prediction

@@ -383,6 +383,103 @@ def constraint_function(kmap_freq):
         )
 
 
+def predict_partner(counts, ci):
+    """Predicted residue at j for residue ci at i from a 20x20 count table.
+
+    Returns (constraint_pick, conditional_pick); either is None when residue
+    ci never occurs at i in `counts`.
+
+    constraint_pick  argmax_b C(ci, b) = ln(P(ci,b) / (P(ci) P(b))) over the
+                     partners b that actually co-occur with ci.  Restricting to
+                     observed partners matters: with the eps-smoothed C every
+                     never-seen b scores ln(1/P(ci)) > 0 and wins the argmax.
+    conditional_pick argmax_b P(b | ci) (the frequency baseline).
+
+    C is often tied: every partner that occurs only together with ci has
+    C = ln(N / N(ci)).  Ties (within 1e-9) are broken by the larger
+    co-occurrence count, then by the lower code, so the result does not
+    depend on floating-point rounding.
+    """
+    row = counts[ci]
+    if row.sum() <= 0:
+        return None, None
+    total = counts.sum()
+    col = counts.sum(axis=0)
+    seen = row > 0
+    pmi = np.full(N_AA, -np.inf)
+    pmi[seen] = np.log(row[seen] * total / (row.sum() * col[seen]))
+    best = pmi.max()
+    tied = seen & (pmi >= best - 1e-9)
+    pick = int(np.argmax(np.where(tied, row, -1.0)))
+    return pick, int(np.argmax(row))
+
+
+def loo_partner_accuracy(codes_i, codes_j, ref_i, ref_j):
+    """Exact leave-one-out partner prediction for one column pair, in O(N).
+
+    For every sequence whose (i, j) residues differ from the reference pair,
+    remove that one observation from the pooled 20x20 count table (identical
+    to rebuilding the table from the other N-1 sequences) and predict its
+    residue at j from its residue at i.  Returns a dict with counts for the
+    constraint-function prediction and the conditional-frequency baseline.
+    """
+    codes_i = np.asarray(codes_i)
+    codes_j = np.asarray(codes_j)
+    ok = (codes_i >= 0) & (codes_i < N_AA) & (codes_j >= 0) & (codes_j < N_AA)
+    counts = np.zeros((N_AA, N_AA), dtype=np.float64)
+    np.add.at(counts, (codes_i[ok], codes_j[ok]), 1)
+    out = {"n_mutations": 0, "correct": 0, "correct_conditional": 0, "abstained": 0}
+    for a, b in zip(codes_i[ok].tolist(), codes_j[ok].tolist()):
+        if a == ref_i and b == ref_j:
+            continue
+        out["n_mutations"] += 1
+        counts[a, b] -= 1
+        pick, cond = predict_partner(counts, a)
+        counts[a, b] += 1
+        if pick is None:
+            out["abstained"] += 1
+            continue
+        out["correct"] += int(pick == b)
+        out["correct_conditional"] += int(cond == b)
+    return out
+
+
+def decode_pair_cube(pi, bits_per_axis=5):
+    """He-2012 codes (< 20) admitted on each axis by a padded-map implicant.
+
+    `pi` is a kmap_sbm prime-implicant dict (``values``/``mask``, MSB first)
+    over a (2^b x 2^b) map whose row/column index is the He-2012 code.
+    Returns (row_codes, col_codes); a cube with free bits admits several
+    codes, and codes >= 20 (the padding) are dropped.
+    """
+    values, mask = list(pi["values"]), list(pi["mask"])
+    out = []
+    for off in (0, bits_per_axis):
+        v, m = values[off:off + bits_per_axis], mask[off:off + bits_per_axis]
+        codes = [
+            c for c in range(N_AA)
+            if all(m[k] or ((c >> (bits_per_axis - 1 - k)) & 1) == v[k]
+                   for k in range(bits_per_axis))
+        ]
+        out.append(codes)
+    return out[0], out[1]
+
+
+def pi_literals(pi, row="s", col="t", bits_per_axis=5):
+    """Product-term literals of a padded-map implicant, e.g. ['s4', '~s1', 't0'].
+
+    Variables are the bits of the He-2012 code (natural binary, MSB = bit 4),
+    `row` for position i and `col` for position j.
+    """
+    terms = []
+    for off, name in ((0, row), (bits_per_axis, col)):
+        for k in range(bits_per_axis):
+            if not pi["mask"][off + k]:
+                var = f"{name}{bits_per_axis - 1 - k}"
+                terms.append(var if pi["values"][off + k] else f"~{var}")
+    return terms
+
+
 def build_mutation_kmap(pos_arrays, pos_i, pos_j, ref_i, ref_j, n_seqs):
     """20x20 K-map: 1=mutation, -1=reference."""
     kmap = np.zeros((N_AA, N_AA), dtype=np.int32)

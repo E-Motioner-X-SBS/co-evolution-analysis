@@ -4,8 +4,9 @@
 > pipeline invalidated the biological numbers in the earlier documentation:
 > (A1) gap-stripping misaligned columns, (A2) 8-bit QM wrap-around corrupted
 > rule labels. The verified corrected results are: 21 variable positions,
-> 10 co-evolving pairs, 36 distinct Boolean rules with a 2-rule essential
-> core (strongest full-MI pair: (373,378) MI=0.807).
+> 10 co-evolving pairs, 36 distinct Boolean rules, 35 of them essential
+> (strongest full-MI pair: (373,378) MI=0.807). Corrections A3/A4 (Nov 2026)
+> replace the earlier "2 essential", "LOO-CV 9.24%" and Spike-mfDCA readings.
 > See [CORRECTION_NOTICE.md](CORRECTION_NOTICE.md) and
 > `analysis/corrected_pipeline.py`. Files marked with a CORRECTION banner
 > describe the original (buggy) run.
@@ -66,7 +67,8 @@ A complete, from-first-principles interpretation of every script and algorithm i
 | Co-evolving pairs (mutation-only MI > 0.1, window 30) | 10 |
 | Strongest full-MI pair | (373, 378) MI = 0.8067 |
 | Strongest mutation-only MI pair | (495, 498) MI = 0.8710 |
-| Master Boolean rules (distinct residue pairs) | 36 (2 essential) |
+| Master Boolean rules (distinct residue pairs) | 36 (35 essential) |
+| LOO-CV partner prediction | 99.4% (98.3% on unique sequences) |
 | Original (buggy) values | 1,249 / 36,918 / 1.5917 / 152 |
 
 
@@ -98,11 +100,11 @@ The analysis answers one question in many ways: **which positions in the Spike p
 | How many position pairs co-evolve? | 10 (mutation-only MI > 0.1, corrected) | 11_master_boolean |
 | What is the strongest full-MI pair? | (373,378) MI = 0.8067 (corrected) | 08_gpu_full |
 | How many high-MI pairs exist? | 5 (MI > 0.5, corrected) | 07_full_length |
-| What are the minimal co-evolution rules? | 36 distinct rules, 2 essential (corrected) | 11_master_boolean |
-| What pairs are forbidden? | 490 forbidden rules (corrected) | 14_flipped |
+| What are the minimal co-evolution rules? | 36 distinct rules, 35 essential (corrected A3) | 11_master_boolean |
+| What pairs are never observed? | 246 cubes (corrected A3) | 14_flipped |
 | How deterministic is co-evolution? | Perplexity ratio up to 2.81x | 19_perplexity |
-| Can rules predict mutations? | 2.93% LOO-CV, 5.84% train/test | 16_allseq, 15_predictive |
-| What are the DIRECT couplings? | mfDCA: (454,495) DI=0.37, uncorrelated with MI (rho=0.06) | 18_dca_mf |
+| Can rules predict mutations? | LOO-CV 99.4%, train/test 25.9% (corrected A4; partners are linked lineage alleles) | 16_allseq, 15_predictive |
+| What are the DIRECT couplings? | not measurable here: mfDCA has Meff = 1 on this alignment (A4) | 18_dca_mf |
 | Can rules generate new sequences? | Partially: rules are necessary constraints, not sufficient | 22_rules |
 | Do MI and perplexity agree on top pairs? | Partially (rho=0.69); combined top is (378,407); ratio rescues (212,215) | 23_combined |
 

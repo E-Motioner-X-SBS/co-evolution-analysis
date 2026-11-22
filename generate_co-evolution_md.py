@@ -93,7 +93,7 @@ def main():
     md.append("# Co-evolution Boolean Functions for SARS-CoV-2 Spike Protein\n")
     md.append("**Dataset:** {} sequences".format(n_all))
     md.append("**Encoding:** Base-20 (He 2012 order)")
-    md.append("**Method:** Variable-position K-map with don't-care conditions")
+    md.append("**Method:** per-pair mutation K-map (1 = observed mutation, 0 = never observed, DC = reference pair and padding)")
     md.append("**Quine-McCluskey minimization**\n")
     md.append("---\n")
 
@@ -139,34 +139,25 @@ def main():
         bool_flat = kmap.flatten().astype(int)
         result = boolean_minimize_kmap(bool_flat, algorithm="qm")
 
-        # Decode QM cubes to residue pairs; deduplicate by (aa_i, aa_j),
-        # OR-ing the essential flag across cubes that decode to the same
-        # pair (they differ only in which don't-care cells they cover).
+        # Decode QM cubes to the residue sets they admit (padding codes 20-31
+        # dropped); deduplicate identical sets, OR-ing the essential flag.
+        from coevolution_shared import decode_pair_cube
+
+        essential_keys = {(tuple(q["values"]), tuple(q["mask"]))
+                          for q in result["essential_prime_implicants"]}
         pi_map = {}  # (aa_i, aa_j) -> is_essential
         pi_order = []
         for pi in result["prime_implicants"]:
-            values = list(pi["values"])
-            mask = list(pi["mask"])
-            # CORRECTED (FIX A2): kmap is 32x32 -> 5 bits per axis (10 bits)
-            while len(values) < 10:
-                values.append(0)
-                mask.append(False)
-            row_code = sum(
-                values[j] * (2 ** (4 - j)) for j in range(5) if not mask[j]
-            )
-            col_code = sum(
-                values[j + 5] * (2 ** (4 - j)) for j in range(5) if not mask[j + 5]
-            )
-            if row_code < 20 and col_code < 20:
-                aa_i = aa_list[row_code]
-                aa_j = aa_list[col_code]
-                is_essential = pi in result["essential_prime_implicants"]
-                key = (aa_i, aa_j)
-                if key not in pi_map:
-                    pi_map[key] = is_essential
-                    pi_order.append(key)
-                else:
-                    pi_map[key] = pi_map[key] or is_essential
+            rows, cols = decode_pair_cube(pi)
+            if not rows or not cols:
+                continue
+            key = ("".join(aa_list[c] for c in rows), "".join(aa_list[c] for c in cols))
+            is_essential = (tuple(pi["values"]), tuple(pi["mask"])) in essential_keys
+            if key not in pi_map:
+                pi_map[key] = is_essential
+                pi_order.append(key)
+            else:
+                pi_map[key] = pi_map[key] or is_essential
         pi_entries = [(k[0], k[1], pi_map[k]) for k in pi_order]
 
         # Count cells
@@ -210,7 +201,7 @@ def main():
                     on_pairs.append("{}-{}".format(aa_list[ai], aa_list[aj]))
         md.append("  {}".format(", ".join(on_pairs)))
         md.append("")
-        md.append("Don't-care positions (conserved): {} cells".format(n_dc))
+        md.append("Don't-care cells (reference pair + padding codes 20-31): {} cells".format(n_dc))
         md.append("Never-seen pairs (off-set): {} cells".format(n_off))
         md.append("```")
         md.append("")
@@ -231,7 +222,7 @@ def main():
             marker = "*" if is_essential else " "
             pi_num += 1
             md.append(
-                "  {} PI_{}: pos_{}={} AND pos_{}={}".format(
+                "  {} PI_{}: pos_{} in {{{}}} AND pos_{} in {{{}}}".format(
                     marker, pi_num, pos_i, aa_i, pos_j, aa_j
                 )
             )
@@ -260,13 +251,13 @@ def main():
             rule_num += 1
             if is_essential:
                 md.append(
-                    "**Rule {}:** IF position {} = **{}** AND position {} = **{}** THEN co-evolutionary (MI = {:.3f})".format(
+                    "**Rule {}:** IF position {} in **{{{}}}** AND position {} in **{{{}}}** THEN observed mutation (MI = {:.3f})".format(
                         rule_num, pos_i, aa_i, pos_j, aa_j, mi
                     )
                 )
             else:
                 md.append(
-                    "Rule {}: IF position {} = {} AND position {} = {} THEN co-evolutionary (MI = {:.3f})".format(
+                    "Rule {}: IF position {} in {{{}}} AND position {} in {{{}}} THEN observed mutation (MI = {:.3f})".format(
                         rule_num, pos_i, aa_i, pos_j, aa_j, mi
                     )
                 )
@@ -288,16 +279,16 @@ def main():
     md.append("## How to Apply\n")
     md.append("1. Extract the residue pair at each co-evolving position pair from a new sequence")
     md.append("2. For each position pair, check if the residue pair matches any rule below")
-    md.append("3. If YES: that position pair is co-evolutionary (consistent with the observed data)")
+    md.append("3. If YES: the combination is one the alignment contains")
     md.append(
-        "4. If position i mutates: find which residue at position j satisfies the co-evolutionary constraint"
+        "4. The rules describe observed combinations only; absence from the list is not evidence of incompatibility"
     )
     md.append("")
     if summary["inferences"]:
         ex = summary["inferences"][0]
         md.append("**Example:** If position {} mutates to {}, check rules for position {}.".format(ex["pos_i"], ex["aa_i"], ex["pos_i"]))
         md.append("Essential rule: IF pos {} = {} AND pos {} = {} THEN co-evolutionary.".format(ex["pos_i"], ex["aa_i"], ex["pos_j"], ex["aa_j"]))
-        md.append("So position {} must also show {} to satisfy the co-evolutionary constraint.".format(ex["pos_j"], ex["aa_j"]))
+        md.append("In the alignment, sequences with {} at position {} carry {} at position {} (an observed combination, not a causal constraint).".format(ex["aa_i"], ex["pos_i"], ex["aa_j"], ex["pos_j"]))
     else:
         md.append("**Example:** No essential inference rules found; see per-pair rule lists above.")
 

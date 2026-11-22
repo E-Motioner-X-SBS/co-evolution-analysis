@@ -1,19 +1,22 @@
 #!/usr/bin/env python3
-"""Exact prime implicants for the master Boolean function (resolves the §7.1 caveat).
+"""Exact prime implicants for the master Boolean function (corrections A3/A4).
 
 master_boolean.py minimises each co-evolving pair's padded 32x32 mutation K-map
-with `kmap_sbm.analysis.prime_implicants`, which keeps only don't-cares at
-Hamming distance 1 from an on-minterm.  doc 12 §7.1 shows that this under-merges,
-so the published "36 distinct prime implicants, 2 essential" is an approximation
-(a lower bound on merging, not an exact QM count).
+with `kmap_sbm.analysis.prime_implicants.boolean_minimize_kmap`.  Before the
+kmap-sbm-validation fix of 2026-11 that function (a) indexed implicant
+coverage and the on-set in two different minterm orders, so its essentials
+and cover were wrong -- the published cover reached 2 of the 36 observed
+mutations, which is where "2 essential" came from -- and (b) merged only
+don't-cares adjacent to an on-cell.
 
 This script rebuilds exactly the same maps (same functions, same pairs) and
 reports, per pair and in total:
 
-  reference   the published minimiser (what master_boolean.py reports)
-  exact       exact Quine-McCluskey (scripts/sequence_circuits.prime_implicants),
-              cross-checked against an independent brute-force enumeration of
-              all prime cubes, with essential primes and a verified cover
+  reference   the kmap_sbm minimiser as installed (exact after the fix)
+  exact       an independent exact Quine-McCluskey
+              (scripts/sequence_circuits.prime_implicants), cross-checked
+              against brute-force enumeration of all prime cubes, with
+              essential primes and a verified cover
 
 under the two don't-care policies discussed in doc 12 §3:
 
@@ -21,6 +24,8 @@ under the two don't-care policies discussed in doc 12 §3:
               (master_boolean.py's choice)
   padding-OFF only the reference cell is don't-care; padding is off-set, so
               cubes stay inside the 20x20 residue block and decode to rules
+
+The pre-fix published values are recorded under "published_before_fix".
 
 Output: analysis/exact_master_boolean.json
 Run:    python analysis/exact_master_boolean.py
@@ -148,11 +153,14 @@ def main() -> int:
     distinct = {k[:4] for k in ref_keys}
     totals["reference_distinct_rules"] = len(distinct)
     totals["reference_essential"] = len({k[:4] for k in ref_keys if k[4]})
-    out = {"pairs": rows, "totals": totals, "n_pairs": len(rows)}
+    out = {"pairs": rows, "totals": totals, "n_pairs": len(rows),
+           "published_before_fix": {"distinct_rules": 36, "essential": 2,
+                                    "on_cells_covered_by_published_cover": 2,
+                                    "on_cells": sum(r["n_on"] for r in rows)}}
     (REPO / "analysis" / "exact_master_boolean.json").write_text(json.dumps(out, indent=2))
 
     print(f"{len(rows)} co-evolving pairs (MI > 0.1), padded 32x32 maps, 10 variables")
-    print(f"reference minimiser (published): {totals['reference_distinct_rules']} distinct decoded rules, "
+    print(f"reference minimiser (kmap_sbm, as installed): {totals['reference_distinct_rules']} distinct decoded rules, "
           f"{totals['reference_essential']} essential; {totals['reference_primes_covering_on']} cubes cover an on-cell")
     for policy in ("padding-DC", "padding-OFF"):
         t = totals[policy]

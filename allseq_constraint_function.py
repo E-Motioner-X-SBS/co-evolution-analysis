@@ -3,9 +3,22 @@
 All-Sequence Constraint Function for Co-evolution
 ==================================================
 
-Builds the constraint function on ALL sequences at full length.
-Uses the Wuhan reference as baseline and tests prediction
-within the same dataset via leave-one-out cross-validation.
+Builds the constraint function C(a, b) = ln(P(a,b) / (P(a) P(b))) on all
+sequences at full length and tests it by leave-one-out cross-validation: for
+each sequence carrying a mutation at a co-evolving pair (relative to the
+majority-residue reference), predict its residue at j from its residue at i
+using the other N-1 sequences.
+
+Prediction = argmax of C over the partners that co-occur with the residue at
+i (coevolution_shared.predict_partner).  The earlier argmax over all 20
+residues was dominated by the eps smoothing: a never-observed partner scores
+ln(1/P(a)) > 0 and won almost every argmax, which is where the old 9.24%
+came from.  The LOO is exact and O(N) per pair (one count is removed from the
+pooled table instead of rebuilding it N times).
+
+Also reported: the conditional-frequency baseline argmax P(b | a), and both
+accuracies on the de-duplicated alignment (identical sequences make plain LOO
+optimistic: a held-out copy is still in the training data).
 """
 
 from kmap_paths import NARY_SRC, REPO_ROOT  # noqa: E402
@@ -13,7 +26,6 @@ from kmap_paths import NARY_SRC, REPO_ROOT  # noqa: E402
 import sys
 import json
 import numpy as np
-from collections import Counter
 from pathlib import Path
 
 sys.path.insert(0, str(NARY_SRC))
@@ -26,45 +38,6 @@ from coevolution_shared import parse_fasta  # single source of truth
 
 from coevolution_shared import compute_entropy  # single source of truth
 
-
-from coevolution_shared import majority_ref as get_majority_ref  # single source of truth
-
-
-def compute_frequency_kmap(pos_arrays, pos_i, pos_j, n_seqs, exclude_idx=None):
-    """Build frequency K-map, optionally excluding one sequence."""
-    kmap = np.zeros((20, 20), dtype=np.float64)
-    for idx, arr in enumerate(pos_arrays[:n_seqs]):
-        if exclude_idx is not None and idx == exclude_idx:
-            continue
-        if pos_i < len(arr) and pos_j < len(arr):
-            ci, cj = int(arr[pos_i]), int(arr[pos_j])
-            if 0 <= ci < 20 and 0 <= cj < 20:
-                kmap[ci, cj] += 1
-    total = kmap.sum()
-    if total > 0:
-        kmap /= total
-    return kmap
-
-
-def compute_constraint_function(kmap_freq):
-    """C(aa_i, aa_j) = ln(P / P_expected) — constraint / coupling function.
-
-    SIGN CONVENTION (verified against DCA literature, Morcos et al 2011 PNAS):
-      C > 0 → pair is MORE common than expected (co-evolutionary)
-      C < 0 → pair is LESS common than expected (anti-correlated)
-      C = 0 → pair occurs at random frequency (independent)
-
-    Prediction: P_co-evolution = σ(C) = 1/(1+e^{-C})
-    """
-    marg_i = kmap_freq.sum(axis=1)
-    marg_j = kmap_freq.sum(axis=0)
-    epsilon = 1e-10
-    with np.errstate(divide="ignore", invalid="ignore"):
-        C = np.log(
-            (kmap_freq + epsilon)
-            / ((marg_i[:, None] + epsilon) * (marg_j[None, :] + epsilon))
-        )
-    return C
 
 
 def main():
@@ -109,56 +82,27 @@ def main():
     )
     print(f"  Co-evolutionary pairs: {len(co_evolving)}")
 
-    # Build constraint function on ALL sequences
-    print("\n[4/4] Building constraint function on ALL sequences...")
+    # Leave-one-out cross-validation (exact, O(N) per pair)
+    print("\n[4/4] Leave-one-out cross-validation...")
+    from coevolution_shared import loo_partner_accuracy
 
-    # Use leave-one-out cross-validation
-    print("\nLeave-One-Out Cross-Validation:")
-    print("For each sequence, build constraint function on ALL OTHER sequences,")
-    print("then predict mutations for the held-out sequence.")
-
+    dense = np.stack(pos_arrays)
+    unique = np.unique(dense, axis=0)
     all_results = []
+    unique_totals = {"n_mutations": 0, "correct": 0, "correct_conditional": 0}
 
     for pos_i, pos_j, mi, n_muts, ref_i, ref_j in co_evolving[:10]:
-        # BUG FIX: ref_i and ref_j are ALREADY integer codes (0-19) returned
-        # by get_majority_ref(). The previous code did aa_list.index(ref_i)
-        # which looked up an INT in a list of STRINGS → always returned 0.
-        # This meant ALL pairs were tested against Alanine (code 0) as reference,
-        # invalidating the LOO-CV results.
-        ref_i_code = int(ref_i)  # Already an int (0-19) from get_majority_ref
-        ref_j_code = int(ref_j)  # Already an int (0-19) from get_majority_ref
-        # For display: convert code back to amino acid letter
+        ref_i_code = int(ref_i)  # integer He-2012 codes from the majority ref
+        ref_j_code = int(ref_j)
         ref_aa_i = aa_list[ref_i_code] if 0 <= ref_i_code < 20 else "?"
         ref_aa_j = aa_list[ref_j_code] if 0 <= ref_j_code < 20 else "?"
 
-        correct = 0
-        total = 0
-
-        for holdout_idx in range(n_all):
-            # Build constraint function on ALL OTHER sequences
-            kmap_freq = compute_frequency_kmap(
-                pos_arrays, pos_i, pos_j, n_all, exclude_idx=holdout_idx
-            )
-
-            if kmap_freq.sum() == 0:
-                continue
-
-            C = compute_constraint_function(kmap_freq)
-
-            # Test on held-out sequence
-            arr = pos_arrays[holdout_idx]
-            if pos_i < len(arr) and pos_j < len(arr):
-                ci, cj = int(arr[pos_i]), int(arr[pos_j])
-                if 0 <= ci < 20 and 0 <= cj < 20:
-                    if ci != ref_i_code or cj != ref_j_code:
-                        # This is a mutation
-                        # Predict: what's the best cj for this ci?
-                        best_cj = np.argmax(C[ci, :])
-                        if best_cj == cj:
-                            correct += 1
-                        total += 1
-
-        accuracy = correct / total if total > 0 else 0
+        r = loo_partner_accuracy(dense[:, pos_i], dense[:, pos_j], ref_i_code, ref_j_code)
+        u = loo_partner_accuracy(unique[:, pos_i], unique[:, pos_j], ref_i_code, ref_j_code)
+        for k in unique_totals:
+            unique_totals[k] += u[k]
+        total = r["n_mutations"]
+        accuracy = r["correct"] / total if total > 0 else 0
         all_results.append(
             {
                 "pos_i": pos_i,
@@ -167,22 +111,34 @@ def main():
                 "ref_i": ref_aa_i,
                 "ref_j": ref_aa_j,
                 "n_mutations": total,
-                "correct": correct,
+                "correct": r["correct"],
                 "accuracy": accuracy,
+                "correct_conditional": r["correct_conditional"],
+                "abstained": r["abstained"],
+                "unique_sequences": u,
             }
         )
-
         print(
-            f"  ({pos_i:2d},{pos_j:2d}): MI={mi:.4f}, accuracy={accuracy:.4f} ({correct}/{total})"
+            f"  ({pos_i:2d},{pos_j:2d}): MI={mi:.4f}, accuracy={accuracy:.4f} "
+            f"({r['correct']}/{total}), conditional baseline {r['correct_conditional']}/{total}"
         )
 
     # Overall accuracy
     total_correct = sum(r["correct"] for r in all_results)
     total_test = sum(r["n_mutations"] for r in all_results)
     overall_acc = total_correct / total_test if total_test > 0 else 0
+    cond_correct = sum(r["correct_conditional"] for r in all_results)
+    cond_acc = cond_correct / total_test if total_test > 0 else 0
+    un = unique_totals["n_mutations"]
 
     print(
-        f"\nOverall LOO-CV accuracy: {overall_acc:.4f} ({total_correct}/{total_test})"
+        f"\nOverall LOO-CV accuracy: {overall_acc:.4f} ({total_correct}/{total_test}); "
+        f"conditional baseline {cond_acc:.4f}"
+    )
+    print(
+        f"De-duplicated ({len(unique)} unique sequences): constraint "
+        f"{unique_totals['correct'] / un if un else 0:.4f}, conditional "
+        f"{unique_totals['correct_conditional'] / un if un else 0:.4f} (n={un})"
     )
 
     # Save results
@@ -191,9 +147,17 @@ def main():
         "method": "Leave-One-Out Cross-Validation",
         "variable_positions": len(variable_positions),
         "co_evolving_pairs": len(co_evolving),
+        "predictor": "argmax_b C(a,b) over partners b co-occurring with a (LOO, exact)",
         "overall_accuracy": overall_acc,
         "total_correct": total_correct,
         "total_test": total_test,
+        "conditional_baseline_accuracy": cond_acc,
+        "n_unique_sequences": int(len(unique)),
+        "unique_sequences": {
+            **unique_totals,
+            "accuracy": unique_totals["correct"] / un if un else 0,
+            "conditional_accuracy": unique_totals["correct_conditional"] / un if un else 0,
+        },
         "results": all_results,
     }
 

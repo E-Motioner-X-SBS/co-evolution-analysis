@@ -5,7 +5,8 @@ PHASE 7: Contact-map validation — do co-evolving pairs/rules map to 3D contact
 For each target with a native structure:
   1. contact map from PDB chain A: Cb-Cb < 8 A (Ca for Gly), |i-j| >= 6
   2. map MSA columns -> PDB residues via Needleman-Wunsch alignment of the
-     MSA consensus/reference sequence against the PDB chain sequence
+     best-matching MSA row (most shared 3-mers) against the PDB chain
+     sequence (A2M: the query row)
   3. score top co-evolving pairs (from master_boolean / full_length results):
        precision@K = fraction of top-K pairs that are contacts
        enrichment  = precision vs random-pair contact rate (same sep dist)
@@ -225,6 +226,39 @@ def a2m_reference_map(a2m_path, pdb_seq):
     return mapping
 
 
+def best_row_column_map(fasta_path, pdb_seq):
+    """{alignment column: PDB residue index} via the best-matching MSA row.
+
+    The first row of a family alignment is not necessarily the structure's
+    own sequence (GPCRdb, PSICOV), so pick the row sharing the most 3-mers
+    with the PDB chain, align its residues to the chain (nw_align) and keep
+    columns whose residue matches the aligned chain residue.
+    """
+    rows, cur = [], []
+    for line in open(fasta_path):
+        if line.startswith(">"):
+            if cur:
+                rows.append("".join(cur).upper())
+            cur = []
+        else:
+            cur.append(line.strip())
+    if cur:
+        rows.append("".join(cur).upper())
+    kmers = {pdb_seq[i:i + 3] for i in range(len(pdb_seq) - 2)}
+    best, best_row = -1, None
+    for row in rows:
+        cols = [c for c, ch in enumerate(row) if ch.isalpha() and ch != "X"]
+        seq = "".join(row[c] for c in cols)
+        shared = sum(seq[i:i + 3] in kmers for i in range(len(seq) - 2))
+        if shared > best:
+            best, best_row = shared, (cols, seq)
+    if best_row is None:
+        return {}
+    cols, seq = best_row
+    aln = nw_align(seq, pdb_seq)
+    return {cols[k]: r for k, r in aln.items() if seq[k] == pdb_seq[r]}
+
+
 def reference_seq(fasta_path):
     """First sequence of the MSA = reference anchor (A2M: query frame)."""
     cur = []
@@ -275,10 +309,10 @@ def load_pairs_from_results(target_dir):
         for p in d.get("top_co_evolving_pairs", []):
             pairs.append((p["pos_i"], p["pos_j"], p.get("mi", 0)))
         return pairs
-    fl = Path(target_dir) / "full_length_analysis" / "full_length_summary.json"
+    fl = Path(target_dir) / "full_length_results" / "full_length_summary.json"
     if fl.exists():
         d = json.load(open(fl))
-        for p in d.get("top_pairs", []):
+        for p in d.get("top_20_co_evolving_pairs", []):
             pairs.append((p["pos_i"], p["pos_j"], p.get("mi", 0)))
     return pairs
 
@@ -341,12 +375,9 @@ def main():
             mapping = a2m_reference_map(str(a2m_src), seq_pdb)
             print(f"  [{tgt}] a2m reference-frame mapping: {len(mapping)} cols", flush=True)
         else:
-            ref = reference_seq(str(fasta))
-            mapping = nw_align(ref, seq_pdb)
-        if len(mapping) < 10 and ref:
-            # fallback: consensus-based mapping (e.g., reference too gappy)
-            cons = consensus_seq(str(fasta))
-            mapping = nw_align(cons, seq_pdb)
+            # NOTE: aligning the FIRST row (the earlier method) mis-mapped
+            # alignments whose first row is a different family member.
+            mapping = best_row_column_map(str(fasta), seq_pdb)
         pairs = load_pairs_from_results(str(RESULTS / ds / tgt))
         if not pairs:
             continue
@@ -365,12 +396,16 @@ def main():
         random.seed(42)
         n_rand = 2000
         hits = 0
+        drawn = 0
         for _ in range(n_rand):
-            a = random.randrange(len(seq_pdb))
-            b = a + random.choice(seps)
-            if b < len(seq_pdb) and (a, b) in contacts:
+            s_ = random.choice(seps)
+            if s_ >= len(seq_pdb):
+                continue
+            a = random.randrange(len(seq_pdb) - s_)   # every draw lands inside the chain
+            drawn += 1
+            if (a, a + s_) in contacts:
                 hits += 1
-        exp = hits / n_rand
+        exp = hits / drawn if drawn else 0.0
         enrich = prec / exp if exp > 0 else float("nan")
         row = {
             "dataset": ds,

@@ -190,12 +190,12 @@ def find_coevolutionary_pairs(pos_arrays, variable_positions, n_seqs, top_n=20):
     ref_codes = {}
     for pos in range(max_pos):
         col = dense[:, pos]
-        valid = col[col >= 0]
+        valid = col[(col >= 0) & (col < 20)]  # gap/unknown (20) is not a residue
         if len(valid) == 0:
             ref_codes[pos] = -1
         else:
             cnt = np.bincount(valid, minlength=20)
-            ref_codes[pos] = int(np.argmax(cnt))
+            ref_codes[pos] = int(np.argmax(cnt))  # ties -> lowest code, as majority_ref
 
     # Only consider pairs where both positions are variable
     for idx_i, pos_i in enumerate(variable_positions):
@@ -363,39 +363,20 @@ def main():
 
         # Decode essential PIs
         print(f"  Essential prime implicants (mutation motifs):")
+        from coevolution_shared import decode_pair_cube, pi_literals
         for pi_idx, pi in enumerate(result["essential_prime_implicants"][:10]):
-            values = list(pi["values"])
-            mask = list(pi["mask"])
-            while len(values) < 10:
-                values.append(0)
-                mask.append(False)
-
-            row_code = sum(values[j] * (2 ** (4 - j)) for j in range(5) if not mask[j])
-            col_code = sum(
-                values[j + 5] * (2 ** (4 - j)) for j in range(5) if not mask[j + 5]
-            )
-
-            row_aa = aa_list[row_code % 20] if row_code < 20 else "?"
-            col_aa = aa_list[col_code % 20] if col_code < 20 else "?"
-
-            terms = []
-            for j in range(8):
-                if not mask[j]:
-                    var = f"s{3 - j}" if j < 4 else f"t{7 - j}"
-                    if values[j] == 0:
-                        terms.append(f"~{var}")
-                    else:
-                        terms.append(var)
-            term_str = " & ".join(terms) if terms else "TRUE"
-
+            rows, cols = decode_pair_cube(pi)
+            row_aa = "".join(aa_list[c] for c in rows) or "?"
+            col_aa = "".join(aa_list[c] for c in cols) or "?"
+            term_str = " & ".join(pi_literals(pi)) or "TRUE"
             # Check if this is a mutation (different from reference)
             ref_i_val = int(reference[pos_i]) if pos_i < len(reference) else -1
             ref_j_val = int(reference[pos_j]) if pos_j < len(reference) else -1
 
-            is_mutation = row_code % 20 != ref_i_val or col_code % 20 != ref_j_val
+            is_mutation = not (rows == [ref_i_val] and cols == [ref_j_val])
             mut_str = "MUTATION" if is_mutation else "reference"
 
-            print(f"    PI_{pi_idx + 1}: {term_str} = ({row_aa},{col_aa}) [{mut_str}]")
+            print(f"    PI_{pi_idx + 1}: {term_str} = ({{{row_aa}}},{{{col_aa}}}) [{mut_str}]")
 
         all_results.append(
             {

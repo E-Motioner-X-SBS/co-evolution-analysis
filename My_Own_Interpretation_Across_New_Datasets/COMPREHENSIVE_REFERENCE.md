@@ -1,5 +1,14 @@
 # Comprehensive Reference: K-Map Co-evolution Analysis of the SARS-CoV-2 Spike Protein
 
+> **Correction A4 (Nov 2026)** — see `My_Interpretation_of_the_Results/CORRECTION_NOTICE.md`.
+> Spike rules: 36 prime implicants, **35 essential** (not 2). Constraint-function LOO-CV **99.4%**
+> (the 9.24% was a predictor artefact). APC-corrected MI on PSICOV150 holdout **0.176** vs circuit
+> 0.179 (5-fold CV 0.189 vs 0.165), so the circuit does not beat the standard sequence baseline.
+> Spike mfDCA: Meff = 1 (all sequences within 80% identity), so its pairs, incl. "(454,495)
+> DCA-only", are not meaningful; the DI coupling sign is fixed. Omicron "contact" pairs are 3–5
+> residues apart and the 299 models come from 10 templates, so the 3D p-values are not
+> independent. PSICOV top-20 MI pairs: 2.38× / precision 0.071 (first reported 2.49× / 0.066).
+
 > **Complete, self-contained account.** This document explains every algorithm,
 > every dataset, every script, every result, and every validation — from first
 > principles. A reader with no prior knowledge of this project should be able to

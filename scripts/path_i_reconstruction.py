@@ -11,7 +11,7 @@ each protein:
     recall(m, K)        = hits / n_native_contacts
     coverage(m, K)      = hits / L            ("one correct contact per residue"
                                                   heuristic of Jones 2012)
-Aggregates over 150 proteins with protein-level 100/49 split for circuit
+Aggregates over the held-out proteins of the protein-level 100/50 split for circuit
 scores (train-derived cell rates), literature baselines label-free.
 
 Literature anchors (all quoted, none self-computed):
@@ -95,8 +95,9 @@ def main():
             for kn, frac in KS:
                 K = max(1, round(frac * L))
                 rec[meth][kn].append(recall_at(s, tc.lab, K, n_cont))
-                hits = s[np.argsort(-s, kind="stable")[:min(K, len(s))]]
-                cov[meth][kn].append(float(len(hits)) / L)
+                top = np.argsort(-s, kind="stable")[:min(K, len(s))]
+                # correct contacts among the top K, per residue (was len(top)/L = K/L)
+                cov[meth][kn].append(float(tc.lab[top].sum()) / L)
             if lr.sum() >= 20:
                 k5 = max(1, round(L / 5))
                 prec_lr[meth].append(
