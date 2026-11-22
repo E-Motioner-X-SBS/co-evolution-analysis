@@ -12,12 +12,17 @@ For each target with results, gather from the per-script JSON outputs:
 Write: rules_and_tables.md + raw JSON dump per dataset.
 """
 
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import REPO_ROOT  # noqa: E402
+
 import json
 import os
 import sys
 from pathlib import Path
 
-REPO = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis")
+REPO = REPO_ROOT
 RESULTS = REPO / "results"
 OUT = REPO / "My_Own_Interpretation_Across_New_Datasets"
 

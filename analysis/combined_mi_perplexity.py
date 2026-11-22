@@ -9,29 +9,35 @@ MI alone?
 Design:
   1. On the CORRECTED aligned data (21 variable positions), compute for
      every variable-position pair (window 30):
-       - MI (mutation-only, as in the pipeline)
+       - MI (full MI over all residue pairs, gaps excluded)
        - Perplexity ratio PP(j)/avg PP(j|i) (determinism)
        - Combined score: rank-based (avg of normalized ranks) and
          z-score based (S = z(MI) + z(ratio))
   2. Rank pairs by MI-only, ratio-only, and combined.
   3. Evaluate each ranking by Leave-One-Out prediction accuracy:
        given a mutation at position i in a held-out sequence, predict the
-       partner at j as argmax of the constraint row C(i, .) (built from the
-       other 1298 sequences); correct if it matches the held-out residue.
+       partner at j as argmax of the constraint row C(i, .) over partners
+       that co-occur with it in the other 1,298 sequences; correct if it
+       matches the held-out residue.
      This is the same protocol as allseq_constraint_function.py, applied
      to the top-K pairs of each ranking.
-  4. Report whether combined ranking improves accuracy and whether the
-     combined constraint (C + lambda * log(PP ratio)) beats C alone.
+  4. Report whether the combined ranking changes accuracy.
 
 Run: python analysis/combined_mi_perplexity.py
 """
+
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import NARY_SRC, REPO_ROOT  # noqa: E402
 import sys, json, numpy as np
 from collections import Counter
 from scipy.stats import spearmanr
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/n-ary-kmap/src")
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
+sys.path.insert(0, str(NARY_SRC))
+sys.path.insert(0, str(REPO_ROOT))
 from coevolution_shared import (load_position_arrays, compute_entropy_vectorized,
-                                majority_ref, mutual_information)
+                                majority_ref, mutual_information,
+                                loo_partner_accuracy)
 
 pos_arrays, n_all, full_len = load_position_arrays(max_pos=None, aligned=True)
 AA = "AILVMFYWEDQNHKRSTCPG"
@@ -102,46 +108,23 @@ print(f"  Spearman(MI, ratio)     = {spearmanr(mi_vals, ra_vals).statistic:.4f}"
 print(f"  Spearman(MI, comb_rank) = {spearmanr(mi_vals, combined_rank).statistic:.4f}")
 
 # LOO-CV prediction for top-K pairs under each ranking
-def loo_accuracy(pair_list, K, use_ratio_in_constraint=False):
-    """Argmax constraint prediction on held-out sequences."""
-    correct = 0
-    total = 0
+def loo_accuracy(pair_list, K):
+    """Exact LOO partner prediction on the top-K pairs of a ranking.
+
+    Same protocol as allseq_constraint_function.py: argmax of the constraint
+    function over partners that co-occur with the held-out residue
+    (coevolution_shared.loo_partner_accuracy, O(N) per pair).
+    """
+    dense = np.stack(pos_arrays)
+    correct = total = 0
     for (i, j) in pair_list[:K]:
         ri = majority_ref(pos_arrays, i, n_all)
         rj = majority_ref(pos_arrays, j, n_all)
-        for hold in range(n_all):
-            # build frequency kmap on other 1298
-            kmap = np.zeros((20, 20))
-            for idx, arr in enumerate(pos_arrays):
-                if idx == hold:
-                    continue
-                if i < len(arr) and j < len(arr):
-                    ci, cj = int(arr[i]), int(arr[j])
-                    if 0 <= ci < 20 and 0 <= cj < 20:
-                        kmap[ci, cj] += 1
-            t = kmap.sum()
-            if t == 0:
-                continue
-            kmap /= t
-            marg_i = kmap.sum(axis=1)
-            marg_j = kmap.sum(axis=0)
-            eps = 1e-10
-            with np.errstate(divide="ignore", invalid="ignore"):
-                C = np.log((kmap + eps) / ((marg_i[:, None] + eps) * (marg_j[None, :] + eps)))
-            if use_ratio_in_constraint:
-                # add determinism bonus: + lambda * log(ratio) uniformly? Not
-                # per-cell; we only combine for ranking, not per-cell C.
-                pass
-            arr = pos_arrays[hold]
-            if i < len(arr) and j < len(arr):
-                ci, cj = int(arr[i]), int(arr[j])
-                if 0 <= ci < 20 and 0 <= cj < 20:
-                    if ci != ri or cj != rj:
-                        best = int(np.argmax(C[ci, :]))
-                        if best == cj:
-                            correct += 1
-                        total += 1
+        r = loo_partner_accuracy(dense[:, i], dense[:, j], ri, rj)
+        correct += r["correct"]
+        total += r["n_mutations"]
     return correct, total
+
 
 K = 10
 order_mi = [keys[k] for k in np.argsort(-mi_vals)]
@@ -174,5 +157,5 @@ out = {
         "combined_z": loo_accuracy(order_cz, K),
     },
 }
-json.dump(out, open("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution/analysis/combined_mi_perplexity.json", "w"), indent=2)
+json.dump(out, open(str(REPO_ROOT / "analysis/combined_mi_perplexity.json"), "w"), indent=2)
 print("\nSaved to analysis/combined_mi_perplexity.json")

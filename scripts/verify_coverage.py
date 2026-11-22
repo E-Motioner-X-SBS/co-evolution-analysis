@@ -13,6 +13,11 @@ Usage: python scripts/verify_coverage.py [--dataset X]
 Output: results/coverage_report.json + summary table
 """
 
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import REPO_ROOT  # noqa: E402
+
 import argparse
 import json
 import re
@@ -20,7 +25,7 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-REPO = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis")
+REPO = REPO_ROOT
 RESULTS = REPO / "results"
 DATA = REPO / "data"
 

@@ -11,36 +11,22 @@ We use the don't-care condition strategically:
 This extracts MUTATIONS as prime implicants, not conservation patterns.
 """
 
+from kmap_paths import KMAP_SBM_SRC, NARY_SRC, REPO_ROOT  # noqa: E402
+
 import sys
 import json
 import numpy as np
 from collections import Counter
 from pathlib import Path
 
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/n-ary-kmap/src")
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/kmap-sbm-validation/src")
+sys.path.insert(0, str(NARY_SRC))
+sys.path.insert(0, str(KMAP_SBM_SRC))
 
 from nkmap.encoding.bio_sequences import Base20AminoEncoder, AMINO_HE_2012
 from kmap_sbm.analysis.prime_implicants import boolean_minimize_kmap
 
 
-def parse_fasta(filepath):
-    sequences = []
-    current_header = None
-    current_seq = []
-    with open(filepath, "r") as f:
-        for line in f:
-            line = line.strip()
-            if line.startswith(">"):
-                if current_header is not None:
-                    sequences.append((current_header, "".join(current_seq)))
-                current_header = line[1:]
-                current_seq = []
-            elif line:
-                current_seq.append(line.upper())
-    if current_header is not None:
-        sequences.append((current_header, "".join(current_seq)))
-    return sequences
+from coevolution_shared import parse_fasta  # single source of truth
 
 
 def build_position_arrays(sequences, encoder, max_pos=200):
@@ -73,18 +59,7 @@ def compute_position_entropy(pos_arrays, pos, n_seqs):
     return entropy
 
 
-def get_majority_ref(pos_arrays, pos, n_seqs):
-    """Return the most common residue code at a position (int 0-19).
-
-    Ties broken by lowest code index (matches GPU kernel).
-    """
-    cnt = Counter(
-        int(a[pos]) for a in pos_arrays[:n_seqs] if pos < len(a) and 0 <= a[pos] < 20
-    )
-    if not cnt:
-        return 0
-    best = max(cnt.values())
-    return min(c for c, n in cnt.items() if n == best)
+from coevolution_shared import majority_ref as get_majority_ref  # single source of truth
 
 
 def find_variable_positions(pos_arrays, n_seqs, entropy_threshold=0.5, max_pos=None):
@@ -215,12 +190,12 @@ def find_coevolutionary_pairs(pos_arrays, variable_positions, n_seqs, top_n=20):
     ref_codes = {}
     for pos in range(max_pos):
         col = dense[:, pos]
-        valid = col[col >= 0]
+        valid = col[(col >= 0) & (col < 20)]  # gap/unknown (20) is not a residue
         if len(valid) == 0:
             ref_codes[pos] = -1
         else:
             cnt = np.bincount(valid, minlength=20)
-            ref_codes[pos] = int(np.argmax(cnt))
+            ref_codes[pos] = int(np.argmax(cnt))  # ties -> lowest code, as majority_ref
 
     # Only consider pairs where both positions are variable
     for idx_i, pos_i in enumerate(variable_positions):
@@ -295,7 +270,7 @@ def minimize_with_dontcare(kmap_with_dc):
 
 
 def main():
-    base_dir = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
+    base_dir = REPO_ROOT
     fasta_file = Path(
         __import__("os").environ.get("COEVO_FASTA")
         or (base_dir / "Spike_protein.aln-fasta")
@@ -388,39 +363,20 @@ def main():
 
         # Decode essential PIs
         print(f"  Essential prime implicants (mutation motifs):")
+        from coevolution_shared import decode_pair_cube, pi_literals
         for pi_idx, pi in enumerate(result["essential_prime_implicants"][:10]):
-            values = list(pi["values"])
-            mask = list(pi["mask"])
-            while len(values) < 10:
-                values.append(0)
-                mask.append(False)
-
-            row_code = sum(values[j] * (2 ** (4 - j)) for j in range(5) if not mask[j])
-            col_code = sum(
-                values[j + 5] * (2 ** (4 - j)) for j in range(5) if not mask[j + 5]
-            )
-
-            row_aa = aa_list[row_code % 20] if row_code < 20 else "?"
-            col_aa = aa_list[col_code % 20] if col_code < 20 else "?"
-
-            terms = []
-            for j in range(8):
-                if not mask[j]:
-                    var = f"s{3 - j}" if j < 4 else f"t{7 - j}"
-                    if values[j] == 0:
-                        terms.append(f"~{var}")
-                    else:
-                        terms.append(var)
-            term_str = " & ".join(terms) if terms else "TRUE"
-
+            rows, cols = decode_pair_cube(pi)
+            row_aa = "".join(aa_list[c] for c in rows) or "?"
+            col_aa = "".join(aa_list[c] for c in cols) or "?"
+            term_str = " & ".join(pi_literals(pi)) or "TRUE"
             # Check if this is a mutation (different from reference)
             ref_i_val = int(reference[pos_i]) if pos_i < len(reference) else -1
             ref_j_val = int(reference[pos_j]) if pos_j < len(reference) else -1
 
-            is_mutation = row_code % 20 != ref_i_val or col_code % 20 != ref_j_val
+            is_mutation = not (rows == [ref_i_val] and cols == [ref_j_val])
             mut_str = "MUTATION" if is_mutation else "reference"
 
-            print(f"    PI_{pi_idx + 1}: {term_str} = ({row_aa},{col_aa}) [{mut_str}]")
+            print(f"    PI_{pi_idx + 1}: {term_str} = ({{{row_aa}}},{{{col_aa}}}) [{mut_str}]")
 
         all_results.append(
             {

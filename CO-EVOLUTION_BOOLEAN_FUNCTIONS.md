@@ -2,7 +2,7 @@
 
 **Dataset:** 1299 sequences
 **Encoding:** Base-20 (He 2012 order)
-**Method:** Variable-position K-map with don't-care conditions
+**Method:** per-pair mutation K-map (1 = observed mutation, 0 = never observed, DC = reference pair and padding)
 **Quine-McCluskey minimization**
 
 ---
@@ -31,7 +31,7 @@
 | Off-set cells | 397 |
 | Don't-care cells | 625 |
 | Prime implicants | 2 |
-| Essential PIs | 0 |
+| Essential PIs | 2 |
 
 ### K-map (Compact View)
 
@@ -41,7 +41,7 @@ Position pair (495, 498): Reference = (R, G)
 Co-evolutionary residue pairs (on-set):
   Q-G, R-S
 
-Don't-care positions (conserved): 625 cells
+Don't-care cells (reference pair + padding codes 20-31): 625 cells
 Never-seen pairs (off-set): 397 cells
 ```
 
@@ -50,8 +50,8 @@ Never-seen pairs (off-set): 397 cells
 ```
 f(pos_495, pos_498) = 1 if ANY of these residue pairs appear:
 
-    PI_1: pos_495=Q AND pos_498=G
-    PI_2: pos_495=R AND pos_498=S
+  * PI_1: pos_495 in {QR} AND pos_498 in {G}
+  * PI_2: pos_495 in {R} AND pos_498 in {S}
 
 (* = essential prime implicant)
 ```
@@ -66,8 +66,8 @@ f(pos_495, pos_498) = 1 if ANY of these residue pairs appear:
 
 ### Inference Rules (Natural Language)
 
-Rule 1: IF position 495 = Q AND position 498 = G THEN co-evolutionary (MI = 0.871)
-Rule 2: IF position 495 = R AND position 498 = S THEN co-evolutionary (MI = 0.871)
+**Rule 1:** IF position 495 in **{QR}** AND position 498 in **{G}** THEN observed mutation (MI = 0.871)
+**Rule 2:** IF position 495 in **{R}** AND position 498 in **{S}** THEN observed mutation (MI = 0.871)
 
 ---
 
@@ -83,7 +83,7 @@ Rule 2: IF position 495 = R AND position 498 = S THEN co-evolutionary (MI = 0.87
 | Off-set cells | 396 |
 | Don't-care cells | 625 |
 | Prime implicants | 3 |
-| Essential PIs | 0 |
+| Essential PIs | 3 |
 
 ### K-map (Compact View)
 
@@ -93,7 +93,7 @@ Position pair (448, 454): Reference = (G, L)
 Co-evolutionary residue pairs (on-set):
   S-L, S-R, G-R
 
-Don't-care positions (conserved): 625 cells
+Don't-care cells (reference pair + padding codes 20-31): 625 cells
 Never-seen pairs (off-set): 396 cells
 ```
 
@@ -102,9 +102,9 @@ Never-seen pairs (off-set): 396 cells
 ```
 f(pos_448, pos_454) = 1 if ANY of these residue pairs appear:
 
-    PI_1: pos_448=G AND pos_454=R
-    PI_2: pos_448=S AND pos_454=L
-    PI_3: pos_448=S AND pos_454=R
+  * PI_1: pos_448 in {S} AND pos_454 in {L}
+  * PI_2: pos_448 in {S} AND pos_454 in {R}
+  * PI_3: pos_448 in {G} AND pos_454 in {R}
 
 (* = essential prime implicant)
 ```
@@ -119,9 +119,9 @@ f(pos_448, pos_454) = 1 if ANY of these residue pairs appear:
 
 ### Inference Rules (Natural Language)
 
-Rule 3: IF position 448 = G AND position 454 = R THEN co-evolutionary (MI = 0.834)
-Rule 4: IF position 448 = S AND position 454 = L THEN co-evolutionary (MI = 0.834)
-Rule 5: IF position 448 = S AND position 454 = R THEN co-evolutionary (MI = 0.834)
+**Rule 3:** IF position 448 in **{S}** AND position 454 in **{L}** THEN observed mutation (MI = 0.834)
+**Rule 4:** IF position 448 in **{S}** AND position 454 in **{R}** THEN observed mutation (MI = 0.834)
+**Rule 5:** IF position 448 in **{G}** AND position 454 in **{R}** THEN observed mutation (MI = 0.834)
 
 ---
 
@@ -137,7 +137,7 @@ Rule 5: IF position 448 = S AND position 454 = R THEN co-evolutionary (MI = 0.83
 | Off-set cells | 396 |
 | Don't-care cells | 625 |
 | Prime implicants | 3 |
-| Essential PIs | 0 |
+| Essential PIs | 3 |
 
 ### K-map (Compact View)
 
@@ -147,7 +147,7 @@ Position pair (488, 498): Reference = (F, G)
 Co-evolutionary residue pairs (on-set):
   V-G, F-S, P-G
 
-Don't-care positions (conserved): 625 cells
+Don't-care cells (reference pair + padding codes 20-31): 625 cells
 Never-seen pairs (off-set): 396 cells
 ```
 
@@ -156,9 +156,9 @@ Never-seen pairs (off-set): 396 cells
 ```
 f(pos_488, pos_498) = 1 if ANY of these residue pairs appear:
 
-    PI_1: pos_488=V AND pos_498=G
-    PI_2: pos_488=P AND pos_498=G
-    PI_3: pos_488=F AND pos_498=S
+  * PI_1: pos_488 in {V} AND pos_498 in {G}
+  * PI_2: pos_488 in {F} AND pos_498 in {S}
+  * PI_3: pos_488 in {P} AND pos_498 in {G}
 
 (* = essential prime implicant)
 ```
@@ -173,9 +173,9 @@ f(pos_488, pos_498) = 1 if ANY of these residue pairs appear:
 
 ### Inference Rules (Natural Language)
 
-Rule 6: IF position 488 = V AND position 498 = G THEN co-evolutionary (MI = 0.822)
-Rule 7: IF position 488 = P AND position 498 = G THEN co-evolutionary (MI = 0.822)
-Rule 8: IF position 488 = F AND position 498 = S THEN co-evolutionary (MI = 0.822)
+**Rule 6:** IF position 488 in **{V}** AND position 498 in **{G}** THEN observed mutation (MI = 0.822)
+**Rule 7:** IF position 488 in **{F}** AND position 498 in **{S}** THEN observed mutation (MI = 0.822)
+**Rule 8:** IF position 488 in **{P}** AND position 498 in **{G}** THEN observed mutation (MI = 0.822)
 
 ---
 
@@ -191,7 +191,7 @@ Rule 8: IF position 488 = F AND position 498 = S THEN co-evolutionary (MI = 0.82
 | Off-set cells | 396 |
 | Don't-care cells | 625 |
 | Prime implicants | 3 |
-| Essential PIs | 0 |
+| Essential PIs | 3 |
 
 ### K-map (Compact View)
 
@@ -201,7 +201,7 @@ Position pair (442, 454): Reference = (K, L)
 Co-evolutionary residue pairs (on-set):
   N-L, N-R, K-R
 
-Don't-care positions (conserved): 625 cells
+Don't-care cells (reference pair + padding codes 20-31): 625 cells
 Never-seen pairs (off-set): 396 cells
 ```
 
@@ -210,9 +210,9 @@ Never-seen pairs (off-set): 396 cells
 ```
 f(pos_442, pos_454) = 1 if ANY of these residue pairs appear:
 
-    PI_1: pos_442=N AND pos_454=L
-    PI_2: pos_442=N AND pos_454=R
-    PI_3: pos_442=K AND pos_454=R
+  * PI_1: pos_442 in {N} AND pos_454 in {L}
+  * PI_2: pos_442 in {N} AND pos_454 in {R}
+  * PI_3: pos_442 in {K} AND pos_454 in {R}
 
 (* = essential prime implicant)
 ```
@@ -227,9 +227,9 @@ f(pos_442, pos_454) = 1 if ANY of these residue pairs appear:
 
 ### Inference Rules (Natural Language)
 
-Rule 9: IF position 442 = N AND position 454 = L THEN co-evolutionary (MI = 0.811)
-Rule 10: IF position 442 = N AND position 454 = R THEN co-evolutionary (MI = 0.811)
-Rule 11: IF position 442 = K AND position 454 = R THEN co-evolutionary (MI = 0.811)
+**Rule 9:** IF position 442 in **{N}** AND position 454 in **{L}** THEN observed mutation (MI = 0.811)
+**Rule 10:** IF position 442 in **{N}** AND position 454 in **{R}** THEN observed mutation (MI = 0.811)
+**Rule 11:** IF position 442 in **{K}** AND position 454 in **{R}** THEN observed mutation (MI = 0.811)
 
 ---
 
@@ -245,7 +245,7 @@ Rule 11: IF position 442 = K AND position 454 = R THEN co-evolutionary (MI = 0.8
 | Off-set cells | 396 |
 | Don't-care cells | 625 |
 | Prime implicants | 3 |
-| Essential PIs | 0 |
+| Essential PIs | 3 |
 
 ### K-map (Compact View)
 
@@ -255,7 +255,7 @@ Position pair (442, 448): Reference = (K, G)
 Co-evolutionary residue pairs (on-set):
   N-S, N-G, K-S
 
-Don't-care positions (conserved): 625 cells
+Don't-care cells (reference pair + padding codes 20-31): 625 cells
 Never-seen pairs (off-set): 396 cells
 ```
 
@@ -264,9 +264,9 @@ Never-seen pairs (off-set): 396 cells
 ```
 f(pos_442, pos_448) = 1 if ANY of these residue pairs appear:
 
-    PI_1: pos_442=N AND pos_448=G
-    PI_2: pos_442=N AND pos_448=S
-    PI_3: pos_442=K AND pos_448=S
+  * PI_1: pos_442 in {N} AND pos_448 in {S}
+  * PI_2: pos_442 in {N} AND pos_448 in {G}
+  * PI_3: pos_442 in {K} AND pos_448 in {S}
 
 (* = essential prime implicant)
 ```
@@ -281,9 +281,9 @@ f(pos_442, pos_448) = 1 if ANY of these residue pairs appear:
 
 ### Inference Rules (Natural Language)
 
-Rule 12: IF position 442 = N AND position 448 = G THEN co-evolutionary (MI = 0.728)
-Rule 13: IF position 442 = N AND position 448 = S THEN co-evolutionary (MI = 0.728)
-Rule 14: IF position 442 = K AND position 448 = S THEN co-evolutionary (MI = 0.728)
+**Rule 12:** IF position 442 in **{N}** AND position 448 in **{S}** THEN observed mutation (MI = 0.728)
+**Rule 13:** IF position 442 in **{N}** AND position 448 in **{G}** THEN observed mutation (MI = 0.728)
+**Rule 14:** IF position 442 in **{K}** AND position 448 in **{S}** THEN observed mutation (MI = 0.728)
 
 ---
 
@@ -299,7 +299,7 @@ Rule 14: IF position 442 = K AND position 448 = S THEN co-evolutionary (MI = 0.7
 | Off-set cells | 396 |
 | Don't-care cells | 624 |
 | Prime implicants | 4 |
-| Essential PIs | 0 |
+| Essential PIs | 4 |
 
 ### K-map (Compact View)
 
@@ -309,7 +309,7 @@ Position pair (212, 215): Reference = (V, G)
 Co-evolutionary residue pairs (on-set):
   I-V, L-V, V-P, S-G
 
-Don't-care positions (conserved): 624 cells
+Don't-care cells (reference pair + padding codes 20-31): 624 cells
 Never-seen pairs (off-set): 396 cells
 ```
 
@@ -318,10 +318,10 @@ Never-seen pairs (off-set): 396 cells
 ```
 f(pos_212, pos_215) = 1 if ANY of these residue pairs appear:
 
-    PI_1: pos_212=V AND pos_215=P
-    PI_2: pos_212=S AND pos_215=G
-    PI_3: pos_212=I AND pos_215=V
-    PI_4: pos_212=L AND pos_215=V
+  * PI_1: pos_212 in {I} AND pos_215 in {V}
+  * PI_2: pos_212 in {L} AND pos_215 in {V}
+  * PI_3: pos_212 in {V} AND pos_215 in {P}
+  * PI_4: pos_212 in {S} AND pos_215 in {G}
 
 (* = essential prime implicant)
 ```
@@ -337,10 +337,10 @@ f(pos_212, pos_215) = 1 if ANY of these residue pairs appear:
 
 ### Inference Rules (Natural Language)
 
-Rule 15: IF position 212 = V AND position 215 = P THEN co-evolutionary (MI = 0.398)
-Rule 16: IF position 212 = S AND position 215 = G THEN co-evolutionary (MI = 0.398)
-Rule 17: IF position 212 = I AND position 215 = V THEN co-evolutionary (MI = 0.398)
-Rule 18: IF position 212 = L AND position 215 = V THEN co-evolutionary (MI = 0.398)
+**Rule 15:** IF position 212 in **{I}** AND position 215 in **{V}** THEN observed mutation (MI = 0.398)
+**Rule 16:** IF position 212 in **{L}** AND position 215 in **{V}** THEN observed mutation (MI = 0.398)
+**Rule 17:** IF position 212 in **{V}** AND position 215 in **{P}** THEN observed mutation (MI = 0.398)
+**Rule 18:** IF position 212 in **{S}** AND position 215 in **{G}** THEN observed mutation (MI = 0.398)
 
 ---
 
@@ -356,7 +356,7 @@ Rule 18: IF position 212 = L AND position 215 = V THEN co-evolutionary (MI = 0.3
 | Off-set cells | 395 |
 | Don't-care cells | 625 |
 | Prime implicants | 4 |
-| Essential PIs | 0 |
+| Essential PIs | 4 |
 
 ### K-map (Compact View)
 
@@ -366,7 +366,7 @@ Position pair (215, 216): Reference = (G, R)
 Co-evolutionary residue pairs (on-set):
   V-R, E-R, P-E, P-K
 
-Don't-care positions (conserved): 625 cells
+Don't-care cells (reference pair + padding codes 20-31): 625 cells
 Never-seen pairs (off-set): 395 cells
 ```
 
@@ -375,10 +375,10 @@ Never-seen pairs (off-set): 395 cells
 ```
 f(pos_215, pos_216) = 1 if ANY of these residue pairs appear:
 
-    PI_1: pos_215=E AND pos_216=R
-    PI_2: pos_215=V AND pos_216=R
-    PI_3: pos_215=P AND pos_216=K
-    PI_4: pos_215=P AND pos_216=E
+  * PI_1: pos_215 in {VG} AND pos_216 in {R}
+  * PI_2: pos_215 in {E} AND pos_216 in {R}
+  * PI_3: pos_215 in {P} AND pos_216 in {E}
+  * PI_4: pos_215 in {P} AND pos_216 in {K}
 
 (* = essential prime implicant)
 ```
@@ -393,10 +393,10 @@ f(pos_215, pos_216) = 1 if ANY of these residue pairs appear:
 
 ### Inference Rules (Natural Language)
 
-Rule 19: IF position 215 = E AND position 216 = R THEN co-evolutionary (MI = 0.377)
-Rule 20: IF position 215 = V AND position 216 = R THEN co-evolutionary (MI = 0.377)
-Rule 21: IF position 215 = P AND position 216 = K THEN co-evolutionary (MI = 0.377)
-Rule 22: IF position 215 = P AND position 216 = E THEN co-evolutionary (MI = 0.377)
+**Rule 19:** IF position 215 in **{VG}** AND position 216 in **{R}** THEN observed mutation (MI = 0.377)
+**Rule 20:** IF position 215 in **{E}** AND position 216 in **{R}** THEN observed mutation (MI = 0.377)
+**Rule 21:** IF position 215 in **{P}** AND position 216 in **{E}** THEN observed mutation (MI = 0.377)
+**Rule 22:** IF position 215 in **{P}** AND position 216 in **{K}** THEN observed mutation (MI = 0.377)
 
 ---
 
@@ -412,7 +412,7 @@ Rule 22: IF position 215 = P AND position 216 = E THEN co-evolutionary (MI = 0.3
 | Off-set cells | 394 |
 | Don't-care cells | 624 |
 | Prime implicants | 6 |
-| Essential PIs | 1 |
+| Essential PIs | 6 |
 
 ### K-map (Compact View)
 
@@ -422,7 +422,7 @@ Position pair (212, 216): Reference = (V, R)
 Co-evolutionary residue pairs (on-set):
   I-R, L-R, V-E, V-K, S-R, G-R
 
-Don't-care positions (conserved): 624 cells
+Don't-care cells (reference pair + padding codes 20-31): 624 cells
 Never-seen pairs (off-set): 394 cells
 ```
 
@@ -431,12 +431,12 @@ Never-seen pairs (off-set): 394 cells
 ```
 f(pos_212, pos_216) = 1 if ANY of these residue pairs appear:
 
-  * PI_1: pos_212=G AND pos_216=R
-    PI_2: pos_212=V AND pos_216=E
-    PI_3: pos_212=I AND pos_216=R
-    PI_4: pos_212=L AND pos_216=R
-    PI_5: pos_212=V AND pos_216=K
-    PI_6: pos_212=S AND pos_216=R
+  * PI_1: pos_212 in {I} AND pos_216 in {R}
+  * PI_2: pos_212 in {L} AND pos_216 in {R}
+  * PI_3: pos_212 in {V} AND pos_216 in {E}
+  * PI_4: pos_212 in {V} AND pos_216 in {K}
+  * PI_5: pos_212 in {S} AND pos_216 in {R}
+  * PI_6: pos_212 in {G} AND pos_216 in {R}
 
 (* = essential prime implicant)
 ```
@@ -452,12 +452,12 @@ f(pos_212, pos_216) = 1 if ANY of these residue pairs appear:
 
 ### Inference Rules (Natural Language)
 
-**Rule 23:** IF position 212 = **G** AND position 216 = **R** THEN co-evolutionary (MI = 0.377)
-Rule 24: IF position 212 = V AND position 216 = E THEN co-evolutionary (MI = 0.377)
-Rule 25: IF position 212 = I AND position 216 = R THEN co-evolutionary (MI = 0.377)
-Rule 26: IF position 212 = L AND position 216 = R THEN co-evolutionary (MI = 0.377)
-Rule 27: IF position 212 = V AND position 216 = K THEN co-evolutionary (MI = 0.377)
-Rule 28: IF position 212 = S AND position 216 = R THEN co-evolutionary (MI = 0.377)
+**Rule 23:** IF position 212 in **{I}** AND position 216 in **{R}** THEN observed mutation (MI = 0.377)
+**Rule 24:** IF position 212 in **{L}** AND position 216 in **{R}** THEN observed mutation (MI = 0.377)
+**Rule 25:** IF position 212 in **{V}** AND position 216 in **{E}** THEN observed mutation (MI = 0.377)
+**Rule 26:** IF position 212 in **{V}** AND position 216 in **{K}** THEN observed mutation (MI = 0.377)
+**Rule 27:** IF position 212 in **{S}** AND position 216 in **{R}** THEN observed mutation (MI = 0.377)
+**Rule 28:** IF position 212 in **{G}** AND position 216 in **{R}** THEN observed mutation (MI = 0.377)
 
 ---
 
@@ -473,7 +473,7 @@ Rule 28: IF position 212 = S AND position 216 = R THEN co-evolutionary (MI = 0.3
 | Off-set cells | 395 |
 | Don't-care cells | 625 |
 | Prime implicants | 4 |
-| Essential PIs | 1 |
+| Essential PIs | 4 |
 
 ### K-map (Compact View)
 
@@ -483,7 +483,7 @@ Position pair (210, 215): Reference = (N, G)
 Co-evolutionary residue pairs (on-set):
   I-P, N-V, N-E, K-G
 
-Don't-care positions (conserved): 625 cells
+Don't-care cells (reference pair + padding codes 20-31): 625 cells
 Never-seen pairs (off-set): 395 cells
 ```
 
@@ -492,10 +492,10 @@ Never-seen pairs (off-set): 395 cells
 ```
 f(pos_210, pos_215) = 1 if ANY of these residue pairs appear:
 
-    PI_1: pos_210=I AND pos_215=P
-    PI_2: pos_210=N AND pos_215=E
-    PI_3: pos_210=N AND pos_215=V
-  * PI_4: pos_210=K AND pos_215=G
+  * PI_1: pos_210 in {I} AND pos_215 in {P}
+  * PI_2: pos_210 in {N} AND pos_215 in {VG}
+  * PI_3: pos_210 in {N} AND pos_215 in {E}
+  * PI_4: pos_210 in {K} AND pos_215 in {G}
 
 (* = essential prime implicant)
 ```
@@ -510,10 +510,10 @@ f(pos_210, pos_215) = 1 if ANY of these residue pairs appear:
 
 ### Inference Rules (Natural Language)
 
-Rule 29: IF position 210 = I AND position 215 = P THEN co-evolutionary (MI = 0.238)
-Rule 30: IF position 210 = N AND position 215 = E THEN co-evolutionary (MI = 0.238)
-Rule 31: IF position 210 = N AND position 215 = V THEN co-evolutionary (MI = 0.238)
-**Rule 32:** IF position 210 = **K** AND position 215 = **G** THEN co-evolutionary (MI = 0.238)
+**Rule 29:** IF position 210 in **{I}** AND position 215 in **{P}** THEN observed mutation (MI = 0.238)
+**Rule 30:** IF position 210 in **{N}** AND position 215 in **{VG}** THEN observed mutation (MI = 0.238)
+**Rule 31:** IF position 210 in **{N}** AND position 215 in **{E}** THEN observed mutation (MI = 0.238)
+**Rule 32:** IF position 210 in **{K}** AND position 215 in **{G}** THEN observed mutation (MI = 0.238)
 
 ---
 
@@ -529,7 +529,7 @@ Rule 31: IF position 210 = N AND position 215 = V THEN co-evolutionary (MI = 0.2
 | Off-set cells | 396 |
 | Don't-care cells | 624 |
 | Prime implicants | 4 |
-| Essential PIs | 0 |
+| Essential PIs | 3 |
 
 ### K-map (Compact View)
 
@@ -539,7 +539,7 @@ Position pair (210, 212): Reference = (N, V)
 Co-evolutionary residue pairs (on-set):
   I-V, I-G, N-L, N-S
 
-Don't-care positions (conserved): 624 cells
+Don't-care cells (reference pair + padding codes 20-31): 624 cells
 Never-seen pairs (off-set): 396 cells
 ```
 
@@ -548,10 +548,10 @@ Never-seen pairs (off-set): 396 cells
 ```
 f(pos_210, pos_212) = 1 if ANY of these residue pairs appear:
 
-    PI_1: pos_210=I AND pos_212=V
-    PI_2: pos_210=I AND pos_212=G
-    PI_3: pos_210=N AND pos_212=L
-    PI_4: pos_210=N AND pos_212=S
+  * PI_1: pos_210 in {I} AND pos_212 in {VG}
+    PI_2: pos_210 in {I} AND pos_212 in {G}
+  * PI_3: pos_210 in {N} AND pos_212 in {L}
+  * PI_4: pos_210 in {N} AND pos_212 in {S}
 
 (* = essential prime implicant)
 ```
@@ -566,10 +566,10 @@ f(pos_210, pos_212) = 1 if ANY of these residue pairs appear:
 
 ### Inference Rules (Natural Language)
 
-Rule 33: IF position 210 = I AND position 212 = V THEN co-evolutionary (MI = 0.177)
-Rule 34: IF position 210 = I AND position 212 = G THEN co-evolutionary (MI = 0.177)
-Rule 35: IF position 210 = N AND position 212 = L THEN co-evolutionary (MI = 0.177)
-Rule 36: IF position 210 = N AND position 212 = S THEN co-evolutionary (MI = 0.177)
+**Rule 33:** IF position 210 in **{I}** AND position 212 in **{VG}** THEN observed mutation (MI = 0.177)
+Rule 34: IF position 210 in {I} AND position 212 in {G} THEN observed mutation (MI = 0.177)
+**Rule 35:** IF position 210 in **{N}** AND position 212 in **{L}** THEN observed mutation (MI = 0.177)
+**Rule 36:** IF position 210 in **{N}** AND position 212 in **{S}** THEN observed mutation (MI = 0.177)
 
 ---
 
@@ -587,9 +587,9 @@ Rule 36: IF position 210 = N AND position 212 = S THEN co-evolutionary (MI = 0.1
 
 1. Extract the residue pair at each co-evolving position pair from a new sequence
 2. For each position pair, check if the residue pair matches any rule below
-3. If YES: that position pair is co-evolutionary (consistent with the observed data)
-4. If position i mutates: find which residue at position j satisfies the co-evolutionary constraint
+3. If YES: the combination is one the alignment contains
+4. The rules describe observed combinations only; absence from the list is not evidence of incompatibility
 
-**Example:** If position 212 mutates to G, check rules for position 212.
-Essential rule: IF pos 212 = G AND pos 216 = R THEN co-evolutionary.
-So position 216 must also show R to satisfy the co-evolutionary constraint.
+**Example:** If position 495 mutates to QR, check rules for position 495.
+Essential rule: IF pos 495 = QR AND pos 498 = G THEN co-evolutionary.
+In the alignment, sequences with QR at position 495 carry G at position 498 (an observed combination, not a causal constraint).

@@ -14,7 +14,8 @@ Stages (each idempotent, resumable, writes JSON under results/kmap_structure/):
                    -> documented ternary labeling -> Quine-McCluskey -> Boolean
                    circuits; evaluated on held-out proteins against baselines:
                    random(base rate), separation-only ablation, plain MI,
-                   perplexity ratio, and PSICOV's PUBLISHED predictions
+                   APC-corrected MI (MIp), perplexity ratio, and PSICOV's
+                   PUBLISHED predictions
                    (raw/con/*.out — the literature contact map).
   sweep   Stage C: labeling-rule sensitivity sweep (t_mult x n_min grid) on the
                    fixed ~100/~49 split — conclusions must be stable (gate G4).
@@ -62,7 +63,7 @@ FEAT_DIR = OUT / "features"
 RANKED_KS = (("prec@L/5", 1 / 5), ("prec@L/2", 1 / 2), ("prec@L", 1.0))
 
 #: Method namespaces that appear in every per-protein record.
-METHOD_KEYS = ("L1", "L2", "sep_only", "mi", "pp", "psicov_published")
+METHOD_KEYS = ("L1", "L2", "sep_only", "mi", "mip", "pp", "psicov_published")
 
 
 # ===========================================================================
@@ -311,6 +312,8 @@ def evaluate_fold(train_names, test_names, caches, t_mult: float, n_min: int) ->
                 ks.cell_rate_score(cs, tc.sbin.astype(np.int64)), tc)},
             "mi": {"ranked": eval_ranked_on_target(
                 np.nan_to_num(tc.mi, nan=-1e9), tc)},
+            "mip": {"ranked": eval_ranked_on_target(
+                ks.apc_corrected(tc.mi, tc.pairs, tc.n_cols), tc)},
             "pp": {"ranked": eval_ranked_on_target(
                 np.nan_to_num(tc.pp, nan=-1e9), tc)},
             "psicov_published": {"ranked": eval_ranked_on_target(
@@ -420,7 +423,7 @@ def _aggregate(rows: list) -> dict:
 
     l2 = col("L2")
     stats = {}
-    for other in ("psicov_published", "mi", "pp", "sep_only"):
+    for other in ("psicov_published", "mi", "mip", "pp", "sep_only"):
         o = col(other)
         ok = ~(np.isnan(l2) | np.isnan(o))
         if ok.sum() >= 5 and np.any(l2[ok] != o[ok]):
@@ -445,7 +448,7 @@ def _print_fold_summary(res: dict) -> None:
     e2 = res.get("L2", {}).get("binary", {}).get("enrichment")
     base = res.get("L2", {}).get("binary", {}).get("base_rate")
     print(f"  prec@L/5  circuit-L1={m('L1')}  circuit-L2={m('L2')}  "
-          f"sep-only={m('sep_only')}  MI={m('mi')}  PP={m('pp')}  "
+          f"sep-only={m('sep_only')}  MI={m('mi')}  MIp={m('mip')}  PP={m('pp')}  "
           f"PSICOV-published={m('psicov_published')}")
     mcc_s = f"{b2['mean']:.3f}" if b2 and b2.get("mean") is not None else "n/a"
     enr_s = f"{e2['mean']:.2f}x" if e2 and e2.get("mean") is not None else "n/a"

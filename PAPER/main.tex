@@ -98,20 +98,23 @@
 	Quine--McCluskey minimisation, and prime-implicant extraction---can be made
 	machine-provable in the Lean~4 theorem prover, and that the resulting Boolean
 	circuits carry genuine structural information when applied to multiple sequence
-	alignments of protein families.  We formalise 118 theorems covering Gray-code
-	properties, $k$-mer indexing, amino-acid encodings, contact-map topology, and
-	implicant-cover semantics; we then apply the verified pipeline to 150 protein
+	alignments of protein families.  We formalise 131 theorems covering Gray-code
+	properties, $k$-mer indexing, amino-acid encodings, contact-map topology,
+	implicant-cover semantics, and sequence circuits; we then apply the verified pipeline to 150 protein
 	domains from the PSICOV benchmark comprising over 1.6~million labelled residue-pair
 	observations against native experimental structures.  Our results show that
 	Quine--McCluskey-minimised contact circuits transfer across proteins at a mean
-	top-$L/5$ precision of $0.179$ ($5.1\times$ random enrichment), that Gray-code
+	top-$L/5$ precision of $0.179$ ($5.1\times$ random enrichment), level with
+	APC-corrected mutual information ($0.176$), that Gray-code
 	adjacency is enriched among native-contact pairs ($1.178\times$, $p =
 		1.1\times10^{-77}$; only $z = 2.51$ above random residue-to-code
-	assignments), and that a rank-fusion hybrid combining mean-field DCA
-	scores with the Karnaugh-map cell-rate prior achieves $0.204$ top-$L/5$
-	precision, exceeding both individual methods ($p < 10^{-4}$).  We additionally
-	demonstrate that flipped (forbidden-combination) circuits transfer across
-	proteins with 98.3\% specificity and that conserved column pairs are enriched
+	assignments).  A rank-fusion hybrid of the Karnaugh-map cell-rate prior
+	with mean-field DCA, first reported at $0.204$, improved only a defective
+	DCA score ($0.169$); with a correct mean-field DCA ($0.566$) the fusion
+	lowers precision ($0.471$).  We additionally
+	demonstrate that flipped (forbidden-combination) circuits transfer as
+	trained, halving the contact rate in forbidden-called cells, and that
+	conserved column pairs are enriched
 	for native contacts by $3.2\times$, an effect carried by near-conserved
 	columns (fully invariant columns are depleted, $0.69\times$).  All software, data, and formal proofs are
 	publicly available.

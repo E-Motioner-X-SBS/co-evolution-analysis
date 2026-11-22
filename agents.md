@@ -100,7 +100,8 @@ per-process GPU memory at 10% (see `coevolution_gpu.get_device()`).
    (5-bit Gray per residue, `encode_gray_single`, `build_aa_kmap_2d` — the
    32×32 dipeptide K-map used for H3) and `analysis/prime_implicants.py`
    (the Quine–McCluskey implementation; **must receive power-of-4 cell
-   counts — it raises otherwise**).
+   counts — it raises otherwise**; exact and with correct essential/cover
+   bookkeeping since the Nov 2026 fix — correction A3).
 
 ### 2.1 The core pipeline (one line each)
 
@@ -125,7 +126,8 @@ FASTA (aligned) → base-20 (He 2012) encoding, gaps/ambiguous = state 20
 - **A2 QM wrap-around**: never feed a 20×20 (400-cell) map to the 8-bit QM —
   pad to 32×32 (1,024 cells, 5 bits/axis) with don't-care rows/cols 20–31.
   The old bug produced 143/152 phantom rules; the corrected set is
-  **36 distinct prime implicants, 2 essential**.
+  **36 distinct prime implicants, 35 essential** (correction A3: the "2
+  essential" first reported came from a bookkeeping defect in the minimiser).
 
 ---
 
@@ -162,17 +164,17 @@ co-evolution-analysis/
 |---|---|---|
 | 1 | `coevolution_shared.py` | shared module: FASTA parsing, entropy, MI, coupling, GPU pair-finder, combined MI+perplexity (single source of truth) |
 | 2 | `coevolution_gpu.py` | GPU kernels (torch CUDA): MI matrix, entropy, majority refs, H1, coupling |
-| 3 | `master_boolean.py` | master Boolean function → 36 PIs / 2 essential (the flagship rule extractor) |
+| 3 | `master_boolean.py` | master Boolean function → 36 PIs, 35 essential (checked by `analysis/exact_master_boolean.py`) |
 | 4 | `boolean_co-evolution.py` | whole-protein dipeptide Boolean minimization + coupling constants |
 | 5 | `nary_kmap_co-evolution.py` | base-20 (n-ary) K-map analysis |
 | 6 | `position_kmap_coevolution.py` | per-position-pair K-maps with MI |
 | 7 | `run_allseq_analysis.py` | all-sequence MI matrix (window 30) |
 | 8 | `run_kmap_analysis.py` | binary Gray K-map pipeline: H1 adjacency (1.34×), signatures, Walsh–Hadamard, mutations |
-| 9 | `flipped_boolean_coevolution.py` | flipped (forbidden) K-maps → 490 forbidden rules |
-| 10 | `kmap_boolean_coevolution.py` | K-map Boolean equations (5-bit Gray literals) |
+| 9 | `flipped_boolean_coevolution.py` | flipped (never-observed) K-maps → 246 cubes |
+| 10 | `kmap_boolean_coevolution.py` | K-map Boolean equations (literals = natural-binary bits of the He-2012 code) |
 | 11 | `variable_position_coevolution.py` | variable-positions-only K-maps with don't-cares |
 | 12 | `predictive_constraint_function.py` | constraint function train/test prediction |
-| 13 | `allseq_constraint_function.py` | leave-one-out CV with the constraint function |
+| 13 | `allseq_constraint_function.py` | leave-one-out CV with the constraint function (exact, O(N) per pair) |
 | 14 | `dca_boolean_coevolution.py` | local precision matrix → Boolean (NOT real DCA) |
 | 15 | `dca_mf_analysis.py` | proper mfDCA (Frobenius norm, APC, direct information) |
 | 16 | `perplexity_coevolution.py` | perplexity ratio per pair |
@@ -290,8 +292,9 @@ Notes:
 | 6 | `trimer_interface.py` | Any inter-protomer contacts? | **ZERO** |
 | 7 | `consistency_cross_script.py` | Does cross-script agreement imply structure? | **NO** — 5-source pairs non-structural |
 | 8 | `perplexity_3d_analysis.py` | Is the perplexity ratio structural? | **ρ=0.67, p=0.006 — strongest metric** |
+| 9 | `validate_contacts.py` | PSICOV 150 natives: enrichment + precision? | 2.38× mean enrichment; precision 0.071 (recomputed, `analysis/psicov_top_pairs_check.py`; first reported 2.49× / 0.066) |
+
 > **CORRECTION (Aug 22, 2026):** this figure is a misattribution. Jones et al. 2012 Table 1 gives PSICOV top-L/5 ≈ **0.73** (sep>6) / ≈0.68 (>23); our re-measurement of the shipped con files = 0.727 / 0.640 (see 3D_Structure_Analysis/11 §9-S1). The 0.44 value corresponds to top-L / MIp-B&vN rows.
-| 9 | `validate_contacts.py` | PSICOV 150 natives: enrichment + precision? | 2.49× mean enrichment; precision 0.066 vs published 0.44 |
 
 ### 5.4 The interpretations (where the findings live)
 
@@ -328,7 +331,6 @@ Notes:
 
 | Job | Why it cannot finish at full scale |
 |---|---|
-| `allseq_constraint_function.py` (LOO-CV) on 222k–486k-seq Pfam families | O(10·N²): ≈27 days (222k) to 2.5 years (486k) of single-core compute. Runs per the no-timeout directive; the only practical route is **documented sampling** (e.g., ≤2,000 test sequences, clearly labeled) |
 | `dca_mf_analysis.py` / `gpu_full_analysis.py` on the Pfam giants | GPU OOM at the 8 GB cap; CPU would need 89 GB RAM for the one-hot at 486k sequences |
 | `run_kmap_analysis.py` H3 on huge alignments | fixed via GPU chunked norm-trick (the scipy pdist fallback attempted an 883 GB allocation — replaced with a chunked CPU fallback) |
 
@@ -345,7 +347,7 @@ cd /store/shuvam/E-motioner-X-SBS/co-evolution-analysis
 # 0. sanity
 $PY -c "import torch; print(torch.__version__, torch.cuda.is_available())"
 
-# 1. reproduce the corrected Spike rule set (regression-verified: 36/2)
+# 1. reproduce the corrected Spike rule set (36 primes, 35 essential)
 $PY master_boolean.py
 
 # 2. reproduce the rule inventory for the structural analyses
@@ -386,7 +388,7 @@ byte-compare-verified re-runs; coverage audit 0 flags on 3,732 runs.
 
 | Question | Answer | Evidence |
 |---|---|---|
-| Is the co-evolution signal structural? | **Partly** — 6 pairs at 3.4–10.5× (p ≤ 1e-8): (500,503), (503,507), (407,410), (210,214), (212,215), (210,215) | validate_3d_complete |
+| Is the co-evolution signal structural? | **No** — against residue pairs at the same separation, with the 11 templates as units, none of the 10 co-evolving pairs is enriched; only the i,i+3/4 pairs (407,410), (500,503), (503,507) are (a property of the fold). The earlier 3.4–10.5× used a pooled-separation control and a binomial over 299 models | validate_3d_complete → analysis/spike_3d_matched_check |
 | Where does it fail? | The 442–498 cluster and (373,378): 13–27 Å apart — immune/lineage covariation | validate_3d_complete |
 | Prime implicants? | 210/212–215 rules fire on contacts (2.8×); pooled 0.58× | validate_residue_rules_3d |
 | Flipped rules? | Steric at 210/212–215; rarity overall | validate_flipped_3d |
@@ -395,7 +397,7 @@ byte-compare-verified re-runs; coverage audit 0 flags on 3,732 runs.
 | Trimer interface? | Zero inter-chain contacts | trimer_interface |
 | Consistency ⇒ structure? | NO | consistency_cross_script |
 | Perplexity? | ρ=0.67, p=0.006 — best single metric | perplexity_3d_analysis |
-| vs published DCA? | enrichment 2.49× (PSICOV 150); precision 0.066 vs 0.44 [CORRECTED: PSICOV L/5 is 0.73, not 0.44 — see 11_Kmap doc §9] | validate_contacts |
+| vs published DCA? | top-20 MI pairs: enrichment 2.38×, precision 0.071 on PSICOV 150 (`analysis/psicov_top_pairs_check.py`; the earlier 2.49× / 0.066 used a first-row column mapping and a biased control); PSICOV published L/5 = 0.73 | validate_contacts |
 | Data quality | GPU/CPU identical to 1e-7; coverage 0 flags; byte-compare identical | check_gpu_cpu, verify_coverage |
 
 ---
@@ -432,11 +434,14 @@ structure. Full write-up:
 | Results | `results/kmap_structure/*.json` + `features/*.npz` (150) |
 | Lean proofs (12 theorems, axiom-audited) | `../lean_proofs/proofs/is_kmap_possible/ContactCircuits.lean` |
 
-Key numbers: circuit transfer prec@L/5 **0.179** holdout (MI 0.097, base 0.034,
-PSICOV-pub 0.727); Gray enrichment **1.178×, p=1.1e-77** (n=47,430; permutation
+Key numbers: circuit transfer prec@L/5 **0.179** holdout (plain MI 0.097,
+**APC-corrected MI 0.176**, base 0.034, PSICOV-pub 0.727; 5-fold CV mean:
+circuit 0.165 vs MIp 0.189); Gray enrichment **1.178×, p=1.1e-77** (n=47,430; permutation
 control z=2.51); map-compression 6/6 p=0.031; determinism md5-stable ×5.
 
 **CORRECTION carried here:** the older "published PSICOV L/5 = 0.44" figure in
+§4/§5.3 above is a misattribution (paper Table-1 L/5 ≈ 0.73; we reproduce
+0.727). See 11_Kmap doc §9-S1 for the web-verified reconciliation.
 
 ### Aug 22 extension — tension, coupling-in-K-map, reconstruction, complete circuit
 
@@ -444,15 +449,13 @@ control z=2.51); map-compression 6/6 p=0.031; determinism md5-stable ×5.
 |---|---|
 | Tension mechanism (G): no lift | circ-G 0.154 < circ-L2 0.165; hubs anti-correlated |
 | mfDCA-in-K-map (H): no lift from DI bins | circH 0.124 < L1 0.134 < L2 0.165 |
-| Our mfDCA matches published benchmarks | 0.169 ≈ literature 0.15–0.20 |
-| **Rank-fusion: K-map prior + DCA** | **0.204 prec@L/5, p≈0 vs both parents** |
-| Reconstruction verdict (I) | circuits NOT ready (recall@L 2.8%); DCA IS (21.8%) |
+| Our mfDCA matches published benchmarks | **No** — path_h's 0.169 has W³ pair weighting and a non-zero-sum gauge; a correct mfDCA gives 0.566 (DI) / 0.692 (zero-sum APC-Frobenius) (`analysis/dca_fusion_recheck.py`) |
+| Rank-fusion: K-map prior + DCA | reproduces (0.204 vs 0.169), but with a correct mfDCA the fusion **lowers** prec@L/5: DI 0.566 → 0.471, Frobenius 0.692 → 0.565 |
+| Reconstruction verdict (I) | circuits NOT ready (recall@L 2.8%); PSICOV's published predictions are (21.8%) |
 | Complete circuit (K): flipped transfers | specificity 98.3%; cons/cons 3.2× enriched |
 | Gray adjacency at scale | 1.178×, p=1e-77; permutation z=2.51 |
 
 New scripts: `path_{g,h,i,k,l}_*.py`; new results: `results/kmap_structure/path_{g,h,i,k,l}*.json`.
-§4/§5.3 above is a misattribution (paper Table-1 L/5 ≈ 0.73; we reproduce
-0.727). See 11_Kmap doc §9-S1 for the web-verified reconciliation.
 
 ---
 

@@ -17,13 +17,18 @@ dipeptide preferences (row_aa/col_aa only, no positions) — recorded separately
 they cannot be mapped to 3D positions and are excluded from position-level
 structural validation.
 """
+
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import KMAP_SBM_SRC, NARY_SRC, REPO_ROOT  # noqa: E402
 import json
 import re
 import sys
 from pathlib import Path
 
-REPO = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis")
-BASE = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
+REPO = REPO_ROOT
+BASE = REPO_ROOT
 OUT = REPO / "results" / "contacts" / "rules_inventory.json"
 
 
@@ -95,8 +100,8 @@ def main():
         try:
             import sys as _sys
             _sys.path.insert(0, str(REPO))
-            _sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/kmap-sbm-validation/src")
-            _sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/n-ary-kmap/src")
+            _sys.path.insert(0, str(KMAP_SBM_SRC))
+            _sys.path.insert(0, str(NARY_SRC))
             from coevolution_shared import (load_position_arrays,
                                             compute_entropy_vectorized,
                                             combined_pair_scores)

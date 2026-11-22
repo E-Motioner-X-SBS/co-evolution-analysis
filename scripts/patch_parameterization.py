@@ -10,12 +10,17 @@ Every replacement is counted and asserted; the script fails loudly if a pattern
 did not match. Reversible via `git checkout -- <files>` (repo is git-tracked).
 """
 
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import REPO_ROOT  # noqa: E402
+
 import re
 import subprocess
 import sys
 from pathlib import Path
 
-REPO = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis")
+REPO = REPO_ROOT
 PY = "from __future__ import annotations\n"  # not needed; placeholder
 OS_ENV = '__import__("os").environ.get'
 

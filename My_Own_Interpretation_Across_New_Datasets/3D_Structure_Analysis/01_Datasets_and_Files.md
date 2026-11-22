@@ -1,5 +1,19 @@
 # 01 — Datasets, Papers, and Files
 
+> **Correction A4 (Nov 2026)** — see `My_Interpretation_of_the_Results/CORRECTION_NOTICE.md`.
+> Spike rules: 36 prime implicants, **35 essential** (not 2). Constraint-function LOO-CV **99.4%**
+> (the 9.24% was a predictor artefact); it is lineage linkage: withholding the test sequence's
+> relatives within 12 mismatches drops it to 67%, level with the 65% frequency baseline
+> (`analysis/spike_lineage_loo.py`). APC-corrected MI on PSICOV150 holdout **0.176** vs circuit
+> 0.179 (5-fold CV 0.189 vs 0.165), so the circuit does not beat the standard sequence baseline.
+> Rank fusion (0.204) reproduces but improved only a defective mfDCA (0.169); with a correct mfDCA
+> (0.566 DI / 0.692 APC-Frobenius) the K-map prior lowers precision (`analysis/dca_fusion_recheck.py`).
+> Spike mfDCA: Meff = 1 (all sequences within 80% identity), so its pairs, incl. "(454,495)
+> DCA-only", are not meaningful; the DI coupling sign is fixed. 3D: with same-separation controls
+> and the 11 templates (not 299 models) as units, none of the 10 co-evolving pairs is in contact
+> more than its separation predicts; only the i,i+3/4 pairs (407,410), (500,503), (503,507) are
+> enriched (`analysis/spike_3d_matched_check.py`). PSICOV top-20 MI pairs: 2.38× / precision 0.071 (first reported 2.49× / 0.066).
+
 Every dataset used in the 3D structural validation, its source paper, the
 verified link, the files we hold, and their exact formats. Links were
 HTTP-verified on 2026-08-13 (200 = live; journal DOIs resolve to the

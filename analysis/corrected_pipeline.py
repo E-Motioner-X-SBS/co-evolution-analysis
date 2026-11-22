@@ -26,10 +26,15 @@ never observed in the data.
 
 Run: python analysis/corrected_pipeline.py
 """
+
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import KMAP_SBM_SRC, NARY_SRC, REPO_ROOT  # noqa: E402
 import sys, json, numpy as np
 from collections import Counter
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/kmap-sbm-validation/src")
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/n-ary-kmap/src")
+sys.path.insert(0, str(KMAP_SBM_SRC))
+sys.path.insert(0, str(NARY_SRC))
 from nkmap.encoding.bio_sequences import AMINO_HE_2012
 from kmap_sbm.analysis.prime_implicants import boolean_minimize_kmap
 
@@ -37,8 +42,8 @@ AA = AMINO_HE_2012
 AA_TO_IDX = {aa: i for i, aa in enumerate(AA)}
 GAP = 20  # 21st state
 
-FASTA = "/store/shuvam/E-motioner-X-SBS/datasets/co-evolution/Spike_protein.aln-fasta"
-OUT = "/store/shuvam/E-motioner-X-SBS/datasets/co-evolution/analysis/corrected_results.json"
+FASTA = str(REPO_ROOT / "Spike_protein.aln-fasta")
+OUT = str(REPO_ROOT / "analysis/corrected_results.json")
 
 seqs = []
 h = None; s = []

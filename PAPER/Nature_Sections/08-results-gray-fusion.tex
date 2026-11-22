@@ -17,34 +17,42 @@ the true encoding at $z = 2.51$ above the null distribution.  An earlier
 analysis restricted to a single protein found the same point estimate but
 failed to reach significance due to insufficient sample size ($n = 38$).
 
-\subsection{Rank fusion improves DCA ranking}
-
-The Karnaugh-map cell-rate prior improved global ranking (circuit AUC 0.658
-vs.\ DCA AUC 0.583) while degrading top-$K$ sharpness.  We hypothesised that
-rank aggregation would capture both properties.  Five fusion rules were
-evaluated under identical protein-level cross-validation:
+\subsection{Rank fusion with DCA}
 
 \begin{table}[ht]
 	\centering
-	\caption{Rank-fusion results over five-fold protein-level CV.}
+	\caption{Rank fusion over five-fold protein-level CV (150 proteins).  Top:
+		the published experiment, re-run unchanged.  Bottom: a working mean-field DCA.}
 	\label{tab:fusion-nat}
 	\begin{tabular}{lcc}
 		\toprule
-		Method            & prec@L/5 (mean $\pm$ sd)   & AUC            \\
+		Method                          & prec@L/5 (mean $\pm$ sd)   & AUC   \\
 		\midrule
-		rawDCA alone      & $0.169 \pm 0.125$          & 0.583          \\
-		circH prior alone & $0.124 \pm 0.088$          & \textbf{0.658} \\
+		rawDCA (published input)        & $0.169 \pm 0.125$          & 0.583 \\
+		circH prior alone               & $0.124 \pm 0.088$          & 0.658 \\
+		ranksum                         & $0.204 \pm 0.104$          & 0.638 \\
 		\midrule
-		\textbf{ranksum}  & $\mathbf{0.204 \pm 0.104}$ & 0.638          \\
-		geometric mean    & $0.203 \pm 0.103$          & 0.634          \\
-		product           & $0.199 \pm 0.108$          & 0.592          \\
+		DI (corrected mfDCA)            & $0.566 \pm 0.172$          & 0.637 \\
+		\quad ranksum(DI, prior)        & $0.471 \pm 0.153$          & 0.674 \\
+		APC-Frobenius, zero-sum gauge   & $\mathbf{0.692 \pm 0.172}$ & 0.758 \\
+		\quad ranksum(Frobenius, prior) & $0.565 \pm 0.191$          & 0.767 \\
+		MIp                             & $0.189 \pm 0.185$          & 0.676 \\
 		\bottomrule
 	\end{tabular}
 \end{table}
 
-The rank-sum fusion achieved prec@L/5 = \textbf{0.204}, exceeding rawDCA
-(Wilcoxon $p < 10^{-4}$) and circH ($p < 10^{-4}$).  Cohen's $d = 0.31$
-with bootstrap 95\% CI $[0.017, 0.054]$.  Mechanistic decomposition showed
-that all rescued pairs had above-median scores from both methods, confirming
-coincidence-of-evidence amplification.  Adding plain MI as a third signal did
-not improve further (three-way 0.201 vs.\ two-way 0.204, $p = 0.607$).
+Re-run unchanged, the published experiment reproduces: rank-sum fusion
+reaches 0.204 against 0.169 for its DCA input (paired difference $+0.036$,
+95\% CI $[0.017, 0.054]$).  That DCA input is defective, however: it weights
+pair frequencies by $W^3$ and takes the Frobenius norm outside the zero-sum
+gauge, and at 0.169 it is no better than APC-corrected MI (0.189, $p = 0.24$).
+A standard mean-field DCA on the same alignments reaches 0.566 (direct
+information) and 0.692 (zero-sum-gauge APC-Frobenius).  Fused with either, the
+K-map prior lowers precision@L/5 (to 0.471 and 0.565; $-0.095$ and $-0.127$,
+$p < 10^{-12}$), while raising AUC slightly.  Equal-weight rank aggregation
+with any much weaker score dilutes a strong one (DI with MIp: 0.520).  The
+published gain reflects a weak DCA being partly compensated; it is not
+evidence that the circuit carries information DCA lacks.  The earlier
+``mechanistic decomposition'' counts have no surviving analysis and are
+withdrawn.
+

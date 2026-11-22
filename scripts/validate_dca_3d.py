@@ -14,15 +14,20 @@ benchmark (validate_contacts.py), restricted to the Spike's own 3D models.
 
 Output: results/contacts/validate_dca_3d.json + printed comparison table.
 """
+
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import REPO_ROOT  # noqa: E402
 import json
 import sys
 from pathlib import Path
 
-REPO = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis")
+REPO = REPO_ROOT
 sys.path.insert(0, str(REPO / "scripts"))
 from rules3d_common import OmicronModels, evaluate_pairs, row_summary  # noqa: E402
 
-BASE = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
+BASE = REPO_ROOT
 OUT = REPO / "results" / "contacts" / "validate_dca_3d.json"
 
 

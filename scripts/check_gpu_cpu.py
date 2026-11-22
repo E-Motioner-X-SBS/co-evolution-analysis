@@ -10,6 +10,11 @@ Usage: python scripts/check_gpu_cpu.py [--target NAME] [--all]
 Writes results/consistency/consistency_report.json
 """
 
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import KMAP_SBM_SRC, NARY_SRC, REPO_ROOT  # noqa: E402
+
 import argparse
 import json
 import os
@@ -17,10 +22,10 @@ import sys
 import time
 from pathlib import Path
 
-REPO = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis")
+REPO = REPO_ROOT
 sys.path.insert(0, str(REPO))
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/kmap-sbm-validation/src")
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/n-ary-kmap/src")
+sys.path.insert(0, str(KMAP_SBM_SRC))
+sys.path.insert(0, str(NARY_SRC))
 
 import numpy as np  # noqa: E402
 

@@ -77,6 +77,11 @@ unit-tested in scripts/tests/test_kmap_structure.py including adversarial cases.
 
 from __future__ import annotations
 
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import KMAP_SBM_SRC  # noqa: E402
+
 
 
 import math
@@ -515,6 +520,29 @@ def mi_scores(pd: ProteinData, pairs: np.ndarray,
     return out
 
 
+def apc_corrected(scores: np.ndarray, pairs: np.ndarray, n_cols: int) -> np.ndarray:
+    """Average-product correction (Dunn et al. 2008) of a pair score.
+
+        S_APC(i, j) = S(i, j) - S(i, .) * S(., j) / S(., .)
+
+    where S(i, .) is the mean score of all candidate pairs touching column i
+    and S(., .) the mean over all candidate pairs.  Applied to MI this is MIp.
+    """
+    s = np.nan_to_num(np.asarray(scores, dtype=np.float64), nan=0.0)
+    i, j = pairs[:, 0], pairs[:, 1]
+    tot = np.zeros(n_cols)
+    deg = np.zeros(n_cols)
+    np.add.at(tot, i, s)
+    np.add.at(tot, j, s)
+    np.add.at(deg, i, 1)
+    np.add.at(deg, j, 1)
+    mean_col = tot / np.maximum(deg, 1)
+    grand = s.mean() if s.size else 0.0
+    if grand <= 0:
+        return s.copy()
+    return s - mean_col[i] * mean_col[j] / grand
+
+
 def perplexity_ratio_columns(dense: np.ndarray, i: int, j: int,
                              entropy_vec: Optional[np.ndarray] = None) -> Optional[float]:
     """PP(j)/mean_a PP(j|i=a); identical semantics to coevolution_shared.perplexity_ratio.
@@ -662,7 +690,7 @@ def qm_minimize(truth_flat: np.ndarray) -> dict:
     Returns the boolean_minimize_kmap result dict unchanged.
     """
     import sys as _sys
-    for p in ("/store/shuvam/E-motioner-X-SBS/kmap-sbm-validation/src",):
+    for p in (str(KMAP_SBM_SRC),):
         if p not in _sys.path:
             _sys.path.insert(0, p)
     from kmap_sbm.analysis.prime_implicants import boolean_minimize_kmap  # type: ignore # noqa: E501 (sibling-repo path resolved at runtime)

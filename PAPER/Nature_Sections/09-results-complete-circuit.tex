@@ -13,9 +13,8 @@ flipped table; all other pairs are abstained.
 
 On held-out proteins, the positive channel achieved precision 0.092
 ($2.6\times$ base) at recall 0.203.  The flipped channel achieved specificity
-of \textbf{98.3\%}: forbidden-called cells showed exactly the predicted
-$\leq$1.75\% contact rate on unseen proteins, confirming that negative-selection
-rules generalise across protein families.  Combined definitive-call MCC was
+of 98.3\%: forbidden-called cells had a 1.7\% contact rate on unseen proteins, half the 3.5\% base rate and within the training bound of 1.75\% (a classifier calling every pair a non-contact already scores 96.5\%).  Negative-selection cells transfer as trained,
+halving the contact rate.  Combined definitive-call MCC was
 $+0.169$ at 22\% coverage.
 
 Pairs in which both alignment columns are fully conserved (entropy $< 0.001$)

@@ -220,7 +220,8 @@ def h1_adjacency_gpu(dense: torch.Tensor) -> tuple[float, int, int]:
     n, max_pos = dense.shape
     a = dense[:, :-1].long()  # [n, max_pos-1]
     b = dense[:, 1:].long()
-    valid = (a >= 0) & (b >= 0)
+    # residues only: aligned arrays use 20 for gap/unknown (and -1 for padding)
+    valid = (a >= 0) & (a < N_AA) & (b >= 0) & (b < N_AA)
     ga = a.clamp(min=0) ^ (a.clamp(min=0) >> 1)
     gb = b.clamp(min=0) ^ (b.clamp(min=0) >> 1)
     xor = ga ^ gb

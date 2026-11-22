@@ -1,0 +1,798 @@
+{
+  "pairs": [
+    {
+      "pair": [
+        495,
+        498
+      ],
+      "mi": 0.8709897994995117,
+      "n_on": 2,
+      "reference": {
+        "raw_primes": 2,
+        "primes_covering_on": 2,
+        "raw_essential": 2
+      },
+      "padding-DC": {
+        "exact_primes": 2,
+        "dc_only_cubes_dropped": 4,
+        "exact_essential": 2,
+        "exact_cover": 2,
+        "cover_complete": true,
+        "cover_sound": true,
+        "bruteforce_agree": true,
+        "essential_rules": [
+          {
+            "aa_i": "QR",
+            "aa_j": "G",
+            "free_bits": 4,
+            "in_block": false
+          },
+          {
+            "aa_i": "R",
+            "aa_j": "S",
+            "free_bits": 2,
+            "in_block": false
+          }
+        ]
+      },
+      "padding-OFF": {
+        "exact_primes": 2,
+        "dc_only_cubes_dropped": 0,
+        "exact_essential": 2,
+        "exact_cover": 2,
+        "cover_complete": true,
+        "cover_sound": true,
+        "bruteforce_agree": true,
+        "essential_rules": [
+          {
+            "aa_i": "QR",
+            "aa_j": "G",
+            "free_bits": 1,
+            "in_block": true
+          },
+          {
+            "aa_i": "R",
+            "aa_j": "S",
+            "free_bits": 0,
+            "in_block": true
+          }
+        ]
+      }
+    },
+    {
+      "pair": [
+        448,
+        454
+      ],
+      "mi": 0.8343690633773804,
+      "n_on": 3,
+      "reference": {
+        "raw_primes": 3,
+        "primes_covering_on": 3,
+        "raw_essential": 3
+      },
+      "padding-DC": {
+        "exact_primes": 3,
+        "dc_only_cubes_dropped": 5,
+        "exact_essential": 3,
+        "exact_cover": 3,
+        "cover_complete": true,
+        "cover_sound": true,
+        "bruteforce_agree": true,
+        "essential_rules": [
+          {
+            "aa_i": "S",
+            "aa_j": "L",
+            "free_bits": 1,
+            "in_block": false
+          },
+          {
+            "aa_i": "S",
+            "aa_j": "R",
+            "free_bits": 2,
+            "in_block": false
+          },
+          {
+            "aa_i": "G",
+            "aa_j": "R",
+            "free_bits": 3,
+            "in_block": false
+          }
+        ]
+      },
+      "padding-OFF": {
+        "exact_primes": 3,
+        "dc_only_cubes_dropped": 1,
+        "exact_essential": 3,
+        "exact_cover": 3,
+        "cover_complete": true,
+        "cover_sound": true,
+        "bruteforce_agree": true,
+        "essential_rules": [
+          {
+            "aa_i": "S",
+            "aa_j": "L",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "S",
+            "aa_j": "R",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "G",
+            "aa_j": "R",
+            "free_bits": 0,
+            "in_block": true
+          }
+        ]
+      }
+    },
+    {
+      "pair": [
+        488,
+        498
+      ],
+      "mi": 0.8218638896942139,
+      "n_on": 3,
+      "reference": {
+        "raw_primes": 3,
+        "primes_covering_on": 3,
+        "raw_essential": 3
+      },
+      "padding-DC": {
+        "exact_primes": 3,
+        "dc_only_cubes_dropped": 5,
+        "exact_essential": 3,
+        "exact_cover": 3,
+        "cover_complete": true,
+        "cover_sound": true,
+        "bruteforce_agree": true,
+        "essential_rules": [
+          {
+            "aa_i": "V",
+            "aa_j": "G",
+            "free_bits": 2,
+            "in_block": false
+          },
+          {
+            "aa_i": "F",
+            "aa_j": "S",
+            "free_bits": 2,
+            "in_block": false
+          },
+          {
+            "aa_i": "P",
+            "aa_j": "G",
+            "free_bits": 4,
+            "in_block": false
+          }
+        ]
+      },
+      "padding-OFF": {
+        "exact_primes": 3,
+        "dc_only_cubes_dropped": 1,
+        "exact_essential": 3,
+        "exact_cover": 3,
+        "cover_complete": true,
+        "cover_sound": true,
+        "bruteforce_agree": true,
+        "essential_rules": [
+          {
+            "aa_i": "V",
+            "aa_j": "G",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "F",
+            "aa_j": "S",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "P",
+            "aa_j": "G",
+            "free_bits": 0,
+            "in_block": true
+          }
+        ]
+      }
+    },
+    {
+      "pair": [
+        442,
+        454
+      ],
+      "mi": 0.8109789490699768,
+      "n_on": 3,
+      "reference": {
+        "raw_primes": 3,
+        "primes_covering_on": 3,
+        "raw_essential": 3
+      },
+      "padding-DC": {
+        "exact_primes": 3,
+        "dc_only_cubes_dropped": 5,
+        "exact_essential": 3,
+        "exact_cover": 3,
+        "cover_complete": true,
+        "cover_sound": true,
+        "bruteforce_agree": true,
+        "essential_rules": [
+          {
+            "aa_i": "N",
+            "aa_j": "L",
+            "free_bits": 1,
+            "in_block": false
+          },
+          {
+            "aa_i": "N",
+            "aa_j": "R",
+            "free_bits": 2,
+            "in_block": false
+          },
+          {
+            "aa_i": "K",
+            "aa_j": "R",
+            "free_bits": 2,
+            "in_block": false
+          }
+        ]
+      },
+      "padding-OFF": {
+        "exact_primes": 3,
+        "dc_only_cubes_dropped": 1,
+        "exact_essential": 3,
+        "exact_cover": 3,
+        "cover_complete": true,
+        "cover_sound": true,
+        "bruteforce_agree": true,
+        "essential_rules": [
+          {
+            "aa_i": "N",
+            "aa_j": "L",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "N",
+            "aa_j": "R",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "K",
+            "aa_j": "R",
+            "free_bits": 0,
+            "in_block": true
+          }
+        ]
+      }
+    },
+    {
+      "pair": [
+        442,
+        448
+      ],
+      "mi": 0.7283939123153687,
+      "n_on": 3,
+      "reference": {
+        "raw_primes": 3,
+        "primes_covering_on": 3,
+        "raw_essential": 3
+      },
+      "padding-DC": {
+        "exact_primes": 3,
+        "dc_only_cubes_dropped": 5,
+        "exact_essential": 3,
+        "exact_cover": 3,
+        "cover_complete": true,
+        "cover_sound": true,
+        "bruteforce_agree": true,
+        "essential_rules": [
+          {
+            "aa_i": "N",
+            "aa_j": "S",
+            "free_bits": 2,
+            "in_block": false
+          },
+          {
+            "aa_i": "N",
+            "aa_j": "G",
+            "free_bits": 3,
+            "in_block": false
+          },
+          {
+            "aa_i": "K",
+            "aa_j": "S",
+            "free_bits": 2,
+            "in_block": false
+          }
+        ]
+      },
+      "padding-OFF": {
+        "exact_primes": 3,
+        "dc_only_cubes_dropped": 1,
+        "exact_essential": 3,
+        "exact_cover": 3,
+        "cover_complete": true,
+        "cover_sound": true,
+        "bruteforce_agree": true,
+        "essential_rules": [
+          {
+            "aa_i": "N",
+            "aa_j": "S",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "N",
+            "aa_j": "G",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "K",
+            "aa_j": "S",
+            "free_bits": 0,
+            "in_block": true
+          }
+        ]
+      }
+    },
+    {
+      "pair": [
+        212,
+        215
+      ],
+      "mi": 0.39768385887145996,
+      "n_on": 4,
+      "reference": {
+        "raw_primes": 4,
+        "primes_covering_on": 4,
+        "raw_essential": 4
+      },
+      "padding-DC": {
+        "exact_primes": 4,
+        "dc_only_cubes_dropped": 4,
+        "exact_essential": 4,
+        "exact_cover": 4,
+        "cover_complete": true,
+        "cover_sound": true,
+        "bruteforce_agree": true,
+        "essential_rules": [
+          {
+            "aa_i": "I",
+            "aa_j": "V",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "L",
+            "aa_j": "V",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "V",
+            "aa_j": "P",
+            "free_bits": 2,
+            "in_block": false
+          },
+          {
+            "aa_i": "S",
+            "aa_j": "G",
+            "free_bits": 3,
+            "in_block": false
+          }
+        ]
+      },
+      "padding-OFF": {
+        "exact_primes": 4,
+        "dc_only_cubes_dropped": 0,
+        "exact_essential": 4,
+        "exact_cover": 4,
+        "cover_complete": true,
+        "cover_sound": true,
+        "bruteforce_agree": true,
+        "essential_rules": [
+          {
+            "aa_i": "I",
+            "aa_j": "V",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "L",
+            "aa_j": "V",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "V",
+            "aa_j": "P",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "S",
+            "aa_j": "G",
+            "free_bits": 0,
+            "in_block": true
+          }
+        ]
+      }
+    },
+    {
+      "pair": [
+        215,
+        216
+      ],
+      "mi": 0.3773494362831116,
+      "n_on": 4,
+      "reference": {
+        "raw_primes": 4,
+        "primes_covering_on": 4,
+        "raw_essential": 4
+      },
+      "padding-DC": {
+        "exact_primes": 4,
+        "dc_only_cubes_dropped": 5,
+        "exact_essential": 4,
+        "exact_cover": 4,
+        "cover_complete": true,
+        "cover_sound": true,
+        "bruteforce_agree": true,
+        "essential_rules": [
+          {
+            "aa_i": "VG",
+            "aa_j": "R",
+            "free_bits": 2,
+            "in_block": false
+          },
+          {
+            "aa_i": "E",
+            "aa_j": "R",
+            "free_bits": 2,
+            "in_block": false
+          },
+          {
+            "aa_i": "P",
+            "aa_j": "E",
+            "free_bits": 3,
+            "in_block": false
+          },
+          {
+            "aa_i": "P",
+            "aa_j": "K",
+            "free_bits": 3,
+            "in_block": false
+          }
+        ]
+      },
+      "padding-OFF": {
+        "exact_primes": 4,
+        "dc_only_cubes_dropped": 0,
+        "exact_essential": 4,
+        "exact_cover": 4,
+        "cover_complete": true,
+        "cover_sound": true,
+        "bruteforce_agree": true,
+        "essential_rules": [
+          {
+            "aa_i": "VG",
+            "aa_j": "R",
+            "free_bits": 1,
+            "in_block": true
+          },
+          {
+            "aa_i": "E",
+            "aa_j": "R",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "P",
+            "aa_j": "E",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "P",
+            "aa_j": "K",
+            "free_bits": 0,
+            "in_block": true
+          }
+        ]
+      }
+    },
+    {
+      "pair": [
+        212,
+        216
+      ],
+      "mi": 0.3773493766784668,
+      "n_on": 6,
+      "reference": {
+        "raw_primes": 6,
+        "primes_covering_on": 6,
+        "raw_essential": 6
+      },
+      "padding-DC": {
+        "exact_primes": 6,
+        "dc_only_cubes_dropped": 4,
+        "exact_essential": 6,
+        "exact_cover": 6,
+        "cover_complete": true,
+        "cover_sound": true,
+        "bruteforce_agree": true,
+        "essential_rules": [
+          {
+            "aa_i": "I",
+            "aa_j": "R",
+            "free_bits": 1,
+            "in_block": false
+          },
+          {
+            "aa_i": "L",
+            "aa_j": "R",
+            "free_bits": 1,
+            "in_block": false
+          },
+          {
+            "aa_i": "V",
+            "aa_j": "E",
+            "free_bits": 1,
+            "in_block": false
+          },
+          {
+            "aa_i": "V",
+            "aa_j": "K",
+            "free_bits": 1,
+            "in_block": false
+          },
+          {
+            "aa_i": "S",
+            "aa_j": "R",
+            "free_bits": 2,
+            "in_block": false
+          },
+          {
+            "aa_i": "G",
+            "aa_j": "R",
+            "free_bits": 3,
+            "in_block": false
+          }
+        ]
+      },
+      "padding-OFF": {
+        "exact_primes": 6,
+        "dc_only_cubes_dropped": 0,
+        "exact_essential": 6,
+        "exact_cover": 6,
+        "cover_complete": true,
+        "cover_sound": true,
+        "bruteforce_agree": true,
+        "essential_rules": [
+          {
+            "aa_i": "I",
+            "aa_j": "R",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "L",
+            "aa_j": "R",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "V",
+            "aa_j": "E",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "V",
+            "aa_j": "K",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "S",
+            "aa_j": "R",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "G",
+            "aa_j": "R",
+            "free_bits": 0,
+            "in_block": true
+          }
+        ]
+      }
+    },
+    {
+      "pair": [
+        210,
+        215
+      ],
+      "mi": 0.23771017789840698,
+      "n_on": 4,
+      "reference": {
+        "raw_primes": 4,
+        "primes_covering_on": 4,
+        "raw_essential": 4
+      },
+      "padding-DC": {
+        "exact_primes": 4,
+        "dc_only_cubes_dropped": 5,
+        "exact_essential": 4,
+        "exact_cover": 4,
+        "cover_complete": true,
+        "cover_sound": true,
+        "bruteforce_agree": true,
+        "essential_rules": [
+          {
+            "aa_i": "I",
+            "aa_j": "P",
+            "free_bits": 2,
+            "in_block": false
+          },
+          {
+            "aa_i": "N",
+            "aa_j": "VG",
+            "free_bits": 2,
+            "in_block": false
+          },
+          {
+            "aa_i": "N",
+            "aa_j": "E",
+            "free_bits": 2,
+            "in_block": false
+          },
+          {
+            "aa_i": "K",
+            "aa_j": "G",
+            "free_bits": 3,
+            "in_block": false
+          }
+        ]
+      },
+      "padding-OFF": {
+        "exact_primes": 4,
+        "dc_only_cubes_dropped": 0,
+        "exact_essential": 4,
+        "exact_cover": 4,
+        "cover_complete": true,
+        "cover_sound": true,
+        "bruteforce_agree": true,
+        "essential_rules": [
+          {
+            "aa_i": "I",
+            "aa_j": "P",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "N",
+            "aa_j": "VG",
+            "free_bits": 1,
+            "in_block": true
+          },
+          {
+            "aa_i": "N",
+            "aa_j": "E",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "K",
+            "aa_j": "G",
+            "free_bits": 0,
+            "in_block": true
+          }
+        ]
+      }
+    },
+    {
+      "pair": [
+        210,
+        212
+      ],
+      "mi": 0.17692936956882477,
+      "n_on": 4,
+      "reference": {
+        "raw_primes": 4,
+        "primes_covering_on": 4,
+        "raw_essential": 3
+      },
+      "padding-DC": {
+        "exact_primes": 4,
+        "dc_only_cubes_dropped": 4,
+        "exact_essential": 3,
+        "exact_cover": 3,
+        "cover_complete": true,
+        "cover_sound": true,
+        "bruteforce_agree": true,
+        "essential_rules": [
+          {
+            "aa_i": "I",
+            "aa_j": "VG",
+            "free_bits": 1,
+            "in_block": true
+          },
+          {
+            "aa_i": "N",
+            "aa_j": "L",
+            "free_bits": 1,
+            "in_block": false
+          },
+          {
+            "aa_i": "N",
+            "aa_j": "S",
+            "free_bits": 2,
+            "in_block": false
+          }
+        ]
+      },
+      "padding-OFF": {
+        "exact_primes": 3,
+        "dc_only_cubes_dropped": 0,
+        "exact_essential": 3,
+        "exact_cover": 3,
+        "cover_complete": true,
+        "cover_sound": true,
+        "bruteforce_agree": true,
+        "essential_rules": [
+          {
+            "aa_i": "I",
+            "aa_j": "VG",
+            "free_bits": 1,
+            "in_block": true
+          },
+          {
+            "aa_i": "N",
+            "aa_j": "L",
+            "free_bits": 0,
+            "in_block": true
+          },
+          {
+            "aa_i": "N",
+            "aa_j": "S",
+            "free_bits": 0,
+            "in_block": true
+          }
+        ]
+      }
+    }
+  ],
+  "totals": {
+    "reference_distinct_rules": 36,
+    "reference_essential": 35,
+    "reference_primes_covering_on": 36,
+    "padding-DC": {
+      "exact_primes": 36,
+      "exact_essential": 35,
+      "exact_cover": 35,
+      "bruteforce_agree": true
+    },
+    "padding-OFF": {
+      "exact_primes": 35,
+      "exact_essential": 35,
+      "exact_cover": 35,
+      "bruteforce_agree": true
+    }
+  },
+  "n_pairs": 10,
+  "published_before_fix": {
+    "distinct_rules": 36,
+    "essential": 2,
+    "on_cells_covered_by_published_cover": 2,
+    "on_cells": 36
+  }
+}

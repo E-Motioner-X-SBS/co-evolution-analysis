@@ -1,5 +1,19 @@
 # 11 — K-map ↔ 3D-Structure Encoding: Universal Contact Circuits on Literature Ground Truth
 
+> **Correction A4 (Nov 2026)** — see `My_Interpretation_of_the_Results/CORRECTION_NOTICE.md`.
+> Spike rules: 36 prime implicants, **35 essential** (not 2). Constraint-function LOO-CV **99.4%**
+> (the 9.24% was a predictor artefact); it is lineage linkage: withholding the test sequence's
+> relatives within 12 mismatches drops it to 67%, level with the 65% frequency baseline
+> (`analysis/spike_lineage_loo.py`). APC-corrected MI on PSICOV150 holdout **0.176** vs circuit
+> 0.179 (5-fold CV 0.189 vs 0.165), so the circuit does not beat the standard sequence baseline.
+> Rank fusion (0.204) reproduces but improved only a defective mfDCA (0.169); with a correct mfDCA
+> (0.566 DI / 0.692 APC-Frobenius) the K-map prior lowers precision (`analysis/dca_fusion_recheck.py`).
+> Spike mfDCA: Meff = 1 (all sequences within 80% identity), so its pairs, incl. "(454,495)
+> DCA-only", are not meaningful; the DI coupling sign is fixed. 3D: with same-separation controls
+> and the 11 templates (not 299 models) as units, none of the 10 co-evolving pairs is in contact
+> more than its separation predicts; only the i,i+3/4 pairs (407,410), (500,503), (503,507) are
+> enriched (`analysis/spike_3d_matched_check.py`). PSICOV top-20 MI pairs: 2.38× / precision 0.071 (first reported 2.49× / 0.066).
+
 **Campaign:** plans/11-kmap-structure-encoding.md (+11b strategy, +11c decisions)
 **Date:** Aug 22, 2026 · **Status:** all five stages executed; results verified
 **Question:** can the chain *binary sequence → Gray/base-20 encoding → K-map →
@@ -59,17 +73,23 @@ ContactCircuits.lean.
 | **circuit-L2 (identity K-map)** | .170 | .148 | .179 | .173 | .157 | **.179** |
 | circuit-L1 (group K-map) | .109 | .113 | .176 | .141 | .130 | .142 |
 | plain MI (per-protein) | .059 | .096 | .084 | .100 | .121 | .097 |
+| **APC-corrected MI (MIp)** | .155 | .175 | .181 | .208 | .228 | **.176** |
 | perplexity ratio | .035 | .031 | .025 | .030 | .035 | .028 |
 | sep-only ablation | .034 | .031 | .023 | .024 | .019 | .033 |
 | base rate (random) | .035 | .033 | .037 | .036 | .036 | .035 |
 | **PSICOV published (literature)** | .698 | .692 | .746 | .761 | .737 | **.723** |
 
-- Circuit-L2 beats MI in **all six splits**; beats sep-only by ~5×; reaches
-  ~25% of published-DCA performance with zero phylogenetic correction.
+- Circuit-L2 beats plain MI in all six splits and sep-only by ~5×, but **not
+  APC-corrected MI**: MIp is ahead in 4 of 5 folds (CV mean 0.189 vs 0.165) and
+  level on the holdout (0.176 vs 0.179, Wilcoxon p = 0.55).  The MIp row was
+  added in Nov 2026; an earlier reviewer check reported MIp = MI because its APC
+  term was never computed (correction A4).
 - Binary membership classifier (L2): MCC ≈ 0.09, enrichment **2.5–2.8×** across
   folds (weak-but-real; ranked scores are the stronger reading).
-- Circuit STABILITY across folds: L1 = 27–33 PIs (20–22 essential);
-  L2 PIs/bin ≈ [72–106, 86–98, 56–76, 39–51] — same shape every fold.
+- Circuit STABILITY across folds (exact minimiser, Nov 2026): L1 = 28–33 PIs
+  (14–19 essential); L2 PIs/bin ≈ [36–52, 48–70, 34–48, 24–35] — same shape
+  every fold.  (First reported as 20–22 essential and [72–106, …] with the
+  under-merging minimiser.)
 
 **What the rules say (holdout circuit).** Level-1 ON-cells are dominated by
 hydrophobic∧aromatic × hydrophobic∧aromatic at short separation, plus
@@ -114,14 +134,17 @@ separation structure preserved exactly).
 
 | Protein | L | on-cells | PIs real | comp real | comp shuffled |
 |---|---|---|---|---|---|
-| 1aapA | 56 | 114 | 230 | 2.02 | 2.35 |
-| 1brfA | 53 | 91 | 248 | 2.73 | 2.94 |
-| 1guuA | 50 | 45 | 133 | 2.96 | 3.38 |
-| 1jo8A | 58 | 127 | 230 | 1.81 | 2.71 |
-| 1ku3A | 61 | 57 | 134 | 2.35 | 2.57 |
-| 1m8aA | 61 | 95 | 189 | 1.99 | 2.51 |
+| 1aapA | 56 | 114 | 121 | 1.06 | 1.22 |
+| 1brfA | 53 | 91 | 114 | 1.25 | 1.38 |
+| 1guuA | 50 | 45 | 65 | 1.44 | 1.49 |
+| 1jo8A | 58 | 127 | 118 | 0.93 | 1.24 |
+| 1ku3A | 61 | 57 | 55 | 0.96 | 1.06 |
+| 1m8aA | 61 | 95 | 93 | 0.98 | 1.11 |
 
-**6/6 real maps compress better; mean 2.31 vs 2.74; Wilcoxon p = 0.031.**
+**6/6 real maps compress better; mean 1.11 vs 1.25 PIs per contact; Wilcoxon
+p = 0.031** — the smallest p a two-sided Wilcoxon test can give with n = 6.
+(Table and means recomputed with the exact minimiser, Nov 2026; first reported
+as 2.31 vs 2.74.)
 Real 3D geometry carries K-map-expressible regularity beyond what density and
 separation structure alone explain. Honest limit: only 6 proteins qualify for
 exact QM at this cell budget; treat as directional evidence, not a benchmark.
@@ -194,7 +217,8 @@ PDB CA-sequence == target fasta: **149/150 exact**; sole exception 1vjkA
 ### S4 — Is Gray enrichment encoding-specific? (code-permutation control)
 Permuting which residue sits at which He code (30 permutations; identical pairs,
 labels, backgrounds): random-code enrichment mean **0.961**, sd 0.095,
-max 1.158 vs He/Gray **1.198** ⇒ **z = 2.51** (~p≈0.006 one-sided).
+max 1.158 vs He/Gray **1.198** ⇒ **z = 2.51**; as an empirical test with 30
+permutations, p ≤ 1/31 ≈ 0.03 (the normal-approximation p ≈ 0.006 is optimistic).
 Honest reading: most of the raw 1.18× reflects generic chemistry clustering
 (any grouped encoding); the SPECIFIC Gray ordering adds a real but modest edge.
 

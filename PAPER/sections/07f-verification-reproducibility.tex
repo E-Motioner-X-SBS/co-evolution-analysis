@@ -37,7 +37,7 @@ is established empirically.
 \subsection{Verification Infrastructure}
 The verification infrastructure is one Lean~4 package,
 \texttt{is\_kmap\_possible}, whose first five modules contain 106 theorems
-covering Gray-code fundamentals (bijectivity, adjacency, involution),
+covering Gray-code fundamentals (bijectivity, adjacency, inverse),
 $k$-mer indexing (injectivity and boundedness for $k = 1$ through $4$),
 amino-acid encodings (injectivity, within-group distance bounds, charge-group
 adjacency), contact-map completeness (symmetry, irreflexivity, Boolean
@@ -45,7 +45,9 @@ minimisation semantics), and encoding equivalence (BLOSUM bound, distance
 distribution invariance).  A sixth module, \texttt{ContactCircuits}, contains
 12 theorems covering the specific assertions made by the circuit-extraction
 pipeline: cover completeness, cover soundness, padding safety, separation-bin
-monotonicity, and cell-index injectivity.
+monotonicity, and cell-index injectivity.  A seventh, \texttt{SequenceCircuits},
+contains 13 theorems behind the sequence-circuit and information-ceiling
+analysis (131 in total).
 
 All modules except \texttt{KmapEncodingEquiv} (which uses Mathlib) import only
 \texttt{Init}, and the proofs use bounded-domain tactics (\texttt{decide},
@@ -53,5 +55,5 @@ All modules except \texttt{KmapEncodingEquiv} (which uses Mathlib) import only
 theorem depends on \texttt{sorry} or on a user-declared axiom.  The axiom
 audit (\texttt{Lean.collectAxioms} on every theorem) finds dependencies only on
 \texttt{propext}, \texttt{Quot.sound}, \texttt{Classical.choice} (seven
-theorems) and the \texttt{native\_decide} evaluation axiom (87 of the 118), so
+theorems) and the \texttt{native\_decide} evaluation axiom (100 of the 131), so
 the \texttt{native\_decide} theorems additionally rest on compiler trust.

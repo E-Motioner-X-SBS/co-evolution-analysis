@@ -8,7 +8,7 @@ co-evolving pair in all three polarities x both don't-care policies, the
 sequence-circuit statistics, the contact-map block circuits, and the
 feature-class ceiling table.
 
-    PY=/store/shuvam/.venv/bin/python
+    PY=python
     $PY scripts/generate_circuit_equations_md.py
 """
 
@@ -50,8 +50,10 @@ def section_coevo(d: Dict) -> str:
     L.append(f"Dataset: 1,299 Omicron Spike sequences, {d['n_variable_positions']} "
              f"variable positions (Shannon H > {d['entropy_threshold']}), "
              f"{d['n_coevolving_pairs']} co-evolving pairs "
-             f"(mutation-only MI > {d['mi_threshold']}, |i-j| ≤ {d['max_gap']}, "
-             f"≥ {d['min_muts']} mutations).\n")
+             f"(binary mutation MI > {d['mi_threshold']}, |i-j| ≤ {d['max_gap']}, "
+             f"≥ {d['min_muts']} mutations).  The binary statistic is the MI of the two "
+             f"differs-from-reference indicators; it is not master_boolean.py's 20×20 "
+             f"mutation-only MI, so this pair set differs from master_boolean's 10 pairs.\n")
     L.append("Variables: `a4..a0` = 5-bit Gray code of the residue at position i, "
              "`b4..b0` = same at position j (He-2012 ordering `AILVMFYWEDQNHKRSTCPG`). "
              "Each product term is one prime implicant; a free bit widens the term "

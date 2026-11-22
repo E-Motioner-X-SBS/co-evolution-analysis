@@ -36,15 +36,15 @@ Quine--McCluskey algorithm~\cite{quine1952,mccluskey1956} then extracts
 minimal sum-of-products expressions from thresholded frequency maps,
 producing prime implicants that we interpret as coevolutionary constraints.
 
-We formalise 118 theorems in Lean~4 covering Gray-code bijectivity, $k$-mer
+We formalise 131 theorems in Lean~4 covering Gray-code bijectivity, $k$-mer
 indexing injectivity, amino-acid encoding properties, contact-map topology,
-implicant-cover soundness, and padding safety.  We apply the verified pipeline
+implicant-cover soundness, padding safety, and the sequence-circuit segment lemma.  We apply the verified pipeline
 to 150 protein domains from the PSICOV benchmark comprising over 1.6 million
 labelled observations against native experimental structures.  Our results
-demonstrate that Boolean circuits transfer across proteins, that their
-cell-rate prior improves DCA ranking when fused via rank aggregation, and
-that negative-selection (forbidden-combination) circuits generalise with high
-specificity.  We also report negative results honestly: an attention-style
+demonstrate that Boolean circuits transfer across proteins at the level of
+APC-corrected mutual information, that their cell-rate prior does not add to a
+correct mean-field DCA, and that negative-selection (forbidden-combination)
+circuits transfer as trained.  We also report negative results honestly: an attention-style
 tension mechanism does not improve prediction, iterative direct information
 is unreliable on conserved-rich families, and current circuit precision falls
 far short of the level required for template-free structure reconstruction.

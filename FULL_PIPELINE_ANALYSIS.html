@@ -14,289 +14,934 @@ code{background:#f6f8fa;padding:0.1rem 0.3rem;border-radius:3px;font-size:0.9em}
 .note{background:#fff8e6;border-left:4px solid #d97706;padding:0.6rem 1rem;margin:1rem 0;border-radius:3px}
 </style>
 </head><body>
-<div class="note"><strong>Corrected (Aug 7, 2026).</strong> Two pipeline defects
-(A1 gap-stripping, A2 8-bit QM wrap-around) were fixed; all numbers below are the
-verified corrected values. This HTML mirrors <code>FULL_PIPELINE_ANALYSIS.md</code>.</div>
-<pre># E-Motioner-X-SBS: Complete Co-Evolution Analysis Pipeline
-
-**Generated:** October 01, 2026 at 02:02
-**Dataset:** SARS-CoV-2 Omicron Spike Protein — 1,299 sequences, 1276 positions
-**Compute:** NVIDIA A100 80GB + 24-core Xeon, Python 3.10
-**Author:** Shuvam Banerji Seal — IISER Kolkata
-
----
-
-## Abstract
-
-This document presents the complete computational pipeline for analyzing co-evolutionary
+<h1>E-Motioner-X-SBS: Complete Co-Evolution Analysis Pipeline</h1>
+<p><strong>Generated:</strong> November 22, 2026 at 23:30
+<strong>Dataset:</strong> SARS-CoV-2 Omicron Spike Protein — 1,299 sequences, 1276 positions
+<strong>Compute:</strong> NVIDIA A100 80GB + 24-core Xeon (torch; CPU fallback)
+<strong>Author:</strong> Shuvam Banerji Seal — IISER Kolkata</p>
+<hr />
+<h2>Abstract</h2>
+<p>This document presents the complete computational pipeline for analyzing co-evolutionary
 constraints in the SARS-CoV-2 Spike protein using Karnaugh map (K-map) Boolean minimization.
-**1,299** Omicron variant Spike sequences from GISAID were encoded using base-20
+<strong>1,299</strong> Omicron variant Spike sequences from GISAID were encoded using base-20
 (He 2012 ordering) amino acid representation. Position-pair mutual information identified
-**2** co-evolving position pairs with Boolean rules. Quine-McCluskey
-minimization produced **2 essential prime implicants** — each representing
-an irreducible co-evolutionary constraint.
-
-**Key results:** H1 Gray-code adjacency enrichment = **0.19×**; 
-max pairwise MI = **0.8067** at positions (373,378);
-21/1276 positions are evolutionarily variable (H &gt; 0.3).
-
-## 1. Formal Foundations — 246 Lean 4 Theorems (131 + 115)
-
-The entire framework rests on formal proofs in Lean 4.29.0. All theorems are **sorry-free** with
-**no user-declared axioms**; most are proved by `native_decide` (100 of the 131 in `lean_proofs/`),
-which additionally trusts the compiler. `lake build` passes clean (per-theorem audit:
-`lean_proofs/proofs/is_kmap_possible/axiom_audit.py`).
-
-### 1.1 Binary K-map (`lean_proofs/`) — 131 Theorems
-
-| File | Theorems | What Is Proved |
-|------|----------|---------------|
-| `KmapProofs.lean` | 16 | Gray code boundedness, injectivity, involution, DNA 2-bit encoding (A=00,C=01,G=11,T=10), complementarity, transition/transversion |
-| `KmerIndexing.lean` | 35 | k-mer encoding (k=1..4) injectivity and boundedness via concatenation, row/column K-map decomposition |
-| `AminoAcidEncoding.lean` | 27 | 20 AAs → 5-bit Gray code, 7 physicochemical groups, within-group dist-1 (14 pairs), cross-group dist-1 (26 pairs), max-dist pairs (F-H, Y-E, W-R, M-K at dist=5) |
-| `ContactMapCompleteness.lean` | 20 | Contact maps as symmetric Boolean functions, irreducibility proof (no two contact pairs are 1-bit K-map adjacent) |
-| `KmapEncodingEquiv.lean` | 8 | Distance distribution, Q₅ hypercube degree=5, encoding captures 50% of Q₅ edges |
-| `ContactCircuits.lean` | 12 | Contact-campaign plumbing: He-code distance counts, separation bins, cell-index injectivity, QM cover soundness, padding safety |
-| `SequenceCircuits.lean` | 13 | Sequence-as-circuit: segment lemma, Gray/binary encoding invariance, faithfulness, Gray code is GF(2)-linear |
-
-### 1.2 N-ary K-map (`n-ary-kmap/`) — 115 Theorems
-
-| File | Theorems | What Is Proved |
-|------|----------|---------------|
-| `NaryGrayCode.lean` | 54 | Generalized n-ary reflected Gray code; digit-sum formula g_k = (d_k + d_{k+1}) mod b |
-| `BaseNDnaEncoding.lean` | 13 | Base-4 DNA encoder with transition adjacency (A↔C, C↔G, G↔T, T↔A as Gray neighbors) |
-| `BaseNAminoEncoding.lean` | 33 | Base-20 amino acid encoder, 7-group physicochemical ordering |
-| `BaseNKMap.lean` | 15 | Base-N K-map structure, cell adjacency, cyclic wrapping |
-
-### 1.3 Speculative Encoding (`speculative-binary-encoding/`) — 15 Theorems
-
-| File | Theorems | What Is Proved |
-|------|----------|---------------|
-| `AntiCorrelation.lean` | 15 | H1 encoding-invariance: the anti-correlation result holds across all 22 binary encodings |
-
-### 1.4 Theorem Verification Bridge
-
-The `lean_consistency.py` script in `kmap-sbm-validation/` re-computes every Lean theorem
-in Python and reports discrepancies. Result: **156/156 checks pass** (4 files), zero discrepancies.
-
-## 2. Dataset
-
-| Property | Value |
-|----------|-------|
-| **File** | `Spike_protein.aln-fasta` (1.8 MB) |
-| **Sequences** | 1,299 SARS-CoV-2 Omicron Spike proteins |
-| **Alignment length** | 1276 residues |
-| **Analysis region** | Full length (1276 residues) |
-| **Variable positions** | 21/1276 (entropy &gt; 0.3) |
-| **Conserved positions** | 1255/1276 |
-| **Co-evolving pairs (MI &gt; 0.01)** | 73 |
-| **Co-evolving pairs (MI &gt; 0.1)** | 17 |
-| **Encoding** | Base-20, He 2012 ordering |
-
-### 2.1 He 2012 Amino Acid Ordering
-
-The 20 standard amino acids are ordered by physicochemical properties:
-
-| Index | AA | Group |
-|-------|-----|-------|
-| 0 | A | Aliphatic |
-| 1 | I | Aliphatic |
-| 2 | L | Aliphatic |
-| 3 | V | Aliphatic |
-| 4 | M | Sulfur |
-| 5 | F | Aromatic |
-| 6 | Y | Aromatic |
-| 7 | W | Aromatic |
-| 8 | E | Negative |
-| 9 | D | Negative |
-| 10 | Q | Polar |
-| 11 | N | Polar |
-| 12 | H | Positive |
-| 13 | K | Positive |
-| 14 | R | Positive |
-| 15 | S | Polar |
-| 16 | T | Polar |
-| 17 | C | Sulfur |
-| 18 | P | Structure |
-| 19 | G | Structure |
-
-## 3. K-map Construction Methodology
-
-### 3.1 Encoding Biological Sequences as Karnaugh Maps
-
-The core innovation is representing protein sequences as Karnaugh maps —
-the same mathematical objects used in digital logic design. The mapping is:
-
-```
-Biological Sequence → Amino Acid Encoding → K-map Cell → Frequency Map → Boolean Function
-```
-
-### 3.2 Step 1: Position Array Construction
-
-Each sequence is converted to a position array of integers (0-19):
-
-$$\text{seq}[i] \rightarrow \text{encoder.encode}(\text{seq}[i]) \in \{0, 1, \dots, 19\}$$
-
-For 1,299 sequences, each of length up to 1276, we build a list of `np.int32` arrays.
-Gap characters ('-') and ambiguous residues are mapped to -1 and excluded.
-
-### 3.3 Step 2: Position-Pair K-map (20×20)
-
-For each pair of positions $(i, j)$, a 20×20 frequency matrix is built:
-
-$$K_{ij}(a, b) = \frac{1}{N}\sum_{s=1}^{N} \mathbb{1}[\text{seq}_s[i] = a \land \text{seq}_s[j] = b]$$
-
-where $N = {n_all:,}$ is the number of sequences, $a,b \in \{0,\dots,19\}$.
-
-### 3.4 Example: Frequency K-map for Positions (76, 77)
-
-The reference residues are **D** at position 76 and **N** at position 77 (Wuhan-Hu-1).
-
-The top 10 most frequent dipeptide pairs at (76, 77):
-
-| Rank | AA(i) | AA(j) | Frequency |
-|------|-------|-------|-----------|
-| 1 | K | R | 1.0000 |
-
-### 3.5 Step 3: Boolean Thresholding
-
-The frequency K-map is converted to a Boolean function by thresholding:
-
-$$B_{ij}(a,b) = \begin{cases} 1 &amp; \text{if } K_{ij}(a,b) \geq \text{threshold} \\ 0 &amp; \text{if } K_{ij}(a,b) &lt; \text{threshold} \\ -1 &amp; \text{if position is conserved (don't-care)} \end{cases}$$
-
-The threshold is typically the 75th percentile of non-zero frequencies.
-Don't-care (-1) marks the reference pair (conserved).
-
-### 3.6 Step 4: Quine-McCluskey Boolean Minimization
-
-The 32×32 = 1,024-cell padded K-map is flattened to a truth table with 10 binary variables
+<strong>10</strong> co-evolving position pairs with Boolean rules. Quine-McCluskey
+minimization produced <strong>35 essential prime implicants</strong> — each the only
+cover of some observed mutation combination.</p>
+<p><strong>Key results:</strong> H1 Gray-code adjacency enrichment = <strong>0.19×</strong>; 
+max pairwise MI = <strong>0.8067</strong> at positions (373,378);
+21/1276 positions are evolutionarily variable (H &gt; 0.3).</p>
+<h2>1. Formal Foundations (Lean 4)</h2>
+<p>The encoding framework is formalised in Lean 4 in the <code>lean_proofs</code> repository
+(binary K-maps, Gray codes, amino-acid encoding, contact circuits, sequence
+circuits) and in <code>n-ary-kmap</code> (base-N K-maps).  All theorems are sorry-free with
+no user-declared axioms; theorems proved by <code>native_decide</code> additionally trust
+the compiler.  Current theorem counts and the per-theorem axiom audit are in
+<code>lean_proofs/README.md</code> and <code>lean_proofs/proofs/is_kmap_possible/axiom_audit.py</code>;
+<code>kmap-sbm-validation/src/kmap_sbm/validation/lean_consistency.py</code> re-checks the
+encoding facts in Python.</p>
+<h2>2. Dataset</h2>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>File</strong></td>
+<td><code>Spike_protein.aln-fasta</code> (1.8 MB)</td>
+</tr>
+<tr>
+<td><strong>Sequences</strong></td>
+<td>1,299 SARS-CoV-2 Omicron Spike proteins</td>
+</tr>
+<tr>
+<td><strong>Alignment length</strong></td>
+<td>1276 residues</td>
+</tr>
+<tr>
+<td><strong>Analysis region</strong></td>
+<td>Full length (1276 residues)</td>
+</tr>
+<tr>
+<td><strong>Variable positions</strong></td>
+<td>21/1276 (entropy &gt; 0.3)</td>
+</tr>
+<tr>
+<td><strong>Conserved positions</strong></td>
+<td>1255/1276</td>
+</tr>
+<tr>
+<td><strong>Co-evolving pairs (MI &gt; 0.01)</strong></td>
+<td>73</td>
+</tr>
+<tr>
+<td><strong>Co-evolving pairs (MI &gt; 0.1)</strong></td>
+<td>17</td>
+</tr>
+<tr>
+<td><strong>Encoding</strong></td>
+<td>Base-20, He 2012 ordering</td>
+</tr>
+</tbody>
+</table>
+<h3>2.1 He 2012 Amino Acid Ordering</h3>
+<p>The 20 standard amino acids are ordered by physicochemical properties:</p>
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>AA</th>
+<th>Group</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>A</td>
+<td>Aliphatic</td>
+</tr>
+<tr>
+<td>1</td>
+<td>I</td>
+<td>Aliphatic</td>
+</tr>
+<tr>
+<td>2</td>
+<td>L</td>
+<td>Aliphatic</td>
+</tr>
+<tr>
+<td>3</td>
+<td>V</td>
+<td>Aliphatic</td>
+</tr>
+<tr>
+<td>4</td>
+<td>M</td>
+<td>Sulfur</td>
+</tr>
+<tr>
+<td>5</td>
+<td>F</td>
+<td>Aromatic</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Y</td>
+<td>Aromatic</td>
+</tr>
+<tr>
+<td>7</td>
+<td>W</td>
+<td>Aromatic</td>
+</tr>
+<tr>
+<td>8</td>
+<td>E</td>
+<td>Negative</td>
+</tr>
+<tr>
+<td>9</td>
+<td>D</td>
+<td>Negative</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Q</td>
+<td>Polar</td>
+</tr>
+<tr>
+<td>11</td>
+<td>N</td>
+<td>Polar</td>
+</tr>
+<tr>
+<td>12</td>
+<td>H</td>
+<td>Positive</td>
+</tr>
+<tr>
+<td>13</td>
+<td>K</td>
+<td>Positive</td>
+</tr>
+<tr>
+<td>14</td>
+<td>R</td>
+<td>Positive</td>
+</tr>
+<tr>
+<td>15</td>
+<td>S</td>
+<td>Polar</td>
+</tr>
+<tr>
+<td>16</td>
+<td>T</td>
+<td>Polar</td>
+</tr>
+<tr>
+<td>17</td>
+<td>C</td>
+<td>Sulfur</td>
+</tr>
+<tr>
+<td>18</td>
+<td>P</td>
+<td>Structure</td>
+</tr>
+<tr>
+<td>19</td>
+<td>G</td>
+<td>Structure</td>
+</tr>
+</tbody>
+</table>
+<h2>3. K-map Construction Methodology</h2>
+<h3>3.1 Encoding Biological Sequences as Karnaugh Maps</h3>
+<p>The core innovation is representing protein sequences as Karnaugh maps —
+the same mathematical objects used in digital logic design. The mapping is:</p>
+<pre><code>Biological Sequence → Amino Acid Encoding → K-map Cell → Frequency Map → Boolean Function
+</code></pre>
+<h3>3.2 Step 1: Position Array Construction</h3>
+<p>Each sequence is converted to a position array of integers (0-19):</p>
+<p>$$\text{seq}[i] \rightarrow \text{encoder.encode}(\text{seq}[i]) \in {0, 1, \dots, 19}$$</p>
+<p>For 1,299 sequences, each of length up to 1276, we build a list of <code>np.int32</code> arrays.
+Gap characters ('-') and ambiguous residues are encoded as state 20 and excluded from all counts.</p>
+<h3>3.3 Step 2: Position-Pair K-map (20×20)</h3>
+<p>For each pair of positions $(i, j)$, a 20×20 frequency matrix is built:</p>
+<p>$$K_{ij}(a, b) = \frac{1}{N}\sum_{s=1}^{N} \mathbb{1}[\text{seq}_s[i] = a \land \text{seq}_s[j] = b]$$</p>
+<p>where $N = 1,299$ is the number of sequences, $a,b \in {0,\dots,19}$.</p>
+<h3>3.4 Example: Frequency K-map for Positions (495, 498)</h3>
+<p>The pair with the highest mutation-only MI (0-based alignment columns, not Spike
+residue numbers). The most frequent residue pairs at (495, 498):</p>
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>AA(i)</th>
+<th>AA(j)</th>
+<th>Frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>R</td>
+<td>G</td>
+<td>0.6723</td>
+</tr>
+<tr>
+<td>2</td>
+<td>R</td>
+<td>S</td>
+<td>0.2321</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Q</td>
+<td>G</td>
+<td>0.0956</td>
+</tr>
+</tbody>
+</table>
+<h3>3.5 Step 3: Boolean Thresholding</h3>
+<p>The frequency K-map is converted to a Boolean function by thresholding:</p>
+<p>$$B_{ij}(a,b) = \begin{cases} 1 &amp; \text{observed, not the reference pair} \ 0 &amp; \text{never observed} \ -1 &amp; \text{reference pair or padding (don't-care)} \end{cases}$$</p>
+<p>This is the mutation K-map of master_boolean.py; rows/cols 20-31 are padding (don't-care).</p>
+<h3>3.6 Step 4: Quine-McCluskey Boolean Minimization</h3>
+<p>The 32×32 = 1,024-cell padded K-map is flattened to a truth table with 10 binary variables
 (5 bits for row amino acid + 5 bits for column amino acid). The Quine-McCluskey
-algorithm finds the minimal set of prime implicants covering all on-set cells:
-
-$$f(\text{pos}_i, \text{pos}_j, \text{aa}_i, \text{aa}_j) = \bigvee_k \bigwedge_{m \in S_k} b_m$$
-
-where $b_m$ are the 10 binary variables and $S_k$ are the literal sets for each prime implicant.
-
-## 4. Entropy and Conservation Analysis
-
-### 4.1 Shannon Entropy
-
-Position-specific entropy measures evolutionary variability:
-
-$$H(p) = -\sum_{i=1}^{20} P(a_i) \log_2 P(a_i)$$
-
-where $P(a_i)$ is the frequency of amino acid $a_i$ at position $p$.
-
-- $H \approx 0$: highly conserved (one amino acid dominates)
-- $H \approx 4.32$: maximally variable (uniform distribution over 20 AAs)
-
-### 4.2 Conservation Landscape (full length)
-
-| Position | Consensus | Frequency | Entropy | Perplexity | Status |
-|----------|-----------|-----------|---------|------------|--------|
-| 0 | M | 0.9962 | -0.0000 | 1.000 | Conserved |
-| 1 | F | 0.9992 | -0.0000 | 1.000 | Conserved |
-| 2 | V | 0.9954 | 0.0302 | 1.021 | Conserved |
-| 3 | F | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 4 | L | 0.9838 | 0.1193 | 1.086 | Conserved |
-| 5 | V | 0.9985 | -0.0000 | 1.000 | Conserved |
-| 6 | L | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 7 | L | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 8 | P | 0.9985 | 0.0091 | 1.006 | Conserved |
-| 9 | L | 0.9992 | -0.0000 | 1.000 | Conserved |
-| 10 | V | 0.9992 | -0.0000 | 1.000 | Conserved |
-| 11 | S | 0.9992 | 0.0091 | 1.006 | Conserved |
-| 12 | S | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 13 | Q | 0.9992 | -0.0000 | 1.000 | Conserved |
-| 14 | C | 0.9992 | -0.0000 | 1.000 | Conserved |
-| 15 | V | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 16 | N | 0.9977 | -0.0000 | 1.000 | Conserved |
-| 17 | L | 0.9985 | 0.0091 | 1.006 | Conserved |
-| 18 | I | 0.7383 | 0.8116 | 1.755 | Variable |
-| 19 | T | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 20 | R | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 21 | T | 0.9992 | -0.0000 | 1.000 | Conserved |
-| 22 | Q | 0.9992 | -0.0000 | 1.000 | Conserved |
-| 23 | L | 0.2440 | 0.0307 | 1.021 | Conserved |
-| 24 | P | 0.2440 | -0.0000 | 1.000 | Conserved |
-| 25 | P | 0.2440 | -0.0000 | 1.000 | Conserved |
-| 26 | S | 0.7529 | 0.8039 | 1.746 | Variable |
-| 27 | Y | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 28 | T | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 29 | N | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 30 | S | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 31 | F | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 32 | T | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 33 | R | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 34 | G | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 35 | V | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 36 | Y | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 37 | Y | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 38 | P | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 39 | D | 1.0000 | -0.0000 | 1.000 | Conserved |
-| ... | ... | ... | ... | ... | ... |
-| 40 | K | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 41 | V | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 42 | F | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 43 | R | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 44 | S | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 45 | S | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 46 | V | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 47 | L | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 48 | H | 0.9977 | 0.0236 | 1.016 | Conserved |
-| 49 | S | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 50 | T | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 51 | Q | 0.9985 | 0.0166 | 1.012 | Conserved |
-| 52 | D | 0.9992 | -0.0000 | 1.000 | Conserved |
-| 53 | L | 0.9992 | 0.0091 | 1.006 | Conserved |
-| 54 | F | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 55 | L | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 56 | P | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 57 | F | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 58 | F | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 59 | S | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 60 | N | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 61 | V | 0.9985 | 0.0181 | 1.013 | Conserved |
-| 62 | T | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 63 | W | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 64 | F | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 65 | H | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 66 | A | 0.7583 | 0.7979 | 1.739 | Variable |
-| 67 | I | 0.9969 | 0.0326 | 1.023 | Conserved |
-| 68 | H | 0.6713 | -0.0000 | 1.000 | Conserved |
-| 69 | V | 0.6713 | -0.0000 | 1.000 | Conserved |
-| 70 | S | 0.9985 | 0.0091 | 1.006 | Conserved |
-| 71 | G | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 72 | T | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 73 | N | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 74 | G | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 75 | T | 0.9977 | 0.0091 | 1.006 | Conserved |
-| 76 | K | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 77 | R | 1.0000 | -0.0000 | 1.000 | Conserved |
-| 78 | F | 0.9992 | 0.0091 | 1.006 | Conserved |
-| 79 | D | 0.9985 | 0.0091 | 1.006 | Conserved |
-
-**Summary:** 21 variable positions (H &gt; 0.3), 1255 conserved.
-
-## 5. Mutual Information Analysis
-
-### 5.1 Definition
-
-Mutual Information quantifies the co-dependence between two positions:
-
-$$MI(i,j) = \sum_{x=1}^{20} \sum_{y=1}^{20} P(x,y) \log_2 \frac{P(x,y)}{P(x) \cdot P(y)}$$
-
-where:
+algorithm (exact, don't-care aware) gives the prime implicants; essentials plus a greedy completion cover every on-set cell:</p>
+<p>$$f(\text{pos}_i, \text{pos}_j, \text{aa}_i, \text{aa}<em>j) = \bigvee_k \bigwedge</em>{m \in S_k} b_m$$</p>
+<p>where $b_m$ are the 10 binary variables and $S_k$ are the literal sets for each prime implicant.</p>
+<h2>4. Entropy and Conservation Analysis</h2>
+<h3>4.1 Shannon Entropy</h3>
+<p>Position-specific entropy measures evolutionary variability:</p>
+<p>$$H(p) = -\sum_{i=1}^{20} P(a_i) \log_2 P(a_i)$$</p>
+<p>where $P(a_i)$ is the frequency of amino acid $a_i$ at position $p$.</p>
+<ul>
+<li>$H \approx 0$: highly conserved (one amino acid dominates)</li>
+<li>$H \approx 4.32$: maximally variable (uniform distribution over 20 AAs)</li>
+</ul>
+<h3>4.2 Conservation Landscape (full length)</h3>
+<table>
+<thead>
+<tr>
+<th>Position</th>
+<th>Consensus</th>
+<th>Frequency</th>
+<th>Entropy</th>
+<th>Perplexity</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>M</td>
+<td>0.9962</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>1</td>
+<td>F</td>
+<td>0.9992</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>2</td>
+<td>V</td>
+<td>0.9954</td>
+<td>0.0302</td>
+<td>1.021</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>3</td>
+<td>F</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>4</td>
+<td>L</td>
+<td>0.9838</td>
+<td>0.1193</td>
+<td>1.086</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>5</td>
+<td>V</td>
+<td>0.9985</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>6</td>
+<td>L</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>7</td>
+<td>L</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>8</td>
+<td>P</td>
+<td>0.9985</td>
+<td>0.0091</td>
+<td>1.006</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>9</td>
+<td>L</td>
+<td>0.9992</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>10</td>
+<td>V</td>
+<td>0.9992</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>11</td>
+<td>S</td>
+<td>0.9992</td>
+<td>0.0091</td>
+<td>1.006</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>12</td>
+<td>S</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Q</td>
+<td>0.9992</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>14</td>
+<td>C</td>
+<td>0.9992</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>15</td>
+<td>V</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>16</td>
+<td>N</td>
+<td>0.9977</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>17</td>
+<td>L</td>
+<td>0.9985</td>
+<td>0.0091</td>
+<td>1.006</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>18</td>
+<td>I</td>
+<td>0.7383</td>
+<td>0.8116</td>
+<td>1.755</td>
+<td>Variable</td>
+</tr>
+<tr>
+<td>19</td>
+<td>T</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>20</td>
+<td>R</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>21</td>
+<td>T</td>
+<td>0.9992</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>22</td>
+<td>Q</td>
+<td>0.9992</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>23</td>
+<td>L</td>
+<td>0.2440</td>
+<td>0.0307</td>
+<td>1.021</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>24</td>
+<td>P</td>
+<td>0.2440</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>25</td>
+<td>P</td>
+<td>0.2440</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>26</td>
+<td>S</td>
+<td>0.7529</td>
+<td>0.8039</td>
+<td>1.746</td>
+<td>Variable</td>
+</tr>
+<tr>
+<td>27</td>
+<td>Y</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>28</td>
+<td>T</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>29</td>
+<td>N</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>30</td>
+<td>S</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>31</td>
+<td>F</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>32</td>
+<td>T</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>33</td>
+<td>R</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>34</td>
+<td>G</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>35</td>
+<td>V</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>36</td>
+<td>Y</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>37</td>
+<td>Y</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>38</td>
+<td>P</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>39</td>
+<td>D</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>40</td>
+<td>K</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>41</td>
+<td>V</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>42</td>
+<td>F</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>43</td>
+<td>R</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>44</td>
+<td>S</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>45</td>
+<td>S</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>46</td>
+<td>V</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>47</td>
+<td>L</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>48</td>
+<td>H</td>
+<td>0.9977</td>
+<td>0.0236</td>
+<td>1.016</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>49</td>
+<td>S</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>50</td>
+<td>T</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>51</td>
+<td>Q</td>
+<td>0.9985</td>
+<td>0.0166</td>
+<td>1.012</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>52</td>
+<td>D</td>
+<td>0.9992</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>53</td>
+<td>L</td>
+<td>0.9992</td>
+<td>0.0091</td>
+<td>1.006</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>54</td>
+<td>F</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>55</td>
+<td>L</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>56</td>
+<td>P</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>57</td>
+<td>F</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>58</td>
+<td>F</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>59</td>
+<td>S</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>60</td>
+<td>N</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>61</td>
+<td>V</td>
+<td>0.9985</td>
+<td>0.0181</td>
+<td>1.013</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>62</td>
+<td>T</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>63</td>
+<td>W</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>64</td>
+<td>F</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>65</td>
+<td>H</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>66</td>
+<td>A</td>
+<td>0.7583</td>
+<td>0.7979</td>
+<td>1.739</td>
+<td>Variable</td>
+</tr>
+<tr>
+<td>67</td>
+<td>I</td>
+<td>0.9969</td>
+<td>0.0326</td>
+<td>1.023</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>68</td>
+<td>H</td>
+<td>0.6713</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>69</td>
+<td>V</td>
+<td>0.6713</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>70</td>
+<td>S</td>
+<td>0.9985</td>
+<td>0.0091</td>
+<td>1.006</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>71</td>
+<td>G</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>72</td>
+<td>T</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>73</td>
+<td>N</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>74</td>
+<td>G</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>75</td>
+<td>T</td>
+<td>0.9977</td>
+<td>0.0091</td>
+<td>1.006</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>76</td>
+<td>K</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>77</td>
+<td>R</td>
+<td>1.0000</td>
+<td>-0.0000</td>
+<td>1.000</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>78</td>
+<td>F</td>
+<td>0.9992</td>
+<td>0.0091</td>
+<td>1.006</td>
+<td>Conserved</td>
+</tr>
+<tr>
+<td>79</td>
+<td>D</td>
+<td>0.9985</td>
+<td>0.0091</td>
+<td>1.006</td>
+<td>Conserved</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Summary:</strong> 21 variable positions (H &gt; 0.3), 1255 conserved.</p>
+<h2>5. Mutual Information Analysis</h2>
+<h3>5.1 Definition</h3>
+<p>Mutual Information quantifies the co-dependence between two positions:</p>
+<p>$$MI(i,j) = \sum_{x=1}^{20} \sum_{y=1}^{20} P(x,y) \log_2 \frac{P(x,y)}{P(x) \cdot P(y)}$$</p>
+<p>where:
 - $P(x,y)$ = joint frequency of amino acid $x$ at position $i$ and $y$ at position $j$
 - $P(x)$ = marginal frequency of $x$ at position $i$
-- $P(y)$ = marginal frequency of $y$ at position $j$
-
-### 5.2 Implementation
-
-We use a **vectorized numpy implementation** via `np.bincount` (O(400) per pair, not O(N²)):
-
-```python
-def mutual_information(pos_arrays, pos_i, pos_j, n_seqs):
+- $P(y)$ = marginal frequency of $y$ at position $j$</p>
+<h3>5.2 Implementation</h3>
+<p>We use a <strong>vectorized numpy implementation</strong> via <code>np.bincount</code> (O(400) per pair, not O(N²)):</p>
+<pre><code class="language-python">def mutual_information(pos_arrays, pos_i, pos_j, n_seqs):
     codes_i = np.array([arr[pos_i] for arr in pos_arrays[:n_seqs]])
     codes_j = np.array([arr[pos_j] for arr in pos_arrays[:n_seqs]])
     valid = (codes_i &gt;= 0) &amp; (codes_j &gt;= 0)
@@ -304,321 +949,1638 @@ def mutual_information(pos_arrays, pos_i, pos_j, n_seqs):
     pairs = codes_i[valid] * 20 + codes_j[valid]
     joint = np.bincount(pairs, minlength=400).reshape(20,20)
     # ... MI from joint and marginals
-```
-
-### 5.3 Top 50 Co-evolving Position Pairs
-
-| Rank | Pos i | Pos j | MI | Ref(i) | Ref(j) | H(i) | H(j) | Δ |
-|------|-------|-------|-------|--------|--------|------|------|----|
-| 1 | 373 | 378 | 0.8067 | F | A | 0.872 | 0.811 | 5 |
-| 2 | 18 | 26 | 0.8024 | I | S | 0.812 | 0.804 | 8 |
-| 3 | 378 | 407 | 0.7920 | A | N | 0.811 | 0.814 | 29 |
-| 4 | 66 | 94 | 0.7907 | A | T | 0.798 | 0.799 | 28 |
-| 5 | 215 | 216 | 0.7571 | G | R | 0.881 | 0.764 | 1 |
-| 6 | 210 | 215 | 0.7532 | N | G | 0.785 | 0.881 | 5 |
-| 7 | 407 | 410 | 0.7495 | N | S | 0.814 | 0.822 | 3 |
-| 8 | 210 | 216 | 0.7453 | N | R | 0.785 | 0.764 | 6 |
-| 9 | 212 | 215 | 0.3977 | V | G | 0.462 | 0.881 | 3 |
-| 10 | 212 | 216 | 0.3773 | V | R | 0.462 | 0.764 | 4 |
-| 11 | 488 | 495 | 0.3419 | F | R | 0.414 | 0.455 | 7 |
-| 12 | 210 | 212 | 0.1769 | N | V | 0.785 | 0.462 | 2 |
-| 13 | 419 | 442 | 0.1319 | N | K | 0.257 | 0.346 | 23 |
-| 14 | 479 | 486 | 0.1134 | N | A | 0.142 | 0.133 | 7 |
-| 15 | 479 | 480 | 0.1115 | N | K | 0.142 | 0.124 | 1 |
-| 16 | 500 | 507 | 0.1028 | R | H | 0.119 | 0.110 | 7 |
-| 17 | 503 | 507 | 0.1011 | Y | H | 0.114 | 0.110 | 4 |
-| 18 | 500 | 503 | 0.0958 | R | Y | 0.119 | 0.114 | 3 |
-| 19 | 480 | 486 | 0.0867 | K | A | 0.124 | 0.133 | 6 |
-| 20 | 410 | 419 | 0.0832 | S | N | 0.822 | 0.257 | 9 |
-| 21 | 375 | 377 | 0.0758 | P | F | 0.076 | 0.076 | 2 |
-| 22 | 407 | 419 | 0.0735 | N | N | 0.814 | 0.257 | 12 |
-| 23 | 486 | 500 | 0.0732 | A | R | 0.133 | 0.119 | 14 |
-| 24 | 373 | 377 | 0.0720 | F | F | 0.872 | 0.076 | 4 |
-| 25 | 373 | 375 | 0.0719 | F | P | 0.872 | 0.076 | 2 |
-| 26 | 479 | 500 | 0.0707 | N | R | 0.142 | 0.119 | 21 |
-| 27 | 486 | 507 | 0.0697 | A | H | 0.133 | 0.110 | 21 |
-| 28 | 479 | 507 | 0.0674 | N | H | 0.142 | 0.110 | 28 |
-| 29 | 486 | 503 | 0.0643 | A | Y | 0.133 | 0.114 | 17 |
-| 30 | 210 | 214 | 0.0623 | N | E | 0.785 | 0.061 | 4 |
-| 31 | 479 | 503 | 0.0622 | N | Y | 0.142 | 0.114 | 24 |
-| 32 | 213 | 216 | 0.0610 | R | R | 0.058 | 0.764 | 3 |
-| 33 | 214 | 216 | 0.0610 | E | R | 0.061 | 0.764 | 2 |
-| 34 | 212 | 214 | 0.0610 | V | E | 0.462 | 0.061 | 2 |
-| 35 | 213 | 214 | 0.0610 | R | E | 0.058 | 0.061 | 1 |
-| 36 | 213 | 215 | 0.0610 | R | G | 0.058 | 0.881 | 2 |
-| 37 | 214 | 215 | 0.0610 | E | G | 0.061 | 0.881 | 1 |
-| 38 | 210 | 213 | 0.0588 | N | R | 0.785 | 0.058 | 3 |
-| 39 | 212 | 213 | 0.0576 | V | R | 0.462 | 0.058 | 1 |
-| 40 | 480 | 500 | 0.0551 | K | R | 0.124 | 0.119 | 20 |
-| 41 | 480 | 503 | 0.0525 | K | Y | 0.124 | 0.114 | 23 |
-| 42 | 480 | 507 | 0.0512 | K | H | 0.124 | 0.110 | 27 |
-| 43 | 495 | 507 | 0.0512 | R | H | 0.455 | 0.110 | 12 |
-| 44 | 495 | 503 | 0.0512 | R | Y | 0.455 | 0.114 | 8 |
-| 45 | 495 | 500 | 0.0496 | R | R | 0.455 | 0.119 | 5 |
-| 46 | 250 | 251 | 0.0393 | Y | L | 0.065 | 0.042 | 1 |
-| 47 | 495 | 498 | 0.0386 | R | G | 0.455 | 0.781 | 3 |
-| 48 | 681 | 683 | 0.0343 | K | H | 0.036 | 0.047 | 2 |
-| 49 | 488 | 498 | 0.0320 | F | G | 0.414 | 0.781 | 10 |
-| 50 | 479 | 495 | 0.0313 | N | R | 0.142 | 0.455 | 16 |
-
-## 6. Quine-McCluskey Boolean Minimization — 2 Essential Prime Implicants
-
-The Boolean minimization was performed on 2 position pairs,
-producing **2 essential prime implicants**. Each rule has the form:
-
-$$f(s_4, s_3, s_2, s_1, s_0, t_4, t_3, t_2, t_1, t_0) = \text{AND of literals}$$
-
-**Variables:**
-- $s_4 s_3 s_2 s_1 s_0$ = 5-bit Gray encoding of residue at position $i$
-- $t_4 t_3 t_2 t_1 t_0$ = 5-bit Gray encoding of residue at position $j$
-- $\bar{s}_k$ = NOT ($s_k = 0$), $s_k$ = ($s_k = 1$)
-
-### 6.1 Complete Inference Rules (2 rules across 2 position pairs)
-
-### Position Pair (210, 215) — MI = 0.7532, Reference: N→G
-
-| Rule | Boolean Expression | Amino Acids |
-|------|-------------------|-------------|
-| 1 | $$s3  \cdot  s2  \cdot  \bar{s1}  \cdot  s0  \cdot  t4  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  t0$$ | (K, G) |
-
-**Interpretation:** When position 210 mutates to any of the listed residues,
-position 215 must co-evolve to the corresponding partner residue to maintain
-protein stability. The reference pair is (N, G).
-
-### Position Pair (212, 216) — MI = 0.3773, Reference: V→R
-
-| Rule | Boolean Expression | Amino Acids |
-|------|-------------------|-------------|
-| 2 | $$s4  \cdot  s1  \cdot  s0  \cdot  \bar{t4}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$ | (G, R) |
-
-**Interpretation:** When position 212 mutates to any of the listed residues,
-position 216 must co-evolve to the corresponding partner residue to maintain
-protein stability. The reference pair is (V, R).
-
-
-**Total inference rules:** 2
-
-## 7. Coupling Constants and Constraint Functions
-
-### 7.1 Definition
-
-The coupling constant $J_{ij}(a,b)$ measures the log-odds of observing pair $(a,b)$
-at positions $(i,j)$ compared to the independent expectation:
-
-$$J_{ij}(a,b) = \ln\frac{P_{ij}(a,b)}{P_i(a) \cdot P_j(b)}$$
-
-- $J &gt; 0$: pair is **co-evolutionary** (more common than expected)
-- $J &lt; 0$: pair is **anti-correlated** (less common than expected)
-- $J = 0$: pair occurs at random frequency
-
-### 7.2 Top Coupling Constants
-
-| Pos i | Pos j | MI | avg\|J\| | Top Co-evolutionary (J&gt;0) | Top Anti-correlated (J&lt;0) |
-|-------|-------|-----|----------|---------------------------|---------------------------|
-| 373 | 378 | 0.8067 | 18.09 | A-I:+23.0, A-L:+23.0, A-V:+23.0 | F-T:-21.3, L-A:-21.3, S-A:-2.3 |
-| 18 | 26 | 0.8024 | 18.87 | A-I:+23.0, A-L:+23.0, A-V:+23.0 | I-A:-21.3, T-S:-5.5 |
-| 378 | 407 | 0.7920 | 18.87 | I-A:+23.0, I-I:+23.0, I-L:+23.0 | T-N:-21.3, A-D:-4.4 |
-| 66 | 94 | 0.7907 | 18.87 | I-A:+23.0, I-L:+23.0, I-V:+23.0 | V-T:-21.3, A-I:-5.5 |
-| 215 | 216 | 0.7571 | 16.85 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | P-R:-21.3, G-E:-21.2, V-E:-17.4 |
-| 210 | 215 | 0.7532 | 16.88 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | N-P:-21.2, I-G:-21.2, I-V:-16.4 |
-| 407 | 410 | 0.7495 | 18.87 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | D-S:-21.3, N-R:-3.0 |
-| 210 | 216 | 0.7453 | 17.57 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | N-E:-21.2, N-K:-15.6, K-E:-14.4 |
-| 212 | 215 | 0.3977 | 16.86 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | V-V:-20.2, I-P:-19.8, L-P:-19.0 |
-| 212 | 216 | 0.3773 | 16.14 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | V-R:-20.3, I-E:-19.8, L-E:-19.0 |
-| 488 | 495 | 0.3419 | 18.24 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | V-R:-20.4, P-R:-16.5, F-Q:-1.7 |
-| 210 | 212 | 0.1769 | 17.58 | A-A:+23.0, A-I:+23.0, A-M:+23.0 | N-V:-19.4, I-L:-19.1, I-S:-18.0 |
-| 419 | 442 | 0.1319 | 18.93 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | K-K:-1.7 |
-| 479 | 486 | 0.1134 | 19.03 | A-I:+23.0, A-L:+23.0, A-V:+23.0 | N-E:-3.2, S-A:-2.1 |
-| 479 | 480 | 0.1115 | 19.07 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | N-T:-18.9, S-K:-1.9 |
-| 500 | 507 | 0.1028 | 19.09 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | R-Y:-18.8, Q-H:-2.3 |
-| 503 | 507 | 0.1011 | 18.40 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | N-H:-18.7, F-Y:-11.6, Y-Y:-2.9 |
-| 500 | 503 | 0.0958 | 18.40 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | R-N:-18.7, Q-F:-11.7, Q-Y:-1.9 |
-| 480 | 486 | 0.0867 | 19.03 | A-I:+23.0, A-L:+23.0, A-V:+23.0 | T-A:-2.0, K-E:-1.6 |
-| 410 | 419 | 0.0832 | 18.88 | A-A:+23.0, A-I:+23.0, A-L:+23.0 | S-K:-3.7 |
-
-## 8. Perplexity Analysis
-
-### 8.1 Definition
-
-Perplexity measures the effective number of choices: $PP = 2^H$.
+</code></pre>
+<h3>5.3 Top 50 Co-evolving Position Pairs</h3>
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Pos i</th>
+<th>Pos j</th>
+<th>MI</th>
+<th>Ref(i)</th>
+<th>Ref(j)</th>
+<th>H(i)</th>
+<th>H(j)</th>
+<th>Δ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>373</td>
+<td>378</td>
+<td>0.8067</td>
+<td>F</td>
+<td>A</td>
+<td>0.872</td>
+<td>0.811</td>
+<td>5</td>
+</tr>
+<tr>
+<td>2</td>
+<td>18</td>
+<td>26</td>
+<td>0.8024</td>
+<td>I</td>
+<td>S</td>
+<td>0.812</td>
+<td>0.804</td>
+<td>8</td>
+</tr>
+<tr>
+<td>3</td>
+<td>378</td>
+<td>407</td>
+<td>0.7920</td>
+<td>A</td>
+<td>N</td>
+<td>0.811</td>
+<td>0.814</td>
+<td>29</td>
+</tr>
+<tr>
+<td>4</td>
+<td>66</td>
+<td>94</td>
+<td>0.7907</td>
+<td>A</td>
+<td>T</td>
+<td>0.798</td>
+<td>0.799</td>
+<td>28</td>
+</tr>
+<tr>
+<td>5</td>
+<td>215</td>
+<td>216</td>
+<td>0.7571</td>
+<td>G</td>
+<td>R</td>
+<td>0.881</td>
+<td>0.764</td>
+<td>1</td>
+</tr>
+<tr>
+<td>6</td>
+<td>210</td>
+<td>215</td>
+<td>0.7532</td>
+<td>N</td>
+<td>G</td>
+<td>0.785</td>
+<td>0.881</td>
+<td>5</td>
+</tr>
+<tr>
+<td>7</td>
+<td>407</td>
+<td>410</td>
+<td>0.7495</td>
+<td>N</td>
+<td>S</td>
+<td>0.814</td>
+<td>0.822</td>
+<td>3</td>
+</tr>
+<tr>
+<td>8</td>
+<td>210</td>
+<td>216</td>
+<td>0.7453</td>
+<td>N</td>
+<td>R</td>
+<td>0.785</td>
+<td>0.764</td>
+<td>6</td>
+</tr>
+<tr>
+<td>9</td>
+<td>212</td>
+<td>215</td>
+<td>0.3977</td>
+<td>V</td>
+<td>G</td>
+<td>0.462</td>
+<td>0.881</td>
+<td>3</td>
+</tr>
+<tr>
+<td>10</td>
+<td>212</td>
+<td>216</td>
+<td>0.3773</td>
+<td>V</td>
+<td>R</td>
+<td>0.462</td>
+<td>0.764</td>
+<td>4</td>
+</tr>
+<tr>
+<td>11</td>
+<td>488</td>
+<td>495</td>
+<td>0.3419</td>
+<td>F</td>
+<td>R</td>
+<td>0.414</td>
+<td>0.455</td>
+<td>7</td>
+</tr>
+<tr>
+<td>12</td>
+<td>210</td>
+<td>212</td>
+<td>0.1769</td>
+<td>N</td>
+<td>V</td>
+<td>0.785</td>
+<td>0.462</td>
+<td>2</td>
+</tr>
+<tr>
+<td>13</td>
+<td>419</td>
+<td>442</td>
+<td>0.1319</td>
+<td>N</td>
+<td>K</td>
+<td>0.257</td>
+<td>0.346</td>
+<td>23</td>
+</tr>
+<tr>
+<td>14</td>
+<td>479</td>
+<td>486</td>
+<td>0.1134</td>
+<td>N</td>
+<td>A</td>
+<td>0.142</td>
+<td>0.133</td>
+<td>7</td>
+</tr>
+<tr>
+<td>15</td>
+<td>479</td>
+<td>480</td>
+<td>0.1115</td>
+<td>N</td>
+<td>K</td>
+<td>0.142</td>
+<td>0.124</td>
+<td>1</td>
+</tr>
+<tr>
+<td>16</td>
+<td>500</td>
+<td>507</td>
+<td>0.1028</td>
+<td>R</td>
+<td>H</td>
+<td>0.119</td>
+<td>0.110</td>
+<td>7</td>
+</tr>
+<tr>
+<td>17</td>
+<td>503</td>
+<td>507</td>
+<td>0.1011</td>
+<td>Y</td>
+<td>H</td>
+<td>0.114</td>
+<td>0.110</td>
+<td>4</td>
+</tr>
+<tr>
+<td>18</td>
+<td>500</td>
+<td>503</td>
+<td>0.0958</td>
+<td>R</td>
+<td>Y</td>
+<td>0.119</td>
+<td>0.114</td>
+<td>3</td>
+</tr>
+<tr>
+<td>19</td>
+<td>480</td>
+<td>486</td>
+<td>0.0867</td>
+<td>K</td>
+<td>A</td>
+<td>0.124</td>
+<td>0.133</td>
+<td>6</td>
+</tr>
+<tr>
+<td>20</td>
+<td>410</td>
+<td>419</td>
+<td>0.0832</td>
+<td>S</td>
+<td>N</td>
+<td>0.822</td>
+<td>0.257</td>
+<td>9</td>
+</tr>
+<tr>
+<td>21</td>
+<td>375</td>
+<td>377</td>
+<td>0.0758</td>
+<td>P</td>
+<td>F</td>
+<td>0.076</td>
+<td>0.076</td>
+<td>2</td>
+</tr>
+<tr>
+<td>22</td>
+<td>407</td>
+<td>419</td>
+<td>0.0735</td>
+<td>N</td>
+<td>N</td>
+<td>0.814</td>
+<td>0.257</td>
+<td>12</td>
+</tr>
+<tr>
+<td>23</td>
+<td>486</td>
+<td>500</td>
+<td>0.0732</td>
+<td>A</td>
+<td>R</td>
+<td>0.133</td>
+<td>0.119</td>
+<td>14</td>
+</tr>
+<tr>
+<td>24</td>
+<td>373</td>
+<td>377</td>
+<td>0.0720</td>
+<td>F</td>
+<td>F</td>
+<td>0.872</td>
+<td>0.076</td>
+<td>4</td>
+</tr>
+<tr>
+<td>25</td>
+<td>373</td>
+<td>375</td>
+<td>0.0719</td>
+<td>F</td>
+<td>P</td>
+<td>0.872</td>
+<td>0.076</td>
+<td>2</td>
+</tr>
+<tr>
+<td>26</td>
+<td>479</td>
+<td>500</td>
+<td>0.0707</td>
+<td>N</td>
+<td>R</td>
+<td>0.142</td>
+<td>0.119</td>
+<td>21</td>
+</tr>
+<tr>
+<td>27</td>
+<td>486</td>
+<td>507</td>
+<td>0.0697</td>
+<td>A</td>
+<td>H</td>
+<td>0.133</td>
+<td>0.110</td>
+<td>21</td>
+</tr>
+<tr>
+<td>28</td>
+<td>479</td>
+<td>507</td>
+<td>0.0674</td>
+<td>N</td>
+<td>H</td>
+<td>0.142</td>
+<td>0.110</td>
+<td>28</td>
+</tr>
+<tr>
+<td>29</td>
+<td>486</td>
+<td>503</td>
+<td>0.0643</td>
+<td>A</td>
+<td>Y</td>
+<td>0.133</td>
+<td>0.114</td>
+<td>17</td>
+</tr>
+<tr>
+<td>30</td>
+<td>210</td>
+<td>214</td>
+<td>0.0623</td>
+<td>N</td>
+<td>E</td>
+<td>0.785</td>
+<td>0.061</td>
+<td>4</td>
+</tr>
+<tr>
+<td>31</td>
+<td>479</td>
+<td>503</td>
+<td>0.0622</td>
+<td>N</td>
+<td>Y</td>
+<td>0.142</td>
+<td>0.114</td>
+<td>24</td>
+</tr>
+<tr>
+<td>32</td>
+<td>213</td>
+<td>216</td>
+<td>0.0610</td>
+<td>R</td>
+<td>R</td>
+<td>0.058</td>
+<td>0.764</td>
+<td>3</td>
+</tr>
+<tr>
+<td>33</td>
+<td>214</td>
+<td>216</td>
+<td>0.0610</td>
+<td>E</td>
+<td>R</td>
+<td>0.061</td>
+<td>0.764</td>
+<td>2</td>
+</tr>
+<tr>
+<td>34</td>
+<td>212</td>
+<td>214</td>
+<td>0.0610</td>
+<td>V</td>
+<td>E</td>
+<td>0.462</td>
+<td>0.061</td>
+<td>2</td>
+</tr>
+<tr>
+<td>35</td>
+<td>213</td>
+<td>214</td>
+<td>0.0610</td>
+<td>R</td>
+<td>E</td>
+<td>0.058</td>
+<td>0.061</td>
+<td>1</td>
+</tr>
+<tr>
+<td>36</td>
+<td>213</td>
+<td>215</td>
+<td>0.0610</td>
+<td>R</td>
+<td>G</td>
+<td>0.058</td>
+<td>0.881</td>
+<td>2</td>
+</tr>
+<tr>
+<td>37</td>
+<td>214</td>
+<td>215</td>
+<td>0.0610</td>
+<td>E</td>
+<td>G</td>
+<td>0.061</td>
+<td>0.881</td>
+<td>1</td>
+</tr>
+<tr>
+<td>38</td>
+<td>210</td>
+<td>213</td>
+<td>0.0588</td>
+<td>N</td>
+<td>R</td>
+<td>0.785</td>
+<td>0.058</td>
+<td>3</td>
+</tr>
+<tr>
+<td>39</td>
+<td>212</td>
+<td>213</td>
+<td>0.0576</td>
+<td>V</td>
+<td>R</td>
+<td>0.462</td>
+<td>0.058</td>
+<td>1</td>
+</tr>
+<tr>
+<td>40</td>
+<td>480</td>
+<td>500</td>
+<td>0.0551</td>
+<td>K</td>
+<td>R</td>
+<td>0.124</td>
+<td>0.119</td>
+<td>20</td>
+</tr>
+<tr>
+<td>41</td>
+<td>480</td>
+<td>503</td>
+<td>0.0525</td>
+<td>K</td>
+<td>Y</td>
+<td>0.124</td>
+<td>0.114</td>
+<td>23</td>
+</tr>
+<tr>
+<td>42</td>
+<td>480</td>
+<td>507</td>
+<td>0.0512</td>
+<td>K</td>
+<td>H</td>
+<td>0.124</td>
+<td>0.110</td>
+<td>27</td>
+</tr>
+<tr>
+<td>43</td>
+<td>495</td>
+<td>507</td>
+<td>0.0512</td>
+<td>R</td>
+<td>H</td>
+<td>0.455</td>
+<td>0.110</td>
+<td>12</td>
+</tr>
+<tr>
+<td>44</td>
+<td>495</td>
+<td>503</td>
+<td>0.0512</td>
+<td>R</td>
+<td>Y</td>
+<td>0.455</td>
+<td>0.114</td>
+<td>8</td>
+</tr>
+<tr>
+<td>45</td>
+<td>495</td>
+<td>500</td>
+<td>0.0496</td>
+<td>R</td>
+<td>R</td>
+<td>0.455</td>
+<td>0.119</td>
+<td>5</td>
+</tr>
+<tr>
+<td>46</td>
+<td>250</td>
+<td>251</td>
+<td>0.0393</td>
+<td>Y</td>
+<td>L</td>
+<td>0.065</td>
+<td>0.042</td>
+<td>1</td>
+</tr>
+<tr>
+<td>47</td>
+<td>495</td>
+<td>498</td>
+<td>0.0386</td>
+<td>R</td>
+<td>G</td>
+<td>0.455</td>
+<td>0.781</td>
+<td>3</td>
+</tr>
+<tr>
+<td>48</td>
+<td>681</td>
+<td>683</td>
+<td>0.0343</td>
+<td>K</td>
+<td>H</td>
+<td>0.036</td>
+<td>0.047</td>
+<td>2</td>
+</tr>
+<tr>
+<td>49</td>
+<td>488</td>
+<td>498</td>
+<td>0.0320</td>
+<td>F</td>
+<td>G</td>
+<td>0.414</td>
+<td>0.781</td>
+<td>10</td>
+</tr>
+<tr>
+<td>50</td>
+<td>479</td>
+<td>495</td>
+<td>0.0313</td>
+<td>N</td>
+<td>R</td>
+<td>0.142</td>
+<td>0.455</td>
+<td>16</td>
+</tr>
+</tbody>
+</table>
+<h2>6. Quine-McCluskey Boolean Minimization — 35 Essential Prime Implicants</h2>
+<p>The Boolean minimization was performed on 10 position pairs,
+producing <strong>35 essential prime implicants</strong>. Each rule has the form:</p>
+<p>$$f(s_4, s_3, s_2, s_1, s_0, t_4, t_3, t_2, t_1, t_0) = \text{AND of literals}$$</p>
+<p><strong>Variables:</strong>
+- $s_4 s_3 s_2 s_1 s_0$ = bits of the He-2012 code (natural binary) of the residue at position $i$
+- $t_4 t_3 t_2 t_1 t_0$ = the same for position $j$
+- $\bar{s}_k$ = NOT ($s_k = 0$), $s_k$ = ($s_k = 1$)</p>
+<h3>6.1 Complete Inference Rules (35 rules across 10 position pairs)</h3>
+<h3>Position Pair (210, 212) — MI = 0.1769, Reference: N→V</h3>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Boolean Expression</th>
+<th>Amino Acids</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>$$\bar{s4}  \cdot  \bar{s3}  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  s0  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  t0$$</td>
+<td>(I, VG)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>$$s3  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  \bar{t4}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  \bar{t0}$$</td>
+<td>(N, L)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>$$s3  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  t0$$</td>
+<td>(N, S)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interpretation:</strong> the listed residue combinations occur together in the alignment;
+they are observations, not stability constraints.
+The reference pair is (N, V).</p>
+<h3>Position Pair (210, 215) — MI = 0.7532, Reference: N→G</h3>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Boolean Expression</th>
+<th>Amino Acids</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td>$$\bar{s4}  \cdot  \bar{s3}  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  s0  \cdot  t4  \cdot  t1  \cdot  \bar{t0}$$</td>
+<td>(I, P)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>$$s3  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  t0$$</td>
+<td>(N, VG)</td>
+</tr>
+<tr>
+<td>6</td>
+<td>$$s3  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  \bar{t0}$$</td>
+<td>(N, E)</td>
+</tr>
+<tr>
+<td>7</td>
+<td>$$s3  \cdot  s2  \cdot  \bar{s1}  \cdot  s0  \cdot  t4  \cdot  t1  \cdot  t0$$</td>
+<td>(K, G)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interpretation:</strong> the listed residue combinations occur together in the alignment;
+they are observations, not stability constraints.
+The reference pair is (N, G).</p>
+<h3>Position Pair (212, 215) — MI = 0.3977, Reference: V→G</h3>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Boolean Expression</th>
+<th>Amino Acids</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8</td>
+<td>$$\bar{s4}  \cdot  \bar{s3}  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  s0  \cdot  \bar{t4}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  t0$$</td>
+<td>(I, V)</td>
+</tr>
+<tr>
+<td>9</td>
+<td>$$\bar{s4}  \cdot  \bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  \bar{s0}  \cdot  \bar{t4}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  t0$$</td>
+<td>(L, V)</td>
+</tr>
+<tr>
+<td>10</td>
+<td>$$\bar{s4}  \cdot  \bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t4  \cdot  t1  \cdot  \bar{t0}$$</td>
+<td>(V, P)</td>
+</tr>
+<tr>
+<td>11</td>
+<td>$$s3  \cdot  s2  \cdot  s1  \cdot  s0  \cdot  t4  \cdot  t1  \cdot  t0$$</td>
+<td>(S, G)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interpretation:</strong> the listed residue combinations occur together in the alignment;
+they are observations, not stability constraints.
+The reference pair is (V, G).</p>
+<h3>Position Pair (212, 216) — MI = 0.3773, Reference: V→R</h3>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Boolean Expression</th>
+<th>Amino Acids</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>12</td>
+<td>$$\bar{s4}  \cdot  \bar{s3}  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$</td>
+<td>(I, R)</td>
+</tr>
+<tr>
+<td>13</td>
+<td>$$\bar{s4}  \cdot  \bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$</td>
+<td>(L, R)</td>
+</tr>
+<tr>
+<td>14</td>
+<td>$$\bar{s4}  \cdot  \bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  \bar{t0}$$</td>
+<td>(V, E)</td>
+</tr>
+<tr>
+<td>15</td>
+<td>$$\bar{s4}  \cdot  \bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  \bar{t1}  \cdot  t0$$</td>
+<td>(V, K)</td>
+</tr>
+<tr>
+<td>16</td>
+<td>$$s3  \cdot  s2  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$</td>
+<td>(S, R)</td>
+</tr>
+<tr>
+<td>17</td>
+<td>$$s4  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$</td>
+<td>(G, R)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interpretation:</strong> the listed residue combinations occur together in the alignment;
+they are observations, not stability constraints.
+The reference pair is (V, R).</p>
+<h3>Position Pair (215, 216) — MI = 0.7571, Reference: G→R</h3>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Boolean Expression</th>
+<th>Amino Acids</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>18</td>
+<td>$$\bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$</td>
+<td>(VG, R)</td>
+</tr>
+<tr>
+<td>19</td>
+<td>$$s3  \cdot  \bar{s2}  \cdot  \bar{s1}  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$</td>
+<td>(E, R)</td>
+</tr>
+<tr>
+<td>20</td>
+<td>$$s4  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  \bar{t2}  \cdot  \bar{t1}  \cdot  \bar{t0}$$</td>
+<td>(P, E)</td>
+</tr>
+<tr>
+<td>21</td>
+<td>$$s4  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  \bar{t1}  \cdot  t0$$</td>
+<td>(P, K)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interpretation:</strong> the listed residue combinations occur together in the alignment;
+they are observations, not stability constraints.
+The reference pair is (G, R).</p>
+<h3>Position Pair (442, 448) — MI = 0.0162, Reference: K→G</h3>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Boolean Expression</th>
+<th>Amino Acids</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>22</td>
+<td>$$s3  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  t0$$</td>
+<td>(N, S)</td>
+</tr>
+<tr>
+<td>23</td>
+<td>$$s3  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t4  \cdot  t1  \cdot  t0$$</td>
+<td>(N, G)</td>
+</tr>
+<tr>
+<td>24</td>
+<td>$$s3  \cdot  s2  \cdot  \bar{s1}  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  t0$$</td>
+<td>(K, S)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interpretation:</strong> the listed residue combinations occur together in the alignment;
+they are observations, not stability constraints.
+The reference pair is (K, G).</p>
+<h3>Position Pair (442, 454) — MI = 0.8110, Reference: K→L</h3>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Boolean Expression</th>
+<th>Amino Acids</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>25</td>
+<td>$$s3  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  \bar{t4}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  \bar{t0}$$</td>
+<td>(N, L)</td>
+</tr>
+<tr>
+<td>26</td>
+<td>$$s3  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$</td>
+<td>(N, R)</td>
+</tr>
+<tr>
+<td>27</td>
+<td>$$s3  \cdot  s2  \cdot  \bar{s1}  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$</td>
+<td>(K, R)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interpretation:</strong> the listed residue combinations occur together in the alignment;
+they are observations, not stability constraints.
+The reference pair is (K, L).</p>
+<h3>Position Pair (448, 454) — MI = 0.0270, Reference: G→L</h3>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Boolean Expression</th>
+<th>Amino Acids</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>28</td>
+<td>$$s3  \cdot  s2  \cdot  s1  \cdot  s0  \cdot  \bar{t4}  \cdot  \bar{t3}  \cdot  \bar{t2}  \cdot  t1  \cdot  \bar{t0}$$</td>
+<td>(S, L)</td>
+</tr>
+<tr>
+<td>29</td>
+<td>$$s3  \cdot  s2  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$</td>
+<td>(S, R)</td>
+</tr>
+<tr>
+<td>30</td>
+<td>$$s4  \cdot  s1  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  \bar{t0}$$</td>
+<td>(G, R)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interpretation:</strong> the listed residue combinations occur together in the alignment;
+they are observations, not stability constraints.
+The reference pair is (G, L).</p>
+<h3>Position Pair (488, 498) — MI = 0.0320, Reference: F→G</h3>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Boolean Expression</th>
+<th>Amino Acids</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>31</td>
+<td>$$\bar{s4}  \cdot  \bar{s3}  \cdot  \bar{s2}  \cdot  s1  \cdot  s0  \cdot  t4  \cdot  t1  \cdot  t0$$</td>
+<td>(V, G)</td>
+</tr>
+<tr>
+<td>32</td>
+<td>$$\bar{s3}  \cdot  s2  \cdot  \bar{s1}  \cdot  s0  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  t0$$</td>
+<td>(F, S)</td>
+</tr>
+<tr>
+<td>33</td>
+<td>$$s4  \cdot  s1  \cdot  \bar{s0}  \cdot  t4  \cdot  t1  \cdot  t0$$</td>
+<td>(P, G)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interpretation:</strong> the listed residue combinations occur together in the alignment;
+they are observations, not stability constraints.
+The reference pair is (F, G).</p>
+<h3>Position Pair (495, 498) — MI = 0.0386, Reference: R→G</h3>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Boolean Expression</th>
+<th>Amino Acids</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>34</td>
+<td>$$s3  \cdot  s1  \cdot  \bar{s0}  \cdot  t4  \cdot  t1  \cdot  t0$$</td>
+<td>(QR, G)</td>
+</tr>
+<tr>
+<td>35</td>
+<td>$$s3  \cdot  s2  \cdot  s1  \cdot  \bar{s0}  \cdot  t3  \cdot  t2  \cdot  t1  \cdot  t0$$</td>
+<td>(R, S)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interpretation:</strong> the listed residue combinations occur together in the alignment;
+they are observations, not stability constraints.
+The reference pair is (R, G).</p>
+<p><strong>Total inference rules:</strong> 35</p>
+<h2>7. Coupling Constants and Constraint Functions</h2>
+<h3>7.1 Definition</h3>
+<p>The coupling constant $J_{ij}(a,b)$ measures the log-odds of observing pair $(a,b)$
+at positions $(i,j)$ compared to the independent expectation:</p>
+<p>$$J_{ij}(a,b) = \ln\frac{P_{ij}(a,b)}{P_i(a) \cdot P_j(b)}$$</p>
+<ul>
+<li>$J &gt; 0$: pair is <strong>co-evolutionary</strong> (more common than expected)</li>
+<li>$J &lt; 0$: pair is <strong>anti-correlated</strong> (less common than expected)</li>
+<li>$J = 0$: pair occurs at random frequency</li>
+</ul>
+<h3>7.2 Top Coupling Constants</h3>
+<table>
+<thead>
+<tr>
+<th>Pos i</th>
+<th>Pos j</th>
+<th>MI</th>
+<th>avg|J|</th>
+<th>Top Co-evolutionary (J&gt;0)</th>
+<th>Top Anti-correlated (J&lt;0)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>373</td>
+<td>378</td>
+<td>0.8067</td>
+<td>18.09</td>
+<td>A-I:+23.0, A-L:+23.0, A-V:+23.0</td>
+<td>F-T:-21.3, L-A:-21.3, S-A:-2.3</td>
+</tr>
+<tr>
+<td>18</td>
+<td>26</td>
+<td>0.8024</td>
+<td>18.87</td>
+<td>A-I:+23.0, A-L:+23.0, A-V:+23.0</td>
+<td>I-A:-21.3, T-S:-5.5</td>
+</tr>
+<tr>
+<td>378</td>
+<td>407</td>
+<td>0.7920</td>
+<td>18.87</td>
+<td>I-A:+23.0, I-I:+23.0, I-L:+23.0</td>
+<td>T-N:-21.3, A-D:-4.4</td>
+</tr>
+<tr>
+<td>66</td>
+<td>94</td>
+<td>0.7907</td>
+<td>18.87</td>
+<td>I-A:+23.0, I-L:+23.0, I-V:+23.0</td>
+<td>V-T:-21.3, A-I:-5.5</td>
+</tr>
+<tr>
+<td>215</td>
+<td>216</td>
+<td>0.7571</td>
+<td>16.85</td>
+<td>A-A:+23.0, A-I:+23.0, A-L:+23.0</td>
+<td>P-R:-21.3, G-E:-21.2, V-E:-17.4</td>
+</tr>
+<tr>
+<td>210</td>
+<td>215</td>
+<td>0.7532</td>
+<td>16.88</td>
+<td>A-A:+23.0, A-I:+23.0, A-L:+23.0</td>
+<td>N-P:-21.2, I-G:-21.2, I-V:-16.4</td>
+</tr>
+<tr>
+<td>407</td>
+<td>410</td>
+<td>0.7495</td>
+<td>18.87</td>
+<td>A-A:+23.0, A-I:+23.0, A-L:+23.0</td>
+<td>D-S:-21.3, N-R:-3.0</td>
+</tr>
+<tr>
+<td>210</td>
+<td>216</td>
+<td>0.7453</td>
+<td>17.57</td>
+<td>A-A:+23.0, A-I:+23.0, A-L:+23.0</td>
+<td>N-E:-21.2, N-K:-15.6, K-E:-14.4</td>
+</tr>
+<tr>
+<td>212</td>
+<td>215</td>
+<td>0.3977</td>
+<td>16.86</td>
+<td>A-A:+23.0, A-I:+23.0, A-L:+23.0</td>
+<td>V-V:-20.2, I-P:-19.8, L-P:-19.0</td>
+</tr>
+<tr>
+<td>212</td>
+<td>216</td>
+<td>0.3773</td>
+<td>16.14</td>
+<td>A-A:+23.0, A-I:+23.0, A-L:+23.0</td>
+<td>V-R:-20.3, I-E:-19.8, L-E:-19.0</td>
+</tr>
+<tr>
+<td>488</td>
+<td>495</td>
+<td>0.3419</td>
+<td>18.24</td>
+<td>A-A:+23.0, A-I:+23.0, A-L:+23.0</td>
+<td>V-R:-20.4, P-R:-16.5, F-Q:-1.7</td>
+</tr>
+<tr>
+<td>210</td>
+<td>212</td>
+<td>0.1769</td>
+<td>17.58</td>
+<td>A-A:+23.0, A-I:+23.0, A-M:+23.0</td>
+<td>N-V:-19.4, I-L:-19.1, I-S:-18.0</td>
+</tr>
+<tr>
+<td>419</td>
+<td>442</td>
+<td>0.1319</td>
+<td>18.93</td>
+<td>A-A:+23.0, A-I:+23.0, A-L:+23.0</td>
+<td>K-K:-1.7</td>
+</tr>
+<tr>
+<td>479</td>
+<td>486</td>
+<td>0.1134</td>
+<td>19.03</td>
+<td>A-I:+23.0, A-L:+23.0, A-V:+23.0</td>
+<td>N-E:-3.2, S-A:-2.1</td>
+</tr>
+<tr>
+<td>479</td>
+<td>480</td>
+<td>0.1115</td>
+<td>19.07</td>
+<td>A-A:+23.0, A-I:+23.0, A-L:+23.0</td>
+<td>N-T:-18.9, S-K:-1.9</td>
+</tr>
+<tr>
+<td>500</td>
+<td>507</td>
+<td>0.1028</td>
+<td>19.09</td>
+<td>A-A:+23.0, A-I:+23.0, A-L:+23.0</td>
+<td>R-Y:-18.8, Q-H:-2.3</td>
+</tr>
+<tr>
+<td>503</td>
+<td>507</td>
+<td>0.1011</td>
+<td>18.40</td>
+<td>A-A:+23.0, A-I:+23.0, A-L:+23.0</td>
+<td>N-H:-18.7, F-Y:-11.6, Y-Y:-2.9</td>
+</tr>
+<tr>
+<td>500</td>
+<td>503</td>
+<td>0.0958</td>
+<td>18.40</td>
+<td>A-A:+23.0, A-I:+23.0, A-L:+23.0</td>
+<td>R-N:-18.7, Q-F:-11.7, Q-Y:-1.9</td>
+</tr>
+<tr>
+<td>480</td>
+<td>486</td>
+<td>0.0867</td>
+<td>19.03</td>
+<td>A-I:+23.0, A-L:+23.0, A-V:+23.0</td>
+<td>T-A:-2.0, K-E:-1.6</td>
+</tr>
+<tr>
+<td>410</td>
+<td>419</td>
+<td>0.0832</td>
+<td>18.88</td>
+<td>A-A:+23.0, A-I:+23.0, A-L:+23.0</td>
+<td>S-K:-3.7</td>
+</tr>
+</tbody>
+</table>
+<h2>8. Perplexity Analysis</h2>
+<h3>8.1 Definition</h3>
+<p>Perplexity measures the effective number of choices: $PP = 2^H$.
 Conditional perplexity $PP(j|i)$ measures how much knowing residue $i$
-reduces uncertainty about residue $j$:
-
-$$PP(j) = 2^{H(P_j)}, \quad PP(j|i=a) = 2^{H(P_{j|i=a})}$$
-
-The **co-evolution ratio** $PP(j) / PP(j|i)$ quantifies constraint strength:
+reduces uncertainty about residue $j$:</p>
+<p>$$PP(j) = 2^{H(P_j)}, \quad PP(j|i=a) = 2^{H(P_{j|i=a})}$$</p>
+<p>The <strong>co-evolution ratio</strong> $PP(j) / PP(j|i)$ quantifies constraint strength:
 - Ratio $\approx 1$: no constraint (positions evolve independently)
-- Ratio $&gt; 2$: strong constraint (position $i$ determines position $j$)
-
-### 8.2 Conditional Perplexity for Top Pairs
-
-| Pos i | Pos j | MI | PPₘ(j) | PPₖₒₙₐ | Ratio | Most Constraining Residue | PP\|that |
-|-------|-------|-----|--------|---------|-------|--------------------------|----------|
-| 373 | 378 | 0.8067 | 1.754 | 1.109 | 1.58 | L | 1.000 |
-| 18 | 26 | 0.8024 | 1.746 | 1.029 | 1.70 | I | 1.015 |
-| 378 | 407 | 0.7920 | 1.758 | 1.011 | 1.74 | T | 1.000 |
-| 66 | 94 | 0.7907 | 1.740 | 1.008 | 1.73 | V | 1.000 |
-| 215 | 216 | 0.7571 | 1.698 | 1.008 | 1.68 | V | 1.000 |
-| 210 | 215 | 0.7532 | 1.842 | 1.176 | 1.57 | N | 1.057 |
-| 407 | 410 | 0.7495 | 1.768 | 1.103 | 1.60 | N | 1.085 |
-| 210 | 216 | 0.7453 | 1.698 | 1.171 | 1.45 | N | 1.000 |
-| 212 | 215 | 0.3977 | 1.842 | 1.093 | 1.69 | I | 1.000 |
-| 212 | 216 | 0.3773 | 1.698 | 1.102 | 1.54 | I | 1.000 |
-| 488 | 495 | 0.3419 | 1.371 | 1.048 | 1.31 | V | 1.000 |
-| 210 | 212 | 0.1769 | 1.377 | 1.038 | 1.33 | I | 1.023 |
-| 419 | 442 | 0.1319 | 1.271 | 1.458 | 0.87 | N | 1.221 |
-| 479 | 486 | 0.1134 | 1.096 | 1.218 | 0.90 | N | 1.006 |
-| 479 | 480 | 0.1115 | 1.090 | 1.268 | 0.86 | N | 1.000 |
-| 500 | 507 | 0.1028 | 1.079 | 1.188 | 0.91 | R | 1.006 |
-| 503 | 507 | 0.1011 | 1.079 | 1.006 | 1.07 | N | 1.000 |
-| 500 | 503 | 0.0958 | 1.083 | 1.257 | 0.86 | R | 1.006 |
-| 480 | 486 | 0.0867 | 1.096 | 1.258 | 0.87 | K | 1.026 |
-| 410 | 419 | 0.0832 | 1.195 | 1.339 | 0.89 | S | 1.030 |
-
-## 9. H1: Gray-code Adjacency Hypothesis
-
-### 9.1 Hypothesis
-
-Consecutive residues in protein sequences are preferentially K-map-adjacent
-(Hamming distance = 1) compared to random expectation.
-
-### 9.2 Method
-
-For each consecutive pair of residues in each of the {n_all:,} sequences:
+- Ratio $&gt; 2$: strong constraint (position $i$ determines position $j$)</p>
+<h3>8.2 Conditional Perplexity for Top Pairs</h3>
+<table>
+<thead>
+<tr>
+<th>Pos i</th>
+<th>Pos j</th>
+<th>MI</th>
+<th>PPₘ(j)</th>
+<th>PPₖₒₙₐ</th>
+<th>Ratio</th>
+<th>Most Constraining Residue</th>
+<th>PP|that</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>373</td>
+<td>378</td>
+<td>0.8067</td>
+<td>1.754</td>
+<td>1.109</td>
+<td>1.58</td>
+<td>L</td>
+<td>1.000</td>
+</tr>
+<tr>
+<td>18</td>
+<td>26</td>
+<td>0.8024</td>
+<td>1.746</td>
+<td>1.029</td>
+<td>1.70</td>
+<td>I</td>
+<td>1.015</td>
+</tr>
+<tr>
+<td>378</td>
+<td>407</td>
+<td>0.7920</td>
+<td>1.758</td>
+<td>1.011</td>
+<td>1.74</td>
+<td>T</td>
+<td>1.000</td>
+</tr>
+<tr>
+<td>66</td>
+<td>94</td>
+<td>0.7907</td>
+<td>1.740</td>
+<td>1.008</td>
+<td>1.73</td>
+<td>V</td>
+<td>1.000</td>
+</tr>
+<tr>
+<td>215</td>
+<td>216</td>
+<td>0.7571</td>
+<td>1.698</td>
+<td>1.008</td>
+<td>1.68</td>
+<td>V</td>
+<td>1.000</td>
+</tr>
+<tr>
+<td>210</td>
+<td>215</td>
+<td>0.7532</td>
+<td>1.842</td>
+<td>1.176</td>
+<td>1.57</td>
+<td>N</td>
+<td>1.057</td>
+</tr>
+<tr>
+<td>407</td>
+<td>410</td>
+<td>0.7495</td>
+<td>1.768</td>
+<td>1.103</td>
+<td>1.60</td>
+<td>N</td>
+<td>1.085</td>
+</tr>
+<tr>
+<td>210</td>
+<td>216</td>
+<td>0.7453</td>
+<td>1.698</td>
+<td>1.171</td>
+<td>1.45</td>
+<td>N</td>
+<td>1.000</td>
+</tr>
+<tr>
+<td>212</td>
+<td>215</td>
+<td>0.3977</td>
+<td>1.842</td>
+<td>1.093</td>
+<td>1.69</td>
+<td>I</td>
+<td>1.000</td>
+</tr>
+<tr>
+<td>212</td>
+<td>216</td>
+<td>0.3773</td>
+<td>1.698</td>
+<td>1.102</td>
+<td>1.54</td>
+<td>I</td>
+<td>1.000</td>
+</tr>
+<tr>
+<td>488</td>
+<td>495</td>
+<td>0.3419</td>
+<td>1.371</td>
+<td>1.048</td>
+<td>1.31</td>
+<td>V</td>
+<td>1.000</td>
+</tr>
+<tr>
+<td>210</td>
+<td>212</td>
+<td>0.1769</td>
+<td>1.377</td>
+<td>1.038</td>
+<td>1.33</td>
+<td>I</td>
+<td>1.023</td>
+</tr>
+<tr>
+<td>419</td>
+<td>442</td>
+<td>0.1319</td>
+<td>1.271</td>
+<td>1.458</td>
+<td>0.87</td>
+<td>N</td>
+<td>1.221</td>
+</tr>
+<tr>
+<td>479</td>
+<td>486</td>
+<td>0.1134</td>
+<td>1.096</td>
+<td>1.218</td>
+<td>0.90</td>
+<td>N</td>
+<td>1.006</td>
+</tr>
+<tr>
+<td>479</td>
+<td>480</td>
+<td>0.1115</td>
+<td>1.090</td>
+<td>1.268</td>
+<td>0.86</td>
+<td>N</td>
+<td>1.000</td>
+</tr>
+<tr>
+<td>500</td>
+<td>507</td>
+<td>0.1028</td>
+<td>1.079</td>
+<td>1.188</td>
+<td>0.91</td>
+<td>R</td>
+<td>1.006</td>
+</tr>
+<tr>
+<td>503</td>
+<td>507</td>
+<td>0.1011</td>
+<td>1.079</td>
+<td>1.006</td>
+<td>1.07</td>
+<td>N</td>
+<td>1.000</td>
+</tr>
+<tr>
+<td>500</td>
+<td>503</td>
+<td>0.0958</td>
+<td>1.083</td>
+<td>1.257</td>
+<td>0.86</td>
+<td>R</td>
+<td>1.006</td>
+</tr>
+<tr>
+<td>480</td>
+<td>486</td>
+<td>0.0867</td>
+<td>1.096</td>
+<td>1.258</td>
+<td>0.87</td>
+<td>K</td>
+<td>1.026</td>
+</tr>
+<tr>
+<td>410</td>
+<td>419</td>
+<td>0.0832</td>
+<td>1.195</td>
+<td>1.339</td>
+<td>0.89</td>
+<td>S</td>
+<td>1.030</td>
+</tr>
+</tbody>
+</table>
+<h2>9. H1: Gray-code Adjacency Hypothesis</h2>
+<h3>9.1 Hypothesis</h3>
+<p>Consecutive residues in protein sequences are preferentially K-map-adjacent
+(Hamming distance = 1) compared to random expectation.</p>
+<h3>9.2 Method</h3>
+<p>For each consecutive pair of residues in each of the 1,299 sequences:
 1. Encode each residue using its base-20 index (He 2012)
 2. Compute Gray code: $g(i) = i \oplus (i \gg 1)$
-3. Compute Hamming distance: $h = \text{popcount}(g(i) \oplus g(j))$
-
-### 9.3 Results
-
-| Metric | Value |
-|--------|-------|
-| Total consecutive pairs | 1,656,225 |
-| Hamming-1 pairs | 314,886 |
-| Observed ratio | **0.1901** |
-| Expected (random) | 0.1613 |
-| **Enrichment** | **1.18×** |
-
-### 9.4 Full Hamming Distance Distribution
-
-| Distance | Count | Percentage | Cumulative |
-|----------|-------|------------|------------|
-| 0 | 92,592 | 5.6% | 5.6% |
-| 1 | 314,886 | 19.0% | 24.6% |
-| 2 | 575,595 | 34.8% | 59.4% |
-| 3 | 439,284 | 26.5% | 85.9% |
-| 4 | 205,470 | 12.4% | 98.3% |
-| 5 | 28,398 | 1.7% | 100.0% |
-
-## 10. Complete Analysis Scripts Inventory
-
-The `datasets/co-evolution/` directory contains **23 Python scripts**
-and **1 shared module** (`coevolution_shared.py`).
-
-| # | Script | Lines | Purpose |
-|---|--------|-------|---------|
-| 1 | `coevolution_shared.py` | 329 | Shared module: FASTA parsing, position arrays (cached), vectorized MI via `np.bincount`, entropy, perplexity, coupling, constraint function, shared-memory worker pool |
-| 2 | `run_kmap_analysis.py` | 908 | Master K-map pipeline: H1-H6 on binary 32×32 K-map, consensus K-map, co-evolution analysis |
-| 3 | `boolean_co-evolution.py` | 637 | Binary K-map Boolean minimization: 32×32 thresholded → Quine-McCluskey → essential prime implicants |
-| 4 | `nary_kmap_co-evolution.py` | 537 | Base-20 K-map analysis: 20×20 frequency map → Boolean → coupling constants |
-| 5 | `master_boolean.py` | 330 | Master Boolean function: 2 essential PIs across 10 pairs (full-length) |
-| 6 | `position_kmap_coevolution.py` | 481 | Position-pair K-maps with MI: builds per-position-pair 20×20 K-maps and minimizes |
-| 7 | `run_allseq_analysis.py` | 328 | Full position-based K-map analysis on ALL 1,299 sequences |
-| 8 | `kmap_boolean_coevolution.py` | 383 | K-map Boolean with full markdown output: 2 rules across 2 position pairs |
-| 9 | `generate_co-evolution_md.py` | 313 | Markdown generator from JSON results |
-| 10 | `generate_full_analysis_md.py` | 397 | Comprehensive report generator from all JSON outputs |
-| 11 | `create_mi_heatmap.py` | 247 | MI heatmap visualization (full + focus region), matplotlib |
-| 12 | `allseq_constraint_function.py` | 247 | Leave-One-Out Cross-Validation: constraint function prediction accuracy |
-| 13 | `predictive_constraint_function.py` | 308 | Three K-map approaches: Observed, Flipped, Continuous prediction |
-| 14 | `flipped_boolean_coevolution.py` | 254 | Flipped Boolean: forbidden pairs analysis (negative selection) |
-| 15 | `dca_boolean_coevolution.py` | 344 | DCA → Boolean pipeline: inverse covariance → coupling → QM minimization |
-| 16 | `variable_position_coevolution.py` | 421 | Variable-position K-map with strategic don't-care conditions |
-| 17 | `perplexity_coevolution.py` | 217 | Perplexity-based co-evolution strength measurement |
-| 18 | `advanced_co-evolution_analysis.py` | 471 | Co-evolution network, Walsh-Hadamard spectrum, variant classification, clustering |
-| 19 | `full_length_analysis.py` | 206 | Full-length entropy and MI analysis (all positions), |
-| 20 | `gpu_full_analysis.py` | 280 | GPU-accelerated analysis: numba parallel entropy/H1/mutations + shared-memory Pool for MI |
-| 21 | `run_all_bg.sh` | 107 | Master launcher: runs all 23 scripts concurrently |
-
-## 11. Flipped Boolean Analysis — Negative Selection
-
-### 11.1 Concept
-
-While the positive Boolean function asks "what co-evolves?", the **flipped** version
+3. Compute Hamming distance: $h = \text{popcount}(g(i) \oplus g(j))$</p>
+<h3>9.3 Results</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total consecutive pairs</td>
+<td>1,656,225</td>
+</tr>
+<tr>
+<td>Hamming-1 pairs</td>
+<td>314,886</td>
+</tr>
+<tr>
+<td>Observed ratio</td>
+<td><strong>0.1901</strong></td>
+</tr>
+<tr>
+<td>Expected (random)</td>
+<td>0.1613</td>
+</tr>
+<tr>
+<td><strong>Enrichment</strong></td>
+<td><strong>1.18×</strong></td>
+</tr>
+</tbody>
+</table>
+<h3>9.4 Full Hamming Distance Distribution</h3>
+<table>
+<thead>
+<tr>
+<th>Distance</th>
+<th>Count</th>
+<th>Percentage</th>
+<th>Cumulative</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>92,592</td>
+<td>5.6%</td>
+<td>5.6%</td>
+</tr>
+<tr>
+<td>1</td>
+<td>314,886</td>
+<td>19.0%</td>
+<td>24.6%</td>
+</tr>
+<tr>
+<td>2</td>
+<td>575,595</td>
+<td>34.8%</td>
+<td>59.4%</td>
+</tr>
+<tr>
+<td>3</td>
+<td>439,284</td>
+<td>26.5%</td>
+<td>85.9%</td>
+</tr>
+<tr>
+<td>4</td>
+<td>205,470</td>
+<td>12.4%</td>
+<td>98.3%</td>
+</tr>
+<tr>
+<td>5</td>
+<td>28,398</td>
+<td>1.7%</td>
+<td>100.0%</td>
+</tr>
+</tbody>
+</table>
+<h2>10. Complete Analysis Scripts Inventory</h2>
+<p>This repository's analysis scripts and the shared module (line counts computed at generation time):</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Script</th>
+<th>Lines</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>coevolution_shared.py</code></td>
+<td>790</td>
+<td>Shared module: FASTA parsing, position arrays (cached), vectorized MI via <code>np.bincount</code>, entropy, perplexity, coupling, constraint function, shared-memory worker pool</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>run_kmap_analysis.py</code></td>
+<td>1018</td>
+<td>Master K-map pipeline: H1-H6 on binary 32×32 K-map, consensus K-map, co-evolution analysis</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>boolean_co-evolution.py</code></td>
+<td>690</td>
+<td>Binary K-map Boolean minimization: 32×32 thresholded → Quine-McCluskey → essential prime implicants</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>nary_kmap_co-evolution.py</code></td>
+<td>591</td>
+<td>Base-20 K-map analysis: 20×20 frequency map → Boolean → coupling constants</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>master_boolean.py</code></td>
+<td>424</td>
+<td>Master Boolean function: 35 essential PIs across 10 pairs (full-length)</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>position_kmap_coevolution.py</code></td>
+<td>527</td>
+<td>Position-pair K-maps with MI: builds per-position-pair 20×20 K-maps and minimizes</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>run_allseq_analysis.py</code></td>
+<td>365</td>
+<td>Full position-based K-map analysis on ALL 1,299 sequences</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>kmap_boolean_coevolution.py</code></td>
+<td>385</td>
+<td>K-map Boolean with full markdown output: 35 rules across 10 position pairs</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>generate_co-evolution_md.py</code></td>
+<td>345</td>
+<td>Markdown generator from JSON results</td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>generate_full_analysis_md.py</code></td>
+<td>501</td>
+<td>Comprehensive report generator from all JSON outputs</td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>create_mi_heatmap.py</code></td>
+<td>303</td>
+<td>MI heatmap visualization (full + focus region), matplotlib</td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>allseq_constraint_function.py</code></td>
+<td>211</td>
+<td>Leave-One-Out Cross-Validation: constraint function prediction accuracy</td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>predictive_constraint_function.py</code></td>
+<td>328</td>
+<td>Three K-map approaches: Observed, Flipped, Continuous prediction</td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>flipped_boolean_coevolution.py</code></td>
+<td>232</td>
+<td>Flipped Boolean: forbidden pairs analysis (negative selection)</td>
+</tr>
+<tr>
+<td>15</td>
+<td><code>dca_boolean_coevolution.py</code></td>
+<td>391</td>
+<td>DCA → Boolean pipeline: inverse covariance → coupling → QM minimization</td>
+</tr>
+<tr>
+<td>16</td>
+<td><code>variable_position_coevolution.py</code></td>
+<td>474</td>
+<td>Variable-position K-map with strategic don't-care conditions</td>
+</tr>
+<tr>
+<td>17</td>
+<td><code>perplexity_coevolution.py</code></td>
+<td>287</td>
+<td>Perplexity-based co-evolution strength measurement</td>
+</tr>
+<tr>
+<td>18</td>
+<td><code>advanced_co-evolution_analysis.py</code></td>
+<td>474</td>
+<td>Co-evolution network, Walsh-Hadamard spectrum, variant classification, clustering</td>
+</tr>
+<tr>
+<td>19</td>
+<td><code>full_length_analysis.py</code></td>
+<td>267</td>
+<td>Full-length entropy and MI analysis (all positions),</td>
+</tr>
+<tr>
+<td>20</td>
+<td><code>gpu_full_analysis.py</code></td>
+<td>274</td>
+<td>torch (GPU, CPU fallback) full analysis: entropy, H1, mutations, full MI matrix</td>
+</tr>
+<tr>
+<td>21</td>
+<td><code>run_all_bg.sh</code></td>
+<td>110</td>
+<td>Master launcher: runs all 23 scripts concurrently</td>
+</tr>
+</tbody>
+</table>
+<h2>11. Flipped Boolean Analysis — Negative Selection</h2>
+<h3>11.1 Concept</h3>
+<p>While the positive Boolean function asks "what co-evolves?", the <strong>flipped</strong> version
 asks "what CANNOT co-exist?" The on-set (1) is assigned to residue pairs that are
-NEVER observed together across all sequences, capturing **negative selection**.
-
-### 11.2 Method
-
-1. Build 20×20 frequency K-map for each position pair
-2. Cells with frequency = 0 → on-set (1) — FORBIDDEN
-3. Cells with frequency &gt; 0 → off-set (0) — ALLOWED
-4. Reference pair → don't-care (-1)
-5. QM minimization → minimal forbidden constraints
-
-### 11.3 Results
-
-The flipped analysis produced **0** forbidden rules. Why?
-
-With 1,299 sequences across multiple Omicron sub-lineages,
-virtually every amino acid pair appears at least once at every position pair.
-The Spike protein's N-terminal region is under **purifying selection** but not
-**absolute constraint** — any single substitution has been sampled by evolution.
-
-This means:
-
-- **No universally forbidden pairs exist** — only statistically disfavored ones
-- Co-evolution is **probabilistic**, not deterministic
-- The constraint function $J_{ij}$ (continuous) is more appropriate than Boolean
-
-## 12. Leave-One-Out Cross-Validation
-
-### 12.1 Method
-
-For each position pair $(i,j)$:
+NEVER observed together across all sequences, capturing <strong>negative selection</strong>.</p>
+<h3>11.2 Method</h3>
+<ol>
+<li>Build 20×20 frequency K-map for each position pair</li>
+<li>Cells with frequency = 0 → on-set (1) — FORBIDDEN</li>
+<li>Cells with frequency &gt; 0 → off-set (0) — ALLOWED</li>
+<li>Reference pair → don't-care (-1)</li>
+<li>QM minimization → minimal forbidden constraints</li>
+</ol>
+<h3>11.3 Results</h3>
+<p>The flipped analysis produced <strong>246</strong> never-observed
+cubes over 10 position pairs.  With 1,299 sequences (299 unique)
+a never-observed combination is absence of evidence, not proof of incompatibility.</p>
+<h2>12. Leave-One-Out Cross-Validation</h2>
+<h3>12.1 Method</h3>
+<p>For each position pair $(i,j)$:
 1. Exclude one sequence from the dataset
-2. Build constraint function $C_{ij}(a,b)$ from the remaining {n_all - 1:,} sequences
-3. Predict the co-evolving partner for the held-out sequence: $b^* = \arg\max_b C_{ij}(a_{\text{mutation}}, b)$
-4. Check if prediction matches
-
-### 12.2 Key Insight
-
-LOO-CV accuracy was near zero (0.08%). This reveals that co-evolutionary rules are **lineage-specific** —
-different Omicron sub-variants (BA.1, BA.2, BA.4, BA.5, XBB, etc.) have **different co-evolutionary patterns**.
-Rules learned from one variant do not generalize to others.
-
-## 13. What This Analysis Pipeline Achieves
-
-### 13.1 By the Numbers
-
-| Metric | Value |
-|--------|-------|
-| Input sequences | 1,299 |
-| Positions analyzed | 1276 |
-| Position arrays built | 1,299 × 1276 = 1,657,524 integers |
-| Variable positions (H &gt; 0.3) | 21 |
-| Co-evolving pairs (MI &gt; 0.1) | 17 |
-| Boolean expressions (QM minimized) | 2 essential prime implicants |
-| Unique position pairs with rules | 2 |
-| Lean 4 theorems | 246 (131 + 115) |
-| Python scripts | 23 |
-| Total Python LOC | ~7,000 |
-| Shared module LOC | 340 |
-
-## 14. How to Apply the Co-evolution Rules
-
-### 14.1 For a New Spike Sequence
-
-```python
-# 1. Extract residues at the co-evolving variable positions
+2. Build constraint function $C_{ij}(a,b)$ from the remaining 1,298 sequences
+3. Predict the partner for the held-out sequence: $b^* = \arg\max_b C_{ij}(a_{\text{mutation}}, b)$ over partners $b$ observed with $a$
+4. Check if prediction matches</p>
+<h3>12.2 Result</h3>
+<p>LOO-CV accuracy 99.4% (3241/3259); conditional-frequency baseline 65.5%; on the 300 de-duplicated sequences 98.3%.
+The residue at one position of a co-evolving pair nearly determines the other: the
+variants are linked alleles of one clonal population, so this measures linkage.</p>
+<h2>13. What This Analysis Pipeline Achieves</h2>
+<h3>13.1 By the Numbers</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Input sequences</td>
+<td>1,299</td>
+</tr>
+<tr>
+<td>Positions analyzed</td>
+<td>1276</td>
+</tr>
+<tr>
+<td>Position arrays built</td>
+<td>1,299 × 1276 = 1,657,524 integers</td>
+</tr>
+<tr>
+<td>Variable positions (H &gt; 0.3)</td>
+<td>21</td>
+</tr>
+<tr>
+<td>Co-evolving pairs (MI &gt; 0.1)</td>
+<td>17</td>
+</tr>
+<tr>
+<td>Boolean expressions (QM minimized)</td>
+<td>35 essential prime implicants</td>
+</tr>
+<tr>
+<td>Unique position pairs with rules</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Top-level Python scripts</td>
+<td>25</td>
+</tr>
+<tr>
+<td>Top-level Python LOC</td>
+<td>10,779</td>
+</tr>
+</tbody>
+</table>
+<h2>14. How to Apply the Co-evolution Rules</h2>
+<h3>14.1 For a New Spike Sequence</h3>
+<pre><code class="language-python"># 1. Extract residues at the co-evolving variable positions
 # (the 21 variable positions identified by entropy H &gt; 0.3)
 
 # 2. For each co-evolving position pair, check the Boolean function
 for (pos_i, pos_j) in coevolving_pairs:
-    aa_i = encode(seq_region[pos_i - 68])
-    aa_j = encode(seq_region[pos_j - 68])
+    aa_i = encode(seq[pos_i])   # He-2012 code at alignment column pos_i
+    aa_j = encode(seq[pos_j])
 
-    # Encode as 4+4 bits
-    bits = int_to_bits(aa_i, 4) + int_to_bits(aa_j, 4)
+    # 5 + 5 bits (32x32 padded map)
+    bits = int_to_bits(aa_i, 5) + int_to_bits(aa_j, 5)
 
     # Check if ANY essential prime implicant matches
     is_coevolving = any(pi.matches(bits) for pi in prime_implicants[(pos_i, pos_j)])
@@ -632,46 +2594,122 @@ def predict_partner(pos_i, aa_i, pos_j):
         if pi.matches_row(aa_i):
             return pi.col_aa  # required co-evolving partner
     return None  # no constraint
-```
-
-## 15. Key References
-
-1. Karnaugh, M. (1953). The Map Method for Synthesis of Combinational Logic Circuits. *AIEE Transactions*.
-2. Gray, F. (1953). Pulse Code Communication. U.S. Patent 2,632,058.
-3. Quine, W.V. (1952). The Problem of Simplifying Truth Functions. *American Mathematical Monthly*.
-4. McCluskey, E.J. (1956). Minimization of Boolean Functions. *Bell System Technical Journal*.
-5. He, P.A. et al. (2012). A novel graphical representation of proteins. *MATCH Communications*.
-6. Petoukhov, S.V. (2024). Matrix Representations of Genetic Code and Karnaugh Maps. *Biosystems*.
-7. de Moura, L. et al. (2021). The Lean 4 Theorem Prover and Programming Language.
-
----
-## Combined MI + Perplexity Analysis (all experiments)
-
-Both lenses are computed for every variable-position pair:
+</code></pre>
+<h2>15. Key References</h2>
+<ol>
+<li>Karnaugh, M. (1953). The Map Method for Synthesis of Combinational Logic Circuits. <em>AIEE Transactions</em>.</li>
+<li>Gray, F. (1953). Pulse Code Communication. U.S. Patent 2,632,058.</li>
+<li>Quine, W.V. (1952). The Problem of Simplifying Truth Functions. <em>American Mathematical Monthly</em>.</li>
+<li>McCluskey, E.J. (1956). Minimization of Boolean Functions. <em>Bell System Technical Journal</em>.</li>
+<li>He, P.A. et al. (2012). A novel graphical representation of proteins. <em>MATCH Communications</em>.</li>
+<li>Petoukhov, S.V. (2024). Matrix Representations of Genetic Code and Karnaugh Maps. <em>Biosystems</em>.</li>
+<li>de Moura, L. et al. (2021). The Lean 4 Theorem Prover and Programming Language.</li>
+</ol>
+<hr />
+<h2>Combined MI + Perplexity Analysis (all experiments)</h2>
+<p>Both lenses are computed for every variable-position pair:
 MI (total correlation) and perplexity ratio (determinism).
-Combined score = average of normalized ranks.
-
-| Variable positions | 21 |
-| Pairs scored (MI + ratio) | 17 |
-
-| Rank | Pos i | Pos j | MI | PP ratio | Combined |
-|------|-------|-------|-----|----------|----------|
-| 1 | 378 | 407 | 0.792 | 1.74 | 0.875 |
-| 2 | 18 | 26 | 0.802 | 1.73 | 0.844 |
-| 3 | 66 | 94 | 0.791 | 1.73 | 0.812 |
-| 4 | 210 | 215 | 0.753 | 1.79 | 0.812 |
-| 5 | 212 | 215 | 0.398 | 1.84 | 0.750 |
-| 6 | 373 | 378 | 0.807 | 1.59 | 0.719 |
-| 7 | 215 | 216 | 0.757 | 1.68 | 0.656 |
-| 8 | 407 | 410 | 0.750 | 1.71 | 0.656 |
-| 9 | 210 | 216 | 0.745 | 1.66 | 0.531 |
-| 10 | 212 | 216 | 0.377 | 1.68 | 0.531 |
-
-Top 3 by MI: (373,378), (18,26), (378,407)
+Combined score = average of normalized ranks.</p>
+<p>| Variable positions | 21 |
+| Pairs scored (MI + ratio) | 17 |</p>
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Pos i</th>
+<th>Pos j</th>
+<th>MI</th>
+<th>PP ratio</th>
+<th>Combined</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>378</td>
+<td>407</td>
+<td>0.792</td>
+<td>1.74</td>
+<td>0.875</td>
+</tr>
+<tr>
+<td>2</td>
+<td>18</td>
+<td>26</td>
+<td>0.802</td>
+<td>1.73</td>
+<td>0.844</td>
+</tr>
+<tr>
+<td>3</td>
+<td>66</td>
+<td>94</td>
+<td>0.791</td>
+<td>1.73</td>
+<td>0.812</td>
+</tr>
+<tr>
+<td>4</td>
+<td>210</td>
+<td>215</td>
+<td>0.753</td>
+<td>1.79</td>
+<td>0.812</td>
+</tr>
+<tr>
+<td>5</td>
+<td>212</td>
+<td>215</td>
+<td>0.398</td>
+<td>1.84</td>
+<td>0.750</td>
+</tr>
+<tr>
+<td>6</td>
+<td>373</td>
+<td>378</td>
+<td>0.807</td>
+<td>1.59</td>
+<td>0.719</td>
+</tr>
+<tr>
+<td>7</td>
+<td>215</td>
+<td>216</td>
+<td>0.757</td>
+<td>1.68</td>
+<td>0.656</td>
+</tr>
+<tr>
+<td>8</td>
+<td>407</td>
+<td>410</td>
+<td>0.750</td>
+<td>1.71</td>
+<td>0.656</td>
+</tr>
+<tr>
+<td>9</td>
+<td>210</td>
+<td>216</td>
+<td>0.745</td>
+<td>1.66</td>
+<td>0.531</td>
+</tr>
+<tr>
+<td>10</td>
+<td>212</td>
+<td>216</td>
+<td>0.377</td>
+<td>1.68</td>
+<td>0.531</td>
+</tr>
+</tbody>
+</table>
+<p>Top 3 by MI: (373,378), (18,26), (378,407)
 Top 3 by PP ratio: (212,215), (210,215), (378,407)
-Top 3 by combined: (378,407), (18,26), (66,94)
-
----
-*Generated October 01, 2026 at 02:02 by `generate_full_pipeline_doc.py`*
-*All values computed from 1,299 Omicron Spike sequences using shared `coevolution_shared` module*</pre>
+Top 3 by combined: (378,407), (18,26), (66,94)</p>
+<hr />
+<p><em>Generated November 22, 2026 at 23:30 by <code>generate_full_pipeline_doc.py</code></em>
+<em>All values computed from 1,299 Omicron Spike sequences using shared <code>coevolution_shared</code> module</em></p>
 </body></html>

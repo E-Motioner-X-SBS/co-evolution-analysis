@@ -1,3 +1,4 @@
+from kmap_paths import REPO_ROOT  # noqa: E402
 
 
 def combined_pipeline_section():
@@ -45,7 +46,7 @@ def combined_pipeline_section():
 COMPLETE PIPELINE DOCUMENTATION GENERATOR
 ==========================================
 Generates FULL_PIPELINE_ANALYSIS.md with:
- - All 246 Lean theorems catalog (131 in lean_proofs + 115 in n-ary-kmap)
+ - Pointers to the Lean proofs (lean_proofs, n-ary-kmap)
  - Complete dataset description
  - K-map construction step-by-step with formulas
  - All Boolean expressions (Quine-McCluskey minimized)
@@ -63,7 +64,7 @@ from collections import Counter
 import numpy as np
 
 # ── Setup ────────────────────────────────────────────────────────────
-BASE = Path("/store/shuvam/E-motioner-X-SBS/datasets/co-evolution")
+BASE = REPO_ROOT
 sys.path.insert(0, str(BASE))
 os.chdir(str(BASE))
 
@@ -139,6 +140,8 @@ def _load(path):
 bool_data = _load(RESULTS / "kmap_boolean_coevolution/boolean_functions.json")
 master_data = _load(RESULTS / "master_boolean/master_boolean_summary.json")
 all_rules = bool_data.get("rules", [])
+flipped_data = _load(RESULTS / "flipped_boolean_results/flipped_boolean_summary.json")
+loocv_data = _load(RESULTS / "allseq_constraint_results/allseq_constraint_summary.json")
 
 
 # Master boolean (full-length)
@@ -232,14 +235,16 @@ for pos in range(full_len_actual):
         (pos, AA_LIST[top], float(pos_freq[pos, top]), float(entropy_vec[pos]))
     )
 
-# Frequency K-map for example pair (76,77)
-freq_76_77 = np.zeros((N_AA, N_AA), dtype=np.float64)
+# Frequency K-map for the example pair: the top master_boolean pair
+_top = (master_data.get("top_co_evolving_pairs") or [{"pos_i": 0, "pos_j": 1}])[0]
+EX_I, EX_J = int(_top["pos_i"]), int(_top["pos_j"])
+freq_ex = np.zeros((N_AA, N_AA), dtype=np.float64)
 for arr in pos_arrays[:n_all]:
-    if 76 < len(arr) and 77 < len(arr):
-        ci, cj = int(arr[76]), int(arr[77])
-        if ci >= 0 and cj >= 0:
-            freq_76_77[ci, cj] += 1
-freq_76_77 /= n_all if n_all else 1
+    if EX_I < len(arr) and EX_J < len(arr):
+        ci, cj = int(arr[EX_I]), int(arr[EX_J])
+        if 0 <= ci < N_AA and 0 <= cj < N_AA:  # gap/unknown (20) excluded
+            freq_ex[ci, cj] += 1
+freq_ex /= max(freq_ex.sum(), 1)
 
 # Coupling for top pairs
 couplings = []
@@ -277,7 +282,7 @@ w(f"**Generated:** {now}")
 w(
     f"**Dataset:** SARS-CoV-2 Omicron Spike Protein — {n_all:,} sequences, {full_len} positions"
 )
-w(f"**Compute:** NVIDIA A100 80GB + 24-core Xeon, Python 3.10")
+w(f"**Compute:** NVIDIA A100 80GB + 24-core Xeon (torch; CPU fallback)")
 w(f"**Author:** Shuvam Banerji Seal — IISER Kolkata")
 w()
 w("---")
@@ -302,9 +307,9 @@ w(
     f"**{len(rules_by_pair)}** co-evolving position pairs with Boolean rules. Quine-McCluskey"
 )
 w(
-    f"minimization produced **{len(all_rules)} essential prime implicants** — each representing"
+    f"minimization produced **{len(all_rules)} essential prime implicants** — each the only"
 )
-w("an irreducible co-evolutionary constraint.")
+w("cover of some observed mutation combination.")
 w()
 w(f"**Key results:** H1 Gray-code adjacency enrichment = **{h1_ratio:.2f}×**; ")
 w(
@@ -314,79 +319,16 @@ w(f"{len(var_positions)}/{full_len_actual} positions are evolutionarily variable
 w()
 
 # ── 1. LEAN THEOREMS ────────────────────────────────────────────────
-w("## 1. Formal Foundations — 246 Lean 4 Theorems (131 + 115)")
+w("## 1. Formal Foundations (Lean 4)")
 w()
-w(
-    "The entire framework rests on formal proofs in Lean 4.29.0. All theorems are **sorry-free** with"
-)
-w(
-    "**no user-declared axioms**; most are proved by `native_decide` (100 of the 131 in `lean_proofs/`),"
-)
-w(
-    "which additionally trusts the compiler. `lake build` passes clean (per-theorem audit:"
-)
-w(
-    "`lean_proofs/proofs/is_kmap_possible/axiom_audit.py`)."
-)
-w()
-
-w("### 1.1 Binary K-map (`lean_proofs/`) — 131 Theorems")
-w()
-w("| File | Theorems | What Is Proved |")
-w("|------|----------|---------------|")
-w(
-    "| `KmapProofs.lean` | 16 | Gray code boundedness, injectivity, involution, DNA 2-bit encoding (A=00,C=01,G=11,T=10), complementarity, transition/transversion |"
-)
-w(
-    "| `KmerIndexing.lean` | 35 | k-mer encoding (k=1..4) injectivity and boundedness via concatenation, row/column K-map decomposition |"
-)
-w(
-    "| `AminoAcidEncoding.lean` | 27 | 20 AAs → 5-bit Gray code, 7 physicochemical groups, within-group dist-1 (14 pairs), cross-group dist-1 (26 pairs), max-dist pairs (F-H, Y-E, W-R, M-K at dist=5) |"
-)
-w(
-    "| `ContactMapCompleteness.lean` | 20 | Contact maps as symmetric Boolean functions, irreducibility proof (no two contact pairs are 1-bit K-map adjacent) |"
-)
-w(
-    "| `KmapEncodingEquiv.lean` | 8 | Distance distribution, Q₅ hypercube degree=5, encoding captures 50% of Q₅ edges |"
-)
-w(
-    "| `ContactCircuits.lean` | 12 | Contact-campaign plumbing: He-code distance counts, separation bins, cell-index injectivity, QM cover soundness, padding safety |"
-)
-w(
-    "| `SequenceCircuits.lean` | 13 | Sequence-as-circuit: segment lemma, Gray/binary encoding invariance, faithfulness, Gray code is GF(2)-linear |"
-)
-w()
-
-w("### 1.2 N-ary K-map (`n-ary-kmap/`) — 115 Theorems")
-w()
-w("| File | Theorems | What Is Proved |")
-w("|------|----------|---------------|")
-w(
-    "| `NaryGrayCode.lean` | 54 | Generalized n-ary reflected Gray code; digit-sum formula g_k = (d_k + d_{k+1}) mod b |"
-)
-w(
-    "| `BaseNDnaEncoding.lean` | 13 | Base-4 DNA encoder with transition adjacency (A↔C, C↔G, G↔T, T↔A as Gray neighbors) |"
-)
-w(
-    "| `BaseNAminoEncoding.lean` | 33 | Base-20 amino acid encoder, 7-group physicochemical ordering |"
-)
-w("| `BaseNKMap.lean` | 15 | Base-N K-map structure, cell adjacency, cyclic wrapping |")
-w()
-
-w("### 1.3 Speculative Encoding (`speculative-binary-encoding/`) — 15 Theorems")
-w()
-w("| File | Theorems | What Is Proved |")
-w("|------|----------|---------------|")
-w(
-    "| `AntiCorrelation.lean` | 15 | H1 encoding-invariance: the anti-correlation result holds across all 22 binary encodings |"
-)
-w()
-w("### 1.4 Theorem Verification Bridge")
-w()
-w(
-    "The `lean_consistency.py` script in `kmap-sbm-validation/` re-computes every Lean theorem"
-)
-w("in Python and reports discrepancies. Result: **156/156 checks pass** (4 files), zero discrepancies.")
+w("The encoding framework is formalised in Lean 4 in the `lean_proofs` repository")
+w("(binary K-maps, Gray codes, amino-acid encoding, contact circuits, sequence")
+w("circuits) and in `n-ary-kmap` (base-N K-maps).  All theorems are sorry-free with")
+w("no user-declared axioms; theorems proved by `native_decide` additionally trust")
+w("the compiler.  Current theorem counts and the per-theorem axiom audit are in")
+w("`lean_proofs/README.md` and `lean_proofs/proofs/is_kmap_possible/axiom_audit.py`;")
+w("`kmap-sbm-validation/src/kmap_sbm/validation/lean_consistency.py` re-checks the")
+w("encoding facts in Python.")
 w()
 
 # ── 2. DATASET ──────────────────────────────────────────────────────
@@ -464,7 +406,7 @@ w()
 w(
     f"For {n_all:,} sequences, each of length up to {full_len}, we build a list of `np.int32` arrays."
 )
-w("Gap characters ('-') and ambiguous residues are mapped to -1 and excluded.")
+w("Gap characters ('-') and ambiguous residues are encoded as state 20 and excluded from all counts.")
 w()
 
 w("### 3.3 Step 2: Position-Pair K-map (20×20)")
@@ -475,29 +417,25 @@ w(
     "$$K_{ij}(a, b) = \\frac{1}{N}\\sum_{s=1}^{N} \\mathbb{1}[\\text{seq}_s[i] = a \\land \\text{seq}_s[j] = b]$$"
 )
 w()
-w("where $N = {n_all:,}$ is the number of sequences, $a,b \\in \\{0,\\dots,19\\}$.")
+w(f"where $N = {n_all:,}$ is the number of sequences, $a,b \\in \\{{0,\\dots,19\\}}$.")
 w()
 
-w("### 3.4 Example: Frequency K-map for Positions (76, 77)")
+w(f"### 3.4 Example: Frequency K-map for Positions ({EX_I}, {EX_J})")
 w()
-w(
-    "The reference residues are **D** at position 76 and **N** at position 77 (Wuhan-Hu-1)."
-)
-w()
-w("The top 10 most frequent dipeptide pairs at (76, 77):")
+w("The pair with the highest mutation-only MI (0-based alignment columns, not Spike")
+w(f"residue numbers). The most frequent residue pairs at ({EX_I}, {EX_J}):")
 w()
 
-# Find top pairs for (76,77)
-top_76_77 = []
+top_ex = []
 for ai in range(N_AA):
     for aj in range(N_AA):
-        if freq_76_77[ai, aj] > 0:
-            top_76_77.append((AA_LIST[ai], AA_LIST[aj], freq_76_77[ai, aj]))
-top_76_77.sort(key=lambda x: x[2], reverse=True)
+        if freq_ex[ai, aj] > 0:
+            top_ex.append((AA_LIST[ai], AA_LIST[aj], freq_ex[ai, aj]))
+top_ex.sort(key=lambda x: x[2], reverse=True)
 
 w("| Rank | AA(i) | AA(j) | Frequency |")
 w("|------|-------|-------|-----------|")
-for rank, (a1, a2, f) in enumerate(top_76_77[:15], 1):
+for rank, (a1, a2, f) in enumerate(top_ex[:15], 1):
     w(f"| {rank} | {a1} | {a2} | {f:.4f} |")
 w()
 
@@ -506,18 +444,18 @@ w()
 w("The frequency K-map is converted to a Boolean function by thresholding:")
 w()
 w(
-    "$$B_{ij}(a,b) = \\begin{cases} 1 & \\text{if } K_{ij}(a,b) \\geq \\text{threshold} \\\\ 0 & \\text{if } K_{ij}(a,b) < \\text{threshold} \\\\ -1 & \\text{if position is conserved (don't-care)} \\end{cases}$$"
+    "$$B_{ij}(a,b) = \\begin{cases} 1 & \\text{observed, not the reference pair} \\\\ 0 & \\text{never observed} \\\\ -1 & \\text{reference pair or padding (don\'t-care)} \\end{cases}$$"
 )
 w()
-w("The threshold is typically the 75th percentile of non-zero frequencies.")
-w("Don't-care (-1) marks the reference pair (conserved).")
+w("This is the mutation K-map of master_boolean.py; rows/cols 20-31 are padding (don't-care).")
+w()
 w()
 
 w("### 3.6 Step 4: Quine-McCluskey Boolean Minimization")
 w()
 w("The 32×32 = 1,024-cell padded K-map is flattened to a truth table with 10 binary variables")
 w("(5 bits for row amino acid + 5 bits for column amino acid). The Quine-McCluskey")
-w("algorithm finds the minimal set of prime implicants covering all on-set cells:")
+w("algorithm (exact, don't-care aware) gives the prime implicants; essentials plus a greedy completion cover every on-set cell:")
 w()
 w(
     "$$f(\\text{pos}_i, \\text{pos}_j, \\text{aa}_i, \\text{aa}_j) = \\bigvee_k \\bigwedge_{m \\in S_k} b_m$$"
@@ -623,8 +561,8 @@ w()
 w("$$f(s_4, s_3, s_2, s_1, s_0, t_4, t_3, t_2, t_1, t_0) = \\text{AND of literals}$$")
 w()
 w("**Variables:**")
-w("- $s_4 s_3 s_2 s_1 s_0$ = 5-bit Gray encoding of residue at position $i$")
-w("- $t_4 t_3 t_2 t_1 t_0$ = 5-bit Gray encoding of residue at position $j$")
+w("- $s_4 s_3 s_2 s_1 s_0$ = bits of the He-2012 code (natural binary) of the residue at position $i$")
+w("- $t_4 t_3 t_2 t_1 t_0$ = the same for position $j$")
 w("- $\\bar{s}_k$ = NOT ($s_k = 0$), $s_k$ = ($s_k = 1$)")
 w()
 
@@ -670,12 +608,12 @@ for (pos_i, pos_j), pair_rules in sorted(rules_by_pair.items()):
     w()
 
     w(
-        f"**Interpretation:** When position {pos_i} mutates to any of the listed residues,"
+        f"**Interpretation:** the listed residue combinations occur together in the alignment;"
     )
     w(
-        f"position {pos_j} must co-evolve to the corresponding partner residue to maintain"
+        f"they are observations, not stability constraints."
     )
-    w(f"protein stability. The reference pair is ({ref_i_val}, {ref_j_val}).")
+    w(f"The reference pair is ({ref_i_val}, {ref_j_val}).")
     w()
 
 w(f"\n**Total inference rules:** {rule_num}")
@@ -758,7 +696,7 @@ w("(Hamming distance = 1) compared to random expectation.")
 w()
 w("### 9.2 Method")
 w()
-w("For each consecutive pair of residues in each of the {n_all:,} sequences:")
+w(f"For each consecutive pair of residues in each of the {n_all:,} sequences:")
 w("1. Encode each residue using its base-20 index (He 2012)")
 w("2. Compute Gray code: $g(i) = i \\oplus (i \\gg 1)$")
 w("3. Compute Hamming distance: $h = \\text{popcount}(g(i) \\oplus g(j))$")
@@ -791,8 +729,8 @@ w()
 # ── 10. THE ANALYSIS SCRIPTS ──────────────────────────────────────────
 w("## 10. Complete Analysis Scripts Inventory")
 w()
-w(f"The `datasets/co-evolution/` directory contains **23 Python scripts**")
-w(f"and **1 shared module** (`coevolution_shared.py`).")
+w("This repository's analysis scripts and the shared module (line counts computed at generation time):")
+w()
 w()
 
 scripts_info = [
@@ -890,15 +828,17 @@ scripts_info = [
     (
         "`gpu_full_analysis.py`",
         "280",
-        "GPU-accelerated analysis: numba parallel entropy/H1/mutations + shared-memory Pool for MI",
+        "torch (GPU, CPU fallback) full analysis: entropy, H1, mutations, full MI matrix",
     ),
     ("`run_all_bg.sh`", "107", "Master launcher: runs all 23 scripts concurrently"),
 ]
 
 w("| # | Script | Lines | Purpose |")
 w("|---|--------|-------|---------|")
-for i, (name, lines, desc) in enumerate(scripts_info, 1):
-    w(f"| {i} | {name} | {lines} | {desc} |")
+for i, (name, _old_count, desc) in enumerate(scripts_info, 1):
+    _p = BASE / name.strip("`")
+    _n = sum(1 for _ in open(_p)) if _p.exists() else "—"
+    w(f"| {i} | {name} | {_n} | {desc} |")
 w()
 
 # ── 11. FLIPPED BOOLEAN ──────────────────────────────────────────────
@@ -922,18 +862,9 @@ w("5. QM minimization → minimal forbidden constraints")
 w()
 w("### 11.3 Results")
 w()
-w("The flipped analysis produced **0** forbidden rules. Why?")
-w()
-w("With 1,299 sequences across multiple Omicron sub-lineages,")
-w("virtually every amino acid pair appears at least once at every position pair.")
-w("The Spike protein's N-terminal region is under **purifying selection** but not")
-w("**absolute constraint** — any single substitution has been sampled by evolution.")
-w()
-
-w("This means:\n")
-w("- **No universally forbidden pairs exist** — only statistically disfavored ones")
-w("- Co-evolution is **probabilistic**, not deterministic")
-w("- The constraint function $J_{ij}$ (continuous) is more appropriate than Boolean")
+w(f"The flipped analysis produced **{flipped_data.get('total_forbidden_rules', 0)}** never-observed")
+w(f"cubes over {flipped_data.get('co_evolving_pairs', 0)} position pairs.  With 1,299 sequences (299 unique)")
+w("a never-observed combination is absence of evidence, not proof of incompatibility.")
 w()
 
 # ── 12. LOOCV ────────────────────────────────────────────────────────
@@ -944,22 +875,22 @@ w()
 w("For each position pair $(i,j)$:")
 w("1. Exclude one sequence from the dataset")
 w(
-    "2. Build constraint function $C_{ij}(a,b)$ from the remaining {n_all - 1:,} sequences"
+    f"2. Build constraint function $C_{{ij}}(a,b)$ from the remaining {n_all - 1:,} sequences"
 )
 w(
-    "3. Predict the co-evolving partner for the held-out sequence: $b^* = \\arg\\max_b C_{ij}(a_{\\text{mutation}}, b)$"
+    "3. Predict the partner for the held-out sequence: $b^* = \\arg\\max_b C_{ij}(a_{\\text{mutation}}, b)$ over partners $b$ observed with $a$"
 )
 w("4. Check if prediction matches")
 w()
-w("### 12.2 Key Insight")
+w("### 12.2 Result")
 w()
-w(
-    "LOO-CV accuracy was near zero (0.08%). This reveals that co-evolutionary rules are **lineage-specific** —"
-)
-w(
-    "different Omicron sub-variants (BA.1, BA.2, BA.4, BA.5, XBB, etc.) have **different co-evolutionary patterns**."
-)
-w("Rules learned from one variant do not generalize to others.")
+_u = loocv_data.get("unique_sequences", {})
+w(f"LOO-CV accuracy {100 * loocv_data.get('overall_accuracy', 0):.1f}% "
+  f"({loocv_data.get('total_correct', 0)}/{loocv_data.get('total_test', 0)}); conditional-frequency baseline "
+  f"{100 * loocv_data.get('conditional_baseline_accuracy', 0):.1f}%; on the "
+  f"{loocv_data.get('n_unique_sequences', 0)} de-duplicated sequences {100 * _u.get('accuracy', 0):.1f}%.")
+w("The residue at one position of a co-evolving pair nearly determines the other: the")
+w("variants are linked alleles of one clonal population, so this measures linkage.")
 w()
 
 # ── 13. SCALE ─────────────────────────────────────────────────────────
@@ -980,10 +911,9 @@ w(
     f"| Boolean expressions (QM minimized) | {len(all_rules)} essential prime implicants |"
 )
 w(f"| Unique position pairs with rules | {len(rules_by_pair)} |")
-w(f"| Lean 4 theorems | 246 (131 + 115) |")
-w(f"| Python scripts | 23 |")
-w(f"| Total Python LOC | ~7,000 |")
-w(f"| Shared module LOC | 340 |")
+_py = sorted(BASE.glob("*.py"))
+w(f"| Top-level Python scripts | {len(_py)} |")
+w(f"| Top-level Python LOC | {sum(sum(1 for _ in open(f)) for f in _py):,} |")
 w()
 
 # ── 14. HOW TO USE THE RULES ──────────────────────────────────────────
@@ -997,11 +927,11 @@ w("# (the 21 variable positions identified by entropy H > 0.3)")
 w()
 w("# 2. For each co-evolving position pair, check the Boolean function")
 w("for (pos_i, pos_j) in coevolving_pairs:")
-w("    aa_i = encode(seq_region[pos_i - 68])")
-w("    aa_j = encode(seq_region[pos_j - 68])")
+w("    aa_i = encode(seq[pos_i])   # He-2012 code at alignment column pos_i")
+w("    aa_j = encode(seq[pos_j])")
 w()
-w("    # Encode as 4+4 bits")
-w("    bits = int_to_bits(aa_i, 4) + int_to_bits(aa_j, 4)")
+w("    # 5 + 5 bits (32x32 padded map)")
+w("    bits = int_to_bits(aa_i, 5) + int_to_bits(aa_j, 5)")
 w()
 w("    # Check if ANY essential prime implicant matches")
 w(
@@ -1066,5 +996,5 @@ print(f"  - {len(mi_pairs)} MI pairs documented")
 print(f"  - {len(consensus)} positions with entropy/perplexity")
 print(f"  - {len(couplings)} coupling constant tables")
 print(f"  - {len(perp_results)} perplexity analyses")
-print(f"  - 246 Lean theorems cataloged")
+print(f"  - Lean proof pointers")
 print(f"  - Full scripts inventory")

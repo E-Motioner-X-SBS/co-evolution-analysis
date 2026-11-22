@@ -27,11 +27,16 @@ Method:
 
 Output: results/contacts/validate_residue_rules_3d.json
 """
+
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import REPO_ROOT  # noqa: E402
 import json
 import sys
 from pathlib import Path
 
-REPO = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis")
+REPO = REPO_ROOT
 sys.path.insert(0, str(REPO / "scripts"))
 from rules3d_common import (OmicronModels, CONTACT, MIN_SEP, N_RAND,
                             dist)  # noqa: E402
@@ -91,7 +96,7 @@ def main():
             # columns, and the char at a mapped column is canonical by
             # construction, but it may differ from the RULE's aa_i (the rule
             # aa is from the MSA consensus of that column).
-            if aligned[pi] == ai and aligned[pj] == aj:
+            if aligned[pi] in ai and aligned[pj] in aj:  # ai/aj are residue sets, e.g. "KR"
                 fired = True
             if not fired:
                 continue

@@ -3,7 +3,7 @@
 test_kmap_structure.py — Adversarial unit + property tests for the
 contact-K-map campaign library (scripts/kmap_structure.py).
 
-Run:  /store/shuvam/.venv/bin/python scripts/tests/test_kmap_structure.py
+Run:  python scripts/tests/test_kmap_structure.py
 Exit 0 = all green.  No external test framework required (plain asserts).
 
 Coverage map (each test cites the invariant it locks):
@@ -26,6 +26,11 @@ Coverage map (each test cites the invariant it locks):
 """
 from __future__ import annotations
 
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[2]))
+from kmap_paths import KMAP_SBM_SRC, NARY_SRC  # noqa: E402
+
 import math
 import sys
 import tempfile
@@ -38,8 +43,8 @@ SCRIPTS = HERE.parent
 REPO = SCRIPTS.parent
 sys.path.insert(0, str(SCRIPTS))
 sys.path.insert(0, str(REPO))
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/n-ary-kmap/src")
-sys.path.insert(0, "/store/shuvam/E-motioner-X-SBS/kmap-sbm-validation/src")
+sys.path.insert(0, str(NARY_SRC))
+sys.path.insert(0, str(KMAP_SBM_SRC))
 
 import kmap_structure as ks  # noqa: E402
 

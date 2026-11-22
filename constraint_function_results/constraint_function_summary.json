@@ -2,7 +2,11 @@
   "dataset": "1299 sequences",
   "variable_positions": 21,
   "co_evolving_pairs": 10,
-  "prediction_accuracy": 0.0010795250089960418,
+  "prediction_accuracy": 0.2594458438287154,
+  "predictor": "argmax_b C(a,b) over partners b co-occurring with a in training",
+  "n_test_mutations": 2779,
+  "conditional_baseline_accuracy": 0.15293270960777258,
+  "abstained": 1441,
   "results": [
     {
       "pos_i": 495,

@@ -22,6 +22,7 @@ sets simultaneously.
 		\midrule
 		Circuit-L2  & .170   & .148   & .179   & .173   & .157   & \textbf{.179} \\
 		Circuit-L1  & .109   & .113   & .176   & .141   & .130   & .142          \\
+		MIp (APC)   & .155   & .175   & .181   & .208   & .228   & .176          \\
 		Plain MI    & .059   & .096   & .084   & .100   & .121   & .097          \\
 		Perplexity  & .035   & .031   & .025   & .030   & .035   & .028          \\
 		Sep-only    & .034   & .031   & .023   & .024   & .019   & .033          \\
@@ -34,11 +35,20 @@ sets simultaneously.
 
 The identity-level circuit (Level-2) transfers at a mean top-$L/5$ precision
 of $0.179$ on held-out proteins, corresponding to $5.1\times$ enrichment over
-the random expectation of $0.035$.  This represents a $1.9\times$ improvement
-over plain mutual information computed per-protein ($0.097$) and a
-$15\times$ improvement over the separation-only ablation ($0.033$),
-demonstrating that the lift is carried by the residue-identity information
-encoded in the Karnaugh map rather than by separation geometry alone.
+the random expectation of $0.035$.  It is $1.8\times$ plain mutual
+information computed per protein ($0.097$) and $5\times$ the separation-only
+ablation ($0.033$), so the lift is carried by residue identity rather than by
+separation geometry.  It does not exceed the standard sequence-only baseline,
+APC-corrected MI (MIp; Dunn et al.\ 2008): on the holdout the two are level
+($0.179$ vs $0.176$, Wilcoxon $p = 0.55$), and in five-fold cross-validation
+MIp is ahead in four of five folds (mean $0.189$ vs $0.165$).  Over the 150
+cross-validated proteins the paired difference in prec@L/5 is $-0.024$ (95\%
+protein-bootstrap interval $-0.055$ to $+0.007$), and over the whole ranking
+MIp is better (AUC $0.676$ vs $0.651$, Wilcoxon $p = 1.5\times10^{-5}$;
+\texttt{analysis/circuit\_vs\_mip\_ci.py}).  The circuit is
+an interpretable re-encoding of the signal that MIp already captures, not
+additional signal.  (An earlier reviewer check reported MIp $=$ MI $= 0.097$;
+its APC term was never computed.)
 
 \subsection{Binary Classification Performance}
 At the circuit-membership threshold (cell rate $\geq 2\times$ base rate,

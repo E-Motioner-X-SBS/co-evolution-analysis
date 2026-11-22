@@ -17,12 +17,17 @@ For every co-evolving position pair (all sources):
 
 Output: results/contacts/trimer_interface.json
 """
+
+import sys as _sys_kp
+from pathlib import Path as _Path_kp
+_sys_kp.path.insert(0, str(_Path_kp(__file__).resolve().parents[1]))
+from kmap_paths import REPO_ROOT  # noqa: E402
 import json
 import math
 import sys
 from pathlib import Path
 
-REPO = Path("/store/shuvam/E-motioner-X-SBS/co-evolution-analysis")
+REPO = REPO_ROOT
 sys.path.insert(0, str(REPO / "scripts"))
 from rules3d_common import (OmicronModels, CONTACT, MIN_SEP, N_RAND,
                             dist)  # noqa: E402
